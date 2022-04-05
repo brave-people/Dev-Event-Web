@@ -7,7 +7,7 @@ interface EventSWR {
   isError : any
   }
 
-const useEvent :any = async (year : number, month : number)=>{
+const useEventSWR :any = async (year : number, month : number)=>{
     const { data, error } = SWR(`/front/v1/events/${year}/${month}`, handler)
   
     return {
@@ -17,4 +17,4 @@ const useEvent :any = async (year : number, month : number)=>{
     }
     }
 
-  export  { useEvent };
+  export  { useEventSWR };
