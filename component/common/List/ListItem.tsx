@@ -6,11 +6,16 @@ type ListItemProps = {
    data: Event
   }
 
-const ListItem = ({data}: ListItemProps) => {
-    return   <Link href={data.event_link}>
+const ListItem = ({data}: any) => {
+  console.log(data)
+    return <div><Link href={String(data.event_link)}>
     <a>
-      {data.title}: {data.description} : {data.organizer} 
+     <div>
+    <span>이벤트 제목 :{data.title}</span> <br/>
+    <span>이벤트 세부사항 : {data.description}</span> <br/>
+    <span> 이벤트 주최자 : {data.organizer} </span><br/>
+      </div> 
     </a>
-  </Link>
+  </Link></div>  
 }
 export default ListItem;
