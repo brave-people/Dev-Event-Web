@@ -1,0 +1,45 @@
+$color-background: #002034;
+
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  width: 100vw;
+  background-color: $color-background;
+
+  &__inner {
+    width: 1193px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    width: 38.55px;
+    height: 40.69px;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .wrapper {
+      padding-left: 24px;
+    }
+  }
+
+  &__search {
+    cursor: pointer;
+    padding-left: 24px;
+  }
+}
