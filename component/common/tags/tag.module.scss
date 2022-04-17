@@ -1,0 +1,19 @@
+.tag {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  background: #5ea8ed;
+  border-radius: 10px;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+
+  &.size--regular {
+    padding: 6px 18px;
+    height: 28px;
+  }
+}
