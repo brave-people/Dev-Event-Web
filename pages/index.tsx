@@ -7,15 +7,16 @@ import Layout from 'component/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
-import Dropdown from 'component/common/dropdowns/dropdown';
+import Dropdown from 'component/common/dropdown/Dropdown';
 import { AiTwotoneCalendar } from 'react-icons/ai';
-import FillButton from 'component/common/buttons/fillButton';
+import FillButton from 'component/common/buttons/FillButton';
+
+import Link from 'next/link';
 
 const cn = classNames.bind(style);
 
 const Home = () => {
   const [date, setDate] = useState({ year: 2022, month: 3 });
-
   // const { events, isLoading, isError } = useEventSWR(date);
   const events = [
     {
@@ -52,7 +53,9 @@ const Home = () => {
           현재 <span className={cn('banner__desc--bold')}>150</span>개의 개발자 행사 진행 중
         </span>
         <span className={cn('banner__button')}>
-          <FillButton color="primary" label="내 이벤트 보기" />
+          <Link href="/myevent">
+            <FillButton color="primary" label="내 이벤트 보기" />
+          </Link>
         </span>
       </div>
 

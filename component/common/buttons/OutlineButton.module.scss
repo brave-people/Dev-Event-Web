@@ -1,0 +1,21 @@
+.button {
+  box-sizing: border-box;
+  border-radius: 16px;
+
+  &.size--regular {
+    padding: 6px 40px 6px 40px;
+    height: 35px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 23px;
+    color: #5ea8ed;
+    cursor: pointer;
+  }
+}
+
+// color
+.primary {
+  color: #5ea8ed;
+  border: 1px solid #5ea8ed;
+  background-color: white;
+}
