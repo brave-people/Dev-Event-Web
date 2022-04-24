@@ -1,10 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
-import { Event } from 'interfaces/index';
+import { Event } from 'model/index';
 import classNames from 'classnames/bind';
 import style from './item.module.scss';
 import Image from 'next/image';
-import Tag from '../tags/tag';
+import Tag from '../tag/Tag';
 
 type ItemProps = {
   //아이템만 쓰기
