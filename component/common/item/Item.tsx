@@ -5,7 +5,6 @@ import classNames from 'classnames/bind';
 import style from './item.module.scss';
 import Image from 'next/image';
 import Tag from '../tag/Tag';
-
 type ItemProps = {
   //아이템만 쓰기
   data: Event;
@@ -14,16 +13,15 @@ const cn = classNames.bind(style);
 
 const Item = ({ data }: any) => {
   return (
-    <Link href={String(data.event_link)}>
-      <a>
-        {' '}
-        <div className={cn('item')}>
+    <div className={cn('item')}>
+      <Link href={String(data.event_link)}>
+        <a>
           <div className={cn('item__content')}>
             <div className={cn('item__content__img')}>
               <Image
                 className={cn('mask')}
-                alt="/event_default_img.png"
-                src="/event_default_img.png"
+                alt="/default/event_img.png"
+                src="/default/event_img.png"
                 width={377}
                 height={207}
               ></Image>
@@ -41,14 +39,14 @@ const Item = ({ data }: any) => {
                 <Tag label="태그3" />
               </div>
             </div>
+            <div className={cn('item__buttons')}>
+              <button>별</button>
+              <button>링크</button>
+            </div>{' '}
           </div>
-          <div className={cn('item__buttons')}>
-            <button>별</button>
-            <button>링크</button>
-          </div>{' '}
-        </div>
-      </a>
-    </Link>
+        </a>
+      </Link>
+    </div>
   );
 };
 export default Item;
