@@ -5,13 +5,15 @@ import classNames from 'classnames/bind';
 import style from './item.module.scss';
 import Image from 'next/image';
 import Tag from '../tag/Tag';
+import Star from 'public/icon/star_grey_outlined.svg';
+import Share from 'public/icon/share_grey_outlined.svg';
 type ItemProps = {
   //아이템만 쓰기
   data: Event;
 };
 const cn = classNames.bind(style);
 
-const Item = ({ data }: any) => {
+const Item = ({ data, isSelected = false }: any) => {
   return (
     <div className={cn('item')}>
       <Link href={String(data.event_link)}>
@@ -39,13 +41,17 @@ const Item = ({ data }: any) => {
                 <Tag label="태그3" />
               </div>
             </div>
-            <div className={cn('item__buttons')}>
-              <button>별</button>
-              <button>링크</button>
-            </div>{' '}
           </div>
         </a>
       </Link>
+      <div className={cn('item__buttons')}>
+        <button className={cn(`like-button`, isSelected ? '--selected' : null)}>
+          <Star />
+        </button>
+        <button className={cn('share-button')}>
+          <Share />
+        </button>
+      </div>
     </div>
   );
 };
