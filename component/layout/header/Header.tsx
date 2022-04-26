@@ -18,7 +18,7 @@ function Header() {
       <div className={cn('header__inner')}>
         <Link href="/" passHref>
           <div className={cn('header__logo')}>
-            <Image src="/logo.png" alt="logo" layout="fill" quality={100}></Image>
+            <Image src="/logo/logo.png" alt="logo" layout="fill" quality={100}></Image>
           </div>
         </Link>
         <div className={cn('header__buttons')}>
