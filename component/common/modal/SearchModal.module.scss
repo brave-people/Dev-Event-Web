@@ -1,0 +1,54 @@
+.modal {
+  position: absolute;
+  top: 56px;
+  bottom: 40px;
+  width: 100vw;
+  height: 30vh;
+  background-image: url('~public/default/search_background.svg');
+  background-color: white;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+
+    .search-input {
+      position: relative;
+      border-left: none;
+      border-right: none;
+      border-top: none;
+      width: 1112px;
+      padding-left: 79px;
+      background-color: transparent;
+      border-bottom: 3px solid #eff0f5;
+      outline: none;
+      font-weight: 400;
+      font-size: 44px;
+      line-height: 64px;
+      color: #757575;
+
+      &__icon {
+        position: absolute;
+        left: 200px;
+      }
+
+      &::placeholder {
+        color: #95969c;
+      }
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: transparent;
+}
