@@ -54,7 +54,7 @@ const Home = () => {
         </span>
         <span className={cn('banner__button')}>
           <Link href="/myevent">
-            <FillButton color="primary" label="내 이벤트 보기" />
+            <FillButton size="large" color="primary" label="내 이벤트 보기" />
           </Link>
         </span>
       </div>

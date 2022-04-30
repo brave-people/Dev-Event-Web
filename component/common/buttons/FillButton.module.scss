@@ -1,9 +1,9 @@
 .button {
   border: none;
-  border-radius: 35px;
+  border-radius: 30px;
   cursor: pointer;
 
-  &.size--regular {
+  &.size--large {
     padding: 15px 58px 16px 58px;
     height: 60px;
     font-size: 16px;
@@ -14,10 +14,24 @@
     line-height: 29px;
     text-align: center;
   }
+
+  &.size--regular {
+    padding: 13px 40px 13px 40px;
+    height: 48px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+  }
 }
 
 // color
 .primary {
   color: #ffffff;
   background: #479ef1;
+}
+
+.error {
+  color: #ffffff;
+  background: #cb1c1c;
 }

@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import React from 'react';
-import style from './fillButton.module.scss';
-import Link from 'next/link';
+import style from './FillButton.module.scss';
+
 const cx = classNames.bind(style);
 
 function FillButton({ onClick, size = 'regular', label, color }: any) {
