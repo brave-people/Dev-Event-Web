@@ -1,0 +1,111 @@
+.modal {
+  position: absolute;
+  width: 1080px;
+  height: 627px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 29px 27px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__close-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    align-self: flex-end;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    text-align: center;
+    color: #000000;
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 452px;
+    height: 434px;
+
+    .login-form {
+      width: 452px;
+      height: 308px;
+      margin-top: 54px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      &__button {
+        padding: 0;
+        margin: 0px;
+        width: 452px;
+        height: 62px;
+        border-radius: 16px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+        span {
+          padding-left: 12px;
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 23px;
+          text-align: center;
+          color: #000000;
+        }
+
+        &.kakao {
+          background: #fae44d;
+          border-radius: 16px;
+          border: none;
+        }
+        &.google {
+          background: #ffffff;
+          border: 1.5px solid #d8d8d8;
+          box-sizing: border-box;
+        }
+        &.github {
+          background: #000000;
+          border-radius: 16px;
+          border: none;
+          span {
+            color: #ffffff;
+          }
+        }
+        &.naver {
+          background: #03c75a;
+          border-radius: 16px;
+          border: none;
+          span {
+            color: #ffffff;
+          }
+        }
+      }
+
+      &__button:not(:first-child) {
+        margin-top: 20px;
+      }
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+}

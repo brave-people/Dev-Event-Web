@@ -7,6 +7,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import TextButton from 'component/common/buttons/TextButton';
 import SearchModal from 'component/common/modal/SearchModal';
+import LoginModal from 'component/common/modal/LoginModal';
 
 const cn = classNames.bind(style);
 
@@ -39,13 +40,7 @@ function Header() {
           </div>
         </div>
       </div>
-      <Modal isOpen={loginModalIsOpen}>
-        <button>구글 로그인</button>
-        <button>네이버 로그인</button>
-        <button>gitgub 로그인</button>
-        <button>카카오톡 로그인</button>
-        <button onClick={() => setLoginModalIsOpen(false)}>닫기</button>
-      </Modal>
+      <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
       <SearchModal isOpen={searchModalIsOpen} onClick={() => setSearchModalIsOpen(false)} />
     </header>
   );
