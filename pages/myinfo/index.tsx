@@ -6,10 +6,13 @@ import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Myinfo.module.scss';
 import OutlineButton from 'component/common/buttons/OutlineButton';
+import DeleteAccountModal from 'component/common/modal/DeleteAccountModal';
 
 const cn = classNames.bind(style);
 
 const MyInfo = () => {
+  const [DeleteAccountModalIsOpen, setDeleteAccountIsOpen] = useState(false);
+
   return (
     <div className={cn('info-container')}>
       <div className={cn('info-container__inner')}>
@@ -35,9 +38,22 @@ const MyInfo = () => {
           </div>
         </div>
         <div className={cn('delete-button')}>
-          <OutlineButton label="탈퇴하기" color="primary" size="regular"></OutlineButton>
+          <OutlineButton
+            label="탈퇴하기"
+            color="primary"
+            size="regular"
+            onClick={() => {
+              setDeleteAccountIsOpen(true);
+            }}
+          ></OutlineButton>
         </div>
       </div>
+      <DeleteAccountModal
+        isOpen={DeleteAccountModalIsOpen}
+        onClick={() => {
+          setDeleteAccountIsOpen(false);
+        }}
+      />
     </div>
   );
 };

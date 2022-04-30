@@ -1,14 +1,14 @@
 .button {
   box-sizing: border-box;
-  border-radius: 16px;
+  border-radius: 30px;
 
   &.size--regular {
-    padding: 6px 40px 6px 40px;
-    height: 35px;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 23px;
-    color: #5ea8ed;
+    padding: 13px 40px 13px 40px;
+    height: 48px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
     cursor: pointer;
   }
 }
@@ -18,4 +18,11 @@
   color: #5ea8ed;
   border: 1px solid #5ea8ed;
   background-color: white;
+}
+
+.grey {
+  background-color: #ffffff;
+  border: 1px solid #bfbfbf;
+  box-sizing: border-box;
+  color: #000000;
 }
