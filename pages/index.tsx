@@ -1,7 +1,6 @@
-import { useEventSWR } from 'lib/hooks/useEventSWR';
+import { useEvents } from 'lib/hooks/useSWR';
 import { useState } from 'react';
 import React, { useEffect } from 'react';
-import Script from 'next/script';
 import Item from 'component/common/item/Item';
 import Layout from 'component/layout';
 import type { ReactElement } from 'react';
@@ -10,37 +9,23 @@ import style from 'styles/Home.module.scss';
 import Dropdown from 'component/common/dropdown/Dropdown';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import FillButton from 'component/common/buttons/FillButton';
-
+import { GetServerSideProps } from 'next';
 import Link from 'next/link';
-
+import { useRouter } from 'next/router';
+import { EventResponse, Event } from 'model/event';
 const cn = classNames.bind(style);
 
-const Home = () => {
-  const [date, setDate] = useState({ year: 2022, month: 3 });
-  // const { events, isLoading, isError } = useEventSWR(date);
-  const events = [
-    {
-      cover_image_link: 'string',
-      description: '이벤트 세부 내용',
-      display_sequence: 0,
-      end_date_time: '2021-12-12 15:30',
-      end_day_week: 'string',
-      end_time: 'string',
-      event_link: 'https://www.naver.com/',
-      id: 0,
-      organizer: '주최자',
-      start_date_time: '2021-12-12 15:30',
-      start_day_week: 'string',
-      start_time: 'string',
-      tags: [
-        {
-          id: 0,
-          tag_name: 'string',
-        },
-      ],
-      title: '이벤트 이름',
-    },
-  ];
+const Home = ({ isLoggedIn }: any) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.query) {
+      localStorage.setItem('token', String(router.query.accessToken));
+      router.replace('/');
+    }
+  }, []);
+
+  const { events, isLoading, isError } = useEvents();
 
   return (
     <>
@@ -58,37 +43,52 @@ const Home = () => {
           </Link>
         </span>
       </div>
-
-      <section className={cn('section')}>
-        <div className={cn('section__header')}>
-          <span className={cn('section__header__title')}>2022년 3월</span>
-          <div className={cn('section__header__filters')}>
-            <Dropdown
-              options={['옵션1', '옵션2', '옵션3']}
-              placeholder="전체"
-              icon={<AiTwotoneCalendar size={16} />}
-            ></Dropdown>
-            <span className={cn('wrapper')}>
-              <Dropdown
-                options={['옵션1', '옵션2', '옵션3']}
-                placeholder="태그"
-                icon={<AiTwotoneCalendar size={16} />}
-              ></Dropdown>
-            </span>
-          </div>
-        </div>
-        <div className={cn('section__list')}>
-          {events.map((event: any) => {
-            return (
-              <div className={cn('wrapper')}>
-                <Item key={event.id} data={event} />
+      {events &&
+        events.map((event: EventResponse) => {
+          return (
+            <section className={cn('section')}>
+              <div className={cn('section__header')}>
+                <span
+                  className={cn('section__header__title')}
+                >{`${event.metadata.year}년 ${event.metadata.month}월`}</span>
+                <div className={cn('section__header__filters')}>
+                  <Dropdown
+                    options={['옵션1', '옵션2', '옵션3']}
+                    placeholder="전체"
+                    icon={<AiTwotoneCalendar size={16} />}
+                  ></Dropdown>
+                  <span className={cn('wrapper')}>
+                    <Dropdown
+                      options={['옵션1', '옵션2', '옵션3']}
+                      placeholder="태그"
+                      icon={<AiTwotoneCalendar size={16} />}
+                    ></Dropdown>
+                  </span>
+                </div>
               </div>
-            );
-          })}
-        </div>
-      </section>
+              <div className={cn('section__list')}>
+                {event &&
+                  event.dev_event.map((item: Event) => {
+                    return (
+                      <div className={cn('wrapper')}>
+                        <Item key={item.id} data={item} />
+                      </div>
+                    );
+                  })}
+              </div>
+            </section>
+          );
+        })}
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return {
+    props: {
+      isLoggedIn: false,
+    },
+  };
 };
 
 Home.getLayout = function getLayout(page: ReactElement) {

@@ -1,19 +1,16 @@
 import React from 'react';
 import Link from 'next/link';
-import { Event } from 'model/index';
+import { Event } from 'model/event';
 import classNames from 'classnames/bind';
 import style from './item.module.scss';
 import Image from 'next/image';
 import Tag from '../tag/Tag';
 import Star from 'public/icon/star_grey_outlined.svg';
 import Share from 'public/icon/share_grey_outlined.svg';
-type ItemProps = {
-  //아이템만 쓰기
-  data: Event;
-};
+
 const cn = classNames.bind(style);
 
-const Item = ({ data, isSelected = false }: any) => {
+const Item = ({ data, isSelected = false }: { data: Event; isSelected: boolean }) => {
   return (
     <div className={cn('item')}>
       <Link href={String(data.event_link)}>
@@ -33,7 +30,6 @@ const Item = ({ data, isSelected = false }: any) => {
               <div className={cn('item__content__desc')}>
                 <span>{data.organizer}</span>
                 <br className={cn('divider')} />
-                <span> {data.description}</span>
               </div>
               <div className={cn('item__content__tags')}>
                 <Tag label="태그1" />
