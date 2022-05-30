@@ -1,4 +1,3 @@
-import { useEventSWR } from 'lib/hooks/useEventSWR';
 import { useState } from 'react';
 import React, { useEffect } from 'react';
 import Layout from 'component/layout/index';
