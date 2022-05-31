@@ -1,6 +1,6 @@
 .banner {
   position: relative;
-  height: 594px;
+  height: 35rem;
   width: 100vw;
   display: flex;
   flex-direction: column;
@@ -8,11 +8,10 @@
   align-items: center;
   background-image: url('../public/default/banner_img.png');
   background-size: cover;
-
   &__title {
-    font-size: 68px;
+    font-size: 4.25rem;
     font-weight: 700;
-    line-height: 88px;
+    line-height: 5.5rem;
     letter-spacing: 0em;
     text-align: center;
     color: #ffffff;
@@ -20,34 +19,36 @@
 
   &__desc {
     font-weight: 400;
-    font-size: 20px;
-    line-height: 29px;
+    font-size: 1.25rem;
+    line-height: 1.813rem;
     text-align: center;
     color: #ffffff;
-    padding-top: 31px;
+    padding-top: 1.938rem;
     &--bold {
       font-weight: bold;
     }
   }
 
   &__button {
-    padding-top: 57px;
+    padding-top: 3.563rem;
   }
 }
 
 .section {
+  width: 68.75rem;
   &__header {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     background-color: transparent;
-    padding-top: 43px;
-    width: 1193px;
+    padding-top: 2.688rem;
+    width: 68.75rem;
+    align-self: center;
     &__title {
       font-weight: 700;
-      font-size: 24px;
-      line-height: 35px;
+      font-size: 1.5rem;
+      line-height: 2.188rem;
       color: #3b3b3b;
     }
     &__filters {
@@ -57,16 +58,16 @@
       justify-content: flex-end;
 
       .wrapper {
-        padding-left: 10px;
+        padding-left: 0.625rem;
       }
     }
   }
 
   &__list {
-    padding-top: 21px;
+    padding-top: 1.313rem;
 
     .wrapper {
-      padding-bottom: 28px;
+      padding-bottom: 1.75rem;
     }
   }
 }

@@ -3,9 +3,9 @@
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  width: 1193px;
-  height: 207px;
-  padding-right: 19px;
+  width: 68.75rem;
+  height: 10.938rem;
+  padding-right: 1.875rem;
   background: #ffffff;
   box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
@@ -18,7 +18,7 @@
     height: 100%;
     &__img {
       background-color: #c4c4c4b2;
-      width: 377px;
+      width: 19.938rem;
       height: 100%;
       border-top-left-radius: 10px;
       border-bottom-left-radius: 10px;
@@ -32,12 +32,12 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
-      padding-left: 48px;
-      width: 609px;
+      padding-left: 3rem;
+      width: 38.063rem;
       height: 100%;
     }
     &__title {
-      width: 609px;
+      width: 38.063rem;
       font-weight: 700;
       font-size: 20px;
       line-height: 23px;
@@ -48,15 +48,15 @@
       white-space: nowrap;
     }
     &__desc {
-      padding-top: 20px;
+      padding-top: 1.25rem;
       font-weight: 400;
-      font-size: 16px;
+      font-size: 1rem;
       line-height: 27px;
       color: #515151;
     }
     &__tags {
       justify-self: flex-end;
-      padding-top: 29px;
+      padding-top: 1.813rem;
       display: flex;
       flex-direction: row;
       button {
@@ -69,7 +69,7 @@
     display: flex;
     flex-direction: column;
     justify-items: flex-start;
-    padding-top: 27px;
+    padding-top: 1.688rem;
 
     .like-button {
       border: none;

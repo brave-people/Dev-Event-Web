@@ -21,8 +21,8 @@ const Item = ({ data, isSelected = false }: { data: Event; isSelected: boolean }
                 className={cn('mask')}
                 alt="/default/event_img.png"
                 src="/default/event_img.png"
-                width={377}
-                height={207}
+                width={319}
+                height={175}
               ></Image>
             </div>
             <div className={cn('item__content__body')}>
