@@ -35,7 +35,7 @@ function Header() {
                 setSearchModalIsOpen(true);
               }}
             >
-              <FiSearch color="#e8e8e8" size={24} />
+              <FiSearch color="#e8e8e8" size={20} />
             </button>
           </div>
         </div>

@@ -1,7 +1,7 @@
 .dropdown {
   display: flex;
   flex-direction: column;
-  min-width: 195px;
+  min-width: 12.188rem;
   position: relative;
 
   &__header {
@@ -9,9 +9,9 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    height: 48px;
-    padding: 0 18px 0 18px;
-    font-size: 14px;
+    height: 3rem;
+    padding: 0 1.125rem 0 1.125rem;
+    font-size: 0.875rem;
     color: #757575;
     font-weight: 400;
     cursor: pointer;
@@ -32,11 +32,11 @@
   }
 
   &__list {
-    min-width: 195px;
-    top: 50px;
+    min-width: 12.188rem;
+    top: 3.125rem;
     position: absolute;
     margin: 0;
-    max-height: 260px;
+    max-height: 16.25rem;
     border-radius: 10px;
     background-color: #fff;
     overflow-y: scroll;
@@ -62,18 +62,18 @@
     }
 
     &__item {
-      padding-top: 8px;
-      padding-bottom: 8px;
-      padding: 8px 29px 8px 29px;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      padding: 0.5rem 1.813rem 0.5rem 1.813rem;
       background-color: #fff;
       display: flex;
       flex-direction: row;
       align-items: center;
-      font-size: 14px;
+      font-size: 0.875;
       color: #757575;
       font-weight: 400;
       cursor: pointer;
-      height: 48px;
+      height: 3rem;
 
       &:hover {
         background: #ebebeb;

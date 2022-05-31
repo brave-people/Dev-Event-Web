@@ -9,12 +9,12 @@ $color-background: #002034;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: 56px;
+  height: 3.5rem;
   width: 100vw;
   background-color: $color-background;
 
   &__inner {
-    width: 1193px;
+    width: 68.75rem;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -44,14 +44,14 @@ $color-background: #002034;
     .search-button {
       border: none;
       background-color: transparent;
-      width: 24px;
-      height: 24px;
+      width: 1.3rem;
+      height: 1.3rem;
       cursor: pointer;
     }
   }
 
   &__search {
     cursor: pointer;
-    padding-left: 24px;
+    padding-left: 1.3rem;
   }
 }
