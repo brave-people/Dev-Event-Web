@@ -1,14 +1,23 @@
-import { getEventsApi } from 'lib/api/handler';
+import { getEventsApi, getMonthlyEventApi } from 'lib/api/handler';
+import { Calender } from 'model/calender';
 import useSWR from 'swr';
 
-const useEvents = () => {
+const useScheduledEvents = () => {
   const { data: events, error } = useSWR(`/front/v1/events/current`, getEventsApi);
 
   return {
-    events: events,
+    scheduledEvents: events,
     isLoading: !error && !events,
     isError: error,
   };
 };
 
-export { useEvents };
+const useMonthlyEvent = ({ param }: { param: Calender }) => {
+  const { data: events, error } = useSWR(`/front/v1/events/${param.year}/${param.month}`, getMonthlyEventApi);
+  return {
+    monthlyEvent: events,
+    isLoading: !error && !events,
+    isError: error,
+  };
+};
+export { useScheduledEvents, useMonthlyEvent };
