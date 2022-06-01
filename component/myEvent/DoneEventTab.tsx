@@ -1,13 +1,13 @@
 import React from 'react';
 import style from 'styles/myevent.module.scss';
 import classNames from 'classnames/bind';
-import Item from 'component/common/item/Item';
 import Dropdown from 'component/common/dropdown/Dropdown';
 import { AiTwotoneCalendar } from 'react-icons/ai';
+import Item from 'component/common/item/Item';
 
 const cn = classNames.bind(style);
 
-const MyOngoingEvent = () => {
+const MyDoneEvent = () => {
   const events = [
     {
       cover_image_link: 'string',
@@ -31,19 +31,9 @@ const MyOngoingEvent = () => {
       title: '이벤트 이름',
     },
   ];
+
   return (
     <div className={cn('tab__body')}>
-      <article className={cn('today-event')}>
-        <div className={cn('today-event__list')}>
-          {events.map((event: any) => {
-            return (
-              <div className={cn('wrapper')}>
-                <Item key={event.id} data={event} />
-              </div>
-            );
-          })}
-        </div>
-      </article>
       <section className={cn('section')}>
         <div className={cn('section__header')}>
           <span className={cn('section__header__title')}>2022년 3월</span>
@@ -66,7 +56,7 @@ const MyOngoingEvent = () => {
           {events.map((event: any) => {
             return (
               <div className={cn('wrapper')}>
-                <Item key={event.id} data={event} />
+                <Item key={event.id} data={event} isSelected={false} />
               </div>
             );
           })}
@@ -76,4 +66,4 @@ const MyOngoingEvent = () => {
   );
 };
 
-export default MyOngoingEvent;
+export default MyDoneEvent;

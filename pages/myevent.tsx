@@ -6,7 +6,7 @@ import classNames from 'classnames/bind';
 import style from 'styles/myevent.module.scss';
 import Link from 'next/link';
 import { MdOutlineArrowForwardIos } from 'react-icons/md';
-import MyEventTabBody from 'component/myEventTab/MyEventTabBody';
+import MyEventTabBody from 'component/myEvent/MyEventBody';
 import { useRouter } from 'next/router';
 
 const cn = classNames.bind(style);

@@ -1,6 +1,6 @@
 import React from 'react';
-import MyOngoingEvent from 'component/myEventTab/MyOngoingEvent';
-import MyDoneEvent from 'component/myEventTab/MyDoneEvent';
+import MyOngoingEvent from 'component/myEvent/ScheduledEventTab';
+import MyDoneEvent from 'component/myEvent/DoneEventTab';
 import { useRouter } from 'next/router';
 
 const TabBody = () => {
