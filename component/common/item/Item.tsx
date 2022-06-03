@@ -20,9 +20,13 @@ const Item = ({ data, isSelected = false }: { data: Event; isSelected: boolean }
               <Image
                 className={cn('mask')}
                 alt="/default/event_img.png"
-                src="/default/event_img.png"
-                width={319}
-                height={175}
+                src={
+                  data.cover_image_link.includes('brave-people-3.s3.ap-northeast-2.amazonaws.com')
+                    ? data.cover_image_link
+                    : '/default/event_img.png'
+                }
+                width={280}
+                height={157.5}
               ></Image>
             </div>
             <div className={cn('item__content__body')}>
