@@ -1,5 +1,8 @@
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    domains: ['brave-people-3.s3.ap-northeast-2.amazonaws.com'],
+  },
   env: {
     BASE_SERVER_URL: 'https://dev-brave-people.o-r.kr',
   },
