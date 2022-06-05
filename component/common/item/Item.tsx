@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { Event } from 'model/event';
 import classNames from 'classnames/bind';
@@ -8,10 +8,13 @@ import Tag from '../tag/Tag';
 import Star from 'public/icon/star_grey_outlined.svg';
 import Share from 'public/icon/share_grey_outlined.svg';
 import router from 'next/router';
+import { MdContentCopy } from 'react-icons/md';
 
 const cn = classNames.bind(style);
 
 const Item = ({ data, isSelected = false }: { data: Event; isSelected: boolean }) => {
+  const [isShareModalOpen, setShareModalOpen] = useState(false);
+
   return (
     <div className={cn('item')}>
       <Link href={String(data.event_link)}>
@@ -57,9 +60,37 @@ const Item = ({ data, isSelected = false }: { data: Event; isSelected: boolean }
         <button className={cn(`like-button`, isSelected ? '--selected' : null)}>
           <Star />
         </button>
-        <button className={cn('share-button')}>
+        <button
+          className={cn('share-button')}
+          onClick={() => {
+            setShareModalOpen(!isShareModalOpen);
+          }}
+        >
           <Share />
         </button>
+
+        {isShareModalOpen ? (
+          <div className={cn('share-modal')}>
+            {' '}
+            <input className={cn('share-modal__link')} value={data.event_link} readOnly></input>
+            <button
+              className={cn('share-modal__button')}
+              onClick={(event) => {
+                const copyLink = data.event_link;
+                navigator.clipboard
+                  .writeText(copyLink)
+                  .then(() => {
+                    alert('클립보드에 복사되었습니다');
+                  })
+                  .catch((err) => {
+                    console.log('클립보드에 복사 실패', err);
+                  });
+              }}
+            >
+              <MdContentCopy color="#757575" size={20} />
+            </button>
+          </div>
+        ) : null}
       </div>
     </div>
   );
