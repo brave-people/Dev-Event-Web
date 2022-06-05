@@ -70,6 +70,7 @@
     flex-direction: column;
     justify-items: flex-start;
     padding-top: 1.688rem;
+    position: relative;
 
     .like-button {
       border: none;
@@ -100,11 +101,49 @@
       height: 24px;
       padding-top: 20px;
       cursor: pointer;
-
       &:hover {
         path {
           fill: #0077e8;
         }
+      }
+    }
+
+    .share-modal {
+      position: absolute;
+      align-self: flex-end;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      top: 95px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+      border: solid 1px #e0e0e0;
+      width: 376px;
+      padding: 15px 10px 15px 10px;
+
+      &__link {
+        width: 300px;
+        min-height: 37px;
+        padding: 9px 10px 9px 10px;
+        word-break: break-all;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background-color: #ecf6ff;
+        border: none;
+        outline: none;
+      }
+      &__button {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        padding: 7px 7px 7px 7px;
+        border: 1.5px solid #ecf6ff;
+        background-color: #fff;
+        cursor: pointer;
       }
     }
   }
