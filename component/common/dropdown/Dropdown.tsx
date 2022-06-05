@@ -2,12 +2,12 @@ import classNames from 'classnames/bind';
 import style from './dropdown.module.scss';
 import React, { useEffect, useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
+import Tag from '../tag/Tag';
 
 const cx = classNames.bind(style);
 
-export default function Dropdown({ name, options, placeholder, value, onClick, icon }: any) {
+export default function Dropdown({ name, options, placeholder, value, onClick, icon, type = 'basic' }: any) {
   const [isOpen, setOpen] = useState(false);
-
   return (
     <>
       <div className={cx('dropdown')}>
@@ -19,18 +19,19 @@ export default function Dropdown({ name, options, placeholder, value, onClick, i
         >
           <span className={cx('dropdown__header__placeholder')}>
             <span className={cx('icon')}>{icon}</span>
-            {placeholder}
+            {value ? value : placeholder}
           </span>
           <IoIosArrowDown size="12" color="#3D3D3D" />
         </div>
 
-        {isOpen == false ? null : (
-          <div className={cx('dropdown__list')}>
+        {isOpen == false ? null : type === 'basic' ? (
+          <div className={cx('dropdown__list', `type--${type}`)}>
             {options.map((item: any, index: number) => {
+              console.log(type);
               return (
                 <div
                   key={index}
-                  className={cx('dropdown__list__item')}
+                  className={cx('dropdown__list__item', `type--${type}`)}
                   onClick={(event) => {
                     setOpen(false);
                     !onClick ? null : onClick(event, item);
@@ -40,6 +41,26 @@ export default function Dropdown({ name, options, placeholder, value, onClick, i
                 </div>
               );
             })}
+          </div>
+        ) : (
+          <div className={cx('dropdown__list', `type--${type}`)}>
+            <span>원하는 태그를 선택하세요.</span>
+            <div className={cx('wrapper')}>
+              {options.map((item: any, index: number) => {
+                return (
+                  <div
+                    key={index}
+                    className={cx('dropdown__list__item', `type--${type}`)}
+                    onClick={(event) => {
+                      setOpen(false);
+                      !onClick ? null : onClick(event, item);
+                    }}
+                  >
+                    <Tag label={item}></Tag>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>

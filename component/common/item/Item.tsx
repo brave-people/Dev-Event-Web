@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Tag from '../tag/Tag';
 import Star from 'public/icon/star_grey_outlined.svg';
 import Share from 'public/icon/share_grey_outlined.svg';
+import router from 'next/router';
 
 const cn = classNames.bind(style);
 
@@ -36,9 +37,17 @@ const Item = ({ data, isSelected = false }: { data: Event; isSelected: boolean }
                 <br className={cn('divider')} />
               </div>
               <div className={cn('item__content__tags')}>
-                <Tag label="태그1" />
-                <Tag label="태그2" />
-                <Tag label="태그3" />
+                {data.tags.map((tag) => {
+                  return (
+                    <Tag
+                      label={tag.tag_name}
+                      onClick={(event: any) => {
+                        const tag = event.target.innerText.replace(/[\t\s\#]/g, '');
+                        router.replace(`/events?tag=${tag}`);
+                      }}
+                    />
+                  );
+                })}
               </div>
             </div>
           </div>
