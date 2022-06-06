@@ -7,8 +7,18 @@ import Item from 'component/common/item/Item';
 
 const cn = classNames.bind(style);
 
-const FilteredEventList = ({ filter }: { filter?: string }) => {
+const FilteredEventList = ({ filter, type }: { filter?: string; type?: string }) => {
   const { scheduledEvents, isLoading, isError } = useScheduledEvents();
+
+  const filterByTag = (item: Event) => {
+    return item.tags.some((item) => {
+      return item.tag_name === filter;
+    });
+  };
+
+  const filterBySearch = (item: Event) => {
+    return item.title.includes(String(filter));
+  };
 
   return (
     <>
@@ -20,9 +30,7 @@ const FilteredEventList = ({ filter }: { filter?: string }) => {
               {event &&
                 event.dev_event
                   .filter((item) => {
-                    return item.tags.some((item) => {
-                      return item.tag_name === filter;
-                    });
+                    return type === 'tag' ? filterByTag(item) : filterBySearch(item);
                   })
                   .map((item: Event) => {
                     return (
