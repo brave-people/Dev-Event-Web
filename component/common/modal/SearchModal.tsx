@@ -11,9 +11,6 @@ function SearchModal({ isOpen, onClick }: any) {
     <Modal isOpen={isOpen} className={cx('modal')} overlayClassName={cx('overlay')} onRequestClose={onClick}>
       <div className={cx('modal__inner')}>
         <input className={cx('search-input')} placeholder="어떤 행사를 찾고 계세요?"></input>
-        <span className={cx('search-input__icon')}>
-          <FiSearch color="#95969c" size={50} />
-        </span>
       </div>
     </Modal>
   );

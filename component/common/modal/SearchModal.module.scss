@@ -1,14 +1,14 @@
 .modal {
   position: absolute;
-  top: 56px;
-  bottom: 40px;
+  top: 3.5rem;
+  bottom: 2.5rem;
   width: 100vw;
-  height: 30vh;
+  height: 25vh;
   background-image: url('~public/default/search_background.svg');
   background-color: white;
   background-repeat: no-repeat;
-  background-size: 100% auto;
-
+  background-size: cover;
+  z-index: 7;
   &__inner {
     display: flex;
     flex-direction: column;
@@ -22,20 +22,19 @@
       border-left: none;
       border-right: none;
       border-top: none;
-      width: 1112px;
-      padding-left: 79px;
+      width: 68.75rem;
+      padding-left: 4.938rem;
       background-color: transparent;
       border-bottom: 3px solid #eff0f5;
       outline: none;
       font-weight: 400;
-      font-size: 44px;
+      font-size: 2.75rem;
       line-height: 64px;
       color: #757575;
-
-      &__icon {
-        position: absolute;
-        left: 200px;
-      }
+      background-image: url(../../../public/icon/search_grey_outlined.svg);
+      background-repeat: no-repeat;
+      background-size: 33px;
+      background-position-y: 15px;
 
       &::placeholder {
         color: #95969c;
