@@ -32,7 +32,7 @@ function Header() {
             <button
               className={cn('search-button')}
               onClick={() => {
-                setSearchModalIsOpen(true);
+                setSearchModalIsOpen(!searchModalIsOpen);
               }}
             >
               <FiSearch color="#e8e8e8" size={20} />
