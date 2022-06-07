@@ -3,43 +3,16 @@ import Layout from 'component/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
-import Dropdown from 'component/common/dropdown/Dropdown';
-import { AiTwotoneCalendar } from 'react-icons/ai';
-import { BiPurchaseTagAlt } from 'react-icons/bi';
 import FillButton from 'component/common/buttons/FillButton';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import dayjs from 'dayjs';
+import EventHeader from 'component/events/EventHeader';
 import EventBody from 'component/events/EventBody';
 import cookie from 'cookie';
-import { useTags } from 'lib/hooks/useSWR';
 
 const cn = classNames.bind(style);
 
-const Events = ({ isLoggedIn }: any) => {
-  const router = useRouter();
-  const [filter, setFilter] = useState({ date: '전체', tag: '태그' });
-  const { tags, isLoading, isError } = useTags();
-
-  const getDateList = () => {
-    const list = ['전체'];
-    let currentDate = dayjs().endOf('month');
-    const startDate = dayjs('2022-01-01');
-    while (startDate.isBefore(currentDate)) {
-      list.push(currentDate.format('YYYY년 MM월'));
-      currentDate = currentDate.subtract(1, 'M');
-    }
-    return list;
-  };
-
-  const getTagList = () => {
-    const list = tags?.map((tag) => {
-      return tag.tag_name;
-    });
-    return list;
-  };
-
+const Events = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   return (
     <>
       <div className={cn('banner')}>
@@ -55,42 +28,7 @@ const Events = ({ isLoggedIn }: any) => {
         </span>
       </div>
       <section className={cn('section')}>
-        <div className={cn('section__header')}>
-          <span>현재 150개의 개발자 행사 진행 중</span>
-          <div className={cn('section__header__filters')}>
-            <Dropdown
-              options={getDateList()}
-              placeholder="전체"
-              value={filter.date}
-              icon={<AiTwotoneCalendar size={16} />}
-              onClick={(event: any) => {
-                setFilter({ ...filter, date: event.target.innerText });
-                if (event.target.innerText === '전체') {
-                  router.replace(`/events`);
-                } else {
-                  const date = event.target.innerText.replace(/[\t\s]/g, '').split(/[년, 월]/);
-                  router.replace(`/events?year=${date[0]}&month=${date[1]}`);
-                }
-              }}
-            ></Dropdown>
-            <span className={cn('wrapper')}>
-              <Dropdown
-                options={getTagList()}
-                placeholder="태그"
-                icon={<BiPurchaseTagAlt size={16} />}
-                type="expand"
-                onClick={(event: any) => {
-                  if (event.target.innerText === '전체') {
-                    router.replace(`/events`);
-                  } else {
-                    const tag = event.target.innerText.replace(/[\t\s\#]/g, '');
-                    router.replace(`/events?tag=${tag}`);
-                  }
-                }}
-              ></Dropdown>
-            </span>
-          </div>
-        </div>
+        <EventHeader />
         <EventBody />
       </section>
     </>
@@ -98,13 +36,18 @@ const Events = ({ isLoggedIn }: any) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  //쿠키 여부 확인
+  let hasToken = false;
   if (context.req.headers.cookie) {
     const parsedCookies = cookie.parse(context.req.headers.cookie);
-    console.log('coockie', parsedCookies['access_token']);
+    if (parsedCookies.access_token) {
+      hasToken = true;
+    }
   }
+
   return {
     props: {
-      isLoggedIn: false,
+      isLoggedIn: hasToken,
     },
   };
 };
