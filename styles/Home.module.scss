@@ -45,6 +45,16 @@
     padding-top: 2.688rem;
     width: 68.75rem;
     align-self: center;
+
+    &__desc {
+      font-weight: 500;
+      font-size: 1.25rem;
+      line-height: 1.813rem;
+      color: #0066c6;
+      span {
+        font-weight: 700;
+      }
+    }
     &__title {
       font-weight: 700;
       font-size: 1.5rem;

@@ -6,7 +6,7 @@ import { AiTwotoneCalendar } from 'react-icons/ai';
 import { BiPurchaseTagAlt } from 'react-icons/bi';
 import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
-import { useTags } from 'lib/hooks/useSWR';
+import { useScheduledEvents, useTags } from 'lib/hooks/useSWR';
 
 const cn = classNames.bind(style);
 
@@ -35,7 +35,7 @@ const EventHeader = () => {
 
   return (
     <div className={cn('section__header')}>
-      <span>현재 150개의 개발자 행사 진행 중</span>
+      <EventCount />
       <div className={cn('section__header__filters')}>
         <Dropdown
           options={getDateList()}
@@ -70,6 +70,26 @@ const EventHeader = () => {
         </span>
       </div>
     </div>
+  );
+};
+
+const EventCount = () => {
+  const [totalCount, setTotalCount] = useState(0);
+  const { scheduledEvents, isLoading, isError } = useScheduledEvents();
+
+  useEffect(() => {
+    const result = scheduledEvents?.reduce(function add(sum, currValue) {
+      return sum + currValue.metadata.total;
+    }, 0);
+
+    setTotalCount(result || 0);
+  }, [scheduledEvents]);
+
+  return (
+    <span className={cn('section__header__desc')}>
+      {' '}
+      현재 <span>{totalCount}개</span>의 개발자 행사 진행 중
+    </span>
   );
 };
 
