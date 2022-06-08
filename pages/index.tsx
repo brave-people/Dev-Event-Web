@@ -1,14 +1,10 @@
 import React from 'react';
 import Layout from 'component/layout';
 import type { ReactElement } from 'react';
-import classNames from 'classnames/bind';
-import style from 'styles/Home.module.scss';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 
-const cn = classNames.bind(style);
-
-const Home = ({ isLoggedIn }: any) => {
+const Home = () => {
   return (
     <Head>
       <title>Dev Event</title>
@@ -17,6 +13,14 @@ const Home = ({ isLoggedIn }: any) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  if (context.query.accessToken || context.query.refreshToken) {
+    context.res.setHeader('set-cookie', [
+      `access_token=${String(context.query.accessToken)}`,
+      `refresh_token=${String(context.query.refreshToken)}`,
+      'foo=bar; HttpOnly Secure',
+    ]);
+  }
+
   return {
     redirect: {
       destination: '/events',
