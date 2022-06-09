@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     context.res.setHeader('set-cookie', [
       `access_token=${String(context.query.accessToken)}`,
       `refresh_token=${String(context.query.refreshToken)}`,
-      'foo=bar; HttpOnly Secure',
+      'Secure; HttpOnly; SameSite=Strict`',
     ]);
   }
 

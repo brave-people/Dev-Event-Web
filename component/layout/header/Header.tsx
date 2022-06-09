@@ -1,17 +1,20 @@
 import classNames from 'classnames/bind';
 import style from './Header.module.scss';
-import React, { useEffect, useState } from 'react';
-import Modal from 'react-modal';
-import { FiSearch, FiUser } from 'react-icons/fi';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import TextButton from 'component/common/buttons/TextButton';
 import SearchModal from 'component/common/modal/SearchModal';
 import LoginModal from 'component/common/modal/LoginModal';
+import { AuthContext } from 'lib/context/auth';
+import Profile from 'public/icon/profile_outlined_regular.svg';
+import Search from 'public/icon/search_outlined_regular.svg';
 
 const cn = classNames.bind(style);
 
 function Header() {
+  const authContext = React.useContext(AuthContext);
+
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const [searchModalIsOpen, setSearchModalIsOpen] = useState(false);
 
@@ -26,18 +29,24 @@ function Header() {
         <div className={cn('header__buttons')}>
           <TextButton label="행사등록" onClick={() => setLoginModalIsOpen(true)}></TextButton>
           <span className={cn('wrapper')}>
-            <TextButton label="로그인" onClick={() => setLoginModalIsOpen(true)}></TextButton>
+            {authContext.isLoggedIn ? (
+              <TextButton label="로그인" onClick={() => setLoginModalIsOpen(true)}></TextButton>
+            ) : (
+              <button className={cn(`profile-button`)}>
+                <Profile />
+              </button>
+            )}
           </span>
-          <div className={cn('header__search')}>
+          <span className={cn('wrapper')}>
             <button
               className={cn('search-button')}
               onClick={() => {
                 setSearchModalIsOpen(!searchModalIsOpen);
               }}
             >
-              <FiSearch color="#e8e8e8" size={20} />
+              <Search />
             </button>
-          </div>
+          </span>
         </div>
       </div>
       <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
