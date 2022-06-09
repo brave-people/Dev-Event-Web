@@ -48,10 +48,13 @@ $color-background: #002034;
       height: 1.3rem;
       cursor: pointer;
     }
-  }
 
-  &__search {
-    cursor: pointer;
-    padding-left: 1.3rem;
+    .profile-button {
+      border: none;
+      background-color: transparent;
+      width: 1.3rem;
+      height: 1.3rem;
+      cursor: pointer;
+    }
   }
 }
