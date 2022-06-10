@@ -13,7 +13,10 @@ const cn = classNames.bind(style);
 
 const MyEvent = ({}: any) => {
   const router = useRouter();
-  const [tabMenu, setTabMenu] = useState({ ongoing: true, done: false });
+  const [tabMenu, setTabMenu] = useState({
+    ongoing: router.query.tab === 'ongoing' || !router.query.tab,
+    done: router.query.tab === 'done',
+  });
 
   return (
     <>
