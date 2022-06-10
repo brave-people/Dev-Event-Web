@@ -8,7 +8,6 @@ const cn = classNames.bind(style);
 
 const ScheduledEventTab = () => {
   const { myEvent, isLoading, isError } = useMyEvent({ filter: 'FUTURE' });
-
   return (
     <div className={cn('tab__body')}>
       <article className={cn('today-event')}>
@@ -20,10 +19,10 @@ const ScheduledEventTab = () => {
       </article>
       <section className={cn('section')}>
         <div className={cn('section__list')}>
-          {!myEvent?.dev_event ? (
+          {!myEvent ? (
             <div>데이터가 없습니다</div>
           ) : (
-            myEvent.dev_event.map((event: any) => {
+            myEvent.map((event: any) => {
               return <div className={cn('wrapper')}>{<Item data={event} isSelected={true} />}</div>;
             })
           )}

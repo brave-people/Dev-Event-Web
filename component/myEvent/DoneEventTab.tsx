@@ -13,13 +13,13 @@ const DoneEventTab = () => {
     <div className={cn('tab__body')}>
       <section className={cn('section')}>
         <div className={cn('section__list')}>
-          {!myEvent?.dev_event ? (
+          {!myEvent ? (
             <div>데이터가 없습니다</div>
           ) : (
-            myEvent.dev_event.map((event: any) => {
+            myEvent.map((event: any) => {
               return (
                 <div className={cn('wrapper')}>
-                  <Item key={event.id} data={event} isSelected={false} />
+                  <Item key={event.id} data={event.dev_event} isSelected={false} />
                 </div>
               );
             })

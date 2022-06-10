@@ -26,11 +26,20 @@ export interface EventResponse {
   dev_event: Event[];
 }
 
-export interface MyEventProps {
-  filter: string;
-}
-
-export interface MyEventResponse {
+export interface MyEvent {
   dev_event: Event[];
   favorite_id: 0;
+}
+
+export interface MyEventGetProps {
+  filter: string;
+}
+export interface MyEventPostProps {
+  eventId: string;
+}
+
+export interface MyEventPostResponse {
+  message: 'string';
+  status: 'string';
+  status_code: 0;
 }
