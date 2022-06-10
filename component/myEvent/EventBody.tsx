@@ -1,9 +1,9 @@
 import React from 'react';
-import MyOngoingEvent from 'component/myEvent/ScheduledEventTab';
-import MyDoneEvent from 'component/myEvent/DoneEventTab';
+import ScheduledEventTab from 'component/myEvent/ScheduledEventTab';
+import DoneEventTab from 'component/myEvent/DoneEventTab';
 import { useRouter } from 'next/router';
 
-const TabBody = () => {
+const EventBody = () => {
   const router = useRouter();
 
   const ongoing = router.query.tab === 'ongoing' || router.query.tab == null;
@@ -11,10 +11,10 @@ const TabBody = () => {
 
   return (
     <>
-      {ongoing && <MyOngoingEvent />}
-      {done && <MyDoneEvent />}
+      {ongoing && <ScheduledEventTab />}
+      {done && <DoneEventTab />}
     </>
   );
 };
 
-export default TabBody;
+export default EventBody;

@@ -6,16 +6,14 @@ import classNames from 'classnames/bind';
 import style from 'styles/myevent.module.scss';
 import Link from 'next/link';
 import { MdOutlineArrowForwardIos } from 'react-icons/md';
-import MyEventTabBody from 'component/myEvent/MyEventBody';
+import EventBody from 'component/myEvent/EventBody';
 import { useRouter } from 'next/router';
 
 const cn = classNames.bind(style);
 
 const MyEvent = ({}: any) => {
-  const [date, setDate] = useState({ year: 2022, month: 3 });
   const router = useRouter();
   const [tabMenu, setTabMenu] = useState({ ongoing: true, done: false });
-  // const { events, isLoading, isError } = useEventSWR(date);
 
   return (
     <>
@@ -54,7 +52,7 @@ const MyEvent = ({}: any) => {
           </div>
         </div>
       </header>
-      <MyEventTabBody />
+      <EventBody />
     </>
   );
 };
