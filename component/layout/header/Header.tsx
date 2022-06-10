@@ -6,9 +6,9 @@ import Image from 'next/image';
 import TextButton from 'component/common/buttons/TextButton';
 import SearchModal from 'component/common/modal/SearchModal';
 import LoginModal from 'component/common/modal/LoginModal';
+import SearchIcon from 'public/icon/search_outlined_regular.svg';
 import { AuthContext } from 'lib/context/auth';
-import Profile from 'public/icon/profile_outlined_regular.svg';
-import Search from 'public/icon/search_outlined_regular.svg';
+import Profile from './Profile';
 
 const cn = classNames.bind(style);
 
@@ -30,11 +30,9 @@ function Header() {
           <TextButton label="행사등록" onClick={() => setLoginModalIsOpen(true)}></TextButton>
           <span className={cn('wrapper')}>
             {authContext.isLoggedIn ? (
-              <TextButton label="로그인" onClick={() => setLoginModalIsOpen(true)}></TextButton>
+              <Profile />
             ) : (
-              <button className={cn(`profile-button`)}>
-                <Profile />
-              </button>
+              <TextButton label="로그인" onClick={() => setLoginModalIsOpen(true)}></TextButton>
             )}
           </span>
           <span className={cn('wrapper')}>
@@ -44,7 +42,7 @@ function Header() {
                 setSearchModalIsOpen(!searchModalIsOpen);
               }}
             >
-              <Search />
+              <SearchIcon />
             </button>
           </span>
         </div>
