@@ -21,7 +21,16 @@ export interface EventMetaData extends Calender {
   total: number;
 }
 
-export interface EventResponse extends Event {
+export interface EventResponse {
   metadata: EventMetaData;
   dev_event: Event[];
+}
+
+export interface MyEventProps {
+  filter: string;
+}
+
+export interface MyEventResponse {
+  dev_event: Event[];
+  favorite_id: 0;
 }

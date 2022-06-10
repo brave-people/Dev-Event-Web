@@ -1,4 +1,4 @@
-import { EventResponse } from 'model/event';
+import { EventResponse, MyEventProps, MyEventResponse } from 'model/event';
 import { TagResponse } from 'model/tag';
 import { User } from 'model/auth';
 import axios, { AxiosResponse } from 'axios';
@@ -19,6 +19,15 @@ export const getMonthlyEventApi = async (url: string): Promise<Event[]> => {
     return response.data;
   } catch (error: any) {
     return error.response;
+  }
+};
+
+export const getMyEventApi = async (url: string, param: MyEventProps): Promise<MyEventResponse> => {
+  try {
+    const response: AxiosResponse = await axiosInstance.get(`${process.env.BASE_SERVER_URL}${url}`, { params: param });
+    return response.data;
+  } catch (error: any) {
+    throw error.response;
   }
 };
 
