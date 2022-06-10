@@ -8,12 +8,12 @@
   &__inner {
     display: flex;
     flex-direction: column;
-    width: 1193px;
+    width: 68.75rem;
 
     .sub-header {
       display: flex;
       flex-direction: column;
-      padding-top: 82px;
+      padding-top: 5.125rem;
 
       &__content {
         display: flex;
@@ -21,19 +21,19 @@
         align-items: flex-start;
         h1 {
           font-weight: 500;
-          font-size: 24px;
-          line-height: 35px;
+          font-size: 1.5rem;
+          line-height: 2.188rem;
           color: #000000;
         }
       }
     }
 
     .info-form {
-      padding: 62px 0px;
+      padding: 3.875rem 0px;
       display: grid;
-      grid-template-columns: 376px 480px;
-      column-gap: 132px;
-      row-gap: 31px;
+      grid-template-columns: 23.5rem 30rem;
+      column-gap: 8.25rem;
+      row-gap: 1.938rem;
       border-bottom: 2px solid #e9e9e9;
 
       &__item {
@@ -44,21 +44,27 @@
         span {
           color: #535353;
           font-weight: 500;
-          font-size: 16px;
-          line-height: 23px;
-          padding-bottom: 11px;
+          font-size: 1rem;
+          line-height: 1.438rem;
+          padding-bottom: 0.688rem;
         }
 
         .input {
           background: #ecf6ff;
           border-radius: 10px;
           border: none;
-          height: 46px;
+          height: 2.875rem;
+          padding-left: 1.375rem;
+          font-weight: 400;
+          font-size: 1rem;
+          line-height: 1.438rem;
+          color: #535353;
+
           .size--small {
-            width: 376px;
+            width: 23.5rem;
           }
           .size--regular {
-            width: 480px;
+            width: 30rem;
           }
         }
       }
@@ -66,7 +72,7 @@
 
     .delete-button {
       align-self: flex-end;
-      padding-top: 21px;
+      padding-top: 1.313rem;
     }
   }
 }
