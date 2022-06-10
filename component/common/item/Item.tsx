@@ -5,14 +5,22 @@ import classNames from 'classnames/bind';
 import style from './item.module.scss';
 import Image from 'next/image';
 import Tag from '../tag/Tag';
-import Star from 'public/icon/star_grey_outlined.svg';
-import Share from 'public/icon/share_grey_outlined.svg';
+import StarIcon from 'public/icon/star_grey_outlined.svg';
+import ShareIcon from 'public/icon/share_grey_outlined.svg';
 import router from 'next/router';
 import { MdContentCopy } from 'react-icons/md';
 
 const cn = classNames.bind(style);
 
-const Item = ({ data, isSelected = false }: { data: Event; isSelected: boolean }) => {
+const Item = ({
+  data,
+  isFavorite = false,
+  onClickFavorite,
+}: {
+  data: Event;
+  isFavorite: boolean;
+  onClickFavorite?: any;
+}) => {
   const [isShareModalOpen, setShareModalOpen] = useState(false);
 
   return (
@@ -57,8 +65,13 @@ const Item = ({ data, isSelected = false }: { data: Event; isSelected: boolean }
         </a>
       </Link>
       <div className={cn('item__buttons')}>
-        <button className={cn(`like-button`, isSelected ? '--selected' : null)}>
-          <Star />
+        <button
+          className={cn(`like-button`, isFavorite ? '--selected' : null)}
+          onClick={() => {
+            onClickFavorite();
+          }}
+        >
+          <StarIcon />
         </button>
         <button
           className={cn('share-button')}
@@ -66,7 +79,7 @@ const Item = ({ data, isSelected = false }: { data: Event; isSelected: boolean }
             setShareModalOpen(!isShareModalOpen);
           }}
         >
-          <Share />
+          <ShareIcon />
         </button>
 
         {isShareModalOpen ? (
