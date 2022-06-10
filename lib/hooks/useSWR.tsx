@@ -1,5 +1,6 @@
-import { getEventsApi, getMonthlyEventApi, getTagsApi, getUserApi } from 'lib/api/handler';
+import { getEventsApi, getMyEventApi, getMonthlyEventApi, getTagsApi, getUserApi } from 'lib/api/handler';
 import { Calender } from 'model/calender';
+import { MyEventProps } from 'model/event';
 import useSWR from 'swr';
 
 const useScheduledEvents = () => {
@@ -21,6 +22,17 @@ const useMonthlyEvent = ({ param }: { param: Calender }) => {
   };
 };
 
+const useMyEvent = (param: MyEventProps) => {
+  const { data: myEvent, error } = useSWR([`/front/v1/favorite/events`, param], getMyEventApi, {
+    shouldRetryOnError: false,
+  });
+  return {
+    myEvent: myEvent,
+    isLoading: !error && !myEvent,
+    isError: error,
+  };
+};
+
 const useTags = () => {
   const { data: tags, error } = useSWR(`/front/v1/events/tags`, getTagsApi);
   return {
@@ -38,4 +50,4 @@ const useUser = () => {
     isError: error,
   };
 };
-export { useScheduledEvents, useMonthlyEvent, useTags, useUser };
+export { useScheduledEvents, useMonthlyEvent, useTags, useUser, useMyEvent };
