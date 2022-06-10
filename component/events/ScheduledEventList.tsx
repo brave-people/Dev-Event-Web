@@ -4,12 +4,18 @@ import { EventResponse, Event } from 'model/event';
 import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
 import Item from 'component/common/item/Item';
+import { createMyEventApi } from 'lib/api/post';
 
 const cn = classNames.bind(style);
 
 const ScheduledEventList = () => {
   const { scheduledEvents, isLoading, isError } = useScheduledEvents();
 
+  const createMyEvent = async ({ eventId }: { eventId: String }) => {
+    const result = await createMyEventApi(`/front/v1/favorite/events${eventId}`, {
+      eventId: Number(eventId),
+    });
+  };
   return (
     <>
       {scheduledEvents &&
@@ -23,7 +29,14 @@ const ScheduledEventList = () => {
                 event.dev_event.map((item: Event) => {
                   return (
                     <div className={cn('wrapper')}>
-                      <Item key={item.id} data={item} isSelected={false} />
+                      <Item
+                        key={item.id}
+                        data={item}
+                        isFavorite={true}
+                        onClickFavorite={() => {
+                          createMyEvent({ eventId: item.id });
+                        }}
+                      />
                     </div>
                   );
                 })}

@@ -4,6 +4,7 @@ import { EventResponse, Event } from 'model/event';
 import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
 import Item from 'component/common/item/Item';
+import { createMyEventApi } from 'lib/api/post';
 
 const cn = classNames.bind(style);
 
@@ -18,6 +19,12 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
 
   const filterBySearch = (item: Event) => {
     return item.title.includes(String(filter));
+  };
+
+  const createMyEvent = async ({ eventId }: { eventId: String }) => {
+    const result = await createMyEventApi(`/front/v1/favorite/events/${eventId}`, {
+      eventId: Number(eventId),
+    });
   };
 
   return (
@@ -35,7 +42,14 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
                   .map((item: Event) => {
                     return (
                       <div className={cn('wrapper')}>
-                        <Item key={item.id} data={item} isSelected={false} />
+                        <Item
+                          key={item.id}
+                          data={item}
+                          isFavorite={false}
+                          onClickFavorite={() => {
+                            createMyEvent({ eventId: item.id });
+                          }}
+                        />
                       </div>
                     );
                   })}
