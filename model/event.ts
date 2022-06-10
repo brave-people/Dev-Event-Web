@@ -27,7 +27,7 @@ export interface EventResponse {
 }
 
 export interface MyEvent {
-  dev_event: Event[];
+  dev_event: Event;
   favorite_id: 0;
 }
 
@@ -35,10 +35,14 @@ export interface MyEventGetProps {
   filter: string;
 }
 export interface MyEventPostProps {
-  eventId: string;
+  eventId: Number;
 }
 
-export interface MyEventPostResponse {
+export interface MyEventDeleteProps {
+  favoriteId: Number;
+}
+
+export interface MyEventResponse {
   message: 'string';
   status: 'string';
   status_code: 0;
