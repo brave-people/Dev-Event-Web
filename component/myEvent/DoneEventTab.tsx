@@ -7,7 +7,7 @@ import Item from 'component/common/item/Item';
 
 const cn = classNames.bind(style);
 
-const MyDoneEvent = () => {
+const DoneEventTab = () => {
   const events = [
     {
       cover_image_link: 'string',
@@ -37,20 +37,6 @@ const MyDoneEvent = () => {
       <section className={cn('section')}>
         <div className={cn('section__header')}>
           <span className={cn('section__header__title')}>2022년 3월</span>
-          <div className={cn('section__header__filters')}>
-            <Dropdown
-              options={['옵션1', '옵션2', '옵션3']}
-              placeholder="전체"
-              icon={<AiTwotoneCalendar size={16} />}
-            ></Dropdown>
-            <span className={cn('wrapper')}>
-              <Dropdown
-                options={['옵션1', '옵션2', '옵션3']}
-                placeholder="태그"
-                icon={<AiTwotoneCalendar size={16} />}
-              ></Dropdown>
-            </span>
-          </div>
         </div>
         <div className={cn('section__list')}>
           {events.map((event: any) => {
@@ -66,4 +52,4 @@ const MyDoneEvent = () => {
   );
 };
 
-export default MyDoneEvent;
+export default DoneEventTab;
