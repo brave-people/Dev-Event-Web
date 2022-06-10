@@ -1,6 +1,6 @@
 import React from 'react';
-import ScheduledEventTab from 'component/myEvent/ScheduledEventTab';
-import DoneEventTab from 'component/myEvent/DoneEventTab';
+import ScheduledEventList from 'component/myEvent/ScheduledEventList';
+import DoneEventList from 'component/myEvent/DoneEventList';
 import { useRouter } from 'next/router';
 
 const EventBody = () => {
@@ -11,8 +11,8 @@ const EventBody = () => {
 
   return (
     <>
-      {ongoing && <ScheduledEventTab />}
-      {done && <DoneEventTab />}
+      {ongoing && <ScheduledEventList />}
+      {done && <DoneEventList />}
     </>
   );
 };
