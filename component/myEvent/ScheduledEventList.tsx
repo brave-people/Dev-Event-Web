@@ -8,6 +8,7 @@ const cn = classNames.bind(style);
 
 const ScheduledEventTab = () => {
   const { myEvent, isLoading, isError } = useMyEvent({ filter: 'FUTURE' });
+
   return (
     <div className={cn('tab__body')}>
       <article className={cn('today-event')}>
