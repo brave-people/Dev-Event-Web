@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Event } from 'model/event';
 import classNames from 'classnames/bind';
@@ -14,11 +14,13 @@ const cn = classNames.bind(style);
 
 const Item = ({
   data,
-  isFavorite = false,
+  isFavorite,
+  isEventDone,
   onClickFavorite,
 }: {
   data: Event;
-  isFavorite: boolean;
+  isEventDone: () => boolean;
+  isFavorite: ({ filter }: { filter: string }) => boolean;
   onClickFavorite?: any;
 }) => {
   const [isShareModalOpen, setShareModalOpen] = useState(false);
@@ -40,6 +42,11 @@ const Item = ({
                 width={280}
                 height={157.5}
               ></Image>
+              {isEventDone() ? (
+                <div className={cn('item__content__img--isDone')}>
+                  <span>종료된 행사입니다</span>
+                </div>
+              ) : null}
             </div>
             <div className={cn('item__content__body')}>
               <span className={cn('item__content__title')}>{data.title}</span>
@@ -66,9 +73,9 @@ const Item = ({
       </Link>
       <div className={cn('item__buttons')}>
         <button
-          className={cn(`like-button`, isFavorite ? '--selected' : null)}
+          className={cn(`like-button`, isFavorite({ filter: isEventDone() ? 'OLD' : 'FUTURE' }) ? '--selected' : null)}
           onClick={() => {
-            onClickFavorite();
+            onClickFavorite({ filter: isEventDone() ? 'OLD' : 'FUTURE' });
           }}
         >
           <StarIcon />
