@@ -1,8 +1,8 @@
 import { AxiosResponse } from 'axios';
 import axiosInstance from 'lib/utils/axiosInstance';
-import { MyEventDeleteProps } from 'model/event';
+import { MyEventDeleteProps, MyEventResponse } from 'model/event';
 
-export const deleteMyEventApi = async (url: string, data: MyEventDeleteProps): Promise<Response> => {
+export const deleteMyEventApi = async (url: string, data: MyEventDeleteProps): Promise<MyEventResponse> => {
   try {
     const response: AxiosResponse = await axiosInstance.delete(`${process.env.BASE_SERVER_URL}${url}`, { data: data });
     return response.data;
