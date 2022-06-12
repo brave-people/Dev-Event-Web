@@ -9,7 +9,7 @@ import { mutate } from 'swr';
 
 const cn = classNames.bind(style);
 
-const ScheduledEventTab = () => {
+const ScheduledEventList = () => {
   const param = { filter: 'FUTURE' };
   const { myEvent, isLoading, isError } = useMyEvent(param);
 
@@ -40,7 +40,12 @@ const ScheduledEventTab = () => {
                   <Item
                     key={event.dev_event.id}
                     data={event.dev_event}
-                    isFavorite={false}
+                    isEventDone={() => {
+                      return false;
+                    }}
+                    isFavorite={() => {
+                      return true;
+                    }}
                     onClickFavorite={() => {
                       deleteMyEvent({ favoriteId: event.favorite_id });
                     }}
@@ -55,4 +60,4 @@ const ScheduledEventTab = () => {
   );
 };
 
-export default ScheduledEventTab;
+export default ScheduledEventList;

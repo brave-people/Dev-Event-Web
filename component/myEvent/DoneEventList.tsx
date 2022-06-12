@@ -9,7 +9,7 @@ import { mutate } from 'swr';
 
 const cn = classNames.bind(style);
 
-const DoneEventTab = () => {
+const DoneEventList = () => {
   const param = { filter: 'OLD' };
   const { myEvent, isLoading, isError } = useMyEvent(param);
 
@@ -33,7 +33,12 @@ const DoneEventTab = () => {
                   <Item
                     key={event.dev_event.id}
                     data={event.dev_event}
-                    isFavorite={false}
+                    isEventDone={() => {
+                      return true;
+                    }}
+                    isFavorite={() => {
+                      return true;
+                    }}
                     onClickFavorite={() => {
                       deleteMyEvent({ favoriteId: event.favorite_id });
                     }}
@@ -48,4 +53,4 @@ const DoneEventTab = () => {
   );
 };
 
-export default DoneEventTab;
+export default DoneEventList;
