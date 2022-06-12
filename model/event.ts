@@ -43,7 +43,7 @@ export interface MyEventDeleteProps {
 }
 
 export interface MyEventResponse {
-  message: 'string';
-  status: 'string';
-  status_code: 0;
+  message: string;
+  status: string;
+  status_code: Number;
 }
