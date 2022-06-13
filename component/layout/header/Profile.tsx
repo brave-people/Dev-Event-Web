@@ -3,14 +3,24 @@ import style from './Header.module.scss';
 import React, { useState } from 'react';
 import ProfileIcon from 'public/icon/profile_outlined_regular.svg';
 import { useRouter } from 'next/router';
+import axios from 'axios';
+import { AuthContext } from 'lib/context/auth';
 
 const cn = classNames.bind(style);
 
 const Profile = () => {
   const [profileMenuIsOpen, setProfileMenuIsOpen] = useState(false);
   const router = useRouter();
+  const authContext = React.useContext(AuthContext);
 
-  const logout = async () => {};
+  const logout = async () => {
+    const result = await axios.post('/api/logout');
+    if (result.data.message === 'SUCCESS') {
+      authContext.logout();
+      router.push('/');
+    }
+  };
+
   return (
     <div className={cn(`profile`)}>
       <button
