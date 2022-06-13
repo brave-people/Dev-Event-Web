@@ -37,7 +37,7 @@ const Events = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
             color="primary"
             label="내 이벤트 보기"
             onClick={() => {
-              isLoggedIn ? router.push('/myevent') : setLoginModalIsOpen(true);
+              authContext.isLoggedIn ? router.push('/myevent') : setLoginModalIsOpen(true);
             }}
           />{' '}
         </span>
@@ -53,11 +53,9 @@ const Events = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = context.req.headers.cookie || '';
-
   if (cookies) {
     const parsedCookies = cookie.parse(cookies);
     const token = parsedCookies.access_token;
-
     const result = await autoLogin({ token: token });
     if (result === 'SUCCESS') {
       return {
