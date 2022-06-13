@@ -3,6 +3,7 @@ import Layout from 'component/layout';
 import type { ReactElement } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
+import { serialize } from 'cookie';
 
 const Home = () => {
   return (
@@ -14,13 +15,23 @@ const Home = () => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   if (context.query.accessToken || context.query.refreshToken) {
-    context.res.setHeader('set-cookie', [
-      `access_token=${String(context.query.accessToken)}`,
-      `refresh_token=${String(context.query.refreshToken)}`,
-      'Secure; HttpOnly; SameSite=Strict`',
+    context.res.setHeader('Set-Cookie', [
+      serialize('access_token', String(context.query.accessToken), {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: true,
+        maxAge: 30 * 60,
+        path: '/',
+      }),
+      serialize('refresh_token', String(context.query.refreshToken), {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: true,
+        maxAge: 30 * 60,
+        path: '/',
+      }),
     ]);
   }
-
   return {
     redirect: {
       destination: '/events',
