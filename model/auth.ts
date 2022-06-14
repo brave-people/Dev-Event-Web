@@ -11,3 +11,9 @@ export interface Token {
   access_token: string;
   refresh_token: string;
 }
+
+export interface DeleteAccountResponse {
+  message: string;
+  status: string;
+  status_code: number;
+}

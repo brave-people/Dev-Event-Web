@@ -7,7 +7,7 @@ import OutlineButton from '../buttons/OutlineButton';
 
 const cx = classNames.bind(style);
 
-function DeleteAccountModal({ isOpen, onClick }: any) {
+function DeleteAccountModal({ isOpen, onClick, onCancel }: any) {
   return (
     <Modal isOpen={isOpen} className={cx('modal')} overlayClassName={cx('overlay')} onRequestClose={onClick}>
       <span className={cx('modal__title')}>정말 탈퇴하시겠습니까?</span>
@@ -16,9 +16,9 @@ function DeleteAccountModal({ isOpen, onClick }: any) {
         <br /> 삭제된 정보는 다시 복구할 수 없습니다.
       </span>
       <div className={cx('modal__buttons')}>
-        <OutlineButton label="취소하기" color="grey" onClick={onClick}></OutlineButton>
+        <OutlineButton label="취소하기" color="grey" onClick={onCancel}></OutlineButton>
         <div className={cx('wrapper')}>
-          <FillButton label="탈퇴하기" color="error"></FillButton>
+          <FillButton label="탈퇴하기" color="error" onClick={onClick}></FillButton>
         </div>
       </div>
     </Modal>
