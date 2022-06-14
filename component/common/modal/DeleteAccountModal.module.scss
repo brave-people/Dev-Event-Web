@@ -1,7 +1,7 @@
 .modal {
   position: absolute;
-  width: 489px;
-  height: 267px;
+  width: 30.563rem;
+  height: 16.688rem;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -15,29 +15,29 @@
 
   &__title {
     font-weight: 500;
-    font-size: 30px;
-    line-height: 43px;
+    font-size: 1.875rem;
+    line-height: 2.688rem;
     text-align: center;
     color: #171717;
   }
 
   &__desc {
     font-weight: 400;
-    font-size: 16px;
-    line-height: 23px;
+    font-size: 1rem;
+    line-height: 1.438rem;
     text-align: center;
     color: #171717;
-    padding-top: 21px;
+    padding-top: 1.313rem;
   }
 
   &__buttons {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding-top: 34px;
+    padding-top: 2.125rem;
 
     .wrapper {
-      padding-left: 30px;
+      padding-left: 1.875rem;
     }
   }
 }
