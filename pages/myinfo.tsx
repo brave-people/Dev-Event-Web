@@ -4,16 +4,36 @@ import Layout from 'component/layout/index';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Myinfo.module.scss';
-import OutlineButton from 'component/common/buttons/OutlineButton';
 import DeleteAccountModal from 'component/common/modal/DeleteAccountModal';
 import { useUser } from 'lib/hooks/useSWR';
 import dayjs from 'dayjs';
+import { deleteAccountApi } from 'lib/api/delete';
+import { AuthContext } from 'lib/context/auth';
+import { useRouter } from 'next/router';
+import axios from 'axios';
 
 const cn = classNames.bind(style);
 
 const MyInfo = () => {
   const [DeleteAccountModalIsOpen, setDeleteAccountIsOpen] = useState(false);
   const { user, isLoading, isError } = useUser();
+  const authContext = React.useContext(AuthContext);
+  const router = useRouter();
+
+  const deleteAccount = async () => {
+    const result = await deleteAccountApi(`/front/v1/users/witdraw`);
+    if (result.status_code === 200) {
+      logout();
+    }
+  };
+
+  const logout = async () => {
+    const result = await axios.post('/api/logout');
+    if (result.data.message === 'SUCCESS') {
+      authContext.logout();
+      router.push('/');
+    }
+  };
 
   return (
     <div className={cn('info-container')}>
@@ -56,9 +76,10 @@ const MyInfo = () => {
       </div>
       <DeleteAccountModal
         isOpen={DeleteAccountModalIsOpen}
-        onClick={() => {
+        onCancel={() => {
           setDeleteAccountIsOpen(false);
         }}
+        onClick={deleteAccount}
       />
     </div>
   );
