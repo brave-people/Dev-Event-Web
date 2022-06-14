@@ -43,15 +43,15 @@ const MyInfo = () => {
             ></input>
           </div>
         </div>
-        <div className={cn('delete-button')}>
-          <OutlineButton
-            label="탈퇴하기"
-            color="primary"
-            size="regular"
+        <div className={cn('delete-button', 'primary')}>
+          <button
+            data-hover="탈퇴하기 🥺"
             onClick={() => {
               setDeleteAccountIsOpen(true);
             }}
-          ></OutlineButton>
+          >
+            탈퇴하기
+          </button>
         </div>
       </div>
       <DeleteAccountModal

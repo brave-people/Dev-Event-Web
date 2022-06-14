@@ -73,6 +73,35 @@
     .delete-button {
       align-self: flex-end;
       padding-top: 1.313rem;
+      box-sizing: border-box;
+      border-radius: 30px;
+
+      button {
+        padding: 0.813rem 2.5rem 0.813rem 2.5rem;
+        height: 3rem;
+        font-weight: 500;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        text-align: center;
+        cursor: pointer;
+        box-sizing: border-box;
+        border-radius: 30px;
+
+        color: #5ea8ed;
+        border: 1px solid #5ea8ed;
+        background-color: white;
+
+        &:hover {
+          &:before {
+            content: attr(data-hover);
+            font-weight: 500;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            text-align: center;
+          }
+          font-size: 0px;
+        }
+      }
     }
   }
 }
