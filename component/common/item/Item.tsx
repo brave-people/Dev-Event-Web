@@ -9,6 +9,7 @@ import StarIcon from 'public/icon/star_grey_outlined.svg';
 import ShareIcon from 'public/icon/share_grey_outlined.svg';
 import router from 'next/router';
 import { MdContentCopy } from 'react-icons/md';
+import { DateUtil } from 'lib/utils/dateUtil';
 
 const cn = classNames.bind(style);
 
@@ -16,10 +17,12 @@ const Item = ({
   data,
   isFavorite,
   isEventDone,
+  isEventNew = () => false,
   onClickFavorite,
 }: {
   data: Event;
   isEventDone: () => boolean;
+  isEventNew?: () => boolean;
   isFavorite: ({ filter }: { filter: string }) => boolean;
   onClickFavorite?: any;
 }) => {
@@ -47,12 +50,25 @@ const Item = ({
                   <span>종료된 행사입니다</span>
                 </div>
               ) : null}
+              {isEventNew() ? (
+                <div className={cn('item__content__flag', 'new')}>
+                  <span>NEW</span>
+                </div>
+              ) : null}
+              {isFavorite({ filter: isEventDone() ? 'OLD' : 'FUTURE' }) ? (
+                <div className={cn('item__content__flag', 'my')}>
+                  <span>MY</span>
+                </div>
+              ) : null}
             </div>
             <div className={cn('item__content__body')}>
               <span className={cn('item__content__title')}>{data.title}</span>
               <div className={cn('item__content__desc')}>
-                <span>{data.organizer}</span>
+                <span>주최 : {data.organizer}</span>
                 <br className={cn('divider')} />
+                <span>
+                  일시 : {DateUtil.getDateFormat(data.start_date_time)} ~ {DateUtil.getDateFormat(data.end_date_time)}
+                </span>
               </div>
               <div className={cn('item__content__tags')}>
                 {data.tags.map((tag) => {
@@ -115,4 +131,5 @@ const Item = ({
     </div>
   );
 };
+
 export default Item;

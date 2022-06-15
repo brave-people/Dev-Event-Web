@@ -1,3 +1,9 @@
+@function svgIcon($color) {
+  $color: '%23' + $color;
+  $icon: "data:image/svg+xml,%3Csvg width='38' height='58' viewBox='0 0 38 58' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0H38V57.4419L19 48.6047L0 57.4419V0Z' fill='#{$color}'/%3E%3C/svg%3E";
+  @return url($icon);
+}
+
 .item {
   display: flex;
   flex-direction: row;
@@ -16,6 +22,43 @@
     align-items: center;
     justify-content: flex-start;
     height: 100%;
+    position: relative;
+
+    &__flag {
+      width: 37px;
+      height: 56px;
+      position: absolute;
+      top: 0px;
+      left: 1.3rem;
+      z-index: 7;
+
+      span {
+        z-index: 8;
+        padding-top: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.89rem;
+        color: #ffffff;
+      }
+      &.new {
+        background-image: svgIcon(9867D7);
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+      &.my {
+        background-image: svgIcon(6DC670);
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+      &.today {
+        background-image: svgIcon(ED5E67);
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+    }
 
     &__img {
       width: 20rem;
