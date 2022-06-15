@@ -1,4 +1,3 @@
-import { Token } from 'model/auth';
 import React, { createContext, ReactNode, useState } from 'react';
 
 interface AuthContext {

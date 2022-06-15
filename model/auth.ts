@@ -7,13 +7,19 @@ export interface User {
   username: string;
 }
 
-export interface Token {
-  access_token: string;
-  refresh_token: string;
-}
-
 export interface DeleteAccountResponse {
   message: string;
   status: string;
   status_code: number;
+}
+
+export interface TokenProp {
+  refresh_token: string;
+}
+
+export interface TokenResponse {
+  access_token: string;
+  access_token_expired_at: Date;
+  refresh_token: string;
+  refresh_token_expired_at: Date;
 }
