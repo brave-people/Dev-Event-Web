@@ -7,7 +7,7 @@ import TextButton from 'component/common/buttons/TextButton';
 import SearchModal from 'component/common/modal/SearchModal';
 import LoginModal from 'component/common/modal/LoginModal';
 import SearchIcon from 'public/icon/search_outlined_regular.svg';
-import { AuthContext } from 'lib/context/auth';
+import { AuthContext } from 'context/auth';
 import Profile from './Profile';
 
 const cn = classNames.bind(style);

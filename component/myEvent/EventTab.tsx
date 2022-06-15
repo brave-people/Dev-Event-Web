@@ -1,12 +1,9 @@
 import { useState } from 'react';
 import React, { useEffect } from 'react';
-import Layout from 'component/layout';
+import Layout from 'component/common/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/myevent.module.scss';
-import Link from 'next/link';
-import { MdOutlineArrowForwardIos } from 'react-icons/md';
-import EventBody from 'component/myEvent/EventBody';
 import { useRouter } from 'next/router';
 
 const cn = classNames.bind(style);
