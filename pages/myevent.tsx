@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import React, { useEffect } from 'react';
 import Layout from 'component/layout';
 import type { ReactElement } from 'react';
@@ -7,12 +6,22 @@ import style from 'styles/myevent.module.scss';
 import Link from 'next/link';
 import { MdOutlineArrowForwardIos } from 'react-icons/md';
 import EventBody from 'component/myEvent/EventBody';
-import { useRouter } from 'next/router';
+import cookie from 'cookie';
 import EventTab from 'component/myEvent/EventTab';
+import { GetServerSideProps } from 'next';
+import { AuthContext } from 'lib/context/auth';
 
 const cn = classNames.bind(style);
 
-const MyEvent = () => {
+const MyEvent = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
+  const authContext = React.useContext(AuthContext);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      authContext.login();
+    }
+  }, []);
+
   return (
     <>
       <header className={cn('sub-header')}>
@@ -35,7 +44,31 @@ const MyEvent = () => {
   );
 };
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookies = context.req.headers.cookie || '';
+  if (cookies) {
+    const parsedCookies = cookie.parse(cookies);
+    const token = parsedCookies.access_token;
+    if (token) {
+      return {
+        props: {
+          isLoggedIn: true,
+        },
+      };
+    }
+  }
+
+  return {
+    redirect: {
+      destination: '/events',
+      permanent: false,
+    },
+    props: {},
+  };
+};
+
 MyEvent.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
+
 export default MyEvent;

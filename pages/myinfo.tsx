@@ -11,14 +11,22 @@ import { deleteAccountApi } from 'lib/api/delete';
 import { AuthContext } from 'lib/context/auth';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { GetServerSideProps } from 'next';
+import cookie from 'cookie';
 
 const cn = classNames.bind(style);
 
-const MyInfo = () => {
+const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   const [DeleteAccountModalIsOpen, setDeleteAccountIsOpen] = useState(false);
   const { user, isLoading, isError } = useUser();
   const authContext = React.useContext(AuthContext);
   const router = useRouter();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      authContext.login();
+    }
+  }, []);
 
   const deleteAccount = async () => {
     const result = await deleteAccountApi(`/front/v1/users/witdraw`);
@@ -85,7 +93,30 @@ const MyInfo = () => {
   );
 };
 
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const cookies = context.req.headers.cookie || '';
+  if (cookies) {
+    const parsedCookies = cookie.parse(cookies);
+    const token = parsedCookies.access_token;
+    if (token) {
+      return {
+        props: {
+          isLoggedIn: true,
+        },
+      };
+    }
+  }
+  return {
+    redirect: {
+      destination: '/events',
+      permanent: false,
+    },
+    props: {},
+  };
+};
+
 MyInfo.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
+
 export default MyInfo;
