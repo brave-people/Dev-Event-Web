@@ -2,7 +2,7 @@ import '../styles/globals.scss';
 import type { ReactElement, ReactNode } from 'react';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
-import { AuthProvider } from 'lib/context/auth';
+import { AuthProvider } from 'context/auth';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;

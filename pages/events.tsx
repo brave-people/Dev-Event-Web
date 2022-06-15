@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Layout from 'component/layout';
+import Layout from 'component/common/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
@@ -8,7 +8,7 @@ import { GetServerSideProps } from 'next';
 import EventHeader from 'component/events/EventHeader';
 import EventBody from 'component/events/EventBody';
 import cookie from 'cookie';
-import { AuthContext } from 'lib/context/auth';
+import { AuthContext } from 'context/auth';
 import router from 'next/router';
 import LoginModal from 'component/common/modal/LoginModal';
 const cn = classNames.bind(style);

@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from 'component/layout';
+import Layout from 'component/common/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
