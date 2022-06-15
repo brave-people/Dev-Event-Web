@@ -7,7 +7,6 @@ import FillButton from 'component/common/buttons/FillButton';
 import { GetServerSideProps } from 'next';
 import EventHeader from 'component/events/EventHeader';
 import EventBody from 'component/events/EventBody';
-import autoLogin from 'pages/api/autoLogin';
 import cookie from 'cookie';
 import { AuthContext } from 'lib/context/auth';
 import router from 'next/router';
@@ -56,8 +55,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   if (cookies) {
     const parsedCookies = cookie.parse(cookies);
     const token = parsedCookies.access_token;
-    const result = await autoLogin({ token: token });
-    if (result === 'SUCCESS') {
+    if (token) {
       return {
         props: {
           isLoggedIn: true,
