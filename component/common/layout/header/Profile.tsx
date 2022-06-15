@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import ProfileIcon from 'public/icon/profile_outlined_regular.svg';
 import { useRouter } from 'next/router';
 import axios from 'axios';
-import { AuthContext } from 'lib/context/auth';
+import { AuthContext } from 'context/auth';
 
 const cn = classNames.bind(style);
 
