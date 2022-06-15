@@ -14,6 +14,7 @@ export interface Event {
   end_day_week: WeekType;
   end_time: string;
   end_date_time: string;
+  create_date_time: string;
   tags: Tag[];
 }
 

@@ -30,6 +30,12 @@ const MonthlyEventList = () => {
     isError: isMyFutureEventError,
   } = useMyEvent(paramByFuture);
 
+  const checkEventNew = ({ createdDate }: { createdDate: string }) => {
+    const todayDate = dayjs();
+    const createDate = dayjs(createdDate);
+
+    return createDate.diff(todayDate, 'day') < 1 && createDate.diff(todayDate, 'day') > -3 ? true : false;
+  };
   const checkEventDone = ({ endDate }: { endDate: string }) => {
     const todayDate = dayjs();
     const eventDate = dayjs(endDate);
@@ -110,6 +116,9 @@ const MonthlyEventList = () => {
                     <Item
                       key={item.id}
                       data={item}
+                      isEventNew={() => {
+                        return checkEventNew({ createdDate: item.create_date_time });
+                      }}
                       isEventDone={() => {
                         return checkEventDone({ endDate: item.end_date_time });
                       }}
