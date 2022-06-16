@@ -104,11 +104,11 @@ const MonthlyEventList = () => {
   return (
     <>
       <section className={cn('section')}>
-        <div className={cn('section__header')}>
-          <span className={cn('section__header__title')}>{`${router.query.year}년 ${router.query.month}월`}</span>
-        </div>
         <div className={cn('section__list')}>
-          {monthlyEvent &&
+          <div className={cn('section__list__title')}>
+            <span>{`${router.query.year}년 ${router.query.month}월`}</span>
+          </div>
+          {monthlyEvent && monthlyEvent.length !== 0 ? (
             monthlyEvent.map((item: any) => {
               return (
                 <div className={cn('wrapper')}>
@@ -140,7 +140,10 @@ const MonthlyEventList = () => {
                   }
                 </div>
               );
-            })}
+            })
+          ) : (
+            <div className={cn('null-container')}>이벤트가 없습니다 📭</div>
+          )}
         </div>
       </section>
     </>
