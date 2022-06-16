@@ -110,8 +110,14 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
         scheduledEvents.map((event: EventResponse) => {
           return (
             <div className={cn('section__list')}>
-              <span className={cn('section__header__title')}>#{filter}</span>
+              <div className={cn('section__list__title')}>
+                <span>#{filter}</span>
+              </div>
               {event &&
+              event.dev_event.filter((item) => {
+                return type === 'tag' ? filterByTag(item) : filterBySearch(item);
+              }).length !== 0 ? (
+                event &&
                 event.dev_event
                   .filter((item) => {
                     return type === 'tag' ? filterByTag(item) : filterBySearch(item);
@@ -145,7 +151,10 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
                         />
                       </div>
                     );
-                  })}
+                  })
+              ) : (
+                <div className={cn('null-container')}>이벤트가 없습니다 📭</div>
+              )}
             </div>
           );
         })}

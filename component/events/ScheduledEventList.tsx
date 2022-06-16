@@ -99,47 +99,53 @@ const ScheduledEventList = () => {
 
   return (
     <>
-      {scheduledEvents &&
-        scheduledEvents.map((event: EventResponse) => {
+      {scheduledEvents && scheduledEvents.length !== 0 ? (
+        scheduledEvents.map((event: EventResponse, index) => {
           return (
-            <div className={cn('section__list')}>
-              <span className={cn('section__header__title')}>
-                {`${event.metadata.year}년 ${event.metadata.month}월`}
-              </span>
-              {event &&
-                event.dev_event.map((item: Event) => {
-                  return (
-                    <div className={cn('wrapper')}>
-                      <Item
-                        key={item.id}
-                        data={item}
-                        isEventNew={() => {
-                          return checkEventNew({ createdDate: item.create_date_time });
-                        }}
-                        isEventDone={() => {
-                          return checkEventDone({ endDate: item.end_date_time });
-                        }}
-                        isFavorite={({ filter }: { filter: string }) => {
-                          if (filter === 'OLD') {
-                            return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
-                          } else {
-                            return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
-                          }
-                        }}
-                        onClickFavorite={({ filter }: { filter: string }) => {
-                          if (filter === 'OLD') {
-                            return onClickFavoriteOldEvent({ item: item });
-                          } else {
-                            return onClickFavoriteFutureEvent({ item: item });
-                          }
-                        }}
-                      />
-                    </div>
-                  );
-                })}
-            </div>
+            <>
+              {index === 0 ? null : <hr className={cn('divider')} />}
+              <div className={cn('section__list')}>
+                <div className={cn('section__list__title')}>
+                  <span>{`${event.metadata.year}년 ${event.metadata.month}월`}</span>
+                </div>
+                {event &&
+                  event.dev_event.map((item: Event) => {
+                    return (
+                      <div className={cn('wrapper')}>
+                        <Item
+                          key={item.id}
+                          data={item}
+                          isEventNew={() => {
+                            return checkEventNew({ createdDate: item.create_date_time });
+                          }}
+                          isEventDone={() => {
+                            return checkEventDone({ endDate: item.end_date_time });
+                          }}
+                          isFavorite={({ filter }: { filter: string }) => {
+                            if (filter === 'OLD') {
+                              return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+                            } else {
+                              return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                            }
+                          }}
+                          onClickFavorite={({ filter }: { filter: string }) => {
+                            if (filter === 'OLD') {
+                              return onClickFavoriteOldEvent({ item: item });
+                            } else {
+                              return onClickFavoriteFutureEvent({ item: item });
+                            }
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
+              </div>
+            </>
           );
-        })}
+        })
+      ) : (
+        <div className={cn('null-container')}>이벤트가 없습니다 📭</div>
+      )}
     </>
   );
 };
