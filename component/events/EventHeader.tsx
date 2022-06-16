@@ -15,6 +15,12 @@ const EventHeader = () => {
   const [filter, setFilter] = useState({ date: '전체', tag: '태그' });
   const { tags, isLoading, isError } = useTags();
 
+  useEffect(() => {
+    if (!router.query.year || !router.query.month) {
+      setFilter({ ...filter, date: '전체' });
+    }
+  }, [router.query]);
+
   const getDateList = () => {
     const list = ['전체'];
     let currentDate = dayjs().endOf('month');
