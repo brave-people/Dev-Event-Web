@@ -5,10 +5,10 @@
   justify-content: space-between;
   width: 68.75rem;
   height: 11.25rem;
-  padding-right: 1.875rem;
   background: #ffffff;
   box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
+  cursor: pointer;
 
   &__content {
     display: flex;
@@ -24,10 +24,10 @@
       position: absolute;
       top: 0px;
       left: 1.2rem;
-      z-index: 7;
+      z-index: 2;
 
       span {
-        z-index: 8;
+        z-index: 3;
         padding-top: 20px;
         display: flex;
         flex-direction: row;
@@ -69,7 +69,7 @@
       background-color: rgba(0, 0, 0, 0.6);
       backdrop-filter: blur(4px);
       position: absolute;
-      z-index: 5;
+      z-index: 1;
       width: 20rem;
       height: 11.25rem;
       border-top-left-radius: 10px;
@@ -93,15 +93,15 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
-      padding-left: 3rem;
-      width: 38.063rem;
+      width: 45.1rem;
       height: 100%;
+      padding-left: 3rem;
+      position: relative;
     }
     &__title {
       width: 38.063rem;
       font-weight: 700;
-      font-size: 20px;
-      line-height: 23px;
+      font-size: 18px;
       color: #000000;
       text-align: left;
       overflow: hidden;
@@ -109,19 +109,30 @@
       white-space: nowrap;
     }
     &__desc {
-      padding-top: 1.25rem;
+      padding-top: 13px;
+      width: 38.063rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       font-weight: 400;
-      font-size: 1rem;
-      line-height: 27px;
+      font-size: 14px;
+      line-height: 25px;
       color: #515151;
     }
-    &__tags {
+
+    &__bottom {
+      height: 28px;
+      width: 100%;
       justify-self: flex-end;
-      padding-top: 1.813rem;
-      display: flex;
-      flex-direction: row;
-      button {
-        margin-right: 5px;
+      margin-top: 10px;
+      position: relative;
+      .tags {
+        position: absolute;
+        display: flex;
+        flex-direction: row;
+        button {
+          margin-right: 5px;
+        }
       }
     }
   }
@@ -130,9 +141,9 @@
     display: flex;
     flex-direction: column;
     justify-items: flex-start;
-    padding-top: 1.688rem;
+    padding-top: 17px;
     position: relative;
-
+    padding-right: 1.875rem;
     .like-button {
       border: none;
       background-color: transparent;
@@ -159,7 +170,7 @@
       background-color: transparent;
       width: 24px;
       height: 24px;
-      padding-top: 20px;
+      margin-top: 20px;
       cursor: pointer;
       &:hover {
         path {
