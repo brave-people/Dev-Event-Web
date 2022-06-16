@@ -1,22 +1,29 @@
 import classNames from 'classnames/bind';
 import style from './dropdown.module.scss';
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 import Tag from '../tag/Tag';
+import { useOnClickOutside } from 'lib/hooks/useOnClickOutside';
 
 const cx = classNames.bind(style);
 
 export default function Dropdown({ name, options, placeholder, value, onClick, icon, type = 'basic' }: any) {
   const [isOpen, setOpen] = useState(false);
+  const outsideRef = useRef(null);
+
+  const handleClickOutside = () => {
+    setOpen(false);
+  };
+  const handleClickDropdown = () => {
+    setOpen(!isOpen);
+  };
+
+  useOnClickOutside({ ref: outsideRef, handler: handleClickOutside, mouseEvent: 'click' });
+
   return (
     <>
       <div className={cx('dropdown')}>
-        <div
-          className={cx('dropdown__header')}
-          onClick={(event) => {
-            setOpen(!isOpen);
-          }}
-        >
+        <div className={cx('dropdown__header')} ref={outsideRef} onClick={handleClickDropdown}>
           <span className={cx('dropdown__header__placeholder')}>
             <span className={cx('icon')}>{icon}</span>
             {value ? value : placeholder}

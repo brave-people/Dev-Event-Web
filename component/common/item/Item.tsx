@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Event } from 'model/event';
 import classNames from 'classnames/bind';
@@ -10,6 +10,7 @@ import ShareIcon from 'public/icon/share_grey_outlined.svg';
 import router from 'next/router';
 import { MdContentCopy } from 'react-icons/md';
 import { DateUtil } from 'lib/utils/dateUtil';
+import { useOnClickOutside } from 'lib/hooks/useOnClickOutside';
 
 const cn = classNames.bind(style);
 
@@ -27,6 +28,12 @@ const Item = ({
   onClickFavorite?: any;
 }) => {
   const [isShareModalOpen, setShareModalOpen] = useState(false);
+
+  const outsideRef = useRef(null);
+  const handleClickOutside = () => {
+    setShareModalOpen(false);
+  };
+  useOnClickOutside({ ref: outsideRef, handler: handleClickOutside, mouseEvent: 'click' });
 
   return (
     <div className={cn('item')}>
@@ -97,6 +104,7 @@ const Item = ({
           <StarIcon />
         </button>
         <button
+          ref={outsideRef}
           className={cn('share-button')}
           onClick={() => {
             setShareModalOpen(!isShareModalOpen);
