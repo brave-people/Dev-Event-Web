@@ -22,17 +22,19 @@ const ScheduledEventList = () => {
 
   return (
     <div className={cn('tab__body')}>
-      <article className={cn('today-event')}>
-        <div className={cn('today-event__list')}>
-          {/* {myEvent?.dev_event.map((event: any) => {
+      {!myEvent || (myEvent && myEvent.length === 0) ? null : (
+        <article className={cn('today-event')}>
+          <div className={cn('today-event__list')}>
+            {/* {myEvent?.dev_event.map((event: any) => {
             return <div className={cn('wrapper')}>{<Item data={event} isSelected={true} />}</div>;
           })} */}
-        </div>
-      </article>
+          </div>
+        </article>
+      )}
       <section className={cn('section')}>
         <div className={cn('section__list')}>
-          {!myEvent ? (
-            <div>데이터가 없습니다</div>
+          {!myEvent || (myEvent && myEvent.length === 0) ? (
+            <div className={cn('null-container')}>내가 찜한 개발자 행사가 없어요 📂</div>
           ) : (
             myEvent.map((event: MyEvent) => {
               return (

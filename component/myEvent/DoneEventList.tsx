@@ -24,8 +24,8 @@ const DoneEventList = () => {
     <div className={cn('tab__body')}>
       <section className={cn('section')}>
         <div className={cn('section__list')}>
-          {!myEvent ? (
-            <div>데이터가 없습니다</div>
+          {!myEvent || (myEvent && myEvent.length === 0) ? (
+            <div className={cn('null-container')}>내가 찜한 개발자 행사가 없어요 📂</div>
           ) : (
             myEvent.map((event: MyEvent) => {
               return (
