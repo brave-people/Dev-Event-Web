@@ -10,7 +10,7 @@
     justify-content: space-between;
     height: 3rem;
     padding: 0 1.125rem 0 1.125rem;
-    font-size: 0.875rem;
+    font-size: 1rem;
     color: #757575;
     font-weight: 400;
     cursor: pointer;
@@ -24,8 +24,9 @@
       flex-direction: row;
       align-items: center;
       .icon {
+        height: 16px;
         margin: 0;
-        padding-right: 10px;
+        padding-right: 0.5rem;
       }
     }
   }
@@ -33,7 +34,7 @@
   &__list {
     &.type--basic {
       min-width: 12.188rem;
-      top: 3.125rem;
+      top: 3.15rem;
       position: absolute;
       margin: 0;
       max-height: 16.25rem;
@@ -65,7 +66,7 @@
     &.type--expand {
       align-self: flex-end;
       position: absolute;
-      top: 3.125rem;
+      top: 3.15rem;
       margin: 0;
       min-width: 27.875rem;
       padding: 1.5rem 1.875rem 1.5rem 1.875rem;
@@ -79,12 +80,13 @@
 
       span {
         font-weight: 500;
-        font-size: 14px;
+        font-size: 1rem;
         line-height: 23px;
         color: #757575;
       }
 
       .wrapper {
+        padding-top: 0.625rem;
         display: flex;
         flex-flow: wrap;
       }
@@ -100,7 +102,6 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      font-size: 0.875;
       color: #757575;
       font-weight: 400;
       cursor: pointer;

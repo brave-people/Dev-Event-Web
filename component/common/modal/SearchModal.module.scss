@@ -3,12 +3,12 @@
   top: 3.5rem;
   bottom: 2.5rem;
   width: 100vw;
-  height: 25vh;
+  height: 26vh;
   background-image: url('~public/default/search_background.svg');
   background-color: white;
   background-repeat: no-repeat;
   background-size: cover;
-  z-index: 7;
+  z-index: 9;
   &__inner {
     display: flex;
     flex-direction: column;
@@ -19,12 +19,12 @@
 
     .search-input {
       position: relative;
-      border-left: none;
-      border-right: none;
-      border-top: none;
       width: 68.75rem;
       padding-left: 4.938rem;
       background-color: transparent;
+      border-left: none;
+      border-right: none;
+      border-top: none;
       border-bottom: 3px solid #eff0f5;
       outline: none;
       font-weight: 400;
