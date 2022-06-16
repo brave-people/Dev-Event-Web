@@ -114,7 +114,7 @@ const Item = ({
               <StarIcon />
             </button>
             <button
-              ref={outsideRef}
+              // ref={outsideRef}
               className={cn('share-button')}
               onClick={() => {
                 setShareModalOpen(!isShareModalOpen);
