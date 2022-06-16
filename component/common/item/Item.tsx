@@ -36,9 +36,15 @@ const Item = ({
   useOnClickOutside({ ref: outsideRef, handler: handleClickOutside, mouseEvent: 'click' });
 
   return (
-    <div className={cn('item')}>
-      <Link href={String(data.event_link)}>
-        <a>
+    <Link href={String(data.event_link)}>
+      <a
+        onClick={(event: any) => {
+          if (event.target.tagName !== 'SPAN' && event.target.tagName !== 'DIV' && event.target.tagName !== 'IMG') {
+            event.preventDefault();
+          }
+        }}
+      >
+        <div className={cn('item')}>
           <div className={cn('item__content')}>
             <div className={cn('item__content__img')}>
               <Image
@@ -77,66 +83,72 @@ const Item = ({
                   일시 : {DateUtil.getDateFormat(data.start_date_time)} ~ {DateUtil.getDateFormat(data.end_date_time)}
                 </span>
               </div>
-              <div className={cn('item__content__tags')}>
-                {data.tags.map((tag) => {
-                  return (
-                    <Tag
-                      label={tag.tag_name}
-                      onClick={(event: any) => {
-                        const tag = event.target.innerText.replace(/[\t\s\#]/g, '');
-                        router.replace(`/events?tag=${tag}`);
-                      }}
-                    />
-                  );
-                })}
+              <div className={cn('item__content__bottom')}>
+                <div className={cn('tags')}>
+                  {data.tags.map((tag) => {
+                    return (
+                      <Tag
+                        label={tag.tag_name}
+                        onClick={(event: any) => {
+                          const tag = event.target.innerText.replace(/[\t\s\#]/g, '');
+                          router.replace(`/events?tag=${tag}`);
+                        }}
+                      />
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
-        </a>
-      </Link>
-      <div className={cn('item__buttons')}>
-        <button
-          className={cn(`like-button`, isFavorite({ filter: isEventDone() ? 'OLD' : 'FUTURE' }) ? '--selected' : null)}
-          onClick={() => {
-            onClickFavorite({ filter: isEventDone() ? 'OLD' : 'FUTURE' });
-          }}
-        >
-          <StarIcon />
-        </button>
-        <button
-          ref={outsideRef}
-          className={cn('share-button')}
-          onClick={() => {
-            setShareModalOpen(!isShareModalOpen);
-          }}
-        >
-          <ShareIcon />
-        </button>
 
-        {isShareModalOpen ? (
-          <div className={cn('share-modal')}>
-            {' '}
-            <input className={cn('share-modal__link')} value={data.event_link} readOnly></input>
+          <div className={cn('item__buttons')}>
             <button
-              className={cn('share-modal__button')}
-              onClick={(event) => {
-                const copyLink = data.event_link;
-                navigator.clipboard
-                  .writeText(copyLink)
-                  .then(() => {
-                    alert('클립보드에 복사되었습니다');
-                  })
-                  .catch((err) => {
-                    console.log('클립보드에 복사 실패', err);
-                  });
+              className={cn(
+                `like-button`,
+                isFavorite({ filter: isEventDone() ? 'OLD' : 'FUTURE' }) ? '--selected' : null
+              )}
+              onClick={() => {
+                onClickFavorite({ filter: isEventDone() ? 'OLD' : 'FUTURE' });
               }}
             >
-              <MdContentCopy color="#757575" size={20} />
+              <StarIcon />
             </button>
+            <button
+              ref={outsideRef}
+              className={cn('share-button')}
+              onClick={() => {
+                setShareModalOpen(!isShareModalOpen);
+              }}
+            >
+              <ShareIcon />
+            </button>
+
+            {isShareModalOpen ? (
+              <div className={cn('share-modal')}>
+                {' '}
+                <input className={cn('share-modal__link')} value={data.event_link} readOnly></input>
+                <button
+                  className={cn('share-modal__button')}
+                  onClick={(event) => {
+                    const copyLink = data.event_link;
+                    navigator.clipboard
+                      .writeText(copyLink)
+                      .then(() => {
+                        alert('클립보드에 복사되었습니다');
+                      })
+                      .catch((err) => {
+                        console.log('클립보드에 복사 실패', err);
+                      });
+                  }}
+                >
+                  <MdContentCopy color="#757575" size={20} />
+                </button>
+              </div>
+            ) : null}
           </div>
-        ) : null}
-      </div>
-    </div>
+        </div>
+      </a>
+    </Link>
   );
 };
 
