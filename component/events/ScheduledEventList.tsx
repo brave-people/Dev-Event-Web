@@ -144,7 +144,7 @@ const ScheduledEventList = () => {
           );
         })
       ) : (
-        <div className={cn('null-container')}>이벤트가 없습니다 📭</div>
+        <div className={cn('null-container')}>아직 조건에 맞는 개발자 행사가 없어요 📂</div>
       )}
     </>
   );
