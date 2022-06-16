@@ -27,7 +27,7 @@ const MyEvent = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
       <header className={cn('sub-header')}>
         <div className={cn('sub-header__inner')}>
           <div className={cn('sub-header__content')}>
-            <h1>마이 Dev Event 리스트</h1>
+            <h1>내 이벤트</h1>
             <span>내가 찜한 개발자 행사 정보들을 한눈에 모아봐요</span>
           </div>
           <Link href="/myinfo">

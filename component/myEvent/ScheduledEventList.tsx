@@ -22,15 +22,13 @@ const ScheduledEventList = () => {
 
   return (
     <div className={cn('tab__body')}>
-      {!myEvent || (myEvent && myEvent.length === 0) ? null : (
+      {/* {!myEvent || (myEvent && myEvent.length === 0) ? null : (
         <article className={cn('today-event')}>
           <div className={cn('today-event__list')}>
-            {/* {myEvent?.dev_event.map((event: any) => {
-            return <div className={cn('wrapper')}>{<Item data={event} isSelected={true} />}</div>;
-          })} */}
+          
           </div>
         </article>
-      )}
+      )} */}
       <section className={cn('section')}>
         <div className={cn('section__list')}>
           {!myEvent || (myEvent && myEvent.length === 0) ? (
