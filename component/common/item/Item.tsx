@@ -35,6 +35,24 @@ const Item = ({
   };
   useOnClickOutside({ ref: outsideRef, handler: handleClickOutside, mouseEvent: 'click' });
 
+  const getEventDate = () => {
+    let eventDate;
+    if (DateUtil.getDateFormat(data.start_date_time) === DateUtil.getDateFormat(data.end_date_time)) {
+      if (data.start_time === data.end_time) {
+        eventDate = `${DateUtil.getDateFormat(data.start_date_time)}(${data.start_day_week}) ${data.start_time}`;
+      } else {
+        eventDate = ` ${DateUtil.getDateFormat(data.start_date_time)}(${data.start_day_week}) ${data.start_time} ~ ${
+          data.end_time
+        }`;
+      }
+    } else {
+      eventDate = `${DateUtil.getDateFormat(data.start_date_time)}(${data.start_day_week}) ~ ${DateUtil.getDateFormat(
+        data.end_date_time
+      )}(${data.end_day_week})`;
+    }
+    return eventDate;
+  };
+
   return (
     <Link href={String(data.event_link)}>
       <a
@@ -79,9 +97,7 @@ const Item = ({
               <div className={cn('item__content__desc')}>
                 <span>주최 : {data.organizer}</span>
                 <br className={cn('divider')} />
-                <span>
-                  일시 : {DateUtil.getDateFormat(data.start_date_time)} ~ {DateUtil.getDateFormat(data.end_date_time)}
-                </span>
+                <span>일시 :{getEventDate()}</span>
               </div>
               <div className={cn('item__content__bottom')}>
                 <div className={cn('tags')}>
@@ -134,10 +150,10 @@ const Item = ({
                     navigator.clipboard
                       .writeText(copyLink)
                       .then(() => {
-                        alert('클립보드에 복사되었습니다');
+                        alert('링크가 복사되었습니다');
                       })
                       .catch((err) => {
-                        console.log('클립보드에 복사 실패', err);
+                        console.log('링크복사 실패', err);
                       });
                   }}
                 >
