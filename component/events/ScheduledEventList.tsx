@@ -109,36 +109,39 @@ const ScheduledEventList = () => {
                   <span>{`${event.metadata.year}년 ${event.metadata.month}월`}</span>
                 </div>
                 {event &&
-                  event.dev_event.map((item: Event) => {
-                    return (
-                      <div className={cn('wrapper')}>
-                        <Item
-                          key={item.id}
-                          data={item}
-                          isEventNew={() => {
-                            return checkEventNew({ createdDate: item.create_date_time });
-                          }}
-                          isEventDone={() => {
-                            return checkEventDone({ endDate: item.end_date_time });
-                          }}
-                          isFavorite={({ filter }: { filter: string }) => {
-                            if (filter === 'OLD') {
-                              return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
-                            } else {
-                              return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
-                            }
-                          }}
-                          onClickFavorite={({ filter }: { filter: string }) => {
-                            if (filter === 'OLD') {
-                              return onClickFavoriteOldEvent({ item: item });
-                            } else {
-                              return onClickFavoriteFutureEvent({ item: item });
-                            }
-                          }}
-                        />
-                      </div>
-                    );
-                  })}
+                  event.dev_event
+                    .filter((item) => checkEventDone({ endDate: item.end_date_time }) === false)
+                    .concat(event.dev_event.filter((item) => checkEventDone({ endDate: item.end_date_time }) === true))
+                    .map((item: Event) => {
+                      return (
+                        <div className={cn('wrapper')}>
+                          <Item
+                            key={item.id}
+                            data={item}
+                            isEventNew={() => {
+                              return checkEventNew({ createdDate: item.create_date_time });
+                            }}
+                            isEventDone={() => {
+                              return checkEventDone({ endDate: item.end_date_time });
+                            }}
+                            isFavorite={({ filter }: { filter: string }) => {
+                              if (filter === 'OLD') {
+                                return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+                              } else {
+                                return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                              }
+                            }}
+                            onClickFavorite={({ filter }: { filter: string }) => {
+                              if (filter === 'OLD') {
+                                return onClickFavoriteOldEvent({ item: item });
+                              } else {
+                                return onClickFavoriteFutureEvent({ item: item });
+                              }
+                            }}
+                          />
+                        </div>
+                      );
+                    })}
               </div>
             </>
           );
