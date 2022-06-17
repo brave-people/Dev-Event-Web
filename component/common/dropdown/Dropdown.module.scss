@@ -3,6 +3,7 @@
   flex-direction: column;
   min-width: 12.188rem;
   position: relative;
+
   &__header {
     display: flex;
     flex-direction: row;
@@ -35,11 +36,11 @@
     animation-name: appearIn;
     animation-duration: 0.2s;
     animation-timing-function: linear;
-
     &.type--basic {
       min-width: 12.188rem;
       top: 3.15rem;
       position: absolute;
+      z-index: 3;
       margin: 0;
       max-height: 16.25rem;
       border-radius: 10px;
@@ -70,6 +71,7 @@
     &.type--expand {
       align-self: flex-end;
       position: absolute;
+      z-index: 3;
       top: 3.15rem;
       margin: 0;
       min-width: 27.875rem;
