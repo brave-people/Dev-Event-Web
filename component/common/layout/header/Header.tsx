@@ -32,7 +32,13 @@ function Header() {
             {authContext.isLoggedIn ? (
               <Profile />
             ) : (
-              <TextButton label="로그인" onClick={() => setLoginModalIsOpen(true)}></TextButton>
+              <TextButton
+                label="로그인"
+                onClick={() => {
+                  setLoginModalIsOpen(true);
+                  setSearchModalIsOpen(false);
+                }}
+              ></TextButton>
             )}
           </span>
           <span className={cn('wrapper')}>
@@ -40,6 +46,7 @@ function Header() {
               className={cn('search-button')}
               onClick={() => {
                 setSearchModalIsOpen(!searchModalIsOpen);
+                setLoginModalIsOpen(false);
               }}
             >
               <SearchIcon />
