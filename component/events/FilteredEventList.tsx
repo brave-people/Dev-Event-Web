@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMyEvent, useScheduledEvents } from 'lib/hooks/useSWR';
 import { EventResponse, Event } from 'model/event';
 import classNames from 'classnames/bind';
@@ -14,7 +14,7 @@ const cn = classNames.bind(style);
 const FilteredEventList = ({ filter, type }: { filter?: string; type?: string }) => {
   const paramByOld = { filter: 'OLD' };
   const paramByFuture = { filter: 'FUTURE' };
-
+  const [filteredEvents, setFilteredEvents] = useState(Array<Event>(0));
   const { scheduledEvents, isLoading, isError } = useScheduledEvents();
   const { myEvent: myOldEvent, isLoading: isMyOldEventLoading, isError: isMyOldEventError } = useMyEvent(paramByOld);
   const {
@@ -22,6 +22,21 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
     isLoading: isMyFutureEventLoading,
     isError: isMyFutureEventError,
   } = useMyEvent(paramByFuture);
+
+  useEffect(() => {
+    let events = Array<Event>(0);
+    scheduledEvents &&
+      scheduledEvents.map((event: EventResponse) => {
+        events.push(...event.dev_event);
+      });
+
+    if (type === 'tag') {
+      setFilteredEvents(events.filter((item) => filterByTag(item)));
+    }
+    if (type === 'search') {
+      setFilteredEvents(events.filter((item) => filterBySearch(item)));
+    }
+  }, [filter]);
 
   const filterByTag = (item: Event) => {
     return item.tags.some((item) => {
@@ -104,60 +119,50 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
       favoriteId: favoriteId,
     });
   };
+
   return (
     <>
-      {scheduledEvents &&
-        scheduledEvents.map((event: EventResponse) => {
-          return (
-            <div className={cn('section__list')}>
-              <div className={cn('section__list__title')}>
-                <span>#{filter}</span>
-              </div>
-              {event &&
-              event.dev_event.filter((item) => {
-                return type === 'tag' ? filterByTag(item) : filterBySearch(item);
-              }).length !== 0 ? (
-                event &&
-                event.dev_event
-                  .filter((item) => {
-                    return type === 'tag' ? filterByTag(item) : filterBySearch(item);
-                  })
-                  .map((item: Event) => {
-                    return (
-                      <div className={cn('wrapper')}>
-                        <Item
-                          key={item.id}
-                          data={item}
-                          isEventNew={() => {
-                            return checkEventNew({ createdDate: item.create_date_time });
-                          }}
-                          isEventDone={() => {
-                            return checkEventDone({ endDate: item.end_date_time });
-                          }}
-                          isFavorite={({ filter }: { filter: string }) => {
-                            if (filter === 'OLD') {
-                              return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
-                            } else {
-                              return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
-                            }
-                          }}
-                          onClickFavorite={({ filter }: { filter: string }) => {
-                            if (filter === 'OLD') {
-                              return onClickFavoriteOldEvent({ item: item });
-                            } else {
-                              return onClickFavoriteFutureEvent({ item: item });
-                            }
-                          }}
-                        />
-                      </div>
-                    );
-                  })
-              ) : (
-                <div className={cn('null-container')}>아직 조건에 맞는 개발자 행사가 없어요 📂</div>
-              )}
-            </div>
-          );
-        })}
+      <div className={cn('section__list')}>
+        <div className={cn('section__list__title')}>
+          <span>#{filter}</span>
+        </div>
+        {filteredEvents && filteredEvents.length !== 0 ? (
+          filteredEvents
+            .sort((a, b) => +new Date(b.end_date_time) - +new Date(a.end_date_time))
+            .map((item: Event) => {
+              return (
+                <div className={cn('wrapper')}>
+                  <Item
+                    key={item.id}
+                    data={item}
+                    isEventNew={() => {
+                      return checkEventNew({ createdDate: item.create_date_time });
+                    }}
+                    isEventDone={() => {
+                      return checkEventDone({ endDate: item.end_date_time });
+                    }}
+                    isFavorite={({ filter }: { filter: string }) => {
+                      if (filter === 'OLD') {
+                        return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+                      } else {
+                        return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                      }
+                    }}
+                    onClickFavorite={({ filter }: { filter: string }) => {
+                      if (filter === 'OLD') {
+                        return onClickFavoriteOldEvent({ item: item });
+                      } else {
+                        return onClickFavoriteFutureEvent({ item: item });
+                      }
+                    }}
+                  />
+                </div>
+              );
+            })
+        ) : (
+          <div className={cn('null-container')}>아직 조건에 맞는 개발자 행사가 없어요 📂</div>
+        )}
+      </div>
     </>
   );
 };
