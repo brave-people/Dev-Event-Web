@@ -13,10 +13,17 @@ const cn = classNames.bind(style);
 const EventHeader = () => {
   const router = useRouter();
   const [filter, setFilter] = useState({ date: '전체', tag: '태그' });
+  const [isFiltered, setIsFiltered] = useState(false);
   const { tags, isLoading, isError } = useTags();
 
   useEffect(() => {
-    if (!router.query.year || !router.query.month) {
+    if (router.query.year && router.query.month) {
+      setIsFiltered(true);
+    } else if (router.query.tag || router.query.keyword) {
+      setIsFiltered(true);
+      setFilter({ ...filter, date: '전체' });
+    } else {
+      setIsFiltered(false);
       setFilter({ ...filter, date: '전체' });
     }
   }, [router.query]);
@@ -41,7 +48,7 @@ const EventHeader = () => {
 
   return (
     <div className={cn('section__header')}>
-      <EventCount />
+      <EventCount isFiltered={isFiltered} />
       <div className={cn('section__header__filters')}>
         <Dropdown
           options={getDateList()}
@@ -79,7 +86,7 @@ const EventHeader = () => {
   );
 };
 
-const EventCount = () => {
+const EventCount = ({ isFiltered }: { isFiltered: boolean }) => {
   const [totalCount, setTotalCount] = useState(0);
   const { scheduledEvents, isLoading, isError } = useScheduledEvents();
 
@@ -91,9 +98,12 @@ const EventCount = () => {
     setTotalCount(result || 0);
   }, [scheduledEvents]);
 
-  return (
+  return isFiltered ? (
     <span className={cn('section__header__desc')}>
-      {' '}
+      <span>검색결과</span>
+    </span>
+  ) : (
+    <span className={cn('section__header__desc')}>
       현재 <span>{totalCount}개</span>의 개발자 행사 진행 중
     </span>
   );
