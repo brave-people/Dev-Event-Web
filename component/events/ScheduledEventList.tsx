@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useMyEvent, useScheduledEvents } from 'lib/hooks/useSWR';
 import { EventResponse, Event } from 'model/event';
 import classNames from 'classnames/bind';
@@ -8,12 +8,16 @@ import { createMyEventApi } from 'lib/api/post';
 import { deleteMyEventApi } from 'lib/api/delete';
 import { mutate } from 'swr';
 import dayjs from 'dayjs';
+import { AuthContext } from 'context/auth';
+import LoginModal from 'component/common/modal/LoginModal';
 
 const cn = classNames.bind(style);
 
 const ScheduledEventList = () => {
   const paramByOld = { filter: 'OLD' };
   const paramByFuture = { filter: 'FUTURE' };
+  const authContext = React.useContext(AuthContext);
+  const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
 
   const { scheduledEvents, isLoading, isError } = useScheduledEvents();
   const { myEvent: myOldEvent, isLoading: isMyOldEventLoading, isError: isMyOldEventError } = useMyEvent(paramByOld);
@@ -125,17 +129,25 @@ const ScheduledEventList = () => {
                               return checkEventDone({ endDate: item.end_date_time });
                             }}
                             isFavorite={({ filter }: { filter: string }) => {
-                              if (filter === 'OLD') {
-                                return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+                              if (authContext.isLoggedIn) {
+                                if (filter === 'OLD') {
+                                  return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+                                } else {
+                                  return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                                }
                               } else {
-                                return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                                return false;
                               }
                             }}
                             onClickFavorite={({ filter }: { filter: string }) => {
-                              if (filter === 'OLD') {
-                                return onClickFavoriteOldEvent({ item: item });
+                              if (authContext.isLoggedIn) {
+                                if (filter === 'OLD') {
+                                  return onClickFavoriteOldEvent({ item: item });
+                                } else {
+                                  return onClickFavoriteFutureEvent({ item: item });
+                                }
                               } else {
-                                return onClickFavoriteFutureEvent({ item: item });
+                                setLoginModalIsOpen(true);
                               }
                             }}
                           />
@@ -143,6 +155,7 @@ const ScheduledEventList = () => {
                       );
                     })}
               </div>
+              <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
             </>
           );
         })

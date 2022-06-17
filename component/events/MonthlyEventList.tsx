@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from 'component/common/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
@@ -11,6 +11,8 @@ import { Event } from 'model/event';
 import { mutate } from 'swr';
 import { createMyEventApi } from 'lib/api/post';
 import { deleteMyEventApi } from 'lib/api/delete';
+import LoginModal from 'component/common/modal/LoginModal';
+import { AuthContext } from 'context/auth';
 
 const cn = classNames.bind(style);
 
@@ -19,6 +21,8 @@ const MonthlyEventList = () => {
   const paramByOld = { filter: 'OLD' };
   const paramByFuture = { filter: 'FUTURE' };
   const param = { year: Number(router.query.year), month: Number(router.query.month) };
+  const authContext = React.useContext(AuthContext);
+  const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
 
   const { monthlyEvent, isLoading, isError } = useMonthlyEvent({
     param: param,
@@ -123,17 +127,25 @@ const MonthlyEventList = () => {
                         return checkEventDone({ endDate: item.end_date_time });
                       }}
                       isFavorite={({ filter }: { filter: string }) => {
-                        if (filter === 'OLD') {
-                          return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+                        if (authContext.isLoggedIn) {
+                          if (filter === 'OLD') {
+                            return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+                          } else {
+                            return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                          }
                         } else {
-                          return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                          return false;
                         }
                       }}
                       onClickFavorite={({ filter }: { filter: string }) => {
-                        if (filter === 'OLD') {
-                          return onClickFavoriteOldEvent({ item: item });
+                        if (authContext.isLoggedIn) {
+                          if (filter === 'OLD') {
+                            return onClickFavoriteOldEvent({ item: item });
+                          } else {
+                            return onClickFavoriteFutureEvent({ item: item });
+                          }
                         } else {
-                          return onClickFavoriteFutureEvent({ item: item });
+                          setLoginModalIsOpen(true);
                         }
                       }}
                     />
@@ -146,6 +158,7 @@ const MonthlyEventList = () => {
           )}
         </div>
       </section>
+      <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
     </>
   );
 };
