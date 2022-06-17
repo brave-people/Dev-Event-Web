@@ -9,6 +9,11 @@
   background-repeat: no-repeat;
   background-size: cover;
   z-index: 9;
+
+  animation-name: appearIn;
+  animation-duration: 0.4s;
+  animation-timing-function: ease-out;
+
   &__inner {
     display: flex;
     flex-direction: column;
@@ -50,4 +55,16 @@
   right: 0;
   bottom: 0;
   background-color: transparent;
+}
+
+@keyframes appearIn {
+  0% {
+    height: 0px;
+    opacity: 0%;
+  }
+
+  100% {
+    height: 26vh;
+    opacity: 100%;
+  }
 }
