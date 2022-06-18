@@ -122,6 +122,32 @@
       font-size: 14px;
       line-height: 25px;
       color: #515151;
+      &__dday {
+        border: none;
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 16px;
+        text-align: center;
+
+        &--approach {
+          background-color: #e17272;
+          color: #fff;
+          padding: 2px 5px 2px 5px;
+          border-radius: 10px;
+        }
+        &--scheduled {
+          background-color: #757575;
+          color: #fff;
+          padding: 2px 5px 2px 5px;
+          border-radius: 10px;
+        }
+        &--ongoing {
+          background-color: #6dc670;
+          color: #fff;
+          padding: 2px 5px 2px 5px;
+          border-radius: 10px;
+        }
+      }
     }
 
     &__bottom {
