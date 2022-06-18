@@ -37,7 +37,10 @@ const ScheduledEventList = () => {
   const checkEventDone = ({ endDate }: { endDate: string }) => {
     const todayDate = dayjs();
     const eventDate = dayjs(endDate);
-    return eventDate.diff(todayDate, 'day') > 0 ? false : true;
+    return eventDate.diff(todayDate, 'day') > 0 ||
+      (eventDate.diff(todayDate, 'day') === 0 && eventDate.get('day') === todayDate.get('day'))
+      ? false
+      : true;
   };
 
   const onClickFavoriteOldEvent = async ({ item }: { item: Event }) => {

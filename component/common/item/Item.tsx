@@ -11,6 +11,7 @@ import router from 'next/router';
 import { MdContentCopy } from 'react-icons/md';
 import { DateUtil } from 'lib/utils/dateUtil';
 import { useOnClickOutside } from 'lib/hooks/useOnClickOutside';
+import dayjs from 'dayjs';
 
 const cn = classNames.bind(style);
 
@@ -53,6 +54,25 @@ const Item = ({
     return eventDate;
   };
 
+  const getEventDdayTag = () => {
+    const todayDate = dayjs();
+    const startDate = dayjs(data.start_date_time);
+    const endDate = dayjs(data.end_date_time);
+
+    if (startDate.diff(todayDate, 'day') > 0 && startDate.diff(todayDate, 'day') < 6) {
+      return <span className={cn('item__content__desc__dday--approach')}>D-{startDate.diff(todayDate, 'day')}</span>;
+    } else if (startDate.diff(todayDate, 'day') > 0) {
+      return <span className={cn('item__content__desc__dday--scheduled')}>D-{startDate.diff(todayDate, 'day')}</span>;
+    } else if (
+      (startDate.diff(todayDate, 'day') < 0 && endDate.diff(todayDate, 'day') > 0) ||
+      (startDate.diff(todayDate, 'day') === 0 && startDate.get('day') === todayDate.get('day')) ||
+      (endDate.diff(todayDate, 'day') === 0 && endDate.get('day') === todayDate.get('day'))
+    ) {
+      return <span className={cn('item__content__desc__dday--ongoing')}>Today</span>;
+    } else {
+      return null;
+    }
+  };
   return (
     <Link href={String(data.event_link)}>
       <a
@@ -97,7 +117,9 @@ const Item = ({
               <div className={cn('item__content__desc')}>
                 <span>주최 : {data.organizer}</span>
                 <br className={cn('divider')} />
-                <span>일시 :{getEventDate()}</span>
+                <span>
+                  일시 :{getEventDate()} <span className={cn('item__content__desc__dday')}>{getEventDdayTag()}</span>{' '}
+                </span>
               </div>
               <div className={cn('item__content__bottom')}>
                 <div className={cn('tags')}>
