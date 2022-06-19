@@ -20,12 +20,16 @@ const ScheduledEventList = () => {
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
 
   const { scheduledEvents, isLoading, isError } = useScheduledEvents();
-  const { myEvent: myOldEvent, isLoading: isMyOldEventLoading, isError: isMyOldEventError } = useMyEvent(paramByOld);
+  const {
+    myEvent: myOldEvent,
+    isLoading: isMyOldEventLoading,
+    isError: isMyOldEventError,
+  } = useMyEvent(paramByOld, authContext.isLoggedIn);
   const {
     myEvent: myFutureEvent,
     isLoading: isMyFutureEventLoading,
     isError: isMyFutureEventError,
-  } = useMyEvent(paramByFuture);
+  } = useMyEvent(paramByFuture, authContext.isLoggedIn);
 
   const checkEventNew = ({ createdDate }: { createdDate: string }) => {
     const todayDate = dayjs();
