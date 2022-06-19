@@ -11,7 +11,7 @@ const cn = classNames.bind(style);
 
 const DoneEventList = () => {
   const param = { filter: 'OLD' };
-  const { myEvent, isLoading, isError } = useMyEvent(param);
+  const { myEvent, isLoading, isError } = useMyEvent(param, true);
 
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: Number }) => {
     const result = await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {

@@ -21,12 +21,16 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
 
   const { scheduledEvents, isLoading, isError } = useScheduledEvents();
-  const { myEvent: myOldEvent, isLoading: isMyOldEventLoading, isError: isMyOldEventError } = useMyEvent(paramByOld);
+  const {
+    myEvent: myOldEvent,
+    isLoading: isMyOldEventLoading,
+    isError: isMyOldEventError,
+  } = useMyEvent(paramByOld, authContext.isLoggedIn);
   const {
     myEvent: myFutureEvent,
     isLoading: isMyFutureEventLoading,
     isError: isMyFutureEventError,
-  } = useMyEvent(paramByFuture);
+  } = useMyEvent(paramByFuture, authContext.isLoggedIn);
 
   useEffect(() => {
     let events = Array<Event>(0);

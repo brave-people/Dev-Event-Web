@@ -27,12 +27,16 @@ const MonthlyEventList = () => {
   const { monthlyEvent, isLoading, isError } = useMonthlyEvent({
     param: param,
   });
-  const { myEvent: myOldEvent, isLoading: isMyOldEventLoading, isError: isMyOldEventError } = useMyEvent(paramByOld);
+  const {
+    myEvent: myOldEvent,
+    isLoading: isMyOldEventLoading,
+    isError: isMyOldEventError,
+  } = useMyEvent(paramByOld, authContext.isLoggedIn);
   const {
     myEvent: myFutureEvent,
     isLoading: isMyFutureEventLoading,
     isError: isMyFutureEventError,
-  } = useMyEvent(paramByFuture);
+  } = useMyEvent(paramByFuture, authContext.isLoggedIn);
 
   const checkEventNew = ({ createdDate }: { createdDate: string }) => {
     const todayDate = dayjs();
