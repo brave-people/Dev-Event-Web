@@ -27,7 +27,12 @@ function Header() {
           </div>
         </Link>
         <div className={cn('header__buttons')}>
-          <TextButton label="행사등록" onClick={() => setLoginModalIsOpen(true)}></TextButton>
+          <Link href={'https://forms.gle/UUjUVg1tTrKhemKu9'}>
+            <a>
+              <TextButton label="행사등록"></TextButton>
+            </a>
+          </Link>
+
           <span className={cn('wrapper')}>
             {authContext.isLoggedIn ? (
               <Profile />
