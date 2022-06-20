@@ -14,12 +14,13 @@ const DoneEventList = () => {
   const { myEvent, isLoading, isError } = useMyEvent(param, true);
 
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: Number }) => {
-    if (favoriteId) {
+    if (favoriteId && myEvent) {
+      const filteredEvent = myEvent.filter((event) => event.favorite_id !== favoriteId);
+      mutate([`/front/v1/favorite/events`, param], [...filteredEvent], false);
+
       const result = await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
         favoriteId: favoriteId,
       });
-      if (result.status === 'FRONT_FAVORITE_200_01') {
-      }
     } else {
       alert('이벤트 정보가 없습니다!');
     }

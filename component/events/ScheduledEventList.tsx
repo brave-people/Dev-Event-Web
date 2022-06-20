@@ -52,8 +52,16 @@ const ScheduledEventList = () => {
       const favoriteId = getFavoriteOldEventId({ id: item.id });
 
       if (favoriteId === 0) {
+        mutate(
+          [`/front/v1/favorite/events`, paramByOld],
+          [...myOldEvent, { favorite_id: favoriteId, dev_event: item }],
+          false
+        );
         const result = await createMyEvent({ eventId: item.id });
       } else {
+        const filteredEvent = myOldEvent.filter((event) => event.favorite_id !== favoriteId);
+        mutate([`/front/v1/favorite/events`, paramByOld], [...filteredEvent], false);
+
         const result = await deleteMyEvent({ favoriteId: favoriteId });
       }
       mutate([`/front/v1/favorite/events`, paramByOld]);
@@ -65,8 +73,16 @@ const ScheduledEventList = () => {
       const favoriteId = getFavoriteFutureEventId({ id: item.id });
 
       if (favoriteId === 0) {
+        mutate(
+          [`/front/v1/favorite/events`, paramByFuture],
+          [...myFutureEvent, { favorite_id: favoriteId, dev_event: item }],
+          false
+        );
         const result = await createMyEvent({ eventId: item.id });
       } else {
+        const filteredEvent = myFutureEvent.filter((event) => event.favorite_id !== favoriteId);
+        mutate([`/front/v1/favorite/events`, paramByFuture], [...filteredEvent], false);
+
         const result = await deleteMyEvent({ favoriteId: favoriteId });
       }
       mutate([`/front/v1/favorite/events`, paramByFuture]);
@@ -99,6 +115,7 @@ const ScheduledEventList = () => {
       const result = await createMyEventApi(`/front/v1/favorite/events/${eventId}`, {
         eventId: Number(eventId),
       });
+
       if (result.status_code === 200 && result.status === 'FRONT_FAVORITE_201_01') {
         return 'SUCCESS';
       }
