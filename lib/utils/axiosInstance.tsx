@@ -12,9 +12,9 @@ axiosInstance.interceptors.request.use(
       Authorization: `${data.access_token}`,
       Accept: 'application/json',
     };
-
     return config;
   },
+
   (err) => {
     return Promise.reject(err);
   }
@@ -26,11 +26,11 @@ axiosInstance.interceptors.response.use(
   },
   async function (error) {
     const config = error.config;
-
-    if (error.response.status === 400) {
+    if (error.response.data.status === 'TOKEN_400_02') {
       const { data } = await axios.post(`/api/getRefreshToken`);
       if (data) {
         const result = await regenerateAccessToken('/admin/v1/token/refresh', { refresh_token: data.refresh_token });
+
         if (result.access_token) {
           const response = await axios.post('/api/autoLogin', { param: { result } });
           config.headers['Authorization'] = result.access_token;
@@ -39,6 +39,20 @@ axiosInstance.interceptors.response.use(
           }
         }
       }
+    } else if (error.response.data.status_code === 400) {
+      const response = await axios.post('/api/logout');
+    } else if (error.response.data.status_code === 404) {
+      alert('존재하지 않은 사용자입니다.');
+      const response = await axios.post('/api/logout');
+    } else if (
+      error.response.data.status === 'AUTH_500_00' ||
+      error.response.data.status === 'AUTH_500_02' ||
+      error.response.data.status === 'AUTH_500_03'
+    ) {
+      alert('인증에 문제가 발생하였습니다.');
+      const response = await axios.post('/api/logout');
+    } else {
+      console.log(error.response);
     }
     return Promise.reject(error);
   }

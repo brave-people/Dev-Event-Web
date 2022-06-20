@@ -56,7 +56,6 @@ const ScheduledEventList = () => {
       } else {
         const result = await deleteMyEvent({ favoriteId: favoriteId });
       }
-      mutate(`/front/v1/events/current`);
       mutate([`/front/v1/favorite/events`, paramByOld]);
     }
   };
@@ -70,7 +69,6 @@ const ScheduledEventList = () => {
       } else {
         const result = await deleteMyEvent({ favoriteId: favoriteId });
       }
-      mutate(`/front/v1/events/current`);
       mutate([`/front/v1/favorite/events`, paramByFuture]);
     }
   };
@@ -97,15 +95,29 @@ const ScheduledEventList = () => {
   };
 
   const createMyEvent = async ({ eventId }: { eventId: String }) => {
-    const result = await createMyEventApi(`/front/v1/favorite/events/${eventId}`, {
-      eventId: Number(eventId),
-    });
+    if (eventId) {
+      const result = await createMyEventApi(`/front/v1/favorite/events/${eventId}`, {
+        eventId: Number(eventId),
+      });
+      if (result.status_code === 200 && result.status === 'FRONT_FAVORITE_201_01') {
+        return 'SUCCESS';
+      }
+    } else {
+      alert('이벤트 정보가 없습니다!');
+    }
   };
 
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: number }) => {
-    const result = await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
-      favoriteId: favoriteId,
-    });
+    if (favoriteId) {
+      const result = await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
+        favoriteId: favoriteId,
+      });
+      if (result.status_code === 200 && result.status === 'FRONT_FAVORITE_201_01') {
+        return 'SUCCESS';
+      }
+    } else {
+      alert('이벤트 정보가 없습니다!');
+    }
   };
 
   return (

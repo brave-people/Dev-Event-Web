@@ -56,8 +56,12 @@ const MonthlyEventList = () => {
 
       if (favoriteId === 0) {
         const result = await createMyEvent({ eventId: item.id });
+        if (result === 'SUCCESS') {
+        }
       } else {
         const result = await deleteMyEvent({ favoriteId: favoriteId });
+        if (result === 'SUCCESS') {
+        }
       }
       mutate([`/front/v1/favorite/events`, paramByOld]);
     }
@@ -69,8 +73,12 @@ const MonthlyEventList = () => {
 
       if (favoriteId === 0) {
         const result = await createMyEvent({ eventId: item.id });
+        if (result === 'SUCCESS') {
+        }
       } else {
         const result = await deleteMyEvent({ favoriteId: favoriteId });
+        if (result === 'SUCCESS') {
+        }
       }
       mutate([`/front/v1/favorite/events`, paramByFuture]);
     }
@@ -98,15 +106,29 @@ const MonthlyEventList = () => {
   };
 
   const createMyEvent = async ({ eventId }: { eventId: String }) => {
-    const result = await createMyEventApi(`/front/v1/favorite/events/${eventId}`, {
-      eventId: Number(eventId),
-    });
+    if (eventId) {
+      const result = await createMyEventApi(`/front/v1/favorite/events/${eventId}`, {
+        eventId: Number(eventId),
+      });
+      if (result.status_code === 200 && result.status === 'FRONT_FAVORITE_201_01') {
+        return 'SUCCESS';
+      }
+    } else {
+      alert('이벤트 정보가 없습니다!');
+    }
   };
 
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: number }) => {
-    const result = await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
-      favoriteId: favoriteId,
-    });
+    if (favoriteId) {
+      const result = await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
+        favoriteId: favoriteId,
+      });
+      if (result.status_code === 200 && result.status === 'FRONT_FAVORITE_200_01') {
+        return 'SUCCESS';
+      }
+    } else {
+      alert('이벤트 정보가 없습니다!');
+    }
   };
 
   return (

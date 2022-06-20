@@ -8,6 +8,7 @@ export const deleteMyEventApi = async (url: string, data: MyEventDeleteProps): P
     const response: AxiosResponse = await axiosInstance.delete(`${process.env.BASE_SERVER_URL}${url}`, { data: data });
     return response.data;
   } catch (error: any) {
+    alert('내 이벤트 해제가 실패했습니다.');
     return error.response;
   }
 };
@@ -17,6 +18,8 @@ export const deleteAccountApi = async (url: string): Promise<DeleteAccountRespon
     const response: AxiosResponse = await axiosInstance.delete(`${process.env.BASE_SERVER_URL}${url}`);
     return response.data;
   } catch (error: any) {
+    alert('탈퇴를 실패했습니다.');
+
     return error.response;
   }
 };

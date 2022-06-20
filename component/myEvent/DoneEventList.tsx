@@ -14,9 +14,15 @@ const DoneEventList = () => {
   const { myEvent, isLoading, isError } = useMyEvent(param, true);
 
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: Number }) => {
-    const result = await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
-      favoriteId: favoriteId,
-    });
+    if (favoriteId) {
+      const result = await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
+        favoriteId: favoriteId,
+      });
+      if (result.status === 'FRONT_FAVORITE_200_01') {
+      }
+    } else {
+      alert('이벤트 정보가 없습니다!');
+    }
     mutate([`/front/v1/favorite/events`, param]);
   };
 
