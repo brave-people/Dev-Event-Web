@@ -14,21 +14,20 @@ const ScheduledEventList = () => {
   const { myEvent, isLoading, isError } = useMyEvent(param, true);
 
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: Number }) => {
-    const result = await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
-      favoriteId: favoriteId,
-    });
+    if (favoriteId) {
+      const result = await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
+        favoriteId: favoriteId,
+      });
+      if (result.status === 'FRONT_FAVORITE_200_01') {
+      }
+    } else {
+      alert('이벤트 정보가 없습니다!');
+    }
     mutate([`/front/v1/favorite/events`, param]);
   };
 
   return (
     <div className={cn('tab__body')}>
-      {/* {!myEvent || (myEvent && myEvent.length === 0) ? null : (
-        <article className={cn('today-event')}>
-          <div className={cn('today-event__list')}>
-          
-          </div>
-        </article>
-      )} */}
       <section className={cn('section')}>
         <div className={cn('section__list')}>
           {!myEvent || (myEvent && myEvent.length === 0) ? (
