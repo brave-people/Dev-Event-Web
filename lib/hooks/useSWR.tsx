@@ -4,7 +4,12 @@ import { MyEventGetProps } from 'model/event';
 import useSWR from 'swr';
 
 const useScheduledEvents = () => {
-  const { data: events, error } = useSWR(`/front/v1/events/current`, getEventsApi);
+  const { data: events, error } = useSWR(`/front/v1/events/current`, getEventsApi, {
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: true,
+    revalidateIfStale: false,
+  });
 
   return {
     scheduledEvents: events,
@@ -14,7 +19,12 @@ const useScheduledEvents = () => {
 };
 
 const useMonthlyEvent = ({ param }: { param: Calender }) => {
-  const { data: events, error } = useSWR(`/front/v1/events/${param.year}/${param.month}`, getMonthlyEventApi);
+  const { data: events, error } = useSWR(`/front/v1/events/${param.year}/${param.month}`, getMonthlyEventApi, {
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: true,
+    revalidateIfStale: false,
+  });
   return {
     monthlyEvent: events,
     isLoading: !error && !events,
@@ -22,9 +32,12 @@ const useMonthlyEvent = ({ param }: { param: Calender }) => {
   };
 };
 
-const useMyEvent = (param: MyEventGetProps) => {
-  const { data: myEvent, error } = useSWR([`/front/v1/favorite/events`, param], getMyEventApi, {
+const useMyEvent = (param: MyEventGetProps, isLoginIn: boolean) => {
+  const { data: myEvent, error } = useSWR(isLoginIn ? [`/front/v1/favorite/events`, param] : null, getMyEventApi, {
     shouldRetryOnError: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: true,
+    revalidateIfStale: false,
   });
   return {
     myEvent: myEvent,
@@ -34,7 +47,12 @@ const useMyEvent = (param: MyEventGetProps) => {
 };
 
 const useTags = () => {
-  const { data: tags, error } = useSWR(`/front/v1/events/tags`, getTagsApi);
+  const { data: tags, error } = useSWR(`/front/v1/events/tags`, getTagsApi, {
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: true,
+    revalidateIfStale: false,
+  });
   return {
     tags: tags,
     isLoading: !error && !tags,
@@ -43,7 +61,12 @@ const useTags = () => {
 };
 
 const useUser = () => {
-  const { data: user, error } = useSWR(`/front/v1/users/profile`, getUserApi, { shouldRetryOnError: false });
+  const { data: user, error } = useSWR(`/front/v1/users/profile`, getUserApi, {
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: true,
+    revalidateIfStale: false,
+  });
   return {
     user: user,
     isLoading: !error && !user,
