@@ -13,6 +13,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import cookie from 'cookie';
+import Head from 'next/head';
 
 const cn = classNames.bind(style);
 
@@ -44,52 +45,57 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   };
 
   return (
-    <div className={cn('info-container')}>
-      <div className={cn('info-container__inner')}>
-        <header className={cn('sub-header')}>
-          <div className={cn('sub-header__inner')}>
-            <div className={cn('sub-header__content')}>
-              <h1>내 정보</h1>
+    <>
+      <Head>
+        <title>Dev Event</title>
+      </Head>
+      <div className={cn('info-container')}>
+        <div className={cn('info-container__inner')}>
+          <header className={cn('sub-header')}>
+            <div className={cn('sub-header__inner')}>
+              <div className={cn('sub-header__content')}>
+                <h1>내 정보</h1>
+              </div>
+            </div>
+          </header>
+          <div className={cn('info-form')}>
+            <div className={cn('info-form__item')}>
+              <span>이름</span>
+              <input className={cn('input', 'size--small')} disabled value={user?.username}></input>
+            </div>
+            <div className={cn('info-form__item')}>
+              <span>이메일</span>
+              <input className={cn('input', 'size--regular')} disabled value={user?.email}></input>
+            </div>
+            <div className={cn('info-form__item')}>
+              <span>가입일</span>
+              <input
+                className={cn('input', 'size--small')}
+                disabled
+                value={dayjs(user?.register_date).format('YYYY. MM. DD')}
+              ></input>
             </div>
           </div>
-        </header>
-        <div className={cn('info-form')}>
-          <div className={cn('info-form__item')}>
-            <span>이름</span>
-            <input className={cn('input', 'size--small')} disabled value={user?.username}></input>
-          </div>
-          <div className={cn('info-form__item')}>
-            <span>이메일</span>
-            <input className={cn('input', 'size--regular')} disabled value={user?.email}></input>
-          </div>
-          <div className={cn('info-form__item')}>
-            <span>가입일</span>
-            <input
-              className={cn('input', 'size--small')}
-              disabled
-              value={dayjs(user?.register_date).format('YYYY. MM. DD')}
-            ></input>
+          <div className={cn('delete-button', 'primary')}>
+            <button
+              data-hover="탈퇴하기 🥺"
+              onClick={() => {
+                setDeleteAccountIsOpen(true);
+              }}
+            >
+              탈퇴하기
+            </button>
           </div>
         </div>
-        <div className={cn('delete-button', 'primary')}>
-          <button
-            data-hover="탈퇴하기 🥺"
-            onClick={() => {
-              setDeleteAccountIsOpen(true);
-            }}
-          >
-            탈퇴하기
-          </button>
-        </div>
+        <DeleteAccountModal
+          isOpen={DeleteAccountModalIsOpen}
+          onCancel={() => {
+            setDeleteAccountIsOpen(false);
+          }}
+          onClick={deleteAccount}
+        />
       </div>
-      <DeleteAccountModal
-        isOpen={DeleteAccountModalIsOpen}
-        onCancel={() => {
-          setDeleteAccountIsOpen(false);
-        }}
-        onClick={deleteAccount}
-      />
-    </div>
+    </>
   );
 };
 

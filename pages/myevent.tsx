@@ -10,6 +10,7 @@ import cookie from 'cookie';
 import EventTab from 'component/myEvent/EventTab';
 import { GetServerSideProps } from 'next';
 import { AuthContext } from 'context/auth';
+import Head from 'next/head';
 
 const cn = classNames.bind(style);
 
@@ -24,6 +25,9 @@ const MyEvent = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
 
   return (
     <>
+      <Head>
+        <title>Dev Event</title>
+      </Head>
       <header className={cn('sub-header')}>
         <div className={cn('sub-header__inner')}>
           <div className={cn('sub-header__content')}>
