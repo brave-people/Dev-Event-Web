@@ -38,11 +38,12 @@
     animation-timing-function: linear;
     &.type--basic {
       min-width: 12.188rem;
+      min-height: 3rem;
+      max-height: 16.25rem;
       top: 3.15rem;
       position: absolute;
       z-index: 3;
       margin: 0;
-      max-height: 16.25rem;
       border-radius: 10px;
       background-color: #fff;
       overflow-y: scroll;
@@ -75,6 +76,7 @@
       top: 3.15rem;
       margin: 0;
       min-width: 27.875rem;
+      min-height: 16.25rem;
       padding: 1.5rem 1.875rem 1.5rem 1.875rem;
       color: #757575;
       background-color: #fff;
@@ -130,12 +132,10 @@
 
 @keyframes appearIn {
   0% {
-    height: 0px;
     opacity: 0%;
   }
 
   100% {
-    height: 26vh;
     opacity: 100%;
   }
 }
