@@ -54,7 +54,7 @@ function Header() {
                 setLoginModalIsOpen(false);
               }}
             >
-              <SearchIcon />
+              <SearchIcon size={24} />
             </button>
           </span>
         </div>

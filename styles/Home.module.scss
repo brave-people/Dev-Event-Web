@@ -7,7 +7,11 @@
   justify-content: center;
   align-items: center;
   background-image: url('../public/default/banner_img.png');
-  background-size: cover;
+  background-size: 100% 462px;
+  min-width: 68.75rem;
+  background-repeat: no-repeat;
+  padding: 0px 20px 0px 20px;
+
   &__title {
     font-size: 3.8rem;
     font-weight: 700;
@@ -37,17 +41,20 @@
 .section {
   width: 68.75rem;
   padding-bottom: 1.813rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   &__header {
-    margin: 0px;
+    width: 68.75rem;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     background-color: transparent;
     padding-top: 2.688rem;
-    width: 68.75rem;
-    align-self: center;
+    margin: 0px;
 
     &__desc {
       display: flex;
@@ -100,7 +107,6 @@
 
   &__list {
     padding-top: 1.813rem;
-
     &__title {
       font-weight: 700;
       font-size: 1.5rem;
