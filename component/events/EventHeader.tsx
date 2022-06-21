@@ -40,10 +40,13 @@ const EventHeader = () => {
   };
 
   const getTagList = () => {
-    const list = tags?.map((tag) => {
-      return tag.tag_name;
-    });
-    return list;
+    if (tags) {
+      const list = tags?.map((tag) => {
+        return tag.tag_name;
+      });
+      return list;
+    }
+    return [];
   };
 
   return (

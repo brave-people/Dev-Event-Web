@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import style from './dropdown.module.scss';
 import React, { useRef, useState } from 'react';
-import { IoIosArrowDown } from 'react-icons/io';
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import Tag from '../tag/Tag';
 import { useOnClickOutside } from 'lib/hooks/useOnClickOutside';
 
@@ -28,13 +28,12 @@ export default function Dropdown({ name, options, placeholder, value, onClick, i
             <span className={cx('icon')}>{icon}</span>
             {value ? value : placeholder}
           </span>
-          <IoIosArrowDown size="12" color="#3D3D3D" />
+          {!isOpen ? <IoIosArrowDown size="12" color="#3D3D3D" /> : <IoIosArrowUp size="12" color="#3D3D3D" />}
         </div>
 
         {isOpen == false ? null : type === 'basic' ? (
           <div className={cx('dropdown__list', `type--${type}`)}>
             {options.map((item: any, index: number) => {
-              console.log(type);
               return (
                 <div
                   key={index}
