@@ -4,5 +4,6 @@ $color-background: #002034;
   background-color: $color-background;
   width: 100vw;
   height: 3.5rem;
-  margin-top: auto;
+  position: absolute;
+  bottom: 0;
 }

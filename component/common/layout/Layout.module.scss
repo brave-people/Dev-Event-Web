@@ -3,6 +3,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-height: 100%;
+  position: relative;
+  padding-bottom: 3.5rem;
 }
 
 .main {
