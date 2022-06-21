@@ -11,6 +11,7 @@ import cookie from 'cookie';
 import { AuthContext } from 'context/auth';
 import router from 'next/router';
 import LoginModal from 'component/common/modal/LoginModal';
+import Head from 'next/head';
 const cn = classNames.bind(style);
 
 const Events = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
@@ -24,6 +25,9 @@ const Events = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
 
   return (
     <>
+      <Head>
+        <title>Dev Event</title>
+      </Head>
       <div className={cn('banner')}>
         <span className={cn('banner__title')}>
           개발자 행사는
