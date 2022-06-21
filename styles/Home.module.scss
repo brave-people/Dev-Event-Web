@@ -50,10 +50,30 @@
     align-self: center;
 
     &__desc {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
       font-weight: 500;
       font-size: 1.23rem;
       line-height: 1.8rem;
       color: #0066c6;
+
+      .reset-button {
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        margin-left: 5px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+      .reset-button:hover {
+        background-color: #cecece;
+      }
+
       span {
         font-weight: 700;
       }
