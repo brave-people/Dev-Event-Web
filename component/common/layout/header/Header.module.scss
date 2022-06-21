@@ -11,6 +11,8 @@ $color-background: #002034;
   justify-content: center;
   height: 3.5rem;
   width: 100vw;
+  min-width: 68.75rem;
+  padding: 0px 20px 0px 20px;
   background-color: $color-background;
 
   &__inner {
@@ -44,8 +46,8 @@ $color-background: #002034;
     .search-button {
       border: none;
       background-color: transparent;
-      width: 24px;
-      height: 24px;
+      width: 30px;
+      height: 30px;
       cursor: pointer;
     }
   }
