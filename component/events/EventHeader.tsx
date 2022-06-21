@@ -4,7 +4,8 @@ import style from 'styles/Home.module.scss';
 import Dropdown from 'component/common/dropdown/Dropdown';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import { BiPurchaseTagAlt } from 'react-icons/bi';
-import { useRouter } from 'next/router';
+import { MdOutlineReplay } from 'react-icons/md';
+import router, { useRouter } from 'next/router';
 import dayjs from 'dayjs';
 import { useScheduledEvents, useTags } from 'lib/hooks/useSWR';
 
@@ -104,6 +105,14 @@ const EventCount = ({ isFiltered }: { isFiltered: boolean }) => {
   return isFiltered ? (
     <span className={cn('section__header__desc')}>
       <span>검색결과</span>
+      <div
+        className={cn('reset-button')}
+        onClick={(event) => {
+          router.replace(`/events`);
+        }}
+      >
+        <MdOutlineReplay size={20} />
+      </div>
     </span>
   ) : (
     <span className={cn('section__header__desc')}>
