@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import React from 'react';
-import style from './textButton.module.scss';
+import style from './TextButton.module.scss';
 const cx = classNames.bind(style);
 
 function TextButton({ onClick, label, size = 'regular' }: any) {

@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import Footer from './footer/Footer';
 import Header from './header/Header';
-import style from './layout.module.scss';
+import style from './Layout.module.scss';
 
 const cn = classNames.bind(style);
 
