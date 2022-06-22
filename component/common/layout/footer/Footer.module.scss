@@ -3,7 +3,9 @@ $color-background: #002034;
 .footer {
   background-color: $color-background;
   width: 100vw;
+  min-width: none;
   height: 3.5rem;
+  min-width: 68.75rem;
   position: absolute;
   bottom: 0;
 }
