@@ -116,7 +116,7 @@ const EventCount = ({ isFiltered }: { isFiltered: boolean }) => {
     </span>
   ) : (
     <span className={cn('section__header__desc')}>
-      현재 <span>{totalCount}개</span>의 개발자 행사 진행 중
+      현재&nbsp;<span>{totalCount}개</span>의 개발자 행사 진행 중
     </span>
   );
 };
