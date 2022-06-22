@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import style from './dropdown.module.scss';
+import style from './Dropdown.module.scss';
 import React, { useRef, useState } from 'react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import Tag from '../tag/Tag';

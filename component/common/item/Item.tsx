@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Event } from 'model/event';
 import classNames from 'classnames/bind';
-import style from './item.module.scss';
+import style from './Item.module.scss';
 import Image from 'next/image';
 import Tag from '../tag/Tag';
 import StarIcon from 'public/icon/star_grey_outlined.svg';
