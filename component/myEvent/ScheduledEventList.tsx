@@ -1,5 +1,5 @@
 import React from 'react';
-import style from 'styles/myevent.module.scss';
+import style from 'styles/Myevent.module.scss';
 import classNames from 'classnames/bind';
 import { useMyEvent } from 'lib/hooks/useSWR';
 import Item from 'component/common/item/Item';
