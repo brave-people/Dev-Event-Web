@@ -9,7 +9,7 @@ export const getEventsApi = async (url: string): Promise<EventResponse[]> => {
     const response: AxiosResponse = await axios.get(`${process.env.BASE_SERVER_URL}${url}`);
     return response.data;
   } catch (error: any) {
-    return error.response;
+    throw error.response;
   }
 };
 
@@ -18,7 +18,7 @@ export const getMonthlyEventApi = async (url: string): Promise<Event[]> => {
     const response: AxiosResponse = await axios.get(`${process.env.BASE_SERVER_URL}${url}`);
     return response.data;
   } catch (error: any) {
-    return error.response;
+    throw error.response;
   }
 };
 
@@ -36,7 +36,7 @@ export const getTagsApi = async (url: string): Promise<TagResponse[]> => {
     const response: AxiosResponse = await axios.get(`${process.env.BASE_SERVER_URL}${url}`);
     return response.data;
   } catch (error: any) {
-    return error.response;
+    throw error.response;
   }
 };
 

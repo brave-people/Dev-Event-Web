@@ -41,7 +41,7 @@ const EventHeader = () => {
   };
 
   const getTagList = () => {
-    if (tags) {
+    if (tags && !isError) {
       const list = tags?.map((tag) => {
         return tag.tag_name;
       });
@@ -95,11 +95,12 @@ const EventCount = ({ isFiltered }: { isFiltered: boolean }) => {
   const { scheduledEvents, isLoading, isError } = useScheduledEvents();
 
   useEffect(() => {
-    const result = scheduledEvents?.reduce(function add(sum, currValue) {
-      return sum + currValue.metadata.total;
-    }, 0);
-
-    setTotalCount(result || 0);
+    if (scheduledEvents && !isError) {
+      const result = scheduledEvents.reduce(function add(sum, currValue) {
+        return sum + currValue.metadata.total;
+      }, 0);
+      setTotalCount(result);
+    }
   }, [scheduledEvents]);
 
   return isFiltered ? (
