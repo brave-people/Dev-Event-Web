@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import Layout from 'component/common/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
-import style from 'styles/myevent.module.scss';
+import style from 'styles/Myevent.module.scss';
 import { useRouter } from 'next/router';
 
 const cn = classNames.bind(style);
