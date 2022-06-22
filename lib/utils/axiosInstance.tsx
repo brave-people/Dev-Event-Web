@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { regenerateAccessToken } from 'lib/api/post';
+import router from 'next/router';
 
 const axiosInstance = axios.create({
   baseURL: `${process.env.BASE_SERVER_URL}`,
@@ -41,9 +42,9 @@ axiosInstance.interceptors.response.use(
       }
     } else if (error.response.data.status_code === 400) {
       const response = await axios.post('/api/logout');
-    } else if (error.response.data.status_code === 404) {
-      alert('존재하지 않은 사용자입니다.');
-      const response = await axios.post('/api/logout');
+      if (response.status === 200) {
+        router.push('/');
+      }
     } else if (
       error.response.data.status === 'AUTH_500_00' ||
       error.response.data.status === 'AUTH_500_02' ||
@@ -51,6 +52,7 @@ axiosInstance.interceptors.response.use(
     ) {
       alert('인증에 문제가 발생하였습니다.');
       const response = await axios.post('/api/logout');
+      router.push('/');
     } else {
       console.log(error.response);
     }
