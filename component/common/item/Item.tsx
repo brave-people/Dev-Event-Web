@@ -55,10 +55,13 @@ const Item = ({
   };
 
   const getEventDdayTag = () => {
-    const todayDate = dayjs();
-    const startDate = dayjs(data.start_date_time);
-    const endDate = dayjs(data.end_date_time);
-
+    const todayDate = dayjs().set('hour', 0).set('minute', 0).set('second', 0).set('millisecond', 0);
+    const startDate = dayjs(data.start_date_time)
+      .set('hour', 0)
+      .set('minute', 0)
+      .set('second', 0)
+      .set('millisecond', 0);
+    const endDate = dayjs(data.end_date_time).set('hour', 0).set('minute', 0).set('second', 0).set('millisecond', 0);
     if (startDate.diff(todayDate, 'day') > 0 && startDate.diff(todayDate, 'day') < 6) {
       return <span className={cn('item__content__desc__dday--approach')}>D-{startDate.diff(todayDate, 'day')}</span>;
     } else if (startDate.diff(todayDate, 'day') > 0) {
