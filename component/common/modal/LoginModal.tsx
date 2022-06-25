@@ -35,7 +35,7 @@ function LoginModal({ isOpen, onClick }: any) {
             }}
           >
             <KakaoIcon />
-            <span> 카카오톡 로그인</span>
+            <span> 카카오 로그인</span>
           </button>
           <button
             className={cx('login-form__button', 'google')}
