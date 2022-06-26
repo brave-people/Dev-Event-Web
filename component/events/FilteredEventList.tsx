@@ -10,6 +10,8 @@ import { mutate } from 'swr';
 import { deleteMyEventApi } from 'lib/api/delete';
 import { AuthContext } from 'context/auth';
 import LoginModal from 'component/common/modal/LoginModal';
+import router from 'next/router';
+import { MdClose } from 'react-icons/md';
 
 const cn = classNames.bind(style);
 
@@ -164,6 +166,14 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
       <div className={cn('section__list')}>
         <div className={cn('section__list__title')}>
           <span>#{filter}</span>
+          <div
+            className={cn('reset-button')}
+            onClick={(event) => {
+              router.replace(`/events`);
+            }}
+          >
+            <MdClose size={20} color="#676767" />
+          </div>
         </div>
         {filteredEvents && filteredEvents.length !== 0 ? (
           filteredEvents
