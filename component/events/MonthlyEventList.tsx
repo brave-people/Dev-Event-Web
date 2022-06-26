@@ -13,6 +13,7 @@ import { createMyEventApi } from 'lib/api/post';
 import { deleteMyEventApi } from 'lib/api/delete';
 import LoginModal from 'component/common/modal/LoginModal';
 import { AuthContext } from 'context/auth';
+import { MdClose } from 'react-icons/md';
 
 const cn = classNames.bind(style);
 
@@ -145,6 +146,14 @@ const MonthlyEventList = () => {
         <div className={cn('section__list')}>
           <div className={cn('section__list__title')}>
             <span>{`${router.query.year}년 ${router.query.month}월`}</span>
+            <div
+              className={cn('reset-button')}
+              onClick={(event) => {
+                router.replace(`/events`);
+              }}
+            >
+              <MdClose size={20} color="#676767" />
+            </div>
           </div>
           {monthlyEvent && monthlyEvent.length !== 0 ? (
             monthlyEvent.map((item: any) => {
