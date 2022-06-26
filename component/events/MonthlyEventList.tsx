@@ -49,11 +49,8 @@ const MonthlyEventList = () => {
       const favoriteId = getFavoriteOldEventId({ id: item.id });
 
       if (favoriteId === 0) {
-        mutate(
-          [`/front/v1/favorite/events`, paramByOld],
-          [...myOldEvent, { favorite_id: favoriteId, dev_event: item }],
-          false
-        );
+        const filteredEvent = myOldEvent.concat({ favorite_id: favoriteId, dev_event: item });
+        mutate([`/front/v1/favorite/events`, paramByOld], filteredEvent, false);
         const result = await createMyEvent({ eventId: item.id });
       } else {
         const filteredEvent = myOldEvent.filter((event) => event.favorite_id !== favoriteId);
@@ -70,16 +67,12 @@ const MonthlyEventList = () => {
       const favoriteId = getFavoriteFutureEventId({ id: item.id });
 
       if (favoriteId === 0) {
-        mutate(
-          [`/front/v1/favorite/events`, paramByFuture],
-          [...myFutureEvent, { favorite_id: favoriteId, dev_event: item }],
-          false
-        );
+        const filteredEvent = myFutureEvent.concat({ favorite_id: favoriteId, dev_event: item });
+        mutate([`/front/v1/favorite/events`, paramByFuture], filteredEvent, false);
         const result = await createMyEvent({ eventId: item.id });
       } else {
         const filteredEvent = myFutureEvent.filter((event) => event.favorite_id !== favoriteId);
         mutate([`/front/v1/favorite/events`, paramByFuture], [...filteredEvent], false);
-
         const result = await deleteMyEvent({ favoriteId: favoriteId });
       }
       mutate([`/front/v1/favorite/events`, paramByFuture]);
