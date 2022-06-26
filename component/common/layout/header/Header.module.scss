@@ -9,7 +9,7 @@ $color-background: #002034;
   align-items: center;
   justify-content: center;
   height: 3.5rem;
-  width: 100vw;
+  width: 100%;
   padding: 0px 20px 0px 20px;
   background-color: $color-background;
 
@@ -137,27 +137,27 @@ $color-background: #002034;
   }
 }
 
-@media (max-width: 68.75rem) {
-  .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 3.5rem;
-    width: 100%;
-    padding: 0px 20px 0px 20px;
-    background-color: $color-background;
+// @media (max-width: 68.75rem) {
+//   .header {
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     z-index: 10;
+//     display: flex;
+//     flex-direction: row;
+//     align-items: center;
+//     justify-content: center;
+//     height: 3.5rem;
+//     width: 100%;
+//     padding: 0px 20px 0px 20px;
+//     background-color: $color-background;
 
-    &__inner {
-      height: 3.5rem;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-    }
-  }
-}
+//     &__inner {
+//       height: 3.5rem;
+//       display: flex;
+//       flex-direction: row;
+//       align-items: center;
+//       justify-content: space-between;
+//     }
+//   }
+// }

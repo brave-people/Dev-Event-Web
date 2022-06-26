@@ -128,71 +128,69 @@ const MonthlyEventList = () => {
 
   return (
     <>
-      <section className={cn('section')}>
-        <div className={cn('section__list')}>
-          <div className={cn('section__list__title')}>
-            <span>{`${router.query.year}년 ${router.query.month}월`}</span>
-            <div
-              className={cn('reset-button')}
-              onClick={(event) => {
-                router.replace(`/events`);
-              }}
-            >
-              <MdClose size={20} color="#676767" />
-            </div>
+      <div className={cn('section__list')}>
+        <div className={cn('section__list__title')}>
+          <span>{`${router.query.year}년 ${router.query.month}월`}</span>
+          <div
+            className={cn('reset-button')}
+            onClick={(event) => {
+              router.replace(`/events`);
+            }}
+          >
+            <MdClose size={20} color="#676767" />
           </div>
-          {monthlyEvent ? (
-            monthlyEvent.length !== 0 ? (
-              monthlyEvent.map((item: any) => {
-                return (
-                  <div className={cn('wrapper')}>
-                    {
-                      <Item
-                        key={item.id}
-                        data={item}
-                        isEventNew={() => {
-                          return checkEventNew({ createdDate: item.create_date_time });
-                        }}
-                        isEventDone={() => {
-                          return checkEventDone({ endDate: item.end_date_time });
-                        }}
-                        isFavorite={({ filter }: { filter: string }) => {
-                          if (authContext.isLoggedIn) {
-                            if (filter === 'OLD') {
-                              return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
-                            } else {
-                              return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
-                            }
-                          } else {
-                            return false;
-                          }
-                        }}
-                        onClickFavorite={({ filter }: { filter: string }) => {
-                          if (authContext.isLoggedIn) {
-                            if (filter === 'OLD') {
-                              return onClickFavoriteOldEvent({ item: item });
-                            } else {
-                              return onClickFavoriteFutureEvent({ item: item });
-                            }
-                          } else {
-                            setLoginModalIsOpen(true);
-                          }
-                        }}
-                      />
-                    }
-                  </div>
-                );
-              })
-            ) : (
-              <div className={cn('null-container')}>아직 조건에 맞는 개발자 행사가 없어요 📂</div>
-            )
-          ) : (
-            <div className={cn('null-container')}>
-              <ThreeDots color="#479EF1" height={60} width={60} />;
-            </div>
-          )}
         </div>
-      </section>
+        {monthlyEvent ? (
+          monthlyEvent.length !== 0 ? (
+            monthlyEvent.map((item: any) => {
+              return (
+                <div className={cn('wrapper')}>
+                  {
+                    <Item
+                      key={item.id}
+                      data={item}
+                      isEventNew={() => {
+                        return checkEventNew({ createdDate: item.create_date_time });
+                      }}
+                      isEventDone={() => {
+                        return checkEventDone({ endDate: item.end_date_time });
+                      }}
+                      isFavorite={({ filter }: { filter: string }) => {
+                        if (authContext.isLoggedIn) {
+                          if (filter === 'OLD') {
+                            return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+                          } else {
+                            return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                          }
+                        } else {
+                          return false;
+                        }
+                      }}
+                      onClickFavorite={({ filter }: { filter: string }) => {
+                        if (authContext.isLoggedIn) {
+                          if (filter === 'OLD') {
+                            return onClickFavoriteOldEvent({ item: item });
+                          } else {
+                            return onClickFavoriteFutureEvent({ item: item });
+                          }
+                        } else {
+                          setLoginModalIsOpen(true);
+                        }
+                      }}
+                    />
+                  }
+                </div>
+              );
+            })
+          ) : (
+            <div className={cn('null-container')}>아직 조건에 맞는 개발자 행사가 없어요 📂</div>
+          )
+        ) : (
+          <div className={cn('null-container')}>
+            <ThreeDots color="#479EF1" height={60} width={60} />;
+          </div>
+        )}
+      </div>
       <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
     </>
   );
