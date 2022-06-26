@@ -10,6 +10,7 @@ import { mutate } from 'swr';
 import dayjs from 'dayjs';
 import { AuthContext } from 'context/auth';
 import LoginModal from 'component/common/modal/LoginModal';
+import { ThreeDots } from 'react-loader-spinner';
 
 const cn = classNames.bind(style);
 
@@ -19,17 +20,9 @@ const ScheduledEventList = () => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
 
-  const { scheduledEvents, isLoading, isError } = useScheduledEvents();
-  const {
-    myEvent: myOldEvent,
-    isLoading: isMyOldEventLoading,
-    isError: isMyOldEventError,
-  } = useMyEvent(paramByOld, authContext.isLoggedIn);
-  const {
-    myEvent: myFutureEvent,
-    isLoading: isMyFutureEventLoading,
-    isError: isMyFutureEventError,
-  } = useMyEvent(paramByFuture, authContext.isLoggedIn);
+  const { scheduledEvents, isError } = useScheduledEvents();
+  const { myEvent: myOldEvent, isError: isMyOldEventError } = useMyEvent(paramByOld, authContext.isLoggedIn);
+  const { myEvent: myFutureEvent, isError: isMyFutureEventError } = useMyEvent(paramByFuture, authContext.isLoggedIn);
 
   const checkEventNew = ({ createdDate }: { createdDate: string }) => {
     const todayDate = dayjs();
@@ -139,64 +132,72 @@ const ScheduledEventList = () => {
 
   return (
     <>
-      {scheduledEvents && scheduledEvents.length !== 0 ? (
-        scheduledEvents.map((event: EventResponse, index) => {
-          return (
-            <>
-              {index === 0 ? null : <hr className={cn('divider')} />}
-              <div className={cn('section__list')}>
-                <div className={cn('section__list__title')}>
-                  <span>{`${event.metadata.year}년 ${event.metadata.month}월`}</span>
+      {scheduledEvents ? (
+        scheduledEvents.length !== 0 ? (
+          scheduledEvents.map((event: EventResponse, index) => {
+            return (
+              <>
+                {index === 0 ? null : <hr className={cn('divider')} />}
+                <div className={cn('section__list')}>
+                  <div className={cn('section__list__title')}>
+                    <span>{`${event.metadata.year}년 ${event.metadata.month}월`}</span>
+                  </div>
+                  {event &&
+                    event.dev_event
+                      .filter((item) => checkEventDone({ endDate: item.end_date_time }) === false)
+                      .concat(
+                        event.dev_event.filter((item) => checkEventDone({ endDate: item.end_date_time }) === true)
+                      )
+                      .map((item: Event) => {
+                        return (
+                          <div className={cn('wrapper')}>
+                            <Item
+                              key={item.id}
+                              data={item}
+                              isEventNew={() => {
+                                return checkEventNew({ createdDate: item.create_date_time });
+                              }}
+                              isEventDone={() => {
+                                return checkEventDone({ endDate: item.end_date_time });
+                              }}
+                              isFavorite={({ filter }: { filter: string }) => {
+                                if (authContext.isLoggedIn) {
+                                  if (filter === 'OLD') {
+                                    return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+                                  } else {
+                                    return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                                  }
+                                } else {
+                                  return false;
+                                }
+                              }}
+                              onClickFavorite={({ filter }: { filter: string }) => {
+                                if (authContext.isLoggedIn) {
+                                  if (filter === 'OLD') {
+                                    return onClickFavoriteOldEvent({ item: item });
+                                  } else {
+                                    return onClickFavoriteFutureEvent({ item: item });
+                                  }
+                                } else {
+                                  setLoginModalIsOpen(true);
+                                }
+                              }}
+                            />
+                          </div>
+                        );
+                      })}
                 </div>
-                {event &&
-                  event.dev_event
-                    .filter((item) => checkEventDone({ endDate: item.end_date_time }) === false)
-                    .concat(event.dev_event.filter((item) => checkEventDone({ endDate: item.end_date_time }) === true))
-                    .map((item: Event) => {
-                      return (
-                        <div className={cn('wrapper')}>
-                          <Item
-                            key={item.id}
-                            data={item}
-                            isEventNew={() => {
-                              return checkEventNew({ createdDate: item.create_date_time });
-                            }}
-                            isEventDone={() => {
-                              return checkEventDone({ endDate: item.end_date_time });
-                            }}
-                            isFavorite={({ filter }: { filter: string }) => {
-                              if (authContext.isLoggedIn) {
-                                if (filter === 'OLD') {
-                                  return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
-                                } else {
-                                  return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
-                                }
-                              } else {
-                                return false;
-                              }
-                            }}
-                            onClickFavorite={({ filter }: { filter: string }) => {
-                              if (authContext.isLoggedIn) {
-                                if (filter === 'OLD') {
-                                  return onClickFavoriteOldEvent({ item: item });
-                                } else {
-                                  return onClickFavoriteFutureEvent({ item: item });
-                                }
-                              } else {
-                                setLoginModalIsOpen(true);
-                              }
-                            }}
-                          />
-                        </div>
-                      );
-                    })}
-              </div>
-              <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
-            </>
-          );
-        })
+                <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
+              </>
+            );
+          })
+        ) : (
+          <div className={cn('null-container')}>아직 조건에 맞는 개발자 행사가 없어요 📂</div>
+        )
       ) : (
-        <div className={cn('null-container')}>아직 조건에 맞는 개발자 행사가 없어요 📂</div>
+        <div className={cn('null-container')}>
+          <ThreeDots color="#479EF1" height={60} width={60} />;
+        </div>
       )}
     </>
   );

@@ -14,6 +14,7 @@ import { deleteMyEventApi } from 'lib/api/delete';
 import LoginModal from 'component/common/modal/LoginModal';
 import { AuthContext } from 'context/auth';
 import { MdClose } from 'react-icons/md';
+import { ThreeDots } from 'react-loader-spinner';
 
 const cn = classNames.bind(style);
 
@@ -25,19 +26,11 @@ const MonthlyEventList = () => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
 
-  const { monthlyEvent, isLoading, isError } = useMonthlyEvent({
+  const { monthlyEvent, isError } = useMonthlyEvent({
     param: param,
   });
-  const {
-    myEvent: myOldEvent,
-    isLoading: isMyOldEventLoading,
-    isError: isMyOldEventError,
-  } = useMyEvent(paramByOld, authContext.isLoggedIn);
-  const {
-    myEvent: myFutureEvent,
-    isLoading: isMyFutureEventLoading,
-    isError: isMyFutureEventError,
-  } = useMyEvent(paramByFuture, authContext.isLoggedIn);
+  const { myEvent: myOldEvent, isError: isMyOldEventError } = useMyEvent(paramByOld, authContext.isLoggedIn);
+  const { myEvent: myFutureEvent, isError: isMyFutureEventError } = useMyEvent(paramByFuture, authContext.isLoggedIn);
 
   const checkEventNew = ({ createdDate }: { createdDate: string }) => {
     const todayDate = dayjs();
@@ -155,49 +148,55 @@ const MonthlyEventList = () => {
               <MdClose size={20} color="#676767" />
             </div>
           </div>
-          {monthlyEvent && monthlyEvent.length !== 0 ? (
-            monthlyEvent.map((item: any) => {
-              return (
-                <div className={cn('wrapper')}>
-                  {
-                    <Item
-                      key={item.id}
-                      data={item}
-                      isEventNew={() => {
-                        return checkEventNew({ createdDate: item.create_date_time });
-                      }}
-                      isEventDone={() => {
-                        return checkEventDone({ endDate: item.end_date_time });
-                      }}
-                      isFavorite={({ filter }: { filter: string }) => {
-                        if (authContext.isLoggedIn) {
-                          if (filter === 'OLD') {
-                            return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+          {monthlyEvent ? (
+            monthlyEvent.length !== 0 ? (
+              monthlyEvent.map((item: any) => {
+                return (
+                  <div className={cn('wrapper')}>
+                    {
+                      <Item
+                        key={item.id}
+                        data={item}
+                        isEventNew={() => {
+                          return checkEventNew({ createdDate: item.create_date_time });
+                        }}
+                        isEventDone={() => {
+                          return checkEventDone({ endDate: item.end_date_time });
+                        }}
+                        isFavorite={({ filter }: { filter: string }) => {
+                          if (authContext.isLoggedIn) {
+                            if (filter === 'OLD') {
+                              return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+                            } else {
+                              return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                            }
                           } else {
-                            return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                            return false;
                           }
-                        } else {
-                          return false;
-                        }
-                      }}
-                      onClickFavorite={({ filter }: { filter: string }) => {
-                        if (authContext.isLoggedIn) {
-                          if (filter === 'OLD') {
-                            return onClickFavoriteOldEvent({ item: item });
+                        }}
+                        onClickFavorite={({ filter }: { filter: string }) => {
+                          if (authContext.isLoggedIn) {
+                            if (filter === 'OLD') {
+                              return onClickFavoriteOldEvent({ item: item });
+                            } else {
+                              return onClickFavoriteFutureEvent({ item: item });
+                            }
                           } else {
-                            return onClickFavoriteFutureEvent({ item: item });
+                            setLoginModalIsOpen(true);
                           }
-                        } else {
-                          setLoginModalIsOpen(true);
-                        }
-                      }}
-                    />
-                  }
-                </div>
-              );
-            })
+                        }}
+                      />
+                    }
+                  </div>
+                );
+              })
+            ) : (
+              <div className={cn('null-container')}>아직 조건에 맞는 개발자 행사가 없어요 📂</div>
+            )
           ) : (
-            <div className={cn('null-container')}>아직 조건에 맞는 개발자 행사가 없어요 📂</div>
+            <div className={cn('null-container')}>
+              <ThreeDots color="#479EF1" height={60} width={60} />;
+            </div>
           )}
         </div>
       </section>
