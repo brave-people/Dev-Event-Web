@@ -12,6 +12,7 @@ import { AuthContext } from 'context/auth';
 import LoginModal from 'component/common/modal/LoginModal';
 import router from 'next/router';
 import { MdClose } from 'react-icons/md';
+import { ThreeDots } from 'react-loader-spinner';
 
 const cn = classNames.bind(style);
 
@@ -23,16 +24,8 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
 
   const { scheduledEvents, isLoading, isError } = useScheduledEvents();
-  const {
-    myEvent: myOldEvent,
-    isLoading: isMyOldEventLoading,
-    isError: isMyOldEventError,
-  } = useMyEvent(paramByOld, authContext.isLoggedIn);
-  const {
-    myEvent: myFutureEvent,
-    isLoading: isMyFutureEventLoading,
-    isError: isMyFutureEventError,
-  } = useMyEvent(paramByFuture, authContext.isLoggedIn);
+  const { myEvent: myOldEvent, isError: isMyOldEventError } = useMyEvent(paramByOld, authContext.isLoggedIn);
+  const { myEvent: myFutureEvent, isError: isMyFutureEventError } = useMyEvent(paramByFuture, authContext.isLoggedIn);
 
   useEffect(() => {
     let events = Array<Event>(0);
@@ -175,49 +168,55 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
             <MdClose size={20} color="#676767" />
           </div>
         </div>
-        {filteredEvents && filteredEvents.length !== 0 ? (
-          filteredEvents
-            .sort((a, b) => +new Date(b.end_date_time) - +new Date(a.end_date_time))
-            .map((item: Event) => {
-              return (
-                <div className={cn('wrapper')}>
-                  <Item
-                    key={item.id}
-                    data={item}
-                    isEventNew={() => {
-                      return checkEventNew({ createdDate: item.create_date_time });
-                    }}
-                    isEventDone={() => {
-                      return checkEventDone({ endDate: item.end_date_time });
-                    }}
-                    isFavorite={({ filter }: { filter: string }) => {
-                      if (authContext.isLoggedIn) {
-                        if (filter === 'OLD') {
-                          return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+        {filteredEvents ? (
+          filteredEvents.length !== 0 ? (
+            filteredEvents
+              .sort((a, b) => +new Date(b.end_date_time) - +new Date(a.end_date_time))
+              .map((item: Event) => {
+                return (
+                  <div className={cn('wrapper')}>
+                    <Item
+                      key={item.id}
+                      data={item}
+                      isEventNew={() => {
+                        return checkEventNew({ createdDate: item.create_date_time });
+                      }}
+                      isEventDone={() => {
+                        return checkEventDone({ endDate: item.end_date_time });
+                      }}
+                      isFavorite={({ filter }: { filter: string }) => {
+                        if (authContext.isLoggedIn) {
+                          if (filter === 'OLD') {
+                            return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+                          } else {
+                            return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                          }
                         } else {
-                          return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                          return false;
                         }
-                      } else {
-                        return false;
-                      }
-                    }}
-                    onClickFavorite={({ filter }: { filter: string }) => {
-                      if (authContext.isLoggedIn) {
-                        if (filter === 'OLD') {
-                          return onClickFavoriteOldEvent({ item: item });
+                      }}
+                      onClickFavorite={({ filter }: { filter: string }) => {
+                        if (authContext.isLoggedIn) {
+                          if (filter === 'OLD') {
+                            return onClickFavoriteOldEvent({ item: item });
+                          } else {
+                            return onClickFavoriteFutureEvent({ item: item });
+                          }
                         } else {
-                          return onClickFavoriteFutureEvent({ item: item });
+                          setLoginModalIsOpen(true);
                         }
-                      } else {
-                        setLoginModalIsOpen(true);
-                      }
-                    }}
-                  />
-                </div>
-              );
-            })
+                      }}
+                    />
+                  </div>
+                );
+              })
+          ) : (
+            <div className={cn('null-container')}>아직 조건에 맞는 개발자 행사가 없어요 📂</div>
+          )
         ) : (
-          <div className={cn('null-container')}>아직 조건에 맞는 개발자 행사가 없어요 📂</div>
+          <div className={cn('null-container')}>
+            <ThreeDots color="#479EF1" height={60} width={60} />;
+          </div>
         )}
       </div>
       <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
