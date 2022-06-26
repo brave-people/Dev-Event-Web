@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  width: 100vw;
+  width: 100%;
   min-width: 68.75rem;
   height: 17.188rem;
   background: #ffffff;
@@ -111,6 +111,7 @@
     background-color: transparent;
     padding-top: 2.688rem;
     width: 68.75rem;
+
     &__title {
       font-weight: 700;
       font-size: 1.5rem;
@@ -132,6 +133,7 @@
   &__list {
     padding-top: 3.2rem;
     min-height: 60vh;
+    padding-bottom: 50px;
     .wrapper {
       padding-bottom: 1.75rem;
     }
@@ -149,4 +151,16 @@
   font-size: 1.5rem;
   line-height: 1.8rem;
   color: #a8a8a8;
+}
+
+@media (max-width: 68.75rem) {
+  .sub-header__inner {
+    width: 68.75rem;
+    padding: 0px 20px 0px 20px;
+    padding-top: 5.125rem;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
 }
