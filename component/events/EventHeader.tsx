@@ -15,7 +15,11 @@ const EventHeader = () => {
   const router = useRouter();
   const [filter, setFilter] = useState({ date: '전체', tag: '태그' });
   const [isFiltered, setIsFiltered] = useState(false);
-  const { tags, isLoading, isError } = useTags();
+  const [totalCount, setTotalCount] = useState(0);
+  const [lastDate, setLastDate] = useState({ year: 0, month: 0 });
+
+  const { tags, isLoading: isTagLoading, isError: isTagError } = useTags();
+  const { scheduledEvents, isLoading: isEventsLoading, isError: isEventError } = useScheduledEvents();
 
   useEffect(() => {
     if (router.query.year && router.query.month) {
@@ -29,10 +33,35 @@ const EventHeader = () => {
     }
   }, [router.query]);
 
+  useEffect(() => {
+    composeTotalCount();
+    getEventLastMonth();
+  }, [scheduledEvents]);
+
+  const composeTotalCount = () => {
+    if (scheduledEvents && !isEventError) {
+      const result = scheduledEvents.reduce(function add(sum, currValue) {
+        return sum + currValue.metadata.total;
+      }, 0);
+      setTotalCount(result);
+    }
+  };
+
+  const getEventLastMonth = () => {
+    if (scheduledEvents) {
+      const lastyear = scheduledEvents[scheduledEvents.length - 1].metadata.year;
+      const lastmonth = scheduledEvents[scheduledEvents.length - 1].metadata.month;
+      setLastDate({ year: lastyear, month: lastmonth });
+    }
+  };
+
   const getDateList = () => {
     const list = ['전체'];
-    let currentDate = dayjs().endOf('month');
-    const startDate = dayjs('2022-01-01');
+    let currentDate = dayjs()
+      .set('year', lastDate.year)
+      .set('month', lastDate.month - 1)
+      .endOf('month');
+    const startDate = dayjs('2022-06-01');
     while (startDate.isBefore(currentDate)) {
       list.push(currentDate.format('YYYY년 MM월'));
       currentDate = currentDate.subtract(1, 'M');
@@ -41,8 +70,8 @@ const EventHeader = () => {
   };
 
   const getTagList = () => {
-    if (tags && !isError) {
-      const list = tags?.map((tag) => {
+    if (tags && !isTagError) {
+      const list = tags.map((tag) => {
         return tag.tag_name;
       });
       return list;
@@ -52,7 +81,7 @@ const EventHeader = () => {
 
   return (
     <div className={cn('section__header')}>
-      <EventCount isFiltered={isFiltered} />
+      <EventCount isFiltered={isFiltered} totalCount={totalCount} />
       <div className={cn('section__header__filters')}>
         <Dropdown
           options={getDateList()}
@@ -90,30 +119,10 @@ const EventHeader = () => {
   );
 };
 
-const EventCount = ({ isFiltered }: { isFiltered: boolean }) => {
-  const [totalCount, setTotalCount] = useState(0);
-  const { scheduledEvents, isLoading, isError } = useScheduledEvents();
-
-  useEffect(() => {
-    if (scheduledEvents && !isError) {
-      const result = scheduledEvents.reduce(function add(sum, currValue) {
-        return sum + currValue.metadata.total;
-      }, 0);
-      setTotalCount(result);
-    }
-  }, [scheduledEvents]);
-
+const EventCount = ({ isFiltered, totalCount }: { isFiltered: boolean; totalCount: Number }) => {
   return isFiltered ? (
     <span className={cn('section__header__desc')}>
       <span>검색결과</span>
-      <div
-        className={cn('reset-button')}
-        onClick={(event) => {
-          router.replace(`/events`);
-        }}
-      >
-        <MdOutlineReplay size={20} />
-      </div>
     </span>
   ) : (
     <span className={cn('section__header__desc')}>
