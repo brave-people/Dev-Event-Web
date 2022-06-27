@@ -5,6 +5,7 @@ import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Myevent.module.scss';
 import { useRouter } from 'next/router';
+import * as ga from 'lib/utils/gTag';
 
 const cn = classNames.bind(style);
 
@@ -29,6 +30,11 @@ const EventTab = ({}: any) => {
         onClick={(event) => {
           setTabMenu({ ongoing: true, done: false });
           router.replace('/myevent?tab=ongoing');
+          ga.event({
+            action: 'web_event_진행중인행사탭클릭',
+            event_category: 'web_myevent',
+            event_label: '내이벤트',
+          });
         }}
       >
         진행 중인 행사
@@ -39,6 +45,11 @@ const EventTab = ({}: any) => {
         onClick={(event) => {
           setTabMenu({ ongoing: false, done: true });
           router.replace('/myevent?tab=done');
+          ga.event({
+            action: 'web_event_종료된행사탭클릭',
+            event_category: 'web_myevent',
+            event_label: '내이벤트',
+          });
         }}
       >
         종료된 행사

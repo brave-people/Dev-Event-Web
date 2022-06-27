@@ -8,6 +8,7 @@ import { MdOutlineReplay } from 'react-icons/md';
 import router, { useRouter } from 'next/router';
 import dayjs from 'dayjs';
 import { useScheduledEvents, useTags } from 'lib/hooks/useSWR';
+import * as ga from 'lib/utils/gTag';
 
 const cn = classNames.bind(style);
 
@@ -89,6 +90,11 @@ const EventHeader = () => {
           value={filter.date}
           icon={<AiTwotoneCalendar size={16} />}
           onClick={(event: any) => {
+            ga.event({
+              action: 'web_event_월별옵션클릭',
+              event_category: 'web_event',
+              event_label: '검색',
+            });
             setFilter({ ...filter, date: event.target.innerText });
             if (event.target.innerText === '전체') {
               router.replace(`/events`);
@@ -105,6 +111,11 @@ const EventHeader = () => {
             icon={<BiPurchaseTagAlt size={16} />}
             type="expand"
             onClick={(event: any) => {
+              ga.event({
+                action: 'web_event_태그옵션클릭',
+                event_category: 'web_event',
+                event_label: '검색',
+              });
               if (event.target.innerText === '전체') {
                 router.replace(`/events`);
               } else {

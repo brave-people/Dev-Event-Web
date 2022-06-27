@@ -9,6 +9,7 @@ import SearchIcon from 'public/icon/search_outlined_regular.svg';
 import { AuthContext } from 'context/auth';
 import Profile from './Profile';
 import Logo from 'public/logo/logo.svg';
+import * as ga from 'lib/utils/gTag';
 
 const cn = classNames.bind(style);
 
@@ -29,7 +30,16 @@ function Header() {
         <div className={cn('header__buttons')}>
           <Link href={'https://forms.gle/UUjUVg1tTrKhemKu9'}>
             <a>
-              <TextButton label="행사등록"></TextButton>
+              <TextButton
+                label="행사등록"
+                onClick={() => {
+                  ga.event({
+                    action: 'web_event_행사등록버튼클릭',
+                    event_category: 'web_event',
+                    event_label: '행사등록',
+                  });
+                }}
+              ></TextButton>
             </a>
           </Link>
 
@@ -42,6 +52,11 @@ function Header() {
                 onClick={() => {
                   setLoginModalIsOpen(true);
                   setSearchModalIsOpen(false);
+                  ga.event({
+                    action: 'web_event_로그인버튼클릭',
+                    event_category: 'web_event',
+                    event_label: '로그인',
+                  });
                 }}
               ></TextButton>
             )}
@@ -52,6 +67,11 @@ function Header() {
               onClick={() => {
                 setSearchModalIsOpen(!searchModalIsOpen);
                 setLoginModalIsOpen(false);
+                ga.event({
+                  action: 'web_event_키워드검색버튼클릭',
+                  event_category: 'web_event',
+                  event_label: '검색',
+                });
               }}
             >
               <SearchIcon size={24} />

@@ -12,6 +12,8 @@ import { AuthContext } from 'context/auth';
 import router from 'next/router';
 import LoginModal from 'component/common/modal/LoginModal';
 import Head from 'next/head';
+import * as ga from 'lib/utils/gTag';
+
 const cn = classNames.bind(style);
 
 const Events = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
@@ -41,6 +43,11 @@ const Events = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
             label="내 이벤트 보기"
             onClick={() => {
               authContext.isLoggedIn ? router.push('/myevent') : setLoginModalIsOpen(true);
+              ga.event({
+                action: 'web_event_내이벤트버튼클릭',
+                event_category: 'web_event',
+                event_label: '내이벤트이동',
+              });
             }}
           />{' '}
         </span>

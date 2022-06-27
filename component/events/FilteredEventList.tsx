@@ -13,6 +13,7 @@ import LoginModal from 'component/common/modal/LoginModal';
 import router from 'next/router';
 import { MdClose } from 'react-icons/md';
 import { ThreeDots } from 'react-loader-spinner';
+import * as ga from 'lib/utils/gTag';
 
 const cn = classNames.bind(style);
 
@@ -133,6 +134,11 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
     } else {
       alert('이벤트 정보가 없습니다!');
     }
+    ga.event({
+      action: 'web_event_관심행사추가버튼클릭',
+      event_category: 'web_event',
+      event_label: '관심행사',
+    });
   };
 
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: number }) => {
@@ -146,6 +152,11 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
     } else {
       alert('이벤트 정보가 없습니다!');
     }
+    ga.event({
+      action: 'web_event_관심행사삭제버튼클릭',
+      event_category: 'web_event',
+      event_label: '관심행사',
+    });
   };
 
   return (
