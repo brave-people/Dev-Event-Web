@@ -7,6 +7,7 @@ import { deleteMyEventApi } from 'lib/api/delete';
 import { MyEvent } from 'model/event';
 import { mutate } from 'swr';
 import { ThreeDots } from 'react-loader-spinner';
+import * as ga from 'lib/utils/gTag';
 
 const cn = classNames.bind(style);
 
@@ -26,6 +27,11 @@ const ScheduledEventList = () => {
       alert('이벤트 정보가 없습니다!');
     }
     mutate([`/front/v1/favorite/events`, param]);
+    ga.event({
+      action: 'web_event_관심행사삭제버튼클릭',
+      event_category: 'web_myevent',
+      event_label: '관심행사',
+    });
   };
 
   return (

@@ -8,11 +8,17 @@ import KakaoIcon from 'public/icon/kakao.svg';
 import GithubIcon from 'public/icon/github.svg';
 import NaverIcon from 'public/icon/naver.svg';
 import router from 'next/router';
+import * as ga from 'lib/utils/gTag';
 
 const cx = classNames.bind(style);
 
 function LoginModal({ isOpen, onClick }: any) {
   const requestLogin = async (type: String) => {
+    ga.event({
+      action: 'web_event_sns로그인버튼클릭',
+      event_category: 'web_event',
+      event_label: '로그인',
+    });
     const url = `${process.env.BASE_SERVER_URL}/auth/login/${type}`;
     router.push(url);
   };

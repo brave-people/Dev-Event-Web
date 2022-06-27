@@ -6,6 +6,8 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { AuthContext } from 'context/auth';
 import { useOnClickOutside } from 'lib/hooks/useOnClickOutside';
+import * as ga from 'lib/utils/gTag';
+
 const cn = classNames.bind(style);
 
 const Profile = () => {
@@ -38,6 +40,11 @@ const Profile = () => {
           <div
             className={cn('profile-menu__item')}
             onClick={() => {
+              ga.event({
+                action: 'web_event_내이벤트메뉴클릭',
+                event_category: 'web_event',
+                event_label: '내이벤트이동',
+              });
               router.push('/myevent');
               setProfileMenuIsOpen(false);
             }}
@@ -47,6 +54,11 @@ const Profile = () => {
           <div
             className={cn('profile-menu__item')}
             onClick={() => {
+              ga.event({
+                action: 'web_event_내정보보기버튼클릭',
+                event_category: 'web_event',
+                event_label: '내정보이동',
+              });
               router.push('/myinfo');
               setProfileMenuIsOpen(false);
             }}

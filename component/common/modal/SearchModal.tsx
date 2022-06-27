@@ -4,6 +4,7 @@ import style from './SearchModal.module.scss';
 import Modal from 'react-modal';
 import { FiSearch } from 'react-icons/fi';
 import router from 'next/router';
+import * as ga from 'lib/utils/gTag';
 
 const cx = classNames.bind(style);
 
@@ -19,6 +20,11 @@ function SearchModal({ isOpen, onClick }: any) {
   const onSubmit = (event: React.KeyboardEvent<HTMLElement>) => {
     if (event.code == 'Enter') {
       if (input) {
+        ga.event({
+          action: 'web_event_키워드검색엔터클릭',
+          event_category: 'web_event',
+          event_label: '검색',
+        });
         router.replace(`/events?keyword=${input}`);
       } else {
         router.replace(`/events`);

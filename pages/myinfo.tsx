@@ -14,6 +14,7 @@ import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import cookie from 'cookie';
 import Head from 'next/head';
+import * as ga from 'lib/utils/gTag';
 
 const cn = classNames.bind(style);
 
@@ -34,6 +35,11 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
     if (result.status_code === 200) {
       logout();
     }
+    ga.event({
+      action: 'web_event_탈퇴진행버튼클릭',
+      event_category: 'web_myinfo',
+      event_label: '탈퇴',
+    });
   };
 
   const logout = async () => {
@@ -81,6 +87,11 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
               data-hover="탈퇴하기 🥺"
               onClick={() => {
                 setDeleteAccountIsOpen(true);
+                ga.event({
+                  action: 'web_event_탈퇴버튼클릭',
+                  event_category: 'web_myinfo',
+                  event_label: '탈퇴',
+                });
               }}
             >
               탈퇴하기
@@ -91,6 +102,11 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
           isOpen={DeleteAccountModalIsOpen}
           onCancel={() => {
             setDeleteAccountIsOpen(false);
+            ga.event({
+              action: 'web_event_탈퇴취소버튼클릭',
+              event_category: 'web_myinfo',
+              event_label: '탈퇴',
+            });
           }}
           onClick={deleteAccount}
         />

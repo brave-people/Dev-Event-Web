@@ -12,6 +12,7 @@ import { MdContentCopy } from 'react-icons/md';
 import { DateUtil } from 'lib/utils/dateUtil';
 import { useOnClickOutside } from 'lib/hooks/useOnClickOutside';
 import dayjs from 'dayjs';
+import * as ga from 'lib/utils/gTag';
 
 const cn = classNames.bind(style);
 
@@ -83,6 +84,11 @@ const Item = ({
           if (event.target.tagName !== 'SPAN' && event.target.tagName !== 'DIV' && event.target.tagName !== 'IMG') {
             event.preventDefault();
           }
+          ga.event({
+            action: 'web_event_이벤트클릭',
+            event_category: 'web_event',
+            event_label: '이벤트클릭',
+          });
         }}
       >
         <div className={cn('item')}>
@@ -131,6 +137,11 @@ const Item = ({
                       <Tag
                         label={tag.tag_name}
                         onClick={(event: any) => {
+                          ga.event({
+                            action: 'web_event_이벤트태그클릭',
+                            event_category: 'web_event',
+                            event_label: '검색',
+                          });
                           const tag = event.target.innerText.replace(/[\t\s\#]/g, '');
                           router.replace(`/events?tag=${tag}`);
                         }}
@@ -159,6 +170,11 @@ const Item = ({
               className={cn('share-button')}
               onClick={() => {
                 setShareModalOpen(!isShareModalOpen);
+                ga.event({
+                  action: 'web_event_공유버튼클릭',
+                  event_category: 'web_event',
+                  event_label: '공유',
+                });
               }}
             >
               <ShareIcon />
@@ -180,6 +196,11 @@ const Item = ({
                       .catch((err) => {
                         console.log('링크복사 실패', err);
                       });
+                    ga.event({
+                      action: 'web_event_url복사버튼클릭',
+                      event_category: 'web_event',
+                      event_label: '공유',
+                    });
                   }}
                 >
                   <MdContentCopy color="#757575" size={20} />

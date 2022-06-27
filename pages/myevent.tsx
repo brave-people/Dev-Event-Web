@@ -11,6 +11,7 @@ import EventTab from 'component/myEvent/EventTab';
 import { GetServerSideProps } from 'next';
 import { AuthContext } from 'context/auth';
 import Head from 'next/head';
+import * as ga from 'lib/utils/gTag';
 
 const cn = classNames.bind(style);
 
@@ -35,7 +36,16 @@ const MyEvent = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
             <span>내가 찜한 개발자 행사 정보들을 한눈에 모아봐요</span>
           </div>
           <Link href="/myinfo">
-            <span className={cn('sub-header__link')}>
+            <span
+              className={cn('sub-header__link')}
+              onClick={() => {
+                ga.event({
+                  action: 'web_event_내정보보기버튼클릭',
+                  event_category: 'web_myevent',
+                  event_label: '내정보이동',
+                });
+              }}
+            >
               <span>내 정보 보기 </span>
               <MdOutlineArrowForwardIos size={16} />
             </span>
