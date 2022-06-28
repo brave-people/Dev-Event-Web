@@ -90,6 +90,7 @@ const Item = ({
             event_label: '이벤트클릭',
           });
         }}
+        target="_blank"
       >
         <div className={cn('item')}>
           <div className={cn('item__content')}>
