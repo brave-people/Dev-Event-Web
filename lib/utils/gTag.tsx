@@ -3,7 +3,11 @@ interface EventParams {
   event_category?: string;
   action: string;
 }
-
+declare global {
+  interface Window {
+    gtag: any;
+  }
+}
 export const GA_TRACKING_ID = 'G-BM8BFNJ65P';
 
 export const pageview = (url: URL) => {
