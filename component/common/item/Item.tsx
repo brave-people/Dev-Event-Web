@@ -33,7 +33,9 @@ const Item = ({
 
   const outsideRef = useRef(null);
   const handleClickOutside = () => {
-    setShareModalOpen(false);
+    if (isShareModalOpen) {
+      setShareModalOpen(false);
+    }
   };
   useOnClickOutside({ ref: outsideRef, handler: handleClickOutside, mouseEvent: 'click' });
 
@@ -78,21 +80,21 @@ const Item = ({
     }
   };
   return (
-    <Link href={String(data.event_link)}>
-      <a
-        onClick={(event: any) => {
-          if (event.target.tagName !== 'SPAN' && event.target.tagName !== 'DIV' && event.target.tagName !== 'IMG') {
-            event.preventDefault();
-          }
-          ga.event({
-            action: 'web_event_이벤트클릭',
-            event_category: 'web_event',
-            event_label: '이벤트클릭',
-          });
-        }}
-        target="_blank"
-      >
-        <div className={cn('item')}>
+    <div className={cn('item')}>
+      <Link href={String(data.event_link)}>
+        <a
+          onClick={(event: any) => {
+            if (event.target.tagName !== 'SPAN' && event.target.tagName !== 'DIV' && event.target.tagName !== 'IMG') {
+              event.preventDefault();
+            }
+            ga.event({
+              action: 'web_event_이벤트클릭',
+              event_category: 'web_event',
+              event_label: '이벤트클릭',
+            });
+          }}
+          target="_blank"
+        >
           <div className={cn('item__content')}>
             <div className={cn('item__content__img')}>
               <Image
@@ -153,65 +155,59 @@ const Item = ({
               </div>
             </div>
           </div>
-
-          <div className={cn('item__buttons')}>
+        </a>
+      </Link>
+      <div className={cn('item__buttons')}>
+        <button
+          className={cn(`like-button`, isFavorite({ filter: isEventDone() ? 'OLD' : 'FUTURE' }) ? '--selected' : null)}
+          onClick={() => {
+            onClickFavorite({ filter: isEventDone() ? 'OLD' : 'FUTURE' });
+          }}
+        >
+          <StarIcon />
+        </button>
+        <button
+          className={cn('share-button')}
+          onClick={() => {
+            setShareModalOpen(!isShareModalOpen);
+            ga.event({
+              action: 'web_event_공유버튼클릭',
+              event_category: 'web_event',
+              event_label: '공유',
+            });
+          }}
+        >
+          <ShareIcon />
+        </button>
+        {isShareModalOpen ? (
+          <div className={cn('share-modal')} ref={outsideRef}>
+            {' '}
+            <input className={cn('share-modal__link')} value={data.event_link} readOnly></input>
             <button
-              className={cn(
-                `like-button`,
-                isFavorite({ filter: isEventDone() ? 'OLD' : 'FUTURE' }) ? '--selected' : null
-              )}
-              onClick={() => {
-                onClickFavorite({ filter: isEventDone() ? 'OLD' : 'FUTURE' });
-              }}
-            >
-              <StarIcon />
-            </button>
-            <button
-              // ref={outsideRef}
-              className={cn('share-button')}
-              onClick={() => {
-                setShareModalOpen(!isShareModalOpen);
+              className={cn('share-modal__button')}
+              onClick={(event) => {
+                const copyLink = data.event_link;
+                navigator.clipboard
+                  .writeText(copyLink)
+                  .then(() => {
+                    alert('링크가 복사되었습니다');
+                  })
+                  .catch((err) => {
+                    console.log('링크복사 실패', err);
+                  });
                 ga.event({
-                  action: 'web_event_공유버튼클릭',
+                  action: 'web_event_url복사버튼클릭',
                   event_category: 'web_event',
                   event_label: '공유',
                 });
               }}
             >
-              <ShareIcon />
+              <MdContentCopy color="#757575" size={20} />
             </button>
-
-            {isShareModalOpen ? (
-              <div className={cn('share-modal')}>
-                {' '}
-                <input className={cn('share-modal__link')} value={data.event_link} readOnly></input>
-                <button
-                  className={cn('share-modal__button')}
-                  onClick={(event) => {
-                    const copyLink = data.event_link;
-                    navigator.clipboard
-                      .writeText(copyLink)
-                      .then(() => {
-                        alert('링크가 복사되었습니다');
-                      })
-                      .catch((err) => {
-                        console.log('링크복사 실패', err);
-                      });
-                    ga.event({
-                      action: 'web_event_url복사버튼클릭',
-                      event_category: 'web_event',
-                      event_label: '공유',
-                    });
-                  }}
-                >
-                  <MdContentCopy color="#757575" size={20} />
-                </button>
-              </div>
-            ) : null}
           </div>
-        </div>
-      </a>
-    </Link>
+        ) : null}
+      </div>
+    </div>
   );
 };
 
