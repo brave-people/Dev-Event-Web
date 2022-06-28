@@ -10,6 +10,7 @@
   border-radius: 10px;
   cursor: pointer;
   transform: translateY(0px);
+
   &__content {
     display: flex;
     flex-direction: row;
@@ -174,6 +175,8 @@
     padding-top: 17px;
     position: relative;
     padding-right: 1.875rem;
+    overflow: visible;
+
     .like-button {
       border: none;
       background-color: transparent;
