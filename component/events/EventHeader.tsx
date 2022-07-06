@@ -35,14 +35,12 @@ const EventHeader = () => {
   }, [router.query]);
 
   useEffect(() => {
-    if (scheduledEvents && !isEventError) {
-      composeTotalCount();
-      getEventLastMonth();
-    }
+    composeTotalCount();
+    getEventLastMonth();
   }, [scheduledEvents]);
 
   const composeTotalCount = () => {
-    if (scheduledEvents && !isEventError) {
+    if (scheduledEvents && !isEventError && scheduledEvents.length !== 0) {
       const result = scheduledEvents.reduce(function add(sum, currValue) {
         return sum + currValue.metadata.total;
       }, 0);
@@ -51,7 +49,7 @@ const EventHeader = () => {
   };
 
   const getEventLastMonth = () => {
-    if (scheduledEvents) {
+    if (scheduledEvents && !isEventError && scheduledEvents.length !== 0) {
       const lastyear = scheduledEvents[scheduledEvents.length - 1].metadata.year;
       const lastmonth = scheduledEvents[scheduledEvents.length - 1].metadata.month;
       setLastDate({ year: lastyear, month: lastmonth });
