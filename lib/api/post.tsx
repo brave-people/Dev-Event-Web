@@ -8,7 +8,6 @@ export const createMyEventApi = async (url: string, data: MyEventPostProps): Pro
     const response: AxiosResponse = await axiosInstance.post(`${process.env.BASE_SERVER_URL}${url}`, data);
     return response.data;
   } catch (error: any) {
-    alert('내 이벤트 등록이 실패했습니다.');
     throw error.response;
   }
 };

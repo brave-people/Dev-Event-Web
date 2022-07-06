@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { handleError } from 'lib/api/error';
 import { regenerateAccessToken } from 'lib/api/post';
-import router from 'next/router';
 
+const requestArray = [];
 const axiosInstance = axios.create({
   baseURL: `${process.env.BASE_SERVER_URL}`,
 });
@@ -27,34 +28,27 @@ axiosInstance.interceptors.response.use(
   },
   async function (error) {
     const config = error.config;
-    if (error.response.data.status === 'TOKEN_400_02') {
-      const { data } = await axios.post(`/api/getRefreshToken`);
-      if (data) {
-        const result = await regenerateAccessToken('/admin/v1/token/refresh', { refresh_token: data.refresh_token });
+    requestArray.push(config);
+    if (requestArray.length === 1) {
+      if (error.response.data.status_code === 400 && error.response.data.status === 'TOKEN_400_02') {
+        const { data } = await axios.post(`/api/getRefreshToken`);
+        if (data) {
+          const result = await regenerateAccessToken('/admin/v1/token/refresh', {
+            refresh_token: data.refresh_token,
+          });
 
-        if (result.access_token) {
-          const response = await axios.post('/api/autoLogin', { param: { result } });
-          config.headers['Authorization'] = result.access_token;
-          if (response.status === 200) {
-            return axios.request(config);
+          if (result.access_token) {
+            const response = await axios.post('/api/autoLogin', { param: { result } });
+            config.headers['Authorization'] = result.access_token;
+            if (response.status === 200) {
+              return axios.request(config);
+            }
           }
         }
+      } else {
+        handleError(error.response.data);
+        return Promise.reject(error);
       }
-    } else if (error.response.data.status_code === 400) {
-      const response = await axios.post('/api/logout');
-      if (response.status === 200) {
-        router.push('/');
-      }
-    } else if (
-      error.response.data.status === 'AUTH_500_00' ||
-      error.response.data.status === 'AUTH_500_02' ||
-      error.response.data.status === 'AUTH_500_03'
-    ) {
-      alert('인증에 문제가 발생하였습니다.');
-      const response = await axios.post('/api/logout');
-      router.push('/');
-    } else {
-      console.log(error.response);
     }
     return Promise.reject(error);
   }
