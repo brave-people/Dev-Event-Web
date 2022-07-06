@@ -21,8 +21,10 @@ const MyEvent = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   useEffect(() => {
     if (isLoggedIn) {
       authContext.login();
+    } else {
+      authContext.logout();
     }
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <>

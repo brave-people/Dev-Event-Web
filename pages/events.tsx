@@ -22,8 +22,10 @@ const Events = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   useEffect(() => {
     if (isLoggedIn) {
       authContext.login();
+    } else {
+      authContext.logout();
     }
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <>
@@ -65,8 +67,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = context.req.headers.cookie || '';
   if (cookies) {
     const parsedCookies = cookie.parse(cookies);
-    const token = parsedCookies.access_token;
-    if (token) {
+    const access_token = parsedCookies.access_token;
+    const refrest_token = parsedCookies.refresh_token;
+    console.log(parsedCookies);
+
+    if (access_token && refrest_token) {
       return {
         props: {
           isLoggedIn: true,

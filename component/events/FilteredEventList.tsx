@@ -24,12 +24,9 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
 
-  const { scheduledEvents, isLoading, isError } = useScheduledEvents();
-  const { myEvent: myOldEvent, isError: isMyOldEventError } = useMyEvent(paramByOld, authContext.isLoggedIn);
-  const { myEvent: myFutureEvent, isError: isMyFutureEventError } = useMyEvent(paramByFuture, authContext.isLoggedIn);
-
   useEffect(() => {
     let events = Array<Event>(0);
+
     scheduledEvents &&
       scheduledEvents.map((event: EventResponse) => {
         events.push(...event.dev_event);
@@ -42,6 +39,17 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
       setFilteredEvents(events.filter((item) => filterBySearch(item)));
     }
   }, [filter]);
+
+  const { scheduledEvents, isLoading, isError } = useScheduledEvents();
+  const { myEvent: myOldEvent, isError: isMyOldEventError } = useMyEvent(paramByOld, authContext.isLoggedIn);
+  const { myEvent: myFutureEvent, isError: isMyFutureEventError } = useMyEvent(paramByFuture, authContext.isLoggedIn);
+
+  if (isError) {
+    return <div className={cn('null-container')}>이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
+  }
+  if (isMyOldEventError || isMyFutureEventError) {
+    return <div className={cn('null-container')}>내 이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
+  }
 
   const filterByTag = (item: Event) => {
     return item.tags.some((item) => {
@@ -173,7 +181,7 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
             <MdClose size={20} color="#676767" />
           </div>
         </div>
-        {filteredEvents ? (
+        {filteredEvents && !isError ? (
           filteredEvents.length !== 0 ? (
             filteredEvents
               .sort((a, b) => +new Date(b.end_date_time) - +new Date(a.end_date_time))

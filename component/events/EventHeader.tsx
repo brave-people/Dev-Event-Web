@@ -35,8 +35,10 @@ const EventHeader = () => {
   }, [router.query]);
 
   useEffect(() => {
-    composeTotalCount();
-    getEventLastMonth();
+    if (scheduledEvents && !isEventError) {
+      composeTotalCount();
+      getEventLastMonth();
+    }
   }, [scheduledEvents]);
 
   const composeTotalCount = () => {
