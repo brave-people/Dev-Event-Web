@@ -16,3 +16,16 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.error {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.8rem;
+  color: #a8a8a8;
+}
