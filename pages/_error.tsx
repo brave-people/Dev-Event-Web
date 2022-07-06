@@ -7,6 +7,14 @@ interface Props {
 }
 
 const Error = ({ statusCode }: { statusCode: Props }) => {
+  if (!statusCode) {
+    return (
+      <div className="error">
+        <span>페이지를 불러오는 중에 문제가 발생했어요!</span>
+      </div>
+    );
+  }
+
   return (
     <div className="error">
       <span>
