@@ -198,7 +198,7 @@ const MonthlyEventList = () => {
           )
         ) : (
           <div className={cn('null-container')}>
-            <ThreeDots color="#479EF1" height={60} width={60} />;
+            <ThreeDots color="#479EF1" height={60} width={60} />
           </div>
         )}
       </div>
