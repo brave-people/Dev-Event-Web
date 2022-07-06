@@ -20,15 +20,23 @@ const cn = classNames.bind(style);
 
 const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   const [DeleteAccountModalIsOpen, setDeleteAccountIsOpen] = useState(false);
-  const { user, isLoading, isError } = useUser();
+
   const authContext = React.useContext(AuthContext);
   const router = useRouter();
 
   useEffect(() => {
     if (isLoggedIn) {
       authContext.login();
+    } else {
+      authContext.logout();
     }
-  }, []);
+  }, [isLoggedIn]);
+
+  const { user, isLoading, isError } = useUser();
+
+  if (isError) {
+    return <div className={cn('null-container')}>내 정보를 불러오는데 문제가 발생했습니다!</div>;
+  }
 
   const deleteAccount = async () => {
     const result = await deleteAccountApi(`/front/v1/users/witdraw`);

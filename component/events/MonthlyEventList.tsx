@@ -33,6 +33,13 @@ const MonthlyEventList = () => {
   const { myEvent: myOldEvent, isError: isMyOldEventError } = useMyEvent(paramByOld, authContext.isLoggedIn);
   const { myEvent: myFutureEvent, isError: isMyFutureEventError } = useMyEvent(paramByFuture, authContext.isLoggedIn);
 
+  if (isError) {
+    return <div className={cn('null-container')}>이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
+  }
+  if (isMyOldEventError || isMyFutureEventError) {
+    return <div className={cn('null-container')}>내 이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
+  }
+
   const checkEventNew = ({ createdDate }: { createdDate: string }) => {
     const todayDate = dayjs();
     const createDate = dayjs(createdDate);
@@ -151,7 +158,7 @@ const MonthlyEventList = () => {
             <MdClose size={20} color="#676767" />
           </div>
         </div>
-        {monthlyEvent ? (
+        {monthlyEvent && !isError ? (
           monthlyEvent.length !== 0 ? (
             monthlyEvent.map((item: any) => {
               return (

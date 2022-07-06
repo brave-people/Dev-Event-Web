@@ -12,6 +12,7 @@ import { AuthContext } from 'context/auth';
 import LoginModal from 'component/common/modal/LoginModal';
 import { ThreeDots } from 'react-loader-spinner';
 import * as ga from 'lib/utils/gTag';
+// import { handleSWRError } from 'lib/api/error';
 
 const cn = classNames.bind(style);
 
@@ -22,8 +23,16 @@ const ScheduledEventList = () => {
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
 
   const { scheduledEvents, isError } = useScheduledEvents();
+
   const { myEvent: myOldEvent, isError: isMyOldEventError } = useMyEvent(paramByOld, authContext.isLoggedIn);
   const { myEvent: myFutureEvent, isError: isMyFutureEventError } = useMyEvent(paramByFuture, authContext.isLoggedIn);
+
+  if (isError) {
+    return <div className={cn('null-container')}>이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
+  }
+  if (isMyOldEventError || isMyFutureEventError) {
+    return <div className={cn('null-container')}>내 이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
+  }
 
   const checkEventNew = ({ createdDate }: { createdDate: string }) => {
     const todayDate = dayjs();

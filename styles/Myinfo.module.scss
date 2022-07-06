@@ -107,6 +107,19 @@
   }
 }
 
+.null-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.8rem;
+  color: #a8a8a8;
+}
+
 @media (max-width: 68.75rem) {
   .info-container__inner {
     display: flex;

@@ -15,6 +15,9 @@ const ScheduledEventList = () => {
   const param = { filter: 'FUTURE' };
   const { myEvent, isLoading, isError } = useMyEvent(param, true);
 
+  if (isError) {
+    return <div className={cn('null-container')}>내 이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
+  }
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: Number }) => {
     if (favoriteId && myEvent) {
       const filteredEvent = myEvent.filter((event) => event.favorite_id !== favoriteId);
@@ -38,7 +41,7 @@ const ScheduledEventList = () => {
     <div className={cn('tab__body')}>
       <section className={cn('section')}>
         <div className={cn('section__list')}>
-          {myEvent ? (
+          {myEvent && !isError ? (
             myEvent.length !== 0 ? (
               myEvent.map((event: MyEvent) => {
                 return (
