@@ -11,6 +11,8 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <meta name="google-site-verification" content="nuMWgo5LJBkwv_VMLcsP3dS6eHzyyGcxKvnwVY9p5Vk" />
+          <meta name="naver-site-verification" content="846c898c7464c31de7f1d43f7c8d6aabab12daf1" />
           <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />
           <script
             dangerouslySetInnerHTML={{
