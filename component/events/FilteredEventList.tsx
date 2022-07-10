@@ -69,9 +69,12 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
   };
 
   const checkEventDone = ({ endDate }: { endDate: string }) => {
-    const todayDate = dayjs();
-    const eventDate = dayjs(endDate);
-    return eventDate.diff(todayDate, 'day') > 0 ? false : true;
+    const todayDate = dayjs().set('hour', 0).set('minute', 0).set('second', 0).set('millisecond', 0);
+    const eventDate = dayjs(endDate).set('hour', 0).set('minute', 0).set('second', 0).set('millisecond', 0);
+    return eventDate.diff(todayDate, 'day') > 0 ||
+      (eventDate.diff(todayDate, 'day') === 0 && eventDate.get('day') === todayDate.get('day'))
+      ? false
+      : true;
   };
 
   const onClickFavoriteOldEvent = async ({ item }: { item: Event }) => {
