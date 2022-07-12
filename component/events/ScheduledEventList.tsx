@@ -38,7 +38,7 @@ const ScheduledEventList = () => {
     const todayDate = dayjs();
     const createDate = dayjs(createdDate);
 
-    return createDate.diff(todayDate, 'day') < 1 && createDate.diff(todayDate, 'day') > -3 ? true : false;
+    return createDate.diff(todayDate, 'day') < 1 && createDate.diff(todayDate, 'day') > -1 ? true : false;
   };
 
   const checkEventDone = ({ endDate }: { endDate: string }) => {

@@ -44,7 +44,7 @@ const MonthlyEventList = () => {
     const todayDate = dayjs();
     const createDate = dayjs(createdDate);
 
-    return createDate.diff(todayDate, 'day') < 1 && createDate.diff(todayDate, 'day') > -3 ? true : false;
+    return createDate.diff(todayDate, 'day') < 1 && createDate.diff(todayDate, 'day') > -1 ? true : false;
   };
   const checkEventDone = ({ endDate }: { endDate: string }) => {
     const todayDate = dayjs().set('hour', 0).set('minute', 0).set('second', 0).set('millisecond', 0);
