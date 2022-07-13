@@ -4,8 +4,7 @@ const nextConfig = {
     domains: ['brave-people-3.s3.ap-northeast-2.amazonaws.com'],
   },
   env: {
-    BASE_SERVER_URL:
-      process.env.NODE_ENV === 'production' ? 'https://real-brave-people.o-r.kr' : 'https://dev-brave-people.o-r.kr',
+    BASE_SERVER_URL: process.env.BASE_SERVER_URL,
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
