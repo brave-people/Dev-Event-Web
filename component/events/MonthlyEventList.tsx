@@ -44,12 +44,15 @@ const MonthlyEventList = () => {
     const todayDate = dayjs();
     const createDate = dayjs(createdDate);
 
-    return createDate.diff(todayDate, 'day') < 1 && createDate.diff(todayDate, 'day') > -3 ? true : false;
+    return createDate.diff(todayDate, 'day') < 1 && createDate.diff(todayDate, 'day') > -1 ? true : false;
   };
   const checkEventDone = ({ endDate }: { endDate: string }) => {
-    const todayDate = dayjs();
-    const eventDate = dayjs(endDate);
-    return eventDate.diff(todayDate, 'day') > 0 ? false : true;
+    const todayDate = dayjs().set('hour', 0).set('minute', 0).set('second', 0).set('millisecond', 0);
+    const eventDate = dayjs(endDate).set('hour', 0).set('minute', 0).set('second', 0).set('millisecond', 0);
+    return eventDate.diff(todayDate, 'day') > 0 ||
+      (eventDate.diff(todayDate, 'day') === 0 && eventDate.get('day') === todayDate.get('day'))
+      ? false
+      : true;
   };
 
   const onClickFavoriteOldEvent = async ({ item }: { item: Event }) => {
