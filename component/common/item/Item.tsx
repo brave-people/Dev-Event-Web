@@ -43,7 +43,11 @@ const Item = ({
     let eventDate;
     if (DateUtil.getDateFormat(data.start_date_time) === DateUtil.getDateFormat(data.end_date_time)) {
       if (data.start_time === data.end_time) {
-        eventDate = `${DateUtil.getDateFormat(data.start_date_time)}(${data.start_day_week}) ${data.start_time}`;
+        if (data.start_time === '00:00' && data.end_time === '00:00') {
+          eventDate = `${DateUtil.getDateFormat(data.start_date_time)}(${data.start_day_week})`;
+        } else {
+          eventDate = `${DateUtil.getDateFormat(data.start_date_time)}(${data.start_day_week}) ${data.start_time}`;
+        }
       } else {
         eventDate = ` ${DateUtil.getDateFormat(data.start_date_time)}(${data.start_day_week}) ${data.start_time} ~ ${
           data.end_time

@@ -20,6 +20,8 @@
     letter-spacing: 0em;
     text-align: center;
     color: #ffffff;
+    padding: 0px;
+    margin: 0px;
   }
 
   &__desc {
@@ -29,6 +31,8 @@
     text-align: center;
     color: #ffffff;
     padding-top: 1.938rem;
+    padding-bottom: 0px;
+    margin: 0px;
     &--bold {
       font-weight: bold;
     }
