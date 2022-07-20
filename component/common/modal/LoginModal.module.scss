@@ -1,3 +1,5 @@
+@import '~styles/_mixin.scss';
+
 .modal {
   position: absolute;
   width: 67.5rem;
@@ -101,6 +103,114 @@
   }
 }
 
+@include mobile {
+  .modal {
+    position: absolute;
+    width: 94%;
+    min-width: 24.143rem;
+    height: 32.643rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 0.786rem 2.571rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &__close-button {
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      align-self: flex-end;
+      width: 24px;
+      height: 24px;
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    &__title {
+      font-weight: 700;
+      font-size: 1.143rem;
+      line-height: 151.8%;
+      text-align: center;
+      color: #000000;
+    }
+
+    &__inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 19.071rem;
+      height: 24.429rem;
+      margin-top: 0.786rem;
+
+      .login-form {
+        width: 19.071rem;
+        height: 16.571rem;
+        margin-top: 4.429rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        &__button {
+          padding: 0;
+          margin: 0px;
+          width: 19.071rem;
+          height: 2.714rem;
+          border-radius: 12.64px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+
+          span {
+            padding-left: 0.714rem;
+            font-weight: 700;
+            font-size: 0.857rem;
+            line-height: 17.38px;
+            text-align: center;
+            color: #000000;
+          }
+
+          &.kakao {
+            background: #fae44d;
+            border-radius: 12.64px;
+            border: none;
+          }
+          &.google {
+            background: #ffffff;
+            border: 1.5px solid #d8d8d8;
+            box-sizing: border-box;
+          }
+          &.github {
+            background: #000000;
+            border-radius: 12.64px;
+            border: none;
+            span {
+              color: #ffffff;
+            }
+          }
+          &.naver {
+            background: #03c75a;
+            border-radius: 12.64px;
+            border: none;
+            span {
+              color: #ffffff;
+            }
+          }
+        }
+      }
+    }
+  }
+}
 .overlay {
   position: fixed;
   top: 0;

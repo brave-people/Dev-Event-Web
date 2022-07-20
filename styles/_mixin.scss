@@ -1,0 +1,15 @@
+$mobile: 25.714rem;
+$tablet: 54.857rem;
+$laptop: 68.75rem;
+
+@mixin mobile {
+  @media (max-width: #{$tablet - 0.071rem}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{$tablet}) and (max-width: #{$laptop - 0.071rem}) {
+    @content;
+  }
+}

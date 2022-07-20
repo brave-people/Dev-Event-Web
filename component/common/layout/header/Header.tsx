@@ -74,7 +74,7 @@ function Header() {
                 });
               }}
             >
-              <SearchIcon size={24} />
+              <SearchIcon />
             </button>
           </span>
         </div>
