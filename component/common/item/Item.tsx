@@ -129,13 +129,15 @@ const Item = ({
               ) : null}
             </div>
             <div className={cn('item__content__body')}>
-              <span className={cn('item__content__title')}>{data.title}</span>
-              <div className={cn('item__content__desc')}>
-                <span>주최 : {data.organizer}</span>
-                <br className={cn('divider')} />
-                <span>
-                  일시 :{getEventDate()} <span className={cn('item__content__desc__dday')}>{getEventDdayTag()}</span>{' '}
-                </span>
+              <div>
+                <span className={cn('item__content__title')}>{data.title}</span>
+                <div className={cn('item__content__desc')}>
+                  <span>주최 : {data.organizer}</span>
+                  <br className={cn('divider')} />
+                  <span>
+                    일시 :{getEventDate()} <span className={cn('item__content__desc__dday')}>{getEventDdayTag()}</span>{' '}
+                  </span>
+                </div>
               </div>
               <div className={cn('item__content__bottom')}>
                 <div className={cn('tags')}>

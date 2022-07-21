@@ -19,7 +19,13 @@ $color-background: #002034;
     text-decoration: underline;
   }
 }
-
+@include tablet {
+  .footer {
+    width: 100vw;
+    height: 3.5rem;
+    min-width: 768px;
+  }
+}
 @include mobile {
   .footer {
     background-color: $color-background;

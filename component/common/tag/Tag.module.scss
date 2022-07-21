@@ -19,7 +19,16 @@
     border-radius: 10px;
   }
 }
-
+@include tablet {
+  .tag.size--regular {
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 24px;
+    font-size: 12px;
+    line-height: 12px;
+    border-radius: 8px;
+  }
+}
 @include mobile {
   .tag.size--regular {
     padding: 4.5px 7.5px;
