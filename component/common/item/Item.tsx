@@ -22,22 +22,59 @@ const Item = ({
   isEventDone,
   isEventNew = () => false,
   onClickFavorite,
+  onClickShareInMobileSize,
 }: {
   data: Event;
   isEventDone: () => boolean;
   isEventNew?: () => boolean;
   isFavorite: ({ filter }: { filter: string }) => boolean;
   onClickFavorite?: any;
+  onClickShareInMobileSize?: any;
 }) => {
-  const [isShareModalOpen, setShareModalOpen] = useState(false);
+  const [isShareModalOpenInDesktop, setShareModalOpenInDesktop] = useState(false);
+
+  let defaultInnerHeight = window.innerHeight;
 
   const outsideRef = useRef(null);
   const handleClickOutside = () => {
-    if (isShareModalOpen) {
-      setShareModalOpen(false);
+    if (isShareModalOpenInDesktop) {
+      setShareModalOpenInDesktop(false);
     }
   };
   useOnClickOutside({ ref: outsideRef, handler: handleClickOutside, mouseEvent: 'click' });
+
+  const checkMobile = () => {
+    return navigator.maxTouchPoints && window.innerHeight !== defaultInnerHeight;
+  };
+
+  const handleShare = async () => {
+    const isMobile = checkMobile();
+    if (isMobile) {
+      if (navigator.share) {
+        try {
+          await navigator
+            .share({ title: data.title, url: data.event_link })
+            .then(() => console.log('Hooray! Your content was shared to tha world'));
+        } catch (error) {
+          console.log(`공유 중 문제가 발생했습니다!`);
+        }
+      } else {
+        onClickShareInMobileSize(data);
+      }
+    } else {
+      const innerWidth = window.innerWidth;
+      if (innerWidth < 768) {
+        onClickShareInMobileSize(data);
+      } else {
+        setShareModalOpenInDesktop(!isShareModalOpenInDesktop);
+      }
+    }
+    ga.event({
+      action: 'web_event_공유버튼클릭',
+      event_category: 'web_event',
+      event_label: '공유',
+    });
+  };
 
   const getEventDate = () => {
     let eventDate;
@@ -129,13 +166,15 @@ const Item = ({
               ) : null}
             </div>
             <div className={cn('item__content__body')}>
-              <span className={cn('item__content__title')}>{data.title}</span>
-              <div className={cn('item__content__desc')}>
-                <span>주최 : {data.organizer}</span>
-                <br className={cn('divider')} />
-                <span>
-                  일시 :{getEventDate()} <span className={cn('item__content__desc__dday')}>{getEventDdayTag()}</span>{' '}
-                </span>
+              <div>
+                <span className={cn('item__content__title')}>{data.title}</span>
+                <div className={cn('item__content__desc')}>
+                  <span>주최 : {data.organizer}</span>
+                  <br className={cn('divider')} />
+                  <span>
+                    일시 :{getEventDate()} <span className={cn('item__content__desc__dday')}>{getEventDdayTag()}</span>{' '}
+                  </span>
+                </div>
               </div>
               <div className={cn('item__content__bottom')}>
                 <div className={cn('tags')}>
@@ -170,20 +209,10 @@ const Item = ({
         >
           <StarIcon />
         </button>
-        <button
-          className={cn('share-button')}
-          onClick={() => {
-            setShareModalOpen(!isShareModalOpen);
-            ga.event({
-              action: 'web_event_공유버튼클릭',
-              event_category: 'web_event',
-              event_label: '공유',
-            });
-          }}
-        >
+        <button className={cn('share-button')} onClick={handleShare}>
           <ShareIcon />
         </button>
-        {isShareModalOpen ? (
+        {isShareModalOpenInDesktop ? (
           <div className={cn('share-modal')} ref={outsideRef}>
             {' '}
             <input className={cn('share-modal__link')} value={data.event_link} readOnly></input>

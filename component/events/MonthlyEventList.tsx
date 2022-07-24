@@ -16,6 +16,7 @@ import { AuthContext } from 'context/auth';
 import { MdClose } from 'react-icons/md';
 import { ThreeDots } from 'react-loader-spinner';
 import * as ga from 'lib/utils/gTag';
+import ShareModal from 'component/common/modal/ShareModal';
 
 const cn = classNames.bind(style);
 
@@ -26,6 +27,13 @@ const MonthlyEventList = () => {
   const param = { year: Number(router.query.year), month: Number(router.query.month) };
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
+  const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
+  const [sharedEvent, setSharedEvent] = useState({});
+
+  const handleShareInMobileSize = (data: Event) => {
+    setSharedEvent(data);
+    setShareModalIsOpen(true);
+  };
 
   const { monthlyEvent, isError } = useMonthlyEvent({
     param: param,
@@ -163,46 +171,49 @@ const MonthlyEventList = () => {
         </div>
         {monthlyEvent && !isError ? (
           monthlyEvent.length !== 0 ? (
-            monthlyEvent.map((item: any) => {
-              return (
-                <div className={cn('wrapper')}>
-                  {
-                    <Item
-                      key={item.id}
-                      data={item}
-                      isEventNew={() => {
-                        return checkEventNew({ createdDate: item.create_date_time });
-                      }}
-                      isEventDone={() => {
-                        return checkEventDone({ endDate: item.end_date_time });
-                      }}
-                      isFavorite={({ filter }: { filter: string }) => {
-                        if (authContext.isLoggedIn) {
-                          if (filter === 'OLD') {
-                            return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+            <div className={cn('section__list__items')}>
+              {monthlyEvent.map((item: any) => {
+                return (
+                  <div className={cn('wrapper')}>
+                    {
+                      <Item
+                        key={item.id}
+                        data={item}
+                        isEventNew={() => {
+                          return checkEventNew({ createdDate: item.create_date_time });
+                        }}
+                        isEventDone={() => {
+                          return checkEventDone({ endDate: item.end_date_time });
+                        }}
+                        isFavorite={({ filter }: { filter: string }) => {
+                          if (authContext.isLoggedIn) {
+                            if (filter === 'OLD') {
+                              return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+                            } else {
+                              return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                            }
                           } else {
-                            return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                            return false;
                           }
-                        } else {
-                          return false;
-                        }
-                      }}
-                      onClickFavorite={({ filter }: { filter: string }) => {
-                        if (authContext.isLoggedIn) {
-                          if (filter === 'OLD') {
-                            return onClickFavoriteOldEvent({ item: item });
+                        }}
+                        onClickFavorite={({ filter }: { filter: string }) => {
+                          if (authContext.isLoggedIn) {
+                            if (filter === 'OLD') {
+                              return onClickFavoriteOldEvent({ item: item });
+                            } else {
+                              return onClickFavoriteFutureEvent({ item: item });
+                            }
                           } else {
-                            return onClickFavoriteFutureEvent({ item: item });
+                            setLoginModalIsOpen(true);
                           }
-                        } else {
-                          setLoginModalIsOpen(true);
-                        }
-                      }}
-                    />
-                  }
-                </div>
-              );
-            })
+                        }}
+                        onClickShareInMobileSize={handleShareInMobileSize}
+                      />
+                    }
+                  </div>
+                );
+              })}
+            </div>
           ) : (
             <div className={cn('null-container')}>아직 조건에 맞는 개발자 행사가 없어요 📂</div>
           )
@@ -213,6 +224,7 @@ const MonthlyEventList = () => {
         )}
       </div>
       <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
+      <ShareModal isOpen={shareModalIsOpen} onClick={() => setShareModalIsOpen(false)} data={sharedEvent}></ShareModal>
     </>
   );
 };

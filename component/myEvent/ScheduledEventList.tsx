@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import style from 'styles/Myevent.module.scss';
 import classNames from 'classnames/bind';
 import { useMyEvent } from 'lib/hooks/useSWR';
@@ -8,12 +8,20 @@ import { MyEvent } from 'model/event';
 import { mutate } from 'swr';
 import { ThreeDots } from 'react-loader-spinner';
 import * as ga from 'lib/utils/gTag';
+import ShareModal from 'component/common/modal/ShareModal';
 
 const cn = classNames.bind(style);
 
 const ScheduledEventList = () => {
   const param = { filter: 'FUTURE' };
   const { myEvent, isLoading, isError } = useMyEvent(param, true);
+  const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
+  const [sharedEvent, setSharedEvent] = useState({});
+
+  const handleShareInMobileSize = (data: Event) => {
+    setSharedEvent(data);
+    setShareModalIsOpen(true);
+  };
 
   if (isError) {
     return <div className={cn('null-container')}>내 이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
@@ -43,25 +51,28 @@ const ScheduledEventList = () => {
         <div className={cn('section__list')}>
           {myEvent && !isError ? (
             myEvent.length !== 0 ? (
-              myEvent.map((event: MyEvent) => {
-                return (
-                  <div className={cn('wrapper')}>
-                    <Item
-                      key={event.dev_event.id}
-                      data={event.dev_event}
-                      isEventDone={() => {
-                        return false;
-                      }}
-                      isFavorite={() => {
-                        return true;
-                      }}
-                      onClickFavorite={() => {
-                        deleteMyEvent({ favoriteId: event.favorite_id });
-                      }}
-                    />
-                  </div>
-                );
-              })
+              <div className={cn('section__list__items')}>
+                {myEvent.map((event: MyEvent) => {
+                  return (
+                    <div className={cn('wrapper')}>
+                      <Item
+                        key={event.dev_event.id}
+                        data={event.dev_event}
+                        isEventDone={() => {
+                          return false;
+                        }}
+                        isFavorite={() => {
+                          return true;
+                        }}
+                        onClickFavorite={() => {
+                          deleteMyEvent({ favoriteId: event.favorite_id });
+                        }}
+                        onClickShareInMobileSize={handleShareInMobileSize}
+                      />
+                    </div>
+                  );
+                })}{' '}
+              </div>
             ) : (
               <div className={cn('null-container')}>내가 찜한 개발자 행사가 없어요 📂</div>
             )
@@ -72,6 +83,7 @@ const ScheduledEventList = () => {
           )}
         </div>
       </section>
+      <ShareModal isOpen={shareModalIsOpen} onClick={() => setShareModalIsOpen(false)} data={sharedEvent}></ShareModal>
     </div>
   );
 };
