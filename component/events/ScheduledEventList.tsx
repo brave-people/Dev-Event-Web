@@ -12,7 +12,7 @@ import { AuthContext } from 'context/auth';
 import LoginModal from 'component/common/modal/LoginModal';
 import { ThreeDots } from 'react-loader-spinner';
 import * as ga from 'lib/utils/gTag';
-// import { handleSWRError } from 'lib/api/error';
+import ShareModal from 'component/common/modal/ShareModal';
 
 const cn = classNames.bind(style);
 
@@ -21,6 +21,13 @@ const ScheduledEventList = () => {
   const paramByFuture = { filter: 'FUTURE' };
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
+  const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
+  const [sharedEvent, setSharedEvent] = useState({});
+
+  const handleShareInMobileSize = (data: Event) => {
+    setSharedEvent(data);
+    setShareModalIsOpen(true);
+  };
 
   const { scheduledEvents, isError } = useScheduledEvents();
 
@@ -184,6 +191,7 @@ const ScheduledEventList = () => {
                                     return false;
                                   }
                                 }}
+                                onClickShareInMobileSize={handleShareInMobileSize}
                                 onClickFavorite={({ filter }: { filter: string }) => {
                                   if (authContext.isLoggedIn) {
                                     if (filter === 'OLD') {
@@ -202,6 +210,11 @@ const ScheduledEventList = () => {
                   </div>
                 </div>
                 <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
+                <ShareModal
+                  isOpen={shareModalIsOpen}
+                  onClick={() => setShareModalIsOpen(false)}
+                  data={sharedEvent}
+                ></ShareModal>
               </>
             );
           })

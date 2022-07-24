@@ -14,6 +14,7 @@ import router from 'next/router';
 import { MdClose } from 'react-icons/md';
 import { ThreeDots } from 'react-loader-spinner';
 import * as ga from 'lib/utils/gTag';
+import ShareModal from 'component/common/modal/ShareModal';
 
 const cn = classNames.bind(style);
 
@@ -23,6 +24,13 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
   const [filteredEvents, setFilteredEvents] = useState(Array<Event>(0));
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
+  const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
+  const [sharedEvent, setSharedEvent] = useState({});
+
+  const handleShareInMobileSize = (data: Event) => {
+    setSharedEvent(data);
+    setShareModalIsOpen(true);
+  };
 
   useEffect(() => {
     let events = Array<Event>(0);
@@ -223,6 +231,7 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
                             setLoginModalIsOpen(true);
                           }
                         }}
+                        onClickShareInMobileSize={handleShareInMobileSize}
                       />
                     </div>
                   );
@@ -238,6 +247,7 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
         )}
       </div>
       <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
+      <ShareModal isOpen={shareModalIsOpen} onClick={() => setShareModalIsOpen(false)} data={sharedEvent}></ShareModal>
     </>
   );
 };
