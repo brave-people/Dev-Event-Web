@@ -52,25 +52,27 @@ const DoneEventList = () => {
         <div className={cn('section__list')}>
           {myEvent ? (
             myEvent.length !== 0 ? (
-              myEvent.map((event: MyEvent) => {
-                return (
-                  <div className={cn('wrapper')}>
-                    <Item
-                      key={event.dev_event.id}
-                      data={event.dev_event}
-                      isEventDone={() => {
-                        return true;
-                      }}
-                      isFavorite={() => {
-                        return true;
-                      }}
-                      onClickFavorite={() => {
-                        deleteMyEvent({ favoriteId: event.favorite_id });
-                      }}
-                    />
-                  </div>
-                );
-              })
+              <div className={cn('section__list__items')}>
+                {myEvent.map((event: MyEvent) => {
+                  return (
+                    <div className={cn('wrapper')}>
+                      <Item
+                        key={event.dev_event.id}
+                        data={event.dev_event}
+                        isEventDone={() => {
+                          return true;
+                        }}
+                        isFavorite={() => {
+                          return true;
+                        }}
+                        onClickFavorite={() => {
+                          deleteMyEvent({ favoriteId: event.favorite_id });
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
             ) : (
               <div className={cn('null-container')}>내가 찜한 개발자 행사가 없어요 📂</div>
             )

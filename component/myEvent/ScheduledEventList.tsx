@@ -51,26 +51,28 @@ const ScheduledEventList = () => {
         <div className={cn('section__list')}>
           {myEvent && !isError ? (
             myEvent.length !== 0 ? (
-              myEvent.map((event: MyEvent) => {
-                return (
-                  <div className={cn('wrapper')}>
-                    <Item
-                      key={event.dev_event.id}
-                      data={event.dev_event}
-                      isEventDone={() => {
-                        return false;
-                      }}
-                      isFavorite={() => {
-                        return true;
-                      }}
-                      onClickFavorite={() => {
-                        deleteMyEvent({ favoriteId: event.favorite_id });
-                      }}
-                      onClickShareInMobileSize={handleShareInMobileSize}
-                    />
-                  </div>
-                );
-              })
+              <div className={cn('section__list__items')}>
+                {myEvent.map((event: MyEvent) => {
+                  return (
+                    <div className={cn('wrapper')}>
+                      <Item
+                        key={event.dev_event.id}
+                        data={event.dev_event}
+                        isEventDone={() => {
+                          return false;
+                        }}
+                        isFavorite={() => {
+                          return true;
+                        }}
+                        onClickFavorite={() => {
+                          deleteMyEvent({ favoriteId: event.favorite_id });
+                        }}
+                        onClickShareInMobileSize={handleShareInMobileSize}
+                      />
+                    </div>
+                  );
+                })}{' '}
+              </div>
             ) : (
               <div className={cn('null-container')}>내가 찜한 개발자 행사가 없어요 📂</div>
             )

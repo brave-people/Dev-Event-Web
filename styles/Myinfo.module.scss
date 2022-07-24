@@ -1,3 +1,5 @@
+@import '~styles/_mixin.scss';
+
 .info-container {
   display: flex;
   flex-direction: column;
@@ -6,11 +8,13 @@
   width: 100%;
   height: 100vh;
   min-width: 68.75rem;
+
   &__inner {
     display: flex;
     flex-direction: column;
-    width: 68.75rem;
-
+    max-width: 68.75rem;
+    width: 100%;
+    padding: 0px 10px 0px 10px;
     .sub-header {
       display: flex;
       flex-direction: column;
@@ -120,11 +124,172 @@
   color: #a8a8a8;
 }
 
-@media (max-width: 68.75rem) {
-  .info-container__inner {
+@include tablet {
+  .info-container {
     display: flex;
     flex-direction: column;
-    width: 68.75rem;
-    padding: 0px 20px 0px 20px;
+    align-items: center;
+    background-color: #fff;
+    width: 100%;
+    height: 100vh;
+    min-width: 688px;
+    &__inner {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      padding: 0px 20px 0px 20px;
+
+      .sub-header {
+        display: flex;
+        flex-direction: column;
+        padding-top: 5.125rem;
+
+        &__content {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          h1 {
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 2.563rem;
+            color: #000000;
+          }
+        }
+      }
+
+      .info-form {
+        padding: 3.875rem 0px;
+        display: grid;
+        grid-template-columns: 40% 45%;
+        column-gap: 5%;
+        row-gap: 1.938rem;
+        border-bottom: 2px solid #e9e9e9;
+
+        &__item {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          span {
+            color: #535353;
+            font-weight: 500;
+            font-size: 13px;
+            line-height: 1.438rem;
+            padding-bottom: 0.688rem;
+          }
+
+          .input {
+            background: #ecf6ff;
+            border-radius: 10px;
+            border: none;
+            height: 2.875rem;
+            padding-left: 1.375rem;
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 1.438rem;
+            width: 100%;
+            color: #535353;
+
+            .size--small {
+              width: 23.5rem;
+            }
+            .size--regular {
+              width: 30rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+@include mobile {
+  .info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    width: 100%;
+    height: 100vh;
+    min-width: 25.714rem;
+    &__inner {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      padding: 0px 20px 0px 20px;
+
+      .sub-header {
+        display: flex;
+        flex-direction: column;
+        padding-top: 5.125rem;
+
+        &__content {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          h1 {
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 2.563rem;
+            color: #000000;
+          }
+        }
+      }
+
+      .info-form {
+        padding: 2rem 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        border-bottom: 2px solid #e9e9e9;
+
+        &__item {
+          width: 100%;
+          max-width: 470px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          span {
+            color: #535353;
+            font-weight: 500;
+            font-size: 13px;
+            line-height: 1.438rem;
+            padding-bottom: 0.688rem;
+          }
+
+          .input {
+            background: #ecf6ff;
+            border-radius: 10px;
+            border: none;
+            height: 2.875rem;
+            padding-left: 1.375rem;
+            font-weight: 400;
+            font-size: 13px;
+            line-height: 1.438rem;
+            width: 100%;
+            color: #535353;
+
+            .size--small {
+              width: 23.5rem;
+            }
+            .size--regular {
+              width: 30rem;
+            }
+          }
+        }
+      }
+    }
+  }
+  .null-container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.2rem;
+    color: #a8a8a8;
   }
 }
