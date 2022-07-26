@@ -68,6 +68,7 @@ const DoneEventList = () => {
                         onClickFavorite={() => {
                           deleteMyEvent({ favoriteId: event.favorite_id });
                         }}
+                        onClickShareInMobileSize={handleShareInMobileSize}
                       />
                     </div>
                   );

@@ -17,6 +17,10 @@
     padding: 6px 18px;
     height: 28px;
     border-radius: 10px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
 @include tablet {
@@ -27,6 +31,10 @@
     font-size: 13px;
     line-height: 12px;
     border-radius: 8px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
 @include mobile {
@@ -36,5 +44,9 @@
     font-size: 11px;
     line-height: 12px;
     border-radius: 6px;
+    max-width: 110px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }
