@@ -5,8 +5,10 @@ import classNames from 'classnames/bind';
 import style from './Item.module.scss';
 import Image from 'next/image';
 import Tag from '../tag/Tag';
-import StarIcon from 'public/icon/star_grey_outlined.svg';
-import ShareIcon from 'public/icon/share_grey_outlined.svg';
+import StarRegularIcon from 'public/icon/star_outlined_regular.svg';
+import StarSmallIcon from 'public/icon/star_outlined_small.svg';
+import ShareRegularIcon from 'public/icon/share_outlined_regular.svg';
+import ShareSmallIcon from 'public/icon/share_outlined_small.svg';
 import router from 'next/router';
 import { MdContentCopy } from 'react-icons/md';
 import { DateUtil } from 'lib/utils/dateUtil';
@@ -44,7 +46,7 @@ const Item = ({
   useOnClickOutside({ ref: outsideRef, handler: handleClickOutside, mouseEvent: 'click' });
 
   const checkMobile = () => {
-    return navigator.maxTouchPoints && window.innerHeight !== defaultInnerHeight;
+    return navigator.maxTouchPoints; //&& window.innerHeight !== defaultInnerHeight;
   };
 
   const handleShare = async () => {
@@ -206,12 +208,8 @@ const Item = ({
           onClick={() => {
             onClickFavorite({ filter: isEventDone() ? 'OLD' : 'FUTURE' });
           }}
-        >
-          <StarIcon />
-        </button>
-        <button className={cn('share-button')} onClick={handleShare}>
-          <ShareIcon />
-        </button>
+        />
+        <button className={cn('share-button')} onClick={handleShare} />
         {isShareModalOpenInDesktop ? (
           <div className={cn('share-modal')} ref={outsideRef}>
             {' '}
