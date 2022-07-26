@@ -533,13 +533,12 @@
         width: 100%;
         align-self: flex-end;
         position: relative;
+        overflow: hidden;
+
         .tags {
           position: absolute;
           display: flex;
           flex-direction: row;
-          button {
-            margin-right: 5px;
-          }
         }
       }
     }

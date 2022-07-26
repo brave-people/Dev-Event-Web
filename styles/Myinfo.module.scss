@@ -261,7 +261,7 @@
             background: #ecf6ff;
             border-radius: 10px;
             border: none;
-            height: 2.875rem;
+            height: 2.6rem;
             padding-left: 1.375rem;
             font-weight: 400;
             font-size: 13px;
@@ -275,6 +275,39 @@
             .size--regular {
               width: 30rem;
             }
+          }
+        }
+      }
+      .delete-button {
+        align-self: flex-end;
+        padding-top: 1.313rem;
+        box-sizing: border-box;
+        border-radius: 30px;
+
+        button {
+          padding: 0.5rem 2rem 0.5rem 2rem;
+          height: 2.5rem;
+          font-weight: 500;
+          font-size: 0.875rem;
+          line-height: 1.25rem;
+          text-align: center;
+          cursor: pointer;
+          box-sizing: border-box;
+          border-radius: 30px;
+
+          color: #5ea8ed;
+          border: 1px solid #5ea8ed;
+          background-color: white;
+
+          &:hover {
+            &:before {
+              content: attr(data-hover);
+              font-weight: 500;
+              font-size: 0.875rem;
+              line-height: 1.25rem;
+              text-align: center;
+            }
+            font-size: 0px;
           }
         }
       }
