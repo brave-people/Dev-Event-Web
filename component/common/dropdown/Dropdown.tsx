@@ -22,8 +22,8 @@ export default function Dropdown({ name, options, placeholder, value, onClick, i
 
   return (
     <>
-      <div className={cx('dropdown')}>
-        <div className={cx('dropdown__header')} ref={outsideRef} onClick={handleClickDropdown}>
+      <div className={cx('dropdown')} ref={outsideRef}>
+        <div className={cx('dropdown__header')} onClick={handleClickDropdown}>
           <span className={cx('dropdown__header__placeholder')}>
             <span className={cx('icon')}>{icon}</span>
             {value ? value : placeholder}

@@ -154,7 +154,7 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      height: 1.643rem;
+      height: 2rem;
       padding: 0 0.5rem 0 0.5rem;
       font-size: 0.857rem;
       color: #757575;
@@ -169,11 +169,11 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        padding-right: 3px;
         .icon {
           height: 14px;
           margin: 0;
           padding-right: 0.471rem;
-
           svg {
             height: 14px;
             width: 14px;
@@ -190,7 +190,7 @@
         min-width: 10.786rem;
         min-height: 3rem;
         max-height: 16.25rem;
-        top: 1.643rem;
+        top: 2rem;
         position: absolute;
         z-index: 3;
         margin: 0;
@@ -223,7 +223,7 @@
         align-self: flex-start;
         position: absolute;
         z-index: 3;
-        top: 1.643rem;
+        top: 2rem;
         margin: 0;
         min-width: 17.214rem;
         min-height: 16.25rem;
