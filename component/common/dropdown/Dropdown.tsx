@@ -12,10 +12,16 @@ export default function Dropdown({ name, options, placeholder, value, onClick, i
   const outsideRef = useRef(null);
 
   const handleClickOutside = () => {
-    setOpen(false);
+    if (isOpen) {
+      setOpen(false);
+    }
   };
   const handleClickDropdown = () => {
-    setOpen(!isOpen);
+    if (isOpen) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
   };
 
   useOnClickOutside({ ref: outsideRef, handler: handleClickOutside, mouseEvent: 'click' });
@@ -31,8 +37,8 @@ export default function Dropdown({ name, options, placeholder, value, onClick, i
           {!isOpen ? <IoIosArrowDown size="12" color="#3D3D3D" /> : <IoIosArrowUp size="12" color="#3D3D3D" />}
         </div>
 
-        {isOpen == false ? null : type === 'basic' ? (
-          <div className={cx('dropdown__list', `type--${type}`)}>
+        {type === 'basic' ? (
+          <div className={cx('dropdown__list', `type--${type}`, isOpen ? null : 'hidden')}>
             {options.map((item: any, index: number) => {
               return (
                 <div
@@ -49,7 +55,7 @@ export default function Dropdown({ name, options, placeholder, value, onClick, i
             })}
           </div>
         ) : (
-          <div className={cx('dropdown__list', `type--${type}`)}>
+          <div className={cx('dropdown__list', `type--${type}`, isOpen ? null : 'hidden')}>
             <span>원하는 태그를 선택하세요.</span>
             <div className={cx('wrapper')}>
               {options.map((item: any, index: number) => {
@@ -62,7 +68,7 @@ export default function Dropdown({ name, options, placeholder, value, onClick, i
                       !onClick ? null : onClick(event, item);
                     }}
                   >
-                    <Tag label={item}></Tag>
+                    <Tag label={item} size="large"></Tag>
                   </div>
                 );
               })}
