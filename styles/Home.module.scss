@@ -319,7 +319,7 @@
         grid-gap: 12px;
         grid-template-columns: repeat(2, 1fr);
       }
-      @media (min-width: 540px) {
+      @media (min-width: 605px) {
         &__items {
           grid-template-columns: repeat(3, 1fr);
         }

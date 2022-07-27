@@ -162,12 +162,14 @@
     background-color: white;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    padding: 1.2rem 2.571rem;
+    padding: 1.5rem 2.571rem;
     display: flex;
     flex-direction: column;
     align-items: center;
 
     &__close-button {
+      position: absolute;
+      right: 20px;
       border: none;
       background-color: transparent;
       cursor: pointer;
@@ -187,6 +189,7 @@
       line-height: 151.8%;
       text-align: center;
       color: #000000;
+      padding-top: 24px;
     }
 
     &__inner {
@@ -211,7 +214,7 @@
           padding: 0;
           margin: 0px;
           width: 19.071rem;
-          height: 2.714rem;
+          height: 2.857rem;
           border-radius: 12.64px;
           display: flex;
           flex-direction: row;

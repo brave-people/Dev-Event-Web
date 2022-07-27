@@ -38,6 +38,10 @@
     animation-name: appearIn;
     animation-duration: 0.2s;
     animation-timing-function: linear;
+
+    &.type--basic.hidden {
+      display: none;
+    }
     &.type--basic {
       min-width: 12.188rem;
       min-height: 3rem;
@@ -71,6 +75,9 @@
       }
     }
 
+    &.type--expand.hidden {
+      display: none;
+    }
     &.type--expand {
       align-self: flex-end;
       position: absolute;
@@ -154,8 +161,8 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      height: 2rem;
-      padding: 0 0.5rem 0 0.5rem;
+      height: 2.429rem;
+      padding: 0 0.6rem 0 0.6rem;
       font-size: 0.857rem;
       color: #757575;
       font-weight: 400;
@@ -169,7 +176,7 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        padding-right: 3px;
+        padding-right: 4px;
         .icon {
           height: 14px;
           margin: 0;
@@ -186,11 +193,16 @@
       animation-name: appearIn;
       animation-duration: 0.2s;
       animation-timing-function: linear;
+
+      &.type--basic.hidden {
+        display: none;
+      }
+
       &.type--basic {
         min-width: 10.786rem;
         min-height: 3rem;
         max-height: 16.25rem;
-        top: 2rem;
+        top: 2.429rem;
         position: absolute;
         z-index: 3;
         margin: 0;
@@ -218,14 +230,16 @@
           /* padding-left: 2px; */
         }
       }
-
+      &.type--expand.hidden {
+        display: none;
+      }
       &.type--expand {
         align-self: flex-start;
         position: absolute;
         z-index: 3;
-        top: 2rem;
+        top: 2.429rem;
         margin: 0;
-        min-width: 17.214rem;
+        min-width: 18rem;
         min-height: 16.25rem;
         padding: 1.5rem 1.875rem 1.5rem 1.875rem;
         color: #757575;
@@ -238,7 +252,7 @@
 
         span {
           font-weight: 500;
-          font-size: 0.857rem;
+          font-size: 13px;
           line-height: 17.38px;
           color: #757575;
         }
@@ -290,7 +304,7 @@
       }
 
       &.type--expand {
-        padding-right: 0.625rem;
+        padding-right: 0.5rem;
         padding-top: 0.75rem;
       }
     }
