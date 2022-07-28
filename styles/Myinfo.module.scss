@@ -268,7 +268,8 @@
             line-height: 1.438rem;
             width: 100%;
             color: #535353;
-
+            -webkit-text-fill-color: #535353;
+            opacity: 1;
             .size--small {
               width: 23.5rem;
             }
