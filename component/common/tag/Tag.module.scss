@@ -1,19 +1,88 @@
+@import '~styles/_mixin.scss';
+
 .tag {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   background: #5ea8ed;
-  border-radius: 10px;
   border: none;
   color: #fff;
   cursor: pointer;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 16px;
   text-align: center;
 
-  &.size--regular {
+  &.size--large {
+    font-size: 14px;
+    line-height: 16px;
     padding: 6px 18px;
     height: 28px;
+    border-radius: 10px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &.size--regular {
+    font-size: 14px;
+    line-height: 16px;
+    padding: 6px 18px;
+    height: 28px;
+    border-radius: 10px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+@include tablet {
+  .tag.size--large {
+    font-size: 14px;
+    line-height: 16px;
+    padding: 6px 18px;
+    height: 28px;
+    border-radius: 10px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .tag.size--regular {
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 24px;
+    font-size: 13px;
+    line-height: 12px;
+    border-radius: 8px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+@include mobile {
+  .tag.size--large {
+    font-size: 13px;
+    line-height: 16px;
+    padding: 9px 15px;
+    height: 34px;
+    border-radius: 10px;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .tag.size--regular {
+    padding: 4.5px 7.5px;
+    height: 20px;
+    font-size: 11px;
+    line-height: 12px;
+    border-radius: 6px;
+    max-width: 110px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }

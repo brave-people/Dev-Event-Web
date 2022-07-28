@@ -11,7 +11,6 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>Dev Event</title>
           <meta
             name="description"
             content="데브이벤트에서 개발자 행사를 놓치지 마세요! 개발자 {웨비나, 컨퍼런스, 해커톤, 네트워킹} 소식을 홍보하고 알려드립니다."

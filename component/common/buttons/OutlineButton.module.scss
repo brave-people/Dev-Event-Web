@@ -1,3 +1,5 @@
+@import '~styles/_mixin.scss';
+
 .button {
   box-sizing: border-box;
   border-radius: 30px;
@@ -10,6 +12,17 @@
     line-height: 1.25rem;
     text-align: center;
     cursor: pointer;
+  }
+}
+
+@include mobile {
+  .button.size--regular {
+    font-weight: 400;
+    text-align: center;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    height: 2.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 }
 
