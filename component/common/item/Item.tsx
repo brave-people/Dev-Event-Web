@@ -170,7 +170,7 @@ const Item = ({
                   <span>주최 : {data.organizer}</span>
                   <br className={cn('divider')} />
                   <span>
-                    일시 :{getEventDate()} <span className={cn('item__content__desc__dday')}>{getEventDdayTag()}</span>{' '}
+                    일시 : {getEventDate()} <span className={cn('item__content__desc__dday')}>{getEventDdayTag()}</span>{' '}
                   </span>
                 </div>
               </div>
@@ -179,6 +179,7 @@ const Item = ({
                   {data.tags.map((tag) => {
                     return (
                       <Tag
+                        key={tag.tag_name}
                         label={tag.tag_name}
                         onClick={(event: any) => {
                           ga.event({

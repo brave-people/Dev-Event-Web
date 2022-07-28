@@ -465,6 +465,7 @@
         height: 100%;
         padding-left: 1.071rem;
         padding-right: 0.929rem;
+        padding-top: 15px;
         position: relative;
       }
 
@@ -499,12 +500,14 @@
         white-space: normal;
 
         &__dday {
+          position: absolute;
+          top: 5px;
+          left: 1rem;
           border: none;
           font-weight: 700;
           font-size: 9px;
           line-height: 16px;
           text-align: center;
-
           &--approach {
             background-color: #e17272;
             color: #fff;
@@ -533,11 +536,14 @@
         align-self: flex-end;
         position: relative;
         overflow: hidden;
-
         .tags {
           position: absolute;
           display: flex;
           flex-direction: row;
+          visibility: visible;
+          & button:nth-child(n + 3) {
+            visibility: hidden;
+          }
         }
       }
     }
