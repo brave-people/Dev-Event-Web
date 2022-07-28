@@ -42,10 +42,22 @@ const EventHeader = () => {
   const composeTotalCount = () => {
     if (scheduledEvents && !isEventError && scheduledEvents.length !== 0) {
       const result = scheduledEvents.reduce(function add(sum, currValue) {
-        return sum + currValue.metadata.total;
+        const filteredEvents = currValue.dev_event.filter(
+          (item) => checkEventDone({ endDate: item.end_date_time }) === false
+        );
+        return sum + filteredEvents.length;
       }, 0);
       setTotalCount(result);
     }
+  };
+
+  const checkEventDone = ({ endDate }: { endDate: string }) => {
+    const todayDate = dayjs().set('hour', 0).set('minute', 0).set('second', 0).set('millisecond', 0);
+    const eventDate = dayjs(endDate).set('hour', 0).set('minute', 0).set('second', 0).set('millisecond', 0);
+    return eventDate.diff(todayDate, 'day') > 0 ||
+      (eventDate.diff(todayDate, 'day') === 0 && eventDate.get('day') === todayDate.get('day'))
+      ? false
+      : true;
   };
 
   const getEventLastMonth = () => {

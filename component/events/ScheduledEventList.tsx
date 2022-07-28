@@ -165,9 +165,9 @@ const ScheduledEventList = () => {
                     {event &&
                       event.dev_event
                         .filter((item) => checkEventDone({ endDate: item.end_date_time }) === false)
-                        .concat(
-                          event.dev_event.filter((item) => checkEventDone({ endDate: item.end_date_time }) === true)
-                        )
+                        // .concat(
+                        //   event.dev_event.filter((item) => checkEventDone({ endDate: item.end_date_time }) === true)
+                        // )
                         .map((item: Event) => {
                           return (
                             <div className={cn('wrapper')}>
