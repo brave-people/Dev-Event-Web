@@ -153,71 +153,73 @@ const ScheduledEventList = () => {
     <>
       {scheduledEvents ? (
         scheduledEvents.length !== 0 ? (
-          scheduledEvents.map((event: EventResponse, index) => {
-            return (
-              <>
-                {index === 0 ? null : <hr className={cn('divider')} />}
-                <div className={cn('section__list')}>
-                  <div className={cn('section__list__title')}>
-                    <span>{`${event.metadata.year}년 ${event.metadata.month}월`}</span>
-                  </div>
-                  <div className={cn('section__list__items')}>
-                    {event &&
-                      event.dev_event
-                        .filter((item) => checkEventDone({ endDate: item.end_date_time }) === false)
-                        // .concat(
-                        //   event.dev_event.filter((item) => checkEventDone({ endDate: item.end_date_time }) === true)
-                        // )
-                        .map((item: Event) => {
-                          return (
-                            <div className={cn('wrapper')}>
-                              <Item
-                                key={item.id}
-                                data={item}
-                                isEventNew={() => {
-                                  return checkEventNew({ createdDate: item.create_date_time });
-                                }}
-                                isEventDone={() => {
-                                  return checkEventDone({ endDate: item.end_date_time });
-                                }}
-                                isFavorite={({ filter }: { filter: string }) => {
-                                  if (authContext.isLoggedIn) {
-                                    if (filter === 'OLD') {
-                                      return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+          scheduledEvents
+            .filter((events) => !(dayjs().get('month') + 1 > events.metadata.month))
+            .map((event: EventResponse, index) => {
+              return (
+                <>
+                  {index === 0 ? null : <hr className={cn('divider')} />}
+                  <div className={cn('section__list')}>
+                    <div className={cn('section__list__title')}>
+                      <span>{`${event.metadata.year}년 ${event.metadata.month}월`}</span>
+                    </div>
+                    <div className={cn('section__list__items')}>
+                      {event &&
+                        event.dev_event
+                          .filter((item) => checkEventDone({ endDate: item.end_date_time }) === false)
+                          // .concat(
+                          //   event.dev_event.filter((item) => checkEventDone({ endDate: item.end_date_time }) === true)
+                          // )
+                          .map((item: Event) => {
+                            return (
+                              <div className={cn('wrapper')}>
+                                <Item
+                                  key={item.id}
+                                  data={item}
+                                  isEventNew={() => {
+                                    return checkEventNew({ createdDate: item.create_date_time });
+                                  }}
+                                  isEventDone={() => {
+                                    return checkEventDone({ endDate: item.end_date_time });
+                                  }}
+                                  isFavorite={({ filter }: { filter: string }) => {
+                                    if (authContext.isLoggedIn) {
+                                      if (filter === 'OLD') {
+                                        return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
+                                      } else {
+                                        return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                                      }
                                     } else {
-                                      return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
+                                      return false;
                                     }
-                                  } else {
-                                    return false;
-                                  }
-                                }}
-                                onClickShareInMobileSize={handleShareInMobileSize}
-                                onClickFavorite={({ filter }: { filter: string }) => {
-                                  if (authContext.isLoggedIn) {
-                                    if (filter === 'OLD') {
-                                      return onClickFavoriteOldEvent({ item: item });
+                                  }}
+                                  onClickShareInMobileSize={handleShareInMobileSize}
+                                  onClickFavorite={({ filter }: { filter: string }) => {
+                                    if (authContext.isLoggedIn) {
+                                      if (filter === 'OLD') {
+                                        return onClickFavoriteOldEvent({ item: item });
+                                      } else {
+                                        return onClickFavoriteFutureEvent({ item: item });
+                                      }
                                     } else {
-                                      return onClickFavoriteFutureEvent({ item: item });
+                                      setLoginModalIsOpen(true);
                                     }
-                                  } else {
-                                    setLoginModalIsOpen(true);
-                                  }
-                                }}
-                              />
-                            </div>
-                          );
-                        })}
+                                  }}
+                                />
+                              </div>
+                            );
+                          })}
+                    </div>
                   </div>
-                </div>
-                <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
-                <ShareModal
-                  isOpen={shareModalIsOpen}
-                  onClick={() => setShareModalIsOpen(false)}
-                  data={sharedEvent}
-                ></ShareModal>
-              </>
-            );
-          })
+                  <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
+                  <ShareModal
+                    isOpen={shareModalIsOpen}
+                    onClick={() => setShareModalIsOpen(false)}
+                    data={sharedEvent}
+                  ></ShareModal>
+                </>
+              );
+            })
         ) : (
           <div className={cn('null-container')}>아직 조건에 맞는 개발자 행사가 없어요 📂</div>
         )
