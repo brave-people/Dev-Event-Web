@@ -1,6 +1,8 @@
 import { Calender, WeekType } from 'model/calender';
 import { Tag } from 'model/tag';
 
+export type EventTimeType = 'DATE' | 'RECRUIT';
+
 export interface Event {
   id: string;
   title: string;
@@ -8,6 +10,7 @@ export interface Event {
   event_link: string;
   cover_image_link: string;
   display_sequence: number;
+  event_time_type: EventTimeType;
   start_day_week: WeekType;
   start_time: string;
   start_date_time: string;
