@@ -170,7 +170,8 @@ const Item = ({
                   <span>주최 : {data.organizer}</span>
                   <br className={cn('divider')} />
                   <span>
-                    일시 : {getEventDate()} <span className={cn('item__content__desc__dday')}>{getEventDdayTag()}</span>{' '}
+                    {data.event_time_type === 'RECRUIT' ? '모집' : '일시'} : {getEventDate()}{' '}
+                    <span className={cn('item__content__desc__dday')}>{getEventDdayTag()}</span>{' '}
                   </span>
                 </div>
               </div>
