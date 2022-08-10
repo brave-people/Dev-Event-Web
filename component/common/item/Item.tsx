@@ -31,8 +31,6 @@ const Item = ({
 }) => {
   const [isShareModalOpenInDesktop, setShareModalOpenInDesktop] = useState(false);
 
-  let defaultInnerHeight = window.innerHeight;
-
   const outsideRef = useRef(null);
   const handleClickOutside = () => {
     if (isShareModalOpenInDesktop) {
@@ -76,22 +74,19 @@ const Item = ({
 
   const getEventDate = () => {
     let eventDate;
-    if (DateUtil.getDateFormat(data.start_date_time) === DateUtil.getDateFormat(data.end_date_time)) {
-      if (data.start_time === data.end_time) {
-        if (data.start_time === '00:00' && data.end_time === '00:00') {
-          eventDate = `${DateUtil.getDateFormat(data.start_date_time)}(${data.start_day_week})`;
-        } else {
-          eventDate = `${DateUtil.getDateFormat(data.start_date_time)}(${data.start_day_week}) ${data.start_time}`;
-        }
+    if (data.start_date_time === data.end_date_time) {
+      if (data.start_time && data.end_time && data.start_time !== '00:00') {
+        eventDate = DateUtil.getDateTimeFormat({ date: data.start_date_time, time: data.start_time });
       } else {
-        eventDate = ` ${DateUtil.getDateFormat(data.start_date_time)}(${data.start_day_week}) ${data.start_time} ~ ${
-          data.end_time
-        }`;
+        eventDate = DateUtil.getDateFormat(data.start_date_time, { hasWeek: true });
       }
     } else {
-      eventDate = `${DateUtil.getDateFormat(data.start_date_time)}(${data.start_day_week}) ~ ${DateUtil.getDateFormat(
-        data.end_date_time
-      )}(${data.end_day_week})`;
+      eventDate = DateUtil.getPeriodFormat({
+        startDate: data.start_date_time,
+        endDate: data.end_date_time,
+        startTime: data.start_time,
+        endTime: data.end_time,
+      });
     }
     return eventDate;
   };
