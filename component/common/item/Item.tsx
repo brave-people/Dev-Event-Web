@@ -9,8 +9,8 @@ import router from 'next/router';
 import { MdContentCopy } from 'react-icons/md';
 import { DateUtil } from 'lib/utils/dateUtil';
 import { useOnClickOutside } from 'lib/hooks/useOnClickOutside';
-import dayjs from 'dayjs';
 import * as ga from 'lib/utils/gTag';
+import DdayTag from 'component/common/tag/DdayTag';
 
 const cn = classNames.bind(style);
 
@@ -91,28 +91,6 @@ const Item = ({
     return eventDate;
   };
 
-  const getEventDdayTag = () => {
-    const todayDate = dayjs().set('hour', 0).set('minute', 0).set('second', 0).set('millisecond', 0);
-    const startDate = dayjs(data.start_date_time)
-      .set('hour', 0)
-      .set('minute', 0)
-      .set('second', 0)
-      .set('millisecond', 0);
-    const endDate = dayjs(data.end_date_time).set('hour', 0).set('minute', 0).set('second', 0).set('millisecond', 0);
-    if (startDate.diff(todayDate, 'day') > 0 && startDate.diff(todayDate, 'day') < 6) {
-      return <span className={cn('item__content__desc__dday--approach')}>D-{startDate.diff(todayDate, 'day')}</span>;
-    } else if (startDate.diff(todayDate, 'day') > 0) {
-      return <span className={cn('item__content__desc__dday--scheduled')}>D-{startDate.diff(todayDate, 'day')}</span>;
-    } else if (
-      (startDate.diff(todayDate, 'day') < 0 && endDate.diff(todayDate, 'day') > 0) ||
-      (startDate.diff(todayDate, 'day') === 0 && startDate.get('day') === todayDate.get('day')) ||
-      (endDate.diff(todayDate, 'day') === 0 && endDate.get('day') === todayDate.get('day'))
-    ) {
-      return <span className={cn('item__content__desc__dday--ongoing')}>Today</span>;
-    } else {
-      return null;
-    }
-  };
   return (
     <div className={cn('item')}>
       <Link href={String(data.event_link)}>
@@ -166,7 +144,7 @@ const Item = ({
                   <br className={cn('divider')} />
                   <span>
                     {data.event_time_type === 'RECRUIT' ? '모집' : '일시'} : {getEventDate()}{' '}
-                    <span className={cn('item__content__desc__dday')}>{getEventDdayTag()}</span>{' '}
+                    <DdayTag startDateTime={data.start_date_time} endDateTime={data.end_date_time} />
                   </span>
                 </div>
               </div>

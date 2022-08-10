@@ -1,6 +1,10 @@
 import dayjs from 'dayjs';
 
 const DateUtil = {
+  setDateTimeToDate: (date?: string) => {
+    return dayjs(date).set('hour', 0).set('minute', 0).set('second', 0).set('millisecond', 0);
+  },
+
   getDay: (date: string) => {
     const dayArr = ['일', '월', '화', '수', '목', '금', '토'];
 
