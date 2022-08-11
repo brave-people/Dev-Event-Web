@@ -4,7 +4,7 @@ import { Event } from 'model/event';
 import classNames from 'classnames/bind';
 import style from './Item.module.scss';
 import Image from 'next/image';
-import Tag from '../tag/Tag';
+import FilterTag from '../tag/FilterTag';
 import router from 'next/router';
 import { MdContentCopy } from 'react-icons/md';
 import { DateUtil } from 'lib/utils/dateUtil';
@@ -152,9 +152,10 @@ const Item = ({
                 <div className={cn('tags')}>
                   {data.tags.map((tag) => {
                     return (
-                      <Tag
-                        key={tag.tag_name}
+                      <FilterTag
+                        key={tag.id}
                         label={tag.tag_name}
+                        color={tag.tag_color}
                         onClick={(event: any) => {
                           ga.event({
                             action: 'web_event_이벤트태그클릭',

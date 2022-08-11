@@ -85,7 +85,7 @@ const EventHeader = () => {
   const getTagList = () => {
     if (tags && !isTagError) {
       const list = tags.map((tag) => {
-        return tag.tag_name;
+        return { tag_name: tag.tag_name, tag_color: tag.tag_color };
       });
       return list;
     }

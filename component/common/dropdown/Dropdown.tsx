@@ -2,9 +2,9 @@ import classNames from 'classnames/bind';
 import style from './Dropdown.module.scss';
 import React, { useRef, useState } from 'react';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
-import Tag from '../tag/Tag';
+import FilterTag from '../tag/FilterTag';
 import { useOnClickOutside } from 'lib/hooks/useOnClickOutside';
-
+import { Tag } from 'model/tag';
 const cx = classNames.bind(style);
 
 export default function Dropdown({ name, options, placeholder, value, onClick, icon, type = 'basic' }: any) {
@@ -58,17 +58,17 @@ export default function Dropdown({ name, options, placeholder, value, onClick, i
           <div className={cx('dropdown__list', `type--${type}`, isOpen ? null : 'hidden')}>
             <span>원하는 태그를 선택하세요.</span>
             <div className={cx('wrapper')}>
-              {options.map((item: any, index: number) => {
+              {options.map((item: Tag, index: number) => {
                 return (
                   <div
                     key={index}
                     className={cx('dropdown__list__item', `type--${type}`)}
                     onClick={(event) => {
                       setOpen(false);
-                      !onClick ? null : onClick(event, item);
+                      !onClick ? null : onClick(event, item.tag_name);
                     }}
                   >
-                    <Tag label={item} size="large"></Tag>
+                    <FilterTag label={item.tag_name} size="large" color={item.tag_color}></FilterTag>
                   </div>
                 );
               })}

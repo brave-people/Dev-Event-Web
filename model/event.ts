@@ -1,5 +1,5 @@
 import { Calender, WeekType } from 'model/calender';
-import { Tag } from 'model/tag';
+import { TagResponse } from 'model/tag';
 
 export type EventTimeType = 'DATE' | 'RECRUIT';
 
@@ -18,7 +18,7 @@ export interface Event {
   end_time: string;
   end_date_time: string;
   create_date_time: string;
-  tags: Tag[];
+  tags: TagResponse[];
 }
 
 export interface EventMetaData extends Calender {
