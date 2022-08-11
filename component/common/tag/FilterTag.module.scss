@@ -1,10 +1,10 @@
 @import '~styles/_mixin.scss';
+@import '~styles/_color.scss';
 
 .tag {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  background: #5ea8ed;
   border: none;
   color: #fff;
   cursor: pointer;
