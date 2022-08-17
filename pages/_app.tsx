@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app';
 import { AuthProvider } from 'context/auth';
 import * as gtag from 'lib/utils/gTag';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -29,5 +30,12 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  return <AuthProvider>{getLayout(<Component {...pageProps} />)}</AuthProvider>;
+  return (
+    <>
+      <Head>
+        <title>Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!</title>
+      </Head>
+      <AuthProvider>{getLayout(<Component {...pageProps} />)}</AuthProvider>
+    </>
+  );
 }

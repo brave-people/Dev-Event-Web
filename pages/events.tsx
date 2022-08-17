@@ -29,14 +29,11 @@ const Events = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
 
   return (
     <>
-      <Head>
-        <title>Dev Event</title>
-      </Head>
       <div className={cn('banner')}>
-        <h2 className={cn('banner__title')}>
+        <h1 className={cn('banner__title')}>
           개발자 행사는
           <br /> 모두 Dev Event에서
-        </h2>
+        </h1>
         <h3 className={cn('banner__desc')}>진행 중인 행사부터 종료된 행사까지, 여기서 모두. </h3>
         <span className={cn('banner__button')}>
           <FillButton
