@@ -1,0 +1,23 @@
+@import '~styles/_mixin.scss';
+.list {
+  .wrapper {
+    padding-top: 1.75rem;
+  }
+}
+
+@include mobile {
+  .list {
+    display: grid;
+    grid-gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: 605px) {
+    .list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  .wrapper {
+    padding-top: 1.143rem;
+    width: 100%;
+  }
+}
