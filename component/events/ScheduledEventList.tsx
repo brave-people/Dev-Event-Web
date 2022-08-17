@@ -6,6 +6,7 @@ import style from 'styles/Home.module.scss';
 import dayjs from 'dayjs';
 import { ThreeDots } from 'react-loader-spinner';
 import List from 'component/common/list/list';
+import { DateUtil } from 'lib/utils/dateUtil';
 
 const cn = classNames.bind(style);
 
@@ -17,12 +18,7 @@ const ScheduledEventList = () => {
   }
 
   const checkEventDone = ({ endDate }: { endDate: string }) => {
-    const todayDate = dayjs().set('hour', 0).set('minute', 0).set('second', 0).set('millisecond', 0);
-    const eventDate = dayjs(endDate).set('hour', 0).set('minute', 0).set('second', 0).set('millisecond', 0);
-    return eventDate.diff(todayDate, 'day') > 0 ||
-      (eventDate.diff(todayDate, 'day') === 0 && eventDate.get('day') === todayDate.get('day'))
-      ? false
-      : true;
+    return DateUtil.isDone(endDate);
   };
 
   return (
