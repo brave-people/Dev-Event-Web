@@ -4,17 +4,18 @@ import style from 'styles/Home.module.scss';
 import Dropdown from 'component/common/dropdown/Dropdown';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import { BiPurchaseTagAlt } from 'react-icons/bi';
-import { MdOutlineReplay } from 'react-icons/md';
 import router, { useRouter } from 'next/router';
 import dayjs from 'dayjs';
 import { useScheduledEvents, useTags } from 'lib/hooks/useSWR';
 import * as ga from 'lib/utils/gTag';
+import CheckButton from 'component/common/buttons/CheckButton';
 
 const cn = classNames.bind(style);
 
 const EventHeader = () => {
   const router = useRouter();
   const [filter, setFilter] = useState({ date: '전체', tag: '태그' });
+  const [isNewViewed, setNewViewed] = useState(false);
   const [isFiltered, setIsFiltered] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [lastDate, setLastDate] = useState({ year: 0, month: 0 });
@@ -96,26 +97,43 @@ const EventHeader = () => {
     <div className={cn('section__header')}>
       <EventCount isFiltered={isFiltered} totalCount={totalCount} />
       <div className={cn('section__header__filters')}>
-        <Dropdown
-          options={getDateList()}
-          placeholder="전체"
-          value={filter.date}
-          icon={<AiTwotoneCalendar size={16} />}
-          onClick={(event: any) => {
-            ga.event({
-              action: 'web_event_월별옵션클릭',
-              event_category: 'web_event',
-              event_label: '검색',
-            });
-            setFilter({ ...filter, date: event.target.innerText });
-            if (event.target.innerText === '전체') {
-              router.replace(`/events`);
-            } else {
-              const date = event.target.innerText.replace(/[\t\s]/g, '').split(/[년, 월]/);
-              router.replace(`/events?year=${date[0]}&month=${date[1]}`);
-            }
-          }}
-        ></Dropdown>
+        {isFiltered ? null : (
+          <CheckButton
+            label="New 이벤트만 보기"
+            value={isNewViewed}
+            onClick={() => {
+              if (isNewViewed) {
+                setNewViewed(false);
+                router.replace(`/events`);
+              } else {
+                setNewViewed(true);
+                router.replace(`/events?filter=new`);
+              }
+            }}
+          />
+        )}
+        <span className={cn('wrapper')}>
+          <Dropdown
+            options={getDateList()}
+            placeholder="전체"
+            value={filter.date}
+            icon={<AiTwotoneCalendar size={16} />}
+            onClick={(event: any) => {
+              ga.event({
+                action: 'web_event_월별옵션클릭',
+                event_category: 'web_event',
+                event_label: '검색',
+              });
+              setFilter({ ...filter, date: event.target.innerText });
+              if (event.target.innerText === '전체') {
+                router.replace(`/events`);
+              } else {
+                const date = event.target.innerText.replace(/[\t\s]/g, '').split(/[년, 월]/);
+                router.replace(`/events?year=${date[0]}&month=${date[1]}`);
+              }
+            }}
+          ></Dropdown>
+        </span>
         <span className={cn('wrapper')}>
           <Dropdown
             options={getTagList()}
