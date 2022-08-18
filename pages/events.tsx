@@ -32,10 +32,10 @@ const Events = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
       <div className={cn('banner')}>
         <h1 className={cn('banner__title')}>
           개발자 행사는
-          <br /> 모두 Dev Event에서
+          <br /> 모두 Dev Event 웹에서
         </h1>
-        <h3 className={cn('banner__desc')}>진행 중인 행사부터 종료된 행사까지, 여기서 모두. </h3>
-        <span className={cn('banner__button')}>
+        <h3 className={cn('banner__desc')}>진행 중인 행사부터 종료된 행사까지, 놓치지 마세요! </h3>
+        {/* <span className={cn('banner__button')}>
           <FillButton
             size="large"
             color="primary"
@@ -49,7 +49,7 @@ const Events = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
               });
             }}
           />{' '}
-        </span>
+        </span> */}
       </div>
       <section className={cn('section')}>
         <EventHeader />
