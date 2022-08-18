@@ -123,9 +123,6 @@
         background-color: #cecece;
       }
     }
-    .wrapper {
-      padding-top: 1.75rem;
-    }
   }
 }
 
@@ -313,20 +310,6 @@
         .reset-button:hover {
           background-color: #cecece;
         }
-      }
-      &__items {
-        display: grid;
-        grid-gap: 12px;
-        grid-template-columns: repeat(2, 1fr);
-      }
-      @media (min-width: 605px) {
-        &__items {
-          grid-template-columns: repeat(3, 1fr);
-        }
-      }
-      .wrapper {
-        padding-top: 1.143rem;
-        width: 100%;
       }
     }
   }

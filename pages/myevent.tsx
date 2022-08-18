@@ -28,9 +28,6 @@ const MyEvent = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
 
   return (
     <>
-      <Head>
-        <title>Dev Event</title>
-      </Head>
       <header className={cn('sub-header')}>
         <div className={cn('sub-header__inner')}>
           <div className={cn('sub-header__content')}>

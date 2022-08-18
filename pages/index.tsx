@@ -9,7 +9,7 @@ import jwt_decode from 'jwt-decode';
 const Home = () => {
   return (
     <Head>
-      <title>Dev Event</title>
+      <title>Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!</title>
     </Head>
   );
 };
