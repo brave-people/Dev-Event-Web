@@ -8,10 +8,9 @@ declare global {
     gtag: any;
   }
 }
-export const GA_TRACKING_ID = 'G-BM8BFNJ65P';
 
 export const pageview = (url: URL) => {
-  window.gtag('config', GA_TRACKING_ID, {
+  window.gtag('config', process.env.GA_TRACKING_ID, {
     page_path: url,
   });
 };

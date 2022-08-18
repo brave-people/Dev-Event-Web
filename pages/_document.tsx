@@ -1,5 +1,4 @@
 import Document, { DocumentContext, DocumentInitialProps, Html, Head, Main, NextScript } from 'next/document';
-import { GA_TRACKING_ID } from 'lib/utils/gTag';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
@@ -33,10 +32,10 @@ class MyDocument extends Document {
           />
           <meta property="og:type" content="website" />
           <meta property="og:site_name" content="Dev Event" />
-          <meta name="google-site-verification" content="nuMWgo5LJBkwv_VMLcsP3dS6eHzyyGcxKvnwVY9p5Vk" />
-          <meta name="naver-site-verification" content="846c898c7464c31de7f1d43f7c8d6aabab12daf1" />
-          <link rel="canonical" href="https://dev-event.vercel.app"></link>
-          <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`} />
+          <meta name="google-site-verification" content={`${process.env.GOOGLE_SITE_VERIFICATION}`} />
+          <meta name="naver-site-verification" content={`${process.env.NAVER_SITE_VERIFICATION}`} />
+          <link rel="canonical" href="https://dev-event.vercel.app" />
+          <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_TRACKING_ID}`} />
           <script
             dangerouslySetInnerHTML={{
               __html: `
@@ -44,7 +43,7 @@ class MyDocument extends Document {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
-            gtag('config', '${GA_TRACKING_ID}', {
+            gtag('config', '${process.env.GA_TRACKING_ID}', {
               page_path: window.location.pathname,
             });
           `,
