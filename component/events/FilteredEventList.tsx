@@ -13,6 +13,7 @@ const cn = classNames.bind(style);
 
 const FilteredEventList = ({ filter, type }: { filter?: string; type?: string }) => {
   const [filteredEvents, setFilteredEvents] = useState(Array<Event>(0));
+  const { scheduledEvents, isError } = useScheduledEvents();
 
   useEffect(() => {
     let events = Array<Event>(0);
@@ -28,9 +29,7 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
     if (type === 'search') {
       setFilteredEvents(events.filter((item) => filterBySearch(item)));
     }
-  }, [filter]);
-
-  const { scheduledEvents, isError } = useScheduledEvents();
+  }, [scheduledEvents, filter]);
 
   if (isError) {
     return <div className={cn('null-container')}>이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
