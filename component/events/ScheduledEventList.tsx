@@ -56,7 +56,7 @@ const ScheduledEventList = () => {
           현재&nbsp;<span>{totalCount}개</span>의 개발자 행사 진행 중
         </span>
         <div className={cn('section__header__filters')}>
-          <CheckButton
+          {/* <CheckButton
             label="New 이벤트만 보기"
             value={isNewFilter}
             onClick={() => {
@@ -66,7 +66,7 @@ const ScheduledEventList = () => {
                 setNewFilter(true);
               }
             }}
-          />
+          /> */}
           <EventFilters />
         </div>
       </div>
