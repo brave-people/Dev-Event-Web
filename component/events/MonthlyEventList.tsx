@@ -8,6 +8,7 @@ import { useMonthlyEvent } from 'lib/hooks/useSWR';
 import { MdClose } from 'react-icons/md';
 import { ThreeDots } from 'react-loader-spinner';
 import List from 'component/common/list/list';
+import EventFilters from './EventFilters';
 
 const cn = classNames.bind(style);
 
@@ -26,6 +27,14 @@ const MonthlyEventList = () => {
 
   return (
     <>
+      <div className={cn('section__header')}>
+        <span className={cn('section__header__desc')}>
+          <span>검색결과</span>
+        </span>
+        <div className={cn('section__header__filters')}>
+          <EventFilters />
+        </div>
+      </div>
       <div className={cn('section__list')}>
         <div className={cn('section__list__title')}>
           <span>{`${router.query.year}년 ${router.query.month}월`}</span>
