@@ -3,11 +3,11 @@ import { handleError } from 'lib/api/error';
 import { regenerateAccessToken } from 'lib/api/post';
 
 const requestArray = [];
-const axiosInstance = axios.create({
+const axiosInstanceWithToken = axios.create({
   baseURL: `${process.env.BASE_SERVER_URL}`,
 });
 
-axiosInstance.interceptors.request.use(
+axiosInstanceWithToken.interceptors.request.use(
   async (config) => {
     const { data } = await axios.post(`/api/getToken`);
     config.headers = {
@@ -22,7 +22,7 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-axiosInstance.interceptors.response.use(
+axiosInstanceWithToken.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -54,4 +54,4 @@ axiosInstance.interceptors.response.use(
   }
 );
 
-export default axiosInstance;
+export default axiosInstanceWithToken;

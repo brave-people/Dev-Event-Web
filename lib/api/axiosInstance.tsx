@@ -1,13 +1,12 @@
 import axios from 'axios';
 import { handleError } from 'lib/api/error';
-import { regenerateAccessToken } from 'lib/api/post';
 
 const requestArray = [];
-const axiosDefault = axios.create({
+const axiosInstance = axios.create({
   baseURL: `${process.env.BASE_SERVER_URL}`,
 });
 
-axiosDefault.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   async (config) => {
     return config;
   },
@@ -17,7 +16,7 @@ axiosDefault.interceptors.request.use(
   }
 );
 
-axiosDefault.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -31,4 +30,4 @@ axiosDefault.interceptors.response.use(
   }
 );
 
-export default axiosDefault;
+export default axiosInstance;

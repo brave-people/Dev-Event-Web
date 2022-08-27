@@ -46,7 +46,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const parsedCookies = cookie.parse(cookies);
     const access_token = parsedCookies.access_token;
     const refrest_token = parsedCookies.refresh_token;
-    console.log(parsedCookies);
 
     if (access_token && refrest_token) {
       return {
