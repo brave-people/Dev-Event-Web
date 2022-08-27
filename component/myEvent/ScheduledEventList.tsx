@@ -9,14 +9,24 @@ import { mutate } from 'swr';
 import { ThreeDots } from 'react-loader-spinner';
 import * as ga from 'lib/utils/gTag';
 import ShareModal from 'component/common/modal/ShareModal';
+import { DateUtil } from 'lib/utils/dateUtil';
+import { useEffect } from 'react';
 
 const cn = classNames.bind(style);
 
 const ScheduledEventList = () => {
-  const param = { filter: 'FUTURE' };
-  const { myEvent, isLoading, isError } = useMyEvent(param, true);
+  const param = { filter: '' };
+  const { myEvent, isError } = useMyEvent(param, true);
+  const [futureEvent, setFutureEvent] = useState(new Array<MyEvent>);
   const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
   const [sharedEvent, setSharedEvent] = useState({});
+
+  useEffect(() => {
+    if (myEvent) {
+      const filtered = myEvent.filter((event) => !checkEventDone({ endDate: event.dev_event.end_date_time }));
+      setFutureEvent(filtered);
+    }
+  }, [myEvent]);
 
   const handleShareInMobileSize = (data: Event) => {
     setSharedEvent(data);
@@ -26,12 +36,16 @@ const ScheduledEventList = () => {
   if (isError) {
     return <div className={cn('null-container')}>내 이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
   }
+
+  const checkEventDone = ({ endDate }: { endDate: string }) => {
+    return DateUtil.isDone(endDate);
+  };
+
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: Number }) => {
     if (favoriteId && myEvent) {
       const filteredEvent = myEvent.filter((event) => event.favorite_id !== favoriteId);
       mutate([`/front/v1/favorite/events`, param], [...filteredEvent], false);
-
-      const result = await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
+      await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
         favoriteId: favoriteId,
       });
     } else {
@@ -49,10 +63,10 @@ const ScheduledEventList = () => {
     <div className={cn('tab__body')}>
       <section className={cn('section')}>
         <div className={cn('section__list')}>
-          {myEvent && !isError ? (
-            myEvent.length !== 0 ? (
+          {myEvent && !isError && futureEvent? (
+            futureEvent.length !== 0 ? (
               <div className={cn('section__list__items')}>
-                {myEvent.map((event: MyEvent) => {
+                {futureEvent.map((event: MyEvent) => {
                   return (
                     <div className={cn('wrapper')}>
                       <Item

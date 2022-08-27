@@ -21,10 +21,8 @@ const List = ({ data }: { data: any }) => {
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
   const [sharedEvent, setSharedEvent] = useState({});
-  const paramByOld = { filter: 'OLD' };
-  const paramByFuture = { filter: 'FUTURE' };
-  const { myEvent: myOldEvent, isError: isMyOldEventError } = useMyEvent(paramByOld, authContext.isLoggedIn);
-  const { myEvent: myFutureEvent, isError: isMyFutureEventError } = useMyEvent(paramByFuture, authContext.isLoggedIn);
+  const param = { filter: '' };
+  const { myEvent, isError } = useMyEvent(param, authContext.isLoggedIn);
 
   const handleShareInMobileSize = (data: Event) => {
     setSharedEvent(data);
@@ -42,9 +40,9 @@ const List = ({ data }: { data: any }) => {
     return DateUtil.isDone(endDate);
   };
 
-  const getFavoriteOldEventId = ({ id }: { id: string }) => {
-    if (myOldEvent) {
-      const result = myOldEvent.find((item) => {
+  const getFavoriteId = ({ id }: { id: string }) => {
+    if (myEvent) {
+      const result = myEvent.find((item) => {
         return item.dev_event.id === id;
       });
       return result ? result.favorite_id : 0;
@@ -53,49 +51,21 @@ const List = ({ data }: { data: any }) => {
     return 0;
   };
 
-  const getFavoriteFutureEventId = ({ id }: { id: string }) => {
-    if (myFutureEvent) {
-      const result = myFutureEvent.find((item) => {
-        return item.dev_event.id === id;
-      });
-      return result ? result.favorite_id : 0;
-    }
-    return 0;
-  };
-
-  const onClickFavoriteOldEvent = async ({ item }: { item: Event }) => {
-    if (myOldEvent) {
-      const favoriteId = getFavoriteOldEventId({ id: item.id });
+  const onClickFavorite = async ({ item }: { item: Event }) => {
+    if (myEvent) {
+      const favoriteId = getFavoriteId({ id: item.id });
 
       if (favoriteId === 0) {
-        const filteredEvent = myOldEvent.concat({ favorite_id: favoriteId, dev_event: item });
-        mutate([`/front/v1/favorite/events`, paramByOld], filteredEvent, false);
+        const filteredEvent = myEvent.concat({ favorite_id: favoriteId, dev_event: item });
+        mutate([`/front/v1/favorite/events`, param], filteredEvent, false);
         const result = await createMyEvent({ eventId: item.id });
       } else {
-        const filteredEvent = myOldEvent.filter((event) => event.favorite_id !== favoriteId);
-        mutate([`/front/v1/favorite/events`, paramByOld], [...filteredEvent], false);
+        const filteredEvent = myEvent.filter((event) => event.favorite_id !== favoriteId);
+        mutate([`/front/v1/favorite/events`, param], [...filteredEvent], false);
 
         const result = await deleteMyEvent({ favoriteId: favoriteId });
       }
-      mutate([`/front/v1/favorite/events`, paramByOld]);
-    }
-  };
-
-  const onClickFavoriteFutureEvent = async ({ item }: { item: Event }) => {
-    if (myFutureEvent) {
-      const favoriteId = getFavoriteFutureEventId({ id: item.id });
-
-      if (favoriteId === 0) {
-        const filteredEvent = myFutureEvent.concat({ favorite_id: favoriteId, dev_event: item });
-        mutate([`/front/v1/favorite/events`, paramByFuture], filteredEvent, false);
-        const result = await createMyEvent({ eventId: item.id });
-      } else {
-        const filteredEvent = myFutureEvent.filter((event) => event.favorite_id !== favoriteId);
-        mutate([`/front/v1/favorite/events`, paramByFuture], [...filteredEvent], false);
-
-        const result = await deleteMyEvent({ favoriteId: favoriteId });
-      }
-      mutate([`/front/v1/favorite/events`, paramByFuture]);
+      mutate([`/front/v1/favorite/events`, param]);
     }
   };
 
@@ -149,24 +119,15 @@ const List = ({ data }: { data: any }) => {
               isEventDone={() => {
                 return checkEventDone({ endDate: item.end_date_time });
               }}
-              isFavorite={({ filter }: { filter: string }) => {
+              isFavorite={() => {
                 if (authContext.isLoggedIn) {
-                  if (filter === 'OLD') {
-                    return getFavoriteOldEventId({ id: item.id }) !== 0 ? true : false;
-                  } else {
-                    return getFavoriteFutureEventId({ id: item.id }) !== 0 ? true : false;
-                  }
-                } else {
-                  return false;
+                  return getFavoriteId({ id: item.id }) !== 0 ? true : false;
                 }
+                return false;
               }}
-              onClickFavorite={({ filter }: { filter: string }) => {
+              onClickFavorite={() => {
                 if (authContext.isLoggedIn) {
-                  if (filter === 'OLD') {
-                    return onClickFavoriteOldEvent({ item: item });
-                  } else {
-                    return onClickFavoriteFutureEvent({ item: item });
-                  }
+                  return onClickFavorite({ item: item });
                 } else {
                   setLoginModalIsOpen(true);
                 }

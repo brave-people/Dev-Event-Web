@@ -25,7 +25,7 @@ const Item = ({
   data: Event;
   isEventDone: () => boolean;
   isEventNew?: () => boolean;
-  isFavorite: ({ filter }: { filter: string }) => boolean;
+  isFavorite: () => boolean;
   onClickFavorite?: any;
   onClickShareInMobileSize?: any;
 }) => {
@@ -130,7 +130,7 @@ const Item = ({
                   <span>NEW</span>
                 </div>
               ) : null}
-              {isFavorite({ filter: isEventDone() ? 'OLD' : 'FUTURE' }) ? (
+              {isFavorite() ? (
                 <div className={cn('item__content__flag', 'my')}>
                   <span>MY</span>
                 </div>
@@ -175,12 +175,7 @@ const Item = ({
         </a>
       </Link>
       <div className={cn('item__buttons')}>
-        <button
-          className={cn(`like-button`, isFavorite({ filter: isEventDone() ? 'OLD' : 'FUTURE' }) ? '--selected' : null)}
-          onClick={() => {
-            onClickFavorite({ filter: isEventDone() ? 'OLD' : 'FUTURE' });
-          }}
-        />
+        <button className={cn(`like-button`, isFavorite() ? '--selected' : null)} onClick={onClickFavorite} />
         <button className={cn('share-button')} onClick={handleShare} />
         {isShareModalOpenInDesktop ? (
           <div className={cn('share-modal')} ref={outsideRef}>
