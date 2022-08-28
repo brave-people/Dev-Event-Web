@@ -1,0 +1,4 @@
+User-agent: *
+Allow:/
+Disallow: /myinfo
+Sitemap: https://dev-event.vercel.app/sitemap.xml

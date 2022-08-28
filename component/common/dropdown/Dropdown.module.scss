@@ -3,7 +3,7 @@
 .dropdown {
   display: flex;
   flex-direction: column;
-  min-width: 12.188rem;
+  min-width: 11rem;
   position: relative;
 
   &__header {
@@ -43,7 +43,7 @@
       display: none;
     }
     &.type--basic {
-      min-width: 12.188rem;
+      min-width: 11rem;
       min-height: 3rem;
       max-height: 16.25rem;
       top: 3.15rem;

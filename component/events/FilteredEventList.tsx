@@ -7,11 +7,13 @@ import router from 'next/router';
 import { MdClose } from 'react-icons/md';
 import { ThreeDots } from 'react-loader-spinner';
 import List from 'component/common/list/list';
+import EventFilters from './EventFilters';
 
 const cn = classNames.bind(style);
 
 const FilteredEventList = ({ filter, type }: { filter?: string; type?: string }) => {
   const [filteredEvents, setFilteredEvents] = useState(Array<Event>(0));
+  const { scheduledEvents, isError } = useScheduledEvents();
 
   useEffect(() => {
     let events = Array<Event>(0);
@@ -27,9 +29,7 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
     if (type === 'search') {
       setFilteredEvents(events.filter((item) => filterBySearch(item)));
     }
-  }, [filter]);
-
-  const { scheduledEvents, isLoading, isError } = useScheduledEvents();
+  }, [scheduledEvents, filter]);
 
   if (isError) {
     return <div className={cn('null-container')}>이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
@@ -47,6 +47,14 @@ const FilteredEventList = ({ filter, type }: { filter?: string; type?: string })
 
   return (
     <>
+      <div className={cn('section__header')}>
+        <span className={cn('section__header__desc')}>
+          <span>검색결과</span>
+        </span>
+        <div className={cn('section__header__filters')}>
+          <EventFilters />
+        </div>
+      </div>
       <div className={cn('section__list')}>
         <div className={cn('section__list__title')}>
           <span>#{filter}</span>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import style from 'styles/Myevent.module.scss';
 import classNames from 'classnames/bind';
 import Item from 'component/common/item/Item';
@@ -9,23 +9,37 @@ import { mutate } from 'swr';
 import { ThreeDots } from 'react-loader-spinner';
 import * as ga from 'lib/utils/gTag';
 import ShareModal from 'component/common/modal/ShareModal';
+import { DateUtil } from 'lib/utils/dateUtil';
 
 const cn = classNames.bind(style);
 
 const DoneEventList = () => {
-  const param = { filter: 'OLD' };
+  const param = { filter: '' };
   const { myEvent, isLoading, isError } = useMyEvent(param, true);
+  const [oldEvent, setOldEvent] = useState(new Array<MyEvent>());
+
   const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
   const [sharedEvent, setSharedEvent] = useState({});
 
-  const handleShareInMobileSize = (data: Event) => {
-    setSharedEvent(data);
-    setShareModalIsOpen(true);
+  useEffect(() => {
+    if (myEvent) {
+      const filtered = myEvent.filter((event) => checkEventDone({ endDate: event.dev_event.end_date_time }));
+      setOldEvent(filtered);
+    }
+  }, [myEvent]);
+
+  const checkEventDone = ({ endDate }: { endDate: string }) => {
+    return DateUtil.isDone(endDate);
   };
 
   if (isError) {
     return <div className={cn('null-container')}>내 이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
   }
+
+  const handleShareInMobileSize = (data: Event) => {
+    setSharedEvent(data);
+    setShareModalIsOpen(true);
+  };
 
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: Number }) => {
     if (favoriteId && myEvent) {
@@ -50,10 +64,10 @@ const DoneEventList = () => {
     <div className={cn('tab__body')}>
       <section className={cn('section')}>
         <div className={cn('section__list')}>
-          {myEvent ? (
-            myEvent.length !== 0 ? (
+          {myEvent && !isError && oldEvent ? (
+            oldEvent.length !== 0 ? (
               <div className={cn('section__list__items')}>
-                {myEvent.map((event: MyEvent) => {
+                {oldEvent.map((event: MyEvent) => {
                   return (
                     <div className={cn('wrapper')}>
                       <Item
