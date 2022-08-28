@@ -16,11 +16,10 @@ const cn = classNames.bind(style);
 const DoneEventList = () => {
   const param = { filter: '' };
   const { myEvent, isLoading, isError } = useMyEvent(param, true);
-  const [oldEvent, setOldEvent] = useState(new Array<MyEvent>);
+  const [oldEvent, setOldEvent] = useState(new Array<MyEvent>());
 
   const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
   const [sharedEvent, setSharedEvent] = useState({});
-
 
   useEffect(() => {
     if (myEvent) {
@@ -29,7 +28,6 @@ const DoneEventList = () => {
     }
   }, [myEvent]);
 
-  
   const checkEventDone = ({ endDate }: { endDate: string }) => {
     return DateUtil.isDone(endDate);
   };
@@ -38,12 +36,10 @@ const DoneEventList = () => {
     return <div className={cn('null-container')}>내 이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
   }
 
-
   const handleShareInMobileSize = (data: Event) => {
     setSharedEvent(data);
     setShareModalIsOpen(true);
   };
-
 
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: Number }) => {
     if (favoriteId && myEvent) {
@@ -68,7 +64,7 @@ const DoneEventList = () => {
     <div className={cn('tab__body')}>
       <section className={cn('section')}>
         <div className={cn('section__list')}>
-          {myEvent && !isError && oldEvent? (
+          {myEvent && !isError && oldEvent ? (
             oldEvent.length !== 0 ? (
               <div className={cn('section__list__items')}>
                 {oldEvent.map((event: MyEvent) => {

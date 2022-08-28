@@ -17,7 +17,7 @@ const cn = classNames.bind(style);
 const ScheduledEventList = () => {
   const param = { filter: '' };
   const { myEvent, isError } = useMyEvent(param, true);
-  const [futureEvent, setFutureEvent] = useState(new Array<MyEvent>);
+  const [futureEvent, setFutureEvent] = useState(new Array<MyEvent>());
   const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
   const [sharedEvent, setSharedEvent] = useState({});
 
@@ -63,7 +63,7 @@ const ScheduledEventList = () => {
     <div className={cn('tab__body')}>
       <section className={cn('section')}>
         <div className={cn('section__list')}>
-          {myEvent && !isError && futureEvent? (
+          {myEvent && !isError && futureEvent ? (
             futureEvent.length !== 0 ? (
               <div className={cn('section__list__items')}>
                 {futureEvent.map((event: MyEvent) => {
