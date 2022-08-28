@@ -1,5 +1,3 @@
-import { useSWRConfig } from 'swr';
-import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import axios from 'axios';
 import router from 'next/router';
 
