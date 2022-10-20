@@ -4,7 +4,7 @@ import { MyEventGetProps } from 'model/event';
 import useSWR from 'swr';
 
 const useScheduledEvents = () => {
-  const { data: events, error } = useSWR(`/front/v1/events/current`, getEventsApi, {
+  const { data: events, error } = useSWR(`/front/v2/events/current`, getEventsApi, {
     shouldRetryOnError: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: true,

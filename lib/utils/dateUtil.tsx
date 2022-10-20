@@ -33,57 +33,42 @@ const DateUtil = {
     return formatDate;
   },
 
-  getDateTimeFormat: ({ date, time }: { date: string; time: string }) => {
-    const formatDate = `${DateUtil.getDateFormat(date, { hasWeek: true })} ${time}`;
+  getTimeFormat: (date: string) => {
+    const formatTime = dayjs(date).format('HH:mm');
+    return formatTime;
+  },
+
+  getDateTimeFormat: (date: string) => {
+    const formatDate = `${DateUtil.getDateFormat(date, { hasWeek: true })} ${DateUtil.getTimeFormat(date)}`;
     return formatDate;
   },
 
   getPeriodFormat: ({
     startDate,
     endDate,
-    startTime,
-    endTime,
+    type,
   }: {
     startDate: string;
     endDate: string;
-    startTime?: string;
-    endTime?: string;
+    type: 'dateTime' | 'date' | 'time';
   }) => {
     let formatDate;
-    const isCondition = (condition: 'time' | 'date' | 'dateTime') => {
-      switch (condition) {
-        case 'dateTime':
-          return DateUtil.getDateFormat(startDate) !== DateUtil.getDateFormat(endDate) && endTime && startTime;
-        case 'date':
-          return (
-            DateUtil.getDateFormat(startDate) !== DateUtil.getDateFormat(endDate) &&
-            (!(startTime && endTime) || startTime === endTime)
-          );
-        case 'time':
-          return (
-            DateUtil.getDateFormat(startDate) === DateUtil.getDateFormat(endDate) &&
-            endTime &&
-            startTime &&
-            startTime !== endTime
-          );
-      }
-    };
-
-    if (isCondition('dateTime')) {
-      formatDate = `${DateUtil.getDateFormat(startDate, { hasWeek: true })} ${startTime} ~ ${DateUtil.getDateFormat(
-        endDate,
-        { hasWeek: true }
-      )} ${endTime}`;
+    if (type === 'dateTime') {
+      formatDate = `${DateUtil.getDateFormat(startDate, { hasWeek: true })} ${DateUtil.getTimeFormat(
+        startDate
+      )} ~ ${DateUtil.getDateFormat(endDate, { hasWeek: true })} ${DateUtil.getTimeFormat(endDate)}`;
     }
 
-    if (isCondition('date')) {
+    if (type === 'date') {
       formatDate = `${DateUtil.getDateFormat(startDate, { hasWeek: true })} ~ ${DateUtil.getDateFormat(endDate, {
         hasWeek: true,
       })}`;
     }
 
-    if (isCondition('time')) {
-      formatDate = `${DateUtil.getDateFormat(startDate, { hasWeek: true })} ${startTime} ~ ${endTime}`;
+    if (type === 'time') {
+      formatDate = `${DateUtil.getDateFormat(startDate, { hasWeek: true })} ${DateUtil.getTimeFormat(
+        startDate
+      )} ~ ${DateUtil.getTimeFormat(endDate)}`;
     }
 
     return formatDate;

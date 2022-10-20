@@ -74,21 +74,59 @@ const Item = ({
 
   const getEventDate = () => {
     let eventDate;
-    if (data.start_date_time === data.end_date_time) {
-      if (data.start_time && data.end_time && data.start_time !== '00:00') {
-        eventDate = DateUtil.getDateTimeFormat({ date: data.start_date_time, time: data.start_time });
-      } else {
+    //당일치기 행사
+    if (data.start_date_time && !data.end_date_time) {
+      if (data.use_start_date_time_yn === 'N' && data.use_end_date_time_yn === null) {
         eventDate = DateUtil.getDateFormat(data.start_date_time, { hasWeek: true });
       }
-    } else {
-      eventDate = DateUtil.getPeriodFormat({
-        startDate: data.start_date_time,
-        endDate: data.end_date_time,
-        startTime: data.start_time,
-        endTime: data.end_time,
-      });
+      if (data.use_start_date_time_yn === 'Y' && data.use_end_date_time_yn === null) {
+        eventDate = DateUtil.getDateTimeFormat(data.start_date_time);
+      }
+
+      return eventDate;
     }
-    return eventDate;
+
+    //마감일만 있는 행사
+    if (!data.start_date_time && data.end_date_time) {
+      if (!data.use_start_date_time_yn) {
+        if (data.use_end_date_time_yn === 'N') {
+          eventDate = DateUtil.getDateFormat(data.end_date_time, { hasWeek: true });
+        }
+        if (data.use_end_date_time_yn === 'Y') {
+          eventDate = DateUtil.getDateTimeFormat(data.end_date_time);
+        }
+      }
+      return `${eventDate} 까지`;
+    }
+
+    //시작, 종료일이 있는 행사
+    if (data.start_date_time && data.end_date_time) {
+      if (data.use_start_date_time_yn === 'N' && data.use_end_date_time_yn === 'N') {
+        eventDate = DateUtil.getPeriodFormat({
+          startDate: data.start_date_time,
+          endDate: data.end_date_time,
+          type: 'date',
+        });
+      }
+      if (data.use_start_date_time_yn === 'Y' && data.use_start_date_time_yn === 'Y') {
+        if (DateUtil.getDateFormat(data.start_date_time) === DateUtil.getDateFormat(data.end_date_time)) {
+          eventDate = DateUtil.getPeriodFormat({
+            startDate: data.start_date_time,
+            endDate: data.start_date_time,
+            type: 'time',
+          });
+        } else {
+          eventDate = DateUtil.getPeriodFormat({
+            startDate: data.start_date_time,
+            endDate: data.end_date_time,
+            type: 'dateTime',
+          });
+        }
+      }
+      return eventDate;
+    }
+
+    return '';
   };
 
   return (
