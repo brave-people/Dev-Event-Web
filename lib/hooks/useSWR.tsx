@@ -19,7 +19,7 @@ const useScheduledEvents = () => {
 };
 
 const useMonthlyEvent = ({ param }: { param: Calender }) => {
-  const { data: events, error } = useSWR(`/front/v1/events/${param.year}/${param.month}`, getMonthlyEventApi, {
+  const { data: events, error } = useSWR(`/front/v2/events/${param.year}/${param.month}`, getMonthlyEventApi, {
     shouldRetryOnError: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: true,

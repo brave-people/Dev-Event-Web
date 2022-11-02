@@ -38,6 +38,11 @@ const EventFilters = () => {
       const lastyear = scheduledEvents[scheduledEvents.length - 1].metadata.year;
       const lastmonth = scheduledEvents[scheduledEvents.length - 1].metadata.month;
       setLastDate({ year: lastyear, month: lastmonth });
+    } else {
+      let currentYear = dayjs().get('year');
+      let currentMonth = dayjs().get('month') + 1;
+
+      setLastDate({ year: currentYear, month: currentMonth });
     }
   };
 
