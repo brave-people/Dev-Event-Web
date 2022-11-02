@@ -2,7 +2,7 @@
 
 .banner {
   position: relative;
-  height: 29rem;
+  height: 27rem;
   width: 100%;
   min-width: 68.75rem;
   display: flex;
@@ -142,7 +142,7 @@
 @include tablet {
   .banner {
     position: relative;
-    height: 33rem;
+    height: 27rem;
     width: 100%;
     min-width: 688px;
     display: flex;
