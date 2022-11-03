@@ -72,27 +72,25 @@ const EventFilters = () => {
 
   return (
     <>
-      <span className={cn('wrapper')}>
-        <Dropdown
-          options={getDateList()}
-          placeholder="전체"
-          value={filter.date}
-          icon={<AiTwotoneCalendar size={16} />}
-          onClick={(event: any) => {
-            ga.event({
-              action: 'web_event_월별옵션클릭',
-              event_category: 'web_event',
-              event_label: '검색',
-            });
-            if (event.target.innerText === '전체') {
-              router.replace(`/events`);
-            } else {
-              const date = event.target.innerText.replace(/[\t\s]/g, '').split(/[년, 월]/);
-              router.replace(`/events?year=${date[0]}&month=${date[1]}`);
-            }
-          }}
-        ></Dropdown>
-      </span>
+      <Dropdown
+        options={getDateList()}
+        placeholder="전체"
+        value={filter.date}
+        icon={<AiTwotoneCalendar size={16} />}
+        onClick={(event: any) => {
+          ga.event({
+            action: 'web_event_월별옵션클릭',
+            event_category: 'web_event',
+            event_label: '검색',
+          });
+          if (event.target.innerText === '전체') {
+            router.replace(`/events`);
+          } else {
+            const date = event.target.innerText.replace(/[\t\s]/g, '').split(/[년, 월]/);
+            router.replace(`/events?year=${date[0]}&month=${date[1]}`);
+          }
+        }}
+      ></Dropdown>
       <span className={cn('wrapper')}>
         <Dropdown
           options={getTagList()}
