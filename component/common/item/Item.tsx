@@ -112,7 +112,7 @@ const Item = ({
         if (DateUtil.getDateFormat(data.start_date_time) === DateUtil.getDateFormat(data.end_date_time)) {
           eventDate = DateUtil.getPeriodFormat({
             startDate: data.start_date_time,
-            endDate: data.start_date_time,
+            endDate: data.end_date_time,
             type: 'time',
           });
         } else {
