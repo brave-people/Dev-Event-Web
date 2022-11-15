@@ -28,6 +28,13 @@ export interface EventMetaData extends Calender {
   month: number;
 }
 
+export interface EventDate {
+  start_date_time: string;
+  end_date_time: string;
+  use_start_date_time_yn: 'Y' | 'N' | null;
+  use_end_date_time_yn: 'Y' | 'N' | null;
+}
+
 export interface EventResponse {
   metadata: EventMetaData;
   dev_event: Event[];

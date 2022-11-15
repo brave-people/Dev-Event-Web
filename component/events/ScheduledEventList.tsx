@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useScheduledEvents } from 'lib/hooks/useSWR';
-import { EventResponse, Event } from 'model/event';
+import { EventResponse, Event, EventDate } from 'model/event';
 import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
 import dayjs from 'dayjs';
@@ -30,12 +30,33 @@ const ScheduledEventList = () => {
     if (scheduledEvents && !isError && scheduledEvents.length !== 0) {
       const result = scheduledEvents.reduce(function add(sum, currValue) {
         const filteredEvents = currValue.dev_event.filter(
-          (item) => checkEventDone({ endDate: item.end_date_time }) === false
+          (item) =>
+            checkEventDone({
+              endDate: getEventEndDate({
+                start_date_time: item.start_date_time,
+                end_date_time: item.end_date_time,
+                use_start_date_time_yn: item.use_start_date_time_yn,
+                use_end_date_time_yn: item.use_end_date_time_yn,
+              }),
+            }) === false
         );
         return sum + filteredEvents.length;
       }, 0);
       setTotalCount(result);
     }
+  };
+
+  const getEventEndDate = (EventDate: EventDate) => {
+    if (EventDate.use_start_date_time_yn && EventDate.use_end_date_time_yn) {
+      return EventDate.end_date_time;
+    }
+    if (EventDate.use_start_date_time_yn && !EventDate.use_end_date_time_yn) {
+      return EventDate.start_date_time;
+    }
+    if (!EventDate.use_start_date_time_yn && EventDate.use_end_date_time_yn) {
+      return EventDate.end_date_time;
+    }
+    return EventDate.end_date_time;
   };
 
   const checkEventDone = ({ endDate }: { endDate: string }) => {
@@ -76,12 +97,29 @@ const ScheduledEventList = () => {
             .filter((events) => !(dayjs().get('month') + 1 > events.metadata.month))
             .map((event: EventResponse, index) => {
               const lists = !isNewFilter
-                ? event && event.dev_event.filter((item) => !checkEventDone({ endDate: item.end_date_time }))
+                ? event &&
+                  event.dev_event.filter(
+                    (item) =>
+                      !checkEventDone({
+                        endDate: getEventEndDate({
+                          start_date_time: item.start_date_time,
+                          end_date_time: item.end_date_time,
+                          use_start_date_time_yn: item.use_start_date_time_yn,
+                          use_end_date_time_yn: item.use_end_date_time_yn,
+                        }),
+                      })
+                  )
                 : event &&
                   event.dev_event.filter(
                     (item) =>
-                      !checkEventDone({ endDate: item.end_date_time }) &&
-                      filterByNew({ createDateTime: item.create_date_time })
+                      !checkEventDone({
+                        endDate: getEventEndDate({
+                          start_date_time: item.start_date_time,
+                          end_date_time: item.end_date_time,
+                          use_start_date_time_yn: item.use_start_date_time_yn,
+                          use_end_date_time_yn: item.use_end_date_time_yn,
+                        }),
+                      }) && filterByNew({ createDateTime: item.create_date_time })
                   );
               return (
                 <>

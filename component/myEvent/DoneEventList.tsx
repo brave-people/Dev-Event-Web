@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import Item from 'component/common/item/Item';
 import { useMyEvent } from 'lib/hooks/useSWR';
 import { deleteMyEventApi } from 'lib/api/delete';
-import { MyEvent } from 'model/event';
+import { MyEvent, EventDate } from 'model/event';
 import { mutate } from 'swr';
 import { ThreeDots } from 'react-loader-spinner';
 import * as ga from 'lib/utils/gTag';
@@ -21,9 +21,31 @@ const DoneEventList = () => {
   const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
   const [sharedEvent, setSharedEvent] = useState({});
 
+  const getEventEndDate = (EventDate: EventDate) => {
+    if (EventDate.use_start_date_time_yn && EventDate.use_end_date_time_yn) {
+      return EventDate.end_date_time;
+    }
+    if (EventDate.use_start_date_time_yn && !EventDate.use_end_date_time_yn) {
+      return EventDate.start_date_time;
+    }
+    if (!EventDate.use_start_date_time_yn && EventDate.use_end_date_time_yn) {
+      return EventDate.end_date_time;
+    }
+    return EventDate.end_date_time;
+  };
+
   useEffect(() => {
     if (myEvent) {
-      const filtered = myEvent.filter((event) => checkEventDone({ endDate: event.dev_event.end_date_time }));
+      const filtered = myEvent.filter((event) =>
+        checkEventDone({
+          endDate: getEventEndDate({
+            start_date_time: event.dev_event.start_date_time,
+            end_date_time: event.dev_event.end_date_time,
+            use_start_date_time_yn: event.dev_event.use_start_date_time_yn,
+            use_end_date_time_yn: event.dev_event.use_end_date_time_yn,
+          }),
+        })
+      );
       setOldEvent(filtered);
     }
   }, [myEvent]);

@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import { useMyEvent } from 'lib/hooks/useSWR';
 import Item from 'component/common/item/Item';
 import { deleteMyEventApi } from 'lib/api/delete';
-import { MyEvent } from 'model/event';
+import { MyEvent, EventDate } from 'model/event';
 import { mutate } from 'swr';
 import { ThreeDots } from 'react-loader-spinner';
 import * as ga from 'lib/utils/gTag';
@@ -23,7 +23,17 @@ const ScheduledEventList = () => {
 
   useEffect(() => {
     if (myEvent) {
-      const filtered = myEvent.filter((event) => !checkEventDone({ endDate: event.dev_event.end_date_time }));
+      const filtered = myEvent.filter(
+        (event) =>
+          !checkEventDone({
+            endDate: getEventEndDate({
+              start_date_time: event.dev_event.start_date_time,
+              end_date_time: event.dev_event.end_date_time,
+              use_start_date_time_yn: event.dev_event.use_start_date_time_yn,
+              use_end_date_time_yn: event.dev_event.use_end_date_time_yn,
+            }),
+          })
+      );
       setFutureEvent(filtered);
     }
   }, [myEvent]);
@@ -36,6 +46,19 @@ const ScheduledEventList = () => {
   if (isError) {
     return <div className={cn('null-container')}>내 이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
   }
+
+  const getEventEndDate = (EventDate: EventDate) => {
+    if (EventDate.use_start_date_time_yn && EventDate.use_end_date_time_yn) {
+      return EventDate.end_date_time;
+    }
+    if (EventDate.use_start_date_time_yn && !EventDate.use_end_date_time_yn) {
+      return EventDate.start_date_time;
+    }
+    if (!EventDate.use_start_date_time_yn && EventDate.use_end_date_time_yn) {
+      return EventDate.end_date_time;
+    }
+    return EventDate.end_date_time;
+  };
 
   const checkEventDone = ({ endDate }: { endDate: string }) => {
     return DateUtil.isDone(endDate);
