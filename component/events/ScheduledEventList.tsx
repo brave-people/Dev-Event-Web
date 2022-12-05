@@ -7,7 +7,6 @@ import dayjs from 'dayjs';
 import { ThreeDots } from 'react-loader-spinner';
 import List from 'component/common/list/list';
 import { DateUtil } from 'lib/utils/dateUtil';
-import CheckButton from 'component/common/buttons/CheckButton';
 import EventFilters from './EventFilters';
 
 const cn = classNames.bind(style);
@@ -94,7 +93,7 @@ const ScheduledEventList = () => {
       {scheduledEvents ? (
         scheduledEvents.length !== 0 ? (
           scheduledEvents
-            .filter((events) => !(dayjs().get('month') + 1 > events.metadata.month))
+            // .filter((events) => !(dayjs().get('month') + 1 > events.metadata.month))
             .map((event: EventResponse, index) => {
               const lists = !isNewFilter
                 ? event &&
