@@ -1,4 +1,4 @@
-import { EventResponse, MyEvent, MyEventGetProps } from 'model/event';
+import { Event, EventResponse, MyEvent, MyEventGetProps } from 'model/event';
 import { TagResponse } from 'model/tag';
 import { User } from 'model/auth';
 import { AxiosResponse } from 'axios';
