@@ -49,7 +49,13 @@ const MonthlyEventList = () => {
         </div>
         {monthlyEvent && !isError ? (
           monthlyEvent.length !== 0 ? (
-            <List data={monthlyEvent} />
+            <List
+              data={monthlyEvent.sort((a, b) => {
+                let target1 = a.end_date_time ? a.end_date_time : a.start_date_time;
+                let target2 = b.end_date_time ? b.end_date_time : b.start_date_time;
+                return +new Date(target2) - +new Date(target1);
+              })}
+            />
           ) : (
             <div className={cn('null-container')}>아직 조건에 맞는 개발자 행사가 없어요 📂</div>
           )
