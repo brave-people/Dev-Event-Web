@@ -1,4 +1,5 @@
 import Document, { DocumentContext, DocumentInitialProps, Html, Head, Main, NextScript } from 'next/document';
+// import Script from 'next/script';
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
@@ -6,30 +7,11 @@ class MyDocument extends Document {
 
     return initialProps;
   }
+
   render() {
     return (
       <Html>
         <Head>
-          <meta name="title" content="Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!" />
-          <meta name="robots" content="index,follow" />
-          <meta
-            name="description"
-            content="데브이벤트 웹에서 개발자 행사를 놓치지 마세요! 개발자를 위한 {웨비나, 컨퍼런스, 해커톤, 네트워킹} 소식을 알려드립니다."
-          />
-          <meta
-            name="keywords"
-            content="데브이벤트 웹, Dev Event, 데브이벤트, 개발자 행사, 용감한 친구들, Web, 웹, 개발자, 이벤트, 행사, 웨비나, 컨퍼런스, 해커톤, 네트워킹, IT"
-          />
-          <meta property="og:type" content="website" />
-          <meta
-            property="og:image"
-            content="https://drive.google.com/uc?export=download&id=1-Jqapt5h4XtxXQbgX07kI3ipgk3V6ESE"
-          />
-          <meta property="og:title" content="Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!" />
-          <meta
-            property="og:description"
-            content="개발자를 위한 {웨비나, 컨퍼런스, 해커톤, 네트워킹} 소식을 알려드립니다."
-          />
           <meta property="og:type" content="website" />
           <meta property="og:site_name" content="Dev Event" />
           <meta name="google-site-verification" content={`${process.env.GOOGLE_SITE_VERIFICATION}`} />
@@ -49,6 +31,10 @@ class MyDocument extends Document {
           `,
             }}
           />
+          {/* <Script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(navigationSchemaJsonObject) }}
+          /> */}
         </Head>
         <body>
           <Main />
@@ -58,5 +44,26 @@ class MyDocument extends Document {
     );
   }
 }
+
+// const navigationSchemaJsonObject = {
+//   '@context': 'https://dev-event.vercel.app',
+//   '@type': 'ItemList',
+//   itemListElement: [
+//     {
+//       '@type': 'SiteNavigationElement',
+//       position: 1,
+//       name: '개발자 행사',
+//       description: '...',
+//       url: 'https://www.your-web-service.com',
+//     },
+//     {
+//       '@type': 'SiteNavigationElement',
+//       position: 2,
+//       name: '오프라인 행사',
+//       description: '...',
+//       url: `https://www.your-web-service.com/products`,
+//     },
+//   ],
+// };
 
 export default MyDocument;

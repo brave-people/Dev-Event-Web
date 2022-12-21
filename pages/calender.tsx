@@ -10,11 +10,15 @@ import LoginModal from 'component/common/modal/LoginModal';
 import MonthlyEventList from 'component/events/MonthlyEventList';
 import { Event } from 'model/event';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 const cn = classNames.bind(style);
 
 const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackData: Event[] }) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
+  const router = useRouter();
+  const filteredDate = { year: Number(router.query.year), month: Number(router.query.month) };
+
   useEffect(() => {
     if (isLoggedIn) {
       authContext.login();
@@ -25,6 +29,31 @@ const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackD
 
   return (
     <>
+      <Head>
+        <title>
+          {filteredDate.year}년 {filteredDate.month}월 - 데브이벤트 행사 월별 검색
+        </title>
+        <meta
+          name="description"
+          content={`${filteredDate.year}년 ${filteredDate.month}월에 진행되는 개발자 행사, 데브이벤트에서 찾아보세요!`}
+        />
+        <meta
+          name="keywords"
+          content="데브이벤트 웹, 개발자 행사, 월별, 이벤트, 행사, 웨비나, 컨퍼런스, 해커톤, 네트워킹, IT"
+        />
+        <meta
+          property="og:image"
+          content="https://drive.google.com/uc?export=download&id=1-Jqapt5h4XtxXQbgX07kI3ipgk3V6ESE"
+        />
+        <meta
+          property="og:title"
+          content={`${filteredDate.year}년 ${filteredDate.month}월 - 데브이벤트 행사 월별 검색`}
+        />
+        <meta
+          property="og:description"
+          content={`${filteredDate.year}년 ${filteredDate.month}월에 진행되는 개발자 행사, 데브이벤트에서 찾아보세요!`}
+        />
+      </Head>
       <div className={cn('banner')}>
         <h1 className={cn('banner__title')}>
           개발자 행사는
@@ -33,7 +62,7 @@ const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackD
         <h3 className={cn('banner__desc')}>진행 중인 행사부터 종료된 행사까지, 놓치지 마세요! </h3>
       </div>
       <section className={cn('section')}>
-        <MonthlyEventList fallbackData={fallbackData} />
+        <MonthlyEventList fallbackData={fallbackData} date={filteredDate} />
       </section>
       <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
     </>

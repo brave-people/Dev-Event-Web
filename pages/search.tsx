@@ -9,6 +9,7 @@ import { AuthContext } from 'context/auth';
 import LoginModal from 'component/common/modal/LoginModal';
 import FilteredEventList from 'component/events/FilteredEventList';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 const cn = classNames.bind(style);
 
@@ -17,6 +18,7 @@ const Search = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   const router = useRouter();
   const isFilteredByTag = router.query.tag;
   const isFilteredBySearch = router.query.keyword;
+  const keyword = router.query.tag || router.query.keyword;
 
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   useEffect(() => {
@@ -29,6 +31,20 @@ const Search = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
 
   return (
     <>
+      <Head>
+        <title>{keyword} - 데브이벤트 행사 키워드 검색</title>
+        <meta name="description" content={`${keyword} 행사, 데브이벤트에서 찾아보세요!`} />
+        <meta
+          name="keywords"
+          content={`${keyword}, 데브이벤트 웹, 개발자 행사, 이벤트, 행사, 웨비나, 컨퍼런스, 해커톤, 네트워킹, IT`}
+        />
+        <meta
+          property="og:image"
+          content="https://drive.google.com/uc?export=download&id=1-Jqapt5h4XtxXQbgX07kI3ipgk3V6ESE"
+        />
+        <meta property="og:title" content={`${keyword} - 데브이벤트 행사 키워드 검색`} />
+        <meta property="og:description" content={`${keyword} 개발자 행사, 데브이벤트에서 찾아보세요!`} />
+      </Head>
       <div className={cn('banner')}>
         <h1 className={cn('banner__title')}>
           개발자 행사는
