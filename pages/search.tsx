@@ -7,13 +7,17 @@ import { GetServerSideProps } from 'next';
 import cookie from 'cookie';
 import { AuthContext } from 'context/auth';
 import LoginModal from 'component/common/modal/LoginModal';
-import { EventResponse } from 'model/event';
-import ScheduledEventList from 'component/events/ScheduledEventList';
+import FilteredEventList from 'component/events/FilteredEventList';
+import { useRouter } from 'next/router';
 
 const cn = classNames.bind(style);
 
-const Events = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackData: EventResponse[] }) => {
+const Search = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   const authContext = React.useContext(AuthContext);
+  const router = useRouter();
+  const isFilteredByTag = router.query.tag;
+  const isFilteredBySearch = router.query.keyword;
+
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   useEffect(() => {
     if (isLoggedIn) {
@@ -33,7 +37,8 @@ const Events = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackDat
         <h3 className={cn('banner__desc')}>진행 중인 행사부터 종료된 행사까지, 놓치지 마세요! </h3>
       </div>
       <section className={cn('section')}>
-        <ScheduledEventList fallbackData={fallbackData} />
+        {isFilteredByTag && <FilteredEventList type="tag" filter={String(isFilteredByTag)} />}
+        {isFilteredBySearch && <FilteredEventList type="search" filter={String(isFilteredBySearch)} />}
       </section>
       <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
     </>
@@ -42,9 +47,6 @@ const Events = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackDat
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = context.req.headers.cookie || '';
-  const res = await fetch('https://real-brave-people.o-r.kr/front/v2/events/current');
-  const events = await res.json();
-
   if (cookies) {
     const parsedCookies = cookie.parse(cookies);
     const access_token = parsedCookies.access_token;
@@ -54,7 +56,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       return {
         props: {
           isLoggedIn: true,
-          fallbackData: events,
         },
       };
     }
@@ -63,12 +64,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       isLoggedIn: false,
-      fallbackData: events,
     },
   };
 };
 
-Events.getLayout = function getLayout(page: ReactElement) {
+Search.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
-export default Events;
+export default Search;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useScheduledEvents } from 'lib/hooks/useSWR';
-import { EventResponse, Event, EventDate } from 'model/event';
+import { EventResponse, EventDate } from 'model/event';
 import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
 import dayjs from 'dayjs';
@@ -8,14 +8,12 @@ import { ThreeDots } from 'react-loader-spinner';
 import List from 'component/common/list/list';
 import { DateUtil } from 'lib/utils/dateUtil';
 import EventFilters from './EventFilters';
-
 const cn = classNames.bind(style);
 
-const ScheduledEventList = () => {
+const ScheduledEventList = ({ fallbackData }: { fallbackData: EventResponse[] }) => {
   const [isNewFilter, setNewFilter] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
-
-  const { scheduledEvents, isError } = useScheduledEvents();
+  const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
 
   useEffect(() => {
     composeTotalCount();
@@ -145,5 +143,4 @@ const ScheduledEventList = () => {
     </>
   );
 };
-
 export default ScheduledEventList;

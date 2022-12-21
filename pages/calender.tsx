@@ -7,12 +7,12 @@ import { GetServerSideProps } from 'next';
 import cookie from 'cookie';
 import { AuthContext } from 'context/auth';
 import LoginModal from 'component/common/modal/LoginModal';
-import { EventResponse } from 'model/event';
-import ScheduledEventList from 'component/events/ScheduledEventList';
-
+import MonthlyEventList from 'component/events/MonthlyEventList';
+import { Event } from 'model/event';
+import Head from 'next/head';
 const cn = classNames.bind(style);
 
-const Events = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackData: EventResponse[] }) => {
+const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackData: Event[] }) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   useEffect(() => {
@@ -33,7 +33,7 @@ const Events = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackDat
         <h3 className={cn('banner__desc')}>진행 중인 행사부터 종료된 행사까지, 놓치지 마세요! </h3>
       </div>
       <section className={cn('section')}>
-        <ScheduledEventList fallbackData={fallbackData} />
+        <MonthlyEventList fallbackData={fallbackData} />
       </section>
       <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
     </>
@@ -41,9 +41,11 @@ const Events = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackDat
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const cookies = context.req.headers.cookie || '';
-  const res = await fetch('https://real-brave-people.o-r.kr/front/v2/events/current');
+  const { year, month } = context.query;
+  const res = await fetch(`https://real-brave-people.o-r.kr/front/v2/events/${year}/${month}`);
   const events = await res.json();
+
+  const cookies = context.req.headers.cookie || '';
 
   if (cookies) {
     const parsedCookies = cookie.parse(cookies);
@@ -68,7 +70,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   };
 };
 
-Events.getLayout = function getLayout(page: ReactElement) {
+Calender.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
-export default Events;
+export default Calender;

@@ -3,22 +3,20 @@ import Layout from 'component/common/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
-import { useRouter } from 'next/router';
+import router from 'next/router';
 import { useMonthlyEvent } from 'lib/hooks/useSWR';
 import { MdClose } from 'react-icons/md';
 import { ThreeDots } from 'react-loader-spinner';
 import List from 'component/common/list/list';
 import EventFilters from './EventFilters';
-
+import { Event } from 'model/event';
+import { Calender } from 'model/calender';
 const cn = classNames.bind(style);
 
-const MonthlyEventList = () => {
-  const router = useRouter();
-
-  const param = { year: Number(router.query.year), month: Number(router.query.month) };
-
+const MonthlyEventList = ({ fallbackData, date }: { fallbackData: Event[]; date: Calender }) => {
   const { monthlyEvent, isError } = useMonthlyEvent({
-    param: param,
+    param: date,
+    fallbackData: fallbackData,
   });
 
   if (isError) {
@@ -37,7 +35,7 @@ const MonthlyEventList = () => {
       </div>
       <div className={cn('section__list')}>
         <div className={cn('section__list__title')}>
-          <span>{`${router.query.year}년 ${router.query.month}월`}</span>
+          <span>{`${date.year}년 ${date.month}월`}</span>
           <div
             className={cn('reset-button')}
             onClick={(event) => {

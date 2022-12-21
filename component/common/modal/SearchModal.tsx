@@ -25,7 +25,7 @@ function SearchModal({ isOpen, onClick }: any) {
           event_category: 'web_event',
           event_label: '검색',
         });
-        router.replace(`/events?keyword=${input}`);
+        router.replace(`/search?keyword=${input}`);
       } else {
         router.replace(`/events`);
       }

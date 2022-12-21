@@ -87,7 +87,7 @@ const EventFilters = () => {
             router.replace(`/events`);
           } else {
             const date = event.target.innerText.replace(/[\t\s]/g, '').split(/[년, 월]/);
-            router.replace(`/events?year=${date[0]}&month=${date[1]}`);
+            router.replace(`/calender?year=${date[0]}&month=${date[1]}`);
           }
         }}
       ></Dropdown>
@@ -107,7 +107,7 @@ const EventFilters = () => {
               router.replace(`/events`);
             } else {
               const tag = event.target.innerText.replace(/[\t\s\#]/g, '');
-              router.replace(`/events?tag=${tag}`);
+              router.replace(`/search?tag=${tag}`);
             }
           }}
         ></Dropdown>
