@@ -71,35 +71,33 @@ const ScheduledEventList = ({ fallbackData }: { fallbackData: EventResponse[] })
       </div>
       {scheduledEvents ? (
         scheduledEvents.length !== 0 ? (
-          scheduledEvents
-            // .filter((events) => !(dayjs().get('month') + 1 > events.metadata.month))
-            .map((event: EventResponse, index) => {
-              const lists =
-                event &&
-                event.dev_event.filter(
-                  (item) =>
-                    !checkEventDone({
-                      endDate: getEventEndDate({
-                        start_date_time: item.start_date_time,
-                        end_date_time: item.end_date_time,
-                        use_start_date_time_yn: item.use_start_date_time_yn,
-                        use_end_date_time_yn: item.use_end_date_time_yn,
-                      }),
-                    })
-                );
-
-              return (
-                <>
-                  {index === 0 ? null : <hr className={cn('divider')} />}
-                  <div className={cn('section__list')}>
-                    <div className={cn('section__list__title')}>
-                      <span>{`${event.metadata.year}년 ${event.metadata.month}월`}</span>
-                    </div>
-                    <List data={lists} />
-                  </div>
-                </>
+          scheduledEvents.map((event: EventResponse, index) => {
+            const lists =
+              event &&
+              event.dev_event.filter(
+                (item) =>
+                  !checkEventDone({
+                    endDate: getEventEndDate({
+                      start_date_time: item.start_date_time,
+                      end_date_time: item.end_date_time,
+                      use_start_date_time_yn: item.use_start_date_time_yn,
+                      use_end_date_time_yn: item.use_end_date_time_yn,
+                    }),
+                  })
               );
-            })
+
+            return lists.length > 0 ? (
+              <>
+                <div className={cn('section__list')}>
+                  <div className={cn('section__list__title')}>
+                    <span>{`${event.metadata.year}년 ${event.metadata.month}월`}</span>
+                  </div>
+                  <List data={lists} />
+                </div>
+                {index === scheduledEvents.length - 1 ? null : <hr className={cn('divider')} />}
+              </>
+            ) : null;
+          })
         ) : (
           <div className={cn('null-container')}>아직 조건에 맞는 개발자 행사가 없어요 📂</div>
         )
