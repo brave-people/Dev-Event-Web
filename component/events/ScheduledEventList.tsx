@@ -11,7 +11,6 @@ import EventFilters from './EventFilters';
 const cn = classNames.bind(style);
 
 const ScheduledEventList = ({ fallbackData }: { fallbackData: EventResponse[] }) => {
-  const [isNewFilter, setNewFilter] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
 
@@ -60,13 +59,6 @@ const ScheduledEventList = ({ fallbackData }: { fallbackData: EventResponse[] })
     return DateUtil.isDone(endDate);
   };
 
-  const filterByNew = ({ createDateTime }: { createDateTime: string }) => {
-    const todayDate = dayjs();
-    const createDate = dayjs(createDateTime);
-
-    return createDate.diff(todayDate, 'day') < 1 && createDate.diff(todayDate, 'day') > -1 ? true : false;
-  };
-
   return (
     <>
       <div className={cn('section__header')}>
@@ -74,17 +66,6 @@ const ScheduledEventList = ({ fallbackData }: { fallbackData: EventResponse[] })
           현재&nbsp;<span>{totalCount}개</span>의 개발자 행사 진행 중
         </span>
         <div className={cn('section__header__filters')}>
-          {/* <CheckButton
-            label="New 이벤트만 보기"
-            value={isNewFilter}
-            onClick={() => {
-              if (isNewFilter) {
-                setNewFilter(false);
-              } else {
-                setNewFilter(true);
-              }
-            }}
-          /> */}
           <EventFilters />
         </div>
       </div>
@@ -93,40 +74,27 @@ const ScheduledEventList = ({ fallbackData }: { fallbackData: EventResponse[] })
           scheduledEvents
             // .filter((events) => !(dayjs().get('month') + 1 > events.metadata.month))
             .map((event: EventResponse, index) => {
-              const lists = !isNewFilter
-                ? event &&
-                  event.dev_event.filter(
-                    (item) =>
-                      !checkEventDone({
-                        endDate: getEventEndDate({
-                          start_date_time: item.start_date_time,
-                          end_date_time: item.end_date_time,
-                          use_start_date_time_yn: item.use_start_date_time_yn,
-                          use_end_date_time_yn: item.use_end_date_time_yn,
-                        }),
-                      })
-                  )
-                : event &&
-                  event.dev_event.filter(
-                    (item) =>
-                      !checkEventDone({
-                        endDate: getEventEndDate({
-                          start_date_time: item.start_date_time,
-                          end_date_time: item.end_date_time,
-                          use_start_date_time_yn: item.use_start_date_time_yn,
-                          use_end_date_time_yn: item.use_end_date_time_yn,
-                        }),
-                      }) && filterByNew({ createDateTime: item.create_date_time })
-                  );
+              const lists =
+                event &&
+                event.dev_event.filter(
+                  (item) =>
+                    !checkEventDone({
+                      endDate: getEventEndDate({
+                        start_date_time: item.start_date_time,
+                        end_date_time: item.end_date_time,
+                        use_start_date_time_yn: item.use_start_date_time_yn,
+                        use_end_date_time_yn: item.use_end_date_time_yn,
+                      }),
+                    })
+                );
+
               return (
                 <>
-                  {index === 0 || isNewFilter ? null : <hr className={cn('divider')} />}
+                  {index === 0 ? null : <hr className={cn('divider')} />}
                   <div className={cn('section__list')}>
-                    {!isNewFilter ? (
-                      <div className={cn('section__list__title')}>
-                        <span>{`${event.metadata.year}년 ${event.metadata.month}월`}</span>
-                      </div>
-                    ) : null}
+                    <div className={cn('section__list__title')}>
+                      <span>{`${event.metadata.year}년 ${event.metadata.month}월`}</span>
+                    </div>
                     <List data={lists} />
                   </div>
                 </>

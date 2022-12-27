@@ -2,7 +2,6 @@ import classNames from 'classnames/bind';
 import React, { useEffect, useState } from 'react';
 import style from './SearchModal.module.scss';
 import Modal from 'react-modal';
-import { FiSearch } from 'react-icons/fi';
 import router from 'next/router';
 import * as ga from 'lib/utils/gTag';
 
@@ -41,7 +40,7 @@ function SearchModal({ isOpen, onClick }: any) {
       <div className={cx('modal__inner')}>
         <input
           className={cx('search-input')}
-          placeholder="어떤 행사를 찾고 계세요?"
+          placeholder="어떤 예정된 행사를 찾고 계세요?"
           onChange={onChangeKeyword}
           value={input}
           onKeyPress={onSubmit}
