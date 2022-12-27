@@ -11,6 +11,8 @@ import MonthlyEventList from 'component/events/MonthlyEventList';
 import { Event } from 'model/event';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import Banner from 'component/common/banner/banner';
+
 const cn = classNames.bind(style);
 
 const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackData: Event[] }) => {
@@ -54,13 +56,7 @@ const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackD
           content={`${filteredDate.year}년 ${filteredDate.month}월에 진행되는 개발자 행사, 데브이벤트에서 찾아보세요!`}
         />
       </Head>
-      <div className={cn('banner')}>
-        <h1 className={cn('banner__title')}>
-          개발자 행사는
-          <br /> 모두 Dev Event 웹에서
-        </h1>
-        <h3 className={cn('banner__desc')}>진행 중인 행사부터 종료된 행사까지, 놓치지 마세요! </h3>
-      </div>
+      <Banner />
       <section className={cn('section')}>
         <MonthlyEventList fallbackData={fallbackData} date={filteredDate} />
       </section>

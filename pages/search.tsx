@@ -10,6 +10,7 @@ import LoginModal from 'component/common/modal/LoginModal';
 import FilteredEventList from 'component/events/FilteredEventList';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import Banner from 'component/common/banner/banner';
 
 const cn = classNames.bind(style);
 
@@ -45,13 +46,7 @@ const Search = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
         <meta property="og:title" content={`${keyword} - 데브이벤트 행사 키워드 검색`} />
         <meta property="og:description" content={`${keyword} 개발자 행사, 데브이벤트에서 찾아보세요!`} />
       </Head>
-      <div className={cn('banner')}>
-        <h1 className={cn('banner__title')}>
-          개발자 행사는
-          <br /> 모두 Dev Event 웹에서
-        </h1>
-        <h3 className={cn('banner__desc')}>진행 중인 행사부터 종료된 행사까지, 놓치지 마세요! </h3>
-      </div>
+      <Banner />
       <section className={cn('section')}>
         {isFilteredByTag && <FilteredEventList type="tag" filter={String(isFilteredByTag)} />}
         {isFilteredBySearch && <FilteredEventList type="search" filter={String(isFilteredBySearch)} />}

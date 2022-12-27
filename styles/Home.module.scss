@@ -1,50 +1,5 @@
 @import '~styles/_mixin.scss';
 
-.banner {
-  position: relative;
-  height: 27rem;
-  width: 100%;
-  min-width: 68.75rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  align-self: flex-start;
-  background-image: url('../public/default/banner_img.png');
-  background-size: 100% 462px;
-  background-repeat: no-repeat;
-  padding: 0px 20px 0px 20px;
-
-  &__title {
-    font-size: 3.8rem;
-    font-weight: 700;
-    line-height: 5.1rem;
-    letter-spacing: 0em;
-    text-align: center;
-    color: #ffffff;
-    padding: 0px;
-    margin: 0px;
-  }
-
-  &__desc {
-    font-weight: 400;
-    font-size: 1.23rem;
-    line-height: 1.813rem;
-    text-align: center;
-    color: #ffffff;
-    padding-top: 1.938rem;
-    padding-bottom: 0px;
-    margin: 0px;
-    &--bold {
-      font-weight: bold;
-    }
-  }
-
-  &__button {
-    padding-top: 3.2rem;
-  }
-}
-
 .section {
   width: 68.75rem;
   padding-bottom: 5.439rem;
@@ -140,21 +95,6 @@
 }
 
 @include tablet {
-  .banner {
-    position: relative;
-    height: 27rem;
-    width: 100%;
-    min-width: 688px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-self: flex-start;
-    background-image: url('../public/default/banner_img.png');
-    background-size: 100% 462px;
-    background-repeat: no-repeat;
-    padding: 0px 20px 0px 20px;
-  }
   .section {
     width: 100%;
     min-width: 688px;
@@ -185,54 +125,8 @@
 }
 
 @include mobile {
-  .banner {
-    position: relative;
-    height: 17.429rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-self: flex-start;
-    background-image: url('../public/default/banner_img.png');
-    background-size: 100% 17.429rem + 3.5rem;
-    min-width: 25.714rem;
-    background-repeat: no-repeat;
-    padding: 0px 20px 0px 20px;
-
-    &__title {
-      font-size: 2rem;
-      font-weight: 700;
-      line-height: 120%;
-      letter-spacing: 0em;
-      text-align: center;
-      color: #ffffff;
-      padding: 0px;
-      margin: 0px;
-    }
-
-    &__desc {
-      font-weight: 400;
-      font-size: 0.857rem;
-      line-height: 1rem;
-      text-align: center;
-      color: #ffffff;
-      padding-top: 1.571rem;
-      padding-bottom: 0px;
-      margin: 0px;
-      &--bold {
-        font-weight: bold;
-      }
-    }
-
-    &__button {
-      padding-top: 2.357rem;
-    }
-  }
-
   .section {
     width: 100%;
-    // min-width: 25.714rem;
 
     display: flex;
     flex-direction: column;
@@ -241,8 +135,6 @@
     padding: 0px 20px 5.439rem 20px;
 
     &__header {
-      // min-width: 25.714rem;
-
       width: 100%;
       display: flex;
       flex-direction: column;
@@ -282,7 +174,6 @@
     &__list {
       padding-top: 1.3rem;
       width: 100%;
-      // min-width: 25.714rem;
 
       &__title {
         font-weight: 700;

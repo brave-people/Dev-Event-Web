@@ -10,6 +10,7 @@ import LoginModal from 'component/common/modal/LoginModal';
 import { EventResponse } from 'model/event';
 import ScheduledEventList from 'component/events/ScheduledEventList';
 import Head from 'next/head';
+import Banner from 'component/common/banner/banner';
 
 const cn = classNames.bind(style);
 
@@ -46,13 +47,7 @@ const Events = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackDat
           content="개발자를 위한 {웨비나, 컨퍼런스, 해커톤, 네트워킹} 소식을 알려드립니다."
         />
       </Head>
-      <div className={cn('banner')}>
-        <h1 className={cn('banner__title')}>
-          개발자 행사는
-          <br /> 모두 Dev Event 웹에서
-        </h1>
-        <h3 className={cn('banner__desc')}>진행 중인 행사부터 종료된 행사까지, 놓치지 마세요! </h3>
-      </div>
+      <Banner />
       <section className={cn('section')}>
         <ScheduledEventList fallbackData={fallbackData} />
       </section>
