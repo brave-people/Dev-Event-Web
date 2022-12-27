@@ -67,7 +67,7 @@ const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackD
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { year, month } = context.query;
-  const res = await fetch(`https://real-brave-people.o-r.kr/front/v2/events/${year}/${month}`);
+  const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/${year}/${month}`);
   const events = await res.json();
 
   const cookies = context.req.headers.cookie || '';

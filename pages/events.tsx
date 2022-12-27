@@ -58,7 +58,7 @@ const Events = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackDat
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = context.req.headers.cookie || '';
-  const res = await fetch('https://real-brave-people.o-r.kr/front/v2/events/current');
+  const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/current`);
   const events = await res.json();
 
   if (cookies) {
