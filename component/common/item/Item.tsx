@@ -201,7 +201,7 @@ const Item = ({
                             event_label: '검색',
                           });
                           const tag = event.target.innerText.replace(/[\t\s\#]/g, '');
-                          router.replace(`/events?tag=${tag}`);
+                          router.replace(`/search?tag=${tag}`);
                         }}
                       />
                     );
