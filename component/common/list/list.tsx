@@ -4,7 +4,7 @@ import style from 'component/common/list/list.module.scss';
 import { useMyEvent } from 'lib/hooks/useSWR';
 import Item from 'component/common/item/Item';
 import dayjs from 'dayjs';
-import { Event } from 'model/event';
+import { Event, EventDate } from 'model/event';
 import { mutate } from 'swr';
 import { createMyEventApi } from 'lib/api/post';
 import { deleteMyEventApi } from 'lib/api/delete';
@@ -34,6 +34,19 @@ const List = ({ data }: { data: any }) => {
     const createDate = dayjs(createdDate);
 
     return createDate.diff(todayDate, 'day') < 1 && createDate.diff(todayDate, 'day') > -1 ? true : false;
+  };
+
+  const getEventEndDate = (EventDate: EventDate) => {
+    if (EventDate.use_start_date_time_yn && EventDate.use_end_date_time_yn) {
+      return EventDate.end_date_time;
+    }
+    if (EventDate.use_start_date_time_yn && !EventDate.use_end_date_time_yn) {
+      return EventDate.start_date_time;
+    }
+    if (!EventDate.use_start_date_time_yn && EventDate.use_end_date_time_yn) {
+      return EventDate.end_date_time;
+    }
+    return EventDate.end_date_time;
   };
 
   const checkEventDone = ({ endDate }: { endDate: string }) => {
@@ -117,7 +130,14 @@ const List = ({ data }: { data: any }) => {
                 return checkEventNew({ createdDate: item.create_date_time });
               }}
               isEventDone={() => {
-                return checkEventDone({ endDate: item.end_date_time });
+                return checkEventDone({
+                  endDate: getEventEndDate({
+                    start_date_time: item.start_date_time,
+                    end_date_time: item.end_date_time,
+                    use_start_date_time_yn: item.use_start_date_time_yn,
+                    use_end_date_time_yn: item.use_end_date_time_yn,
+                  }),
+                });
               }}
               isFavorite={() => {
                 if (authContext.isLoggedIn) {

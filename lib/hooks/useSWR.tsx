@@ -1,10 +1,11 @@
 import { getEventsApi, getMyEventApi, getMonthlyEventApi, getTagsApi, getUserApi } from 'lib/api/handler';
 import { Calender } from 'model/calender';
-import { MyEventGetProps } from 'model/event';
+import { EventResponse, MyEventGetProps, Event } from 'model/event';
 import useSWR from 'swr';
 
-const useScheduledEvents = () => {
-  const { data: events, error } = useSWR(`/front/v1/events/current`, getEventsApi, {
+const useScheduledEvents = (fallbackData?: EventResponse[]) => {
+  const { data: events, error } = useSWR(`/front/v2/events/current`, getEventsApi, {
+    fallbackData: fallbackData ?? fallbackData,
     shouldRetryOnError: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: true,
@@ -18,8 +19,9 @@ const useScheduledEvents = () => {
   };
 };
 
-const useMonthlyEvent = ({ param }: { param: Calender }) => {
-  const { data: events, error } = useSWR(`/front/v1/events/${param.year}/${param.month}`, getMonthlyEventApi, {
+const useMonthlyEvent = ({ param, fallbackData }: { param: Calender; fallbackData: Event[] }) => {
+  const { data: events, error } = useSWR(`/front/v2/events/${param.year}/${param.month}`, getMonthlyEventApi, {
+    fallbackData: fallbackData ?? fallbackData,
     shouldRetryOnError: false,
     revalidateOnFocus: false,
     revalidateOnReconnect: true,

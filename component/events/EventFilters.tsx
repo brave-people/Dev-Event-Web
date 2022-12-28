@@ -38,6 +38,11 @@ const EventFilters = () => {
       const lastyear = scheduledEvents[scheduledEvents.length - 1].metadata.year;
       const lastmonth = scheduledEvents[scheduledEvents.length - 1].metadata.month;
       setLastDate({ year: lastyear, month: lastmonth });
+    } else {
+      let currentYear = dayjs().get('year');
+      let currentMonth = dayjs().get('month') + 1;
+
+      setLastDate({ year: currentYear, month: currentMonth });
     }
   };
 
@@ -67,27 +72,25 @@ const EventFilters = () => {
 
   return (
     <>
-      <span className={cn('wrapper')}>
-        <Dropdown
-          options={getDateList()}
-          placeholder="전체"
-          value={filter.date}
-          icon={<AiTwotoneCalendar size={16} />}
-          onClick={(event: any) => {
-            ga.event({
-              action: 'web_event_월별옵션클릭',
-              event_category: 'web_event',
-              event_label: '검색',
-            });
-            if (event.target.innerText === '전체') {
-              router.replace(`/events`);
-            } else {
-              const date = event.target.innerText.replace(/[\t\s]/g, '').split(/[년, 월]/);
-              router.replace(`/events?year=${date[0]}&month=${date[1]}`);
-            }
-          }}
-        ></Dropdown>
-      </span>
+      <Dropdown
+        options={getDateList()}
+        placeholder="전체"
+        value={filter.date}
+        icon={<AiTwotoneCalendar size={16} />}
+        onClick={(event: any) => {
+          ga.event({
+            action: 'web_event_월별옵션클릭',
+            event_category: 'web_event',
+            event_label: '검색',
+          });
+          if (event.target.innerText === '전체') {
+            router.replace(`/events`);
+          } else {
+            const date = event.target.innerText.replace(/[\t\s]/g, '').split(/[년, 월]/);
+            router.replace(`/calender?year=${date[0]}&month=${date[1]}`);
+          }
+        }}
+      ></Dropdown>
       <span className={cn('wrapper')}>
         <Dropdown
           options={getTagList()}
@@ -104,7 +107,7 @@ const EventFilters = () => {
               router.replace(`/events`);
             } else {
               const tag = event.target.innerText.replace(/[\t\s\#]/g, '');
-              router.replace(`/events?tag=${tag}`);
+              router.replace(`/search?tag=${tag}`);
             }
           }}
         ></Dropdown>

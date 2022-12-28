@@ -6,23 +6,33 @@ export type EventTimeType = 'DATE' | 'RECRUIT';
 export interface Event {
   id: string;
   title: string;
+  description: string;
   organizer: string;
   event_link: string;
   cover_image_link: string;
   display_sequence: number;
   event_time_type: EventTimeType;
   start_day_week: WeekType;
-  start_time: string;
   start_date_time: string;
   end_day_week: WeekType;
-  end_time: string;
   end_date_time: string;
-  create_date_time: string;
   tags: TagResponse[];
+  create_date_time: string;
+  use_end_date_time_yn: 'Y' | 'N' | null;
+  use_start_date_time_yn: 'Y' | 'N' | null;
 }
 
 export interface EventMetaData extends Calender {
   total: number;
+  year: number;
+  month: number;
+}
+
+export interface EventDate {
+  start_date_time: string;
+  end_date_time: string;
+  use_start_date_time_yn: 'Y' | 'N' | null;
+  use_end_date_time_yn: 'Y' | 'N' | null;
 }
 
 export interface EventResponse {

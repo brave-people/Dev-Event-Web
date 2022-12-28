@@ -7,15 +7,20 @@ import { GetServerSideProps } from 'next';
 import cookie from 'cookie';
 import { AuthContext } from 'context/auth';
 import LoginModal from 'component/common/modal/LoginModal';
-import { EventResponse } from 'model/event';
-import ScheduledEventList from 'component/events/ScheduledEventList';
+import FilteredEventList from 'component/events/FilteredEventList';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Banner from 'component/common/banner/banner';
 
 const cn = classNames.bind(style);
 
-const Events = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackData: EventResponse[] }) => {
+const Search = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   const authContext = React.useContext(AuthContext);
+  const router = useRouter();
+  const isFilteredByTag = router.query.tag;
+  const isFilteredBySearch = router.query.keyword;
+  const keyword = router.query.tag || router.query.keyword;
+
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   useEffect(() => {
     if (isLoggedIn) {
@@ -28,28 +33,23 @@ const Events = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackDat
   return (
     <>
       <Head>
-        <title>Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!</title>
-        <meta
-          name="description"
-          content="데브이벤트 웹에서 개발자 행사를 놓치지 마세요! 개발자를 위한 {웨비나, 컨퍼런스, 해커톤, 네트워킹} 소식을 알려드립니다."
-        />
+        <title>{keyword} - 데브이벤트 행사 키워드 검색</title>
+        <meta name="description" content={`${keyword} 행사, 데브이벤트에서 찾아보세요!`} />
         <meta
           name="keywords"
-          content="데브이벤트 웹, Dev Event, 데브이벤트, 개발자 행사, 용감한 친구들, 개발자, 이벤트, 행사, 웨비나, 컨퍼런스, 해커톤, 네트워킹, IT"
+          content={`${keyword}, 데브이벤트 웹, 개발자 행사, 이벤트, 행사, 웨비나, 컨퍼런스, 해커톤, 네트워킹, IT`}
         />
         <meta
           property="og:image"
           content="https://drive.google.com/uc?export=download&id=1-Jqapt5h4XtxXQbgX07kI3ipgk3V6ESE"
         />
-        <meta property="og:title" content="Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!" />
-        <meta
-          property="og:description"
-          content="개발자를 위한 {웨비나, 컨퍼런스, 해커톤, 네트워킹} 소식을 알려드립니다."
-        />
+        <meta property="og:title" content={`${keyword} - 데브이벤트 행사 키워드 검색`} />
+        <meta property="og:description" content={`${keyword} 개발자 행사, 데브이벤트에서 찾아보세요!`} />
       </Head>
       <Banner />
       <section className={cn('section')}>
-        <ScheduledEventList fallbackData={fallbackData} />
+        {isFilteredByTag && <FilteredEventList type="tag" filter={String(isFilteredByTag)} />}
+        {isFilteredBySearch && <FilteredEventList type="search" filter={String(isFilteredBySearch)} />}
       </section>
       <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
     </>
@@ -58,9 +58,6 @@ const Events = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackDat
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = context.req.headers.cookie || '';
-  const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/current`);
-  const events = await res.json();
-
   if (cookies) {
     const parsedCookies = cookie.parse(cookies);
     const access_token = parsedCookies.access_token;
@@ -70,7 +67,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       return {
         props: {
           isLoggedIn: true,
-          fallbackData: events,
         },
       };
     }
@@ -79,12 +75,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       isLoggedIn: false,
-      fallbackData: events,
     },
   };
 };
 
-Events.getLayout = function getLayout(page: ReactElement) {
+Search.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
-export default Events;
+export default Search;
