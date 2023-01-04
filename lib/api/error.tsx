@@ -34,6 +34,18 @@ function getErrorAlert(props: Prop) {
       alert('접근 권한이 없어 인증에 실패했습니다.');
       return 'AUTH_ERROR';
     }
+    if (props.status === 'AUTH_400_01') {
+      alert('아이디 혹은 비밀번호가 잘못되었습니다. 다시 로그인 해주세요!');
+      return 'AUTH_ERROR';
+    }
+    if (props.status === 'AUTH_400_04') {
+      alert('이미 존재하는 이메일입니다.');
+      return 'AUTH_ERROR';
+    }
+    if (props.status === 'AUTH_400_05') {
+      alert('이미 존재하는 아이디입니다.');
+      return 'AUTH_ERROR';
+    }
   } else if (props.status_code === 404) {
     if (props.status === 'AUTH_404_01') {
       alert('존재하지 않은 사용자입니다. 다시 로그인 해주세요!');
