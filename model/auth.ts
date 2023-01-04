@@ -5,6 +5,7 @@ export interface User {
   email: string;
   register_date: string;
   username: string;
+  profile_image_link: string;
 }
 
 export interface DeleteAccountResponse {
@@ -22,4 +23,20 @@ export interface TokenResponse {
   access_token_expired_at: Date;
   refresh_token: string;
   refresh_token_expired_at: Date;
+}
+
+export interface AuthProp {
+  password: string;
+  user_id: string;
+}
+
+export interface SignUpProps extends AuthProp {
+  name: string;
+  email: string;
+}
+
+export interface SignUpResponse {
+  status_code: number;
+  status: string;
+  message: string;
 }

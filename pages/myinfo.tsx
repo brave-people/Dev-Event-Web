@@ -14,6 +14,7 @@ import axios from 'axios';
 import { GetServerSideProps } from 'next';
 import cookie from 'cookie';
 import Head from 'next/head';
+import Image from 'next/image';
 import * as ga from 'lib/utils/gTag';
 
 const cn = classNames.bind(style);
@@ -66,6 +67,12 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
             <div className={cn('sub-header__inner')}>
               <div className={cn('sub-header__content')}>
                 <h1>내 정보</h1>
+                <Image
+                  src={user && user.profile_image_link ? user.profile_image_link : '/icon/profile.svg'}
+                  width={48}
+                  height={48}
+                  className={cn('profile')}
+                />
               </div>
             </div>
           </header>
