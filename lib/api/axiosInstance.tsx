@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { handleError } from 'lib/api/error';
 
-const requestArray = [];
+const requestArray = new Array();
 const axiosInstance = axios.create({
   baseURL: `${process.env.BASE_SERVER_URL}`,
 });
@@ -25,7 +25,9 @@ axiosInstance.interceptors.response.use(
     requestArray.push(config);
     if (requestArray.length === 1) {
       handleError(error.response.data);
+      requestArray.shift();
     }
+
     return Promise.reject(error);
   }
 );
