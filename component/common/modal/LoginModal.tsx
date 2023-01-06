@@ -8,6 +8,7 @@ import KakaoIcon from 'public/icon/kakao.svg';
 import GithubIcon from 'public/icon/github.svg';
 import NaverIcon from 'public/icon/naver.svg';
 import EmailIcon from 'public/icon/email.svg';
+import ArrowBackIcon from 'public/icon/arrow_back_regular.svg';
 import router from 'next/router';
 import * as ga from 'lib/utils/gTag';
 import { loginByEmail, signUpByEmail } from 'lib/api/post';
@@ -32,23 +33,35 @@ function LoginModal({ isOpen, onClose }: any) {
   };
   return (
     <Modal isOpen={isOpen} className={cx('modal')} overlayClassName={cx('overlay')} onRequestClose={onClose}>
-      <button
-        className={cx('modal__close-button')}
-        onClick={() => {
-          setState(pageState.social);
-          onClose();
-        }}
-      >
-        <MdClose size={30} />
-      </button>
-      {state === pageState.social && <SocialLoginList onChangeState={onChangeState} />}
+      <span className={cx('modal__buttons')}>
+        <button
+          className={cx('button', state === pageState.social ? 'hidden' : null)}
+          onClick={() => {
+            if (pageState.signUp || pageState.email) {
+              onChangeState(pageState.social);
+            }
+          }}
+        >
+          <ArrowBackIcon />
+        </button>
+        <button
+          className={cx('button')}
+          onClick={() => {
+            setState(pageState.social);
+            onClose();
+          }}
+        >
+          <MdClose size={24} />
+        </button>
+      </span>
+      {state === pageState.social && <SocialLoginContainer onChangeState={onChangeState} />}
       {state === pageState.email && <LoginByEmailContainer onChangeState={onChangeState} />}
       {state === pageState.signUp && <SignUpByEmailContainer onChangeState={onChangeState} />}
     </Modal>
   );
 }
 
-const SocialLoginList = ({ onChangeState }: any) => {
+const SocialLoginContainer = ({ onChangeState }: any) => {
   const requestSocialLogin = async (type: String) => {
     ga.event({
       action: 'web_event_sns로그인버튼클릭',
@@ -109,7 +122,7 @@ const SocialLoginList = ({ onChangeState }: any) => {
             }}
           >
             <EmailIcon />
-            <span>이메일 로그인</span>
+            <span>아이디 로그인</span>
           </button>
           <button
             className={cx('login-form__button', 'signup')}
@@ -178,6 +191,7 @@ const LoginByEmailContainer = ({ onChangeState }: any) => {
           <span>비밀번호</span>
           <input
             name="password"
+            type="password"
             className={cx('input', 'size--small')}
             placeholder="비밀번호 입력"
             onChange={onChangeInput}
@@ -271,6 +285,7 @@ const SignUpByEmailContainer = ({ onChangeState }: any) => {
           <span>비밀번호</span>
           <input
             name="password"
+            type="password"
             className={cx('input', 'size--small')}
             placeholder="비밀번호 입력 (6~15자)"
             onChange={onChangeInput}

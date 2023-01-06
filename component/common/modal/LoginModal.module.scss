@@ -16,11 +16,23 @@
   align-items: center;
   z-index: 20;
 
-  &__close-button {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    align-self: flex-end;
+  &__buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .button {
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      align-self: flex-end;
+    }
+
+    .button.hidden {
+      visibility: hidden;
+    }
   }
 
   &__title {
