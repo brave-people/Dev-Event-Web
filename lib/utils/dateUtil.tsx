@@ -27,7 +27,7 @@ const DateUtil = {
     formatDate = dayjs(date).format('YYYY.MM.DD');
 
     if (hasWeek) {
-      formatDate += `(${DateUtil.getDay(date)})`;
+      formatDate += ` (${DateUtil.getDay(date)})`;
     }
 
     return formatDate;

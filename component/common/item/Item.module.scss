@@ -127,6 +127,21 @@
       font-size: 14px;
       line-height: 25px;
       color: #515151;
+
+      .wrap {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        .label {
+          white-space: nowrap;
+          overflow: hidden;
+          min-width: 30px;
+        }
+        .date {
+          padding: 0px 4px;
+        }
+      }
     }
 
     &__bottom {
@@ -308,6 +323,19 @@
         -webkit-line-clamp: 4;
         -webkit-box-orient: vertical;
         white-space: normal;
+
+        .wrap {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: flex-start;
+
+          .label {
+            white-space: nowrap;
+            overflow: hidden;
+            min-width: 30px;
+          }
+        }
       }
 
       &__img {
@@ -352,11 +380,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     width: 100%;
+    height: 100%;
     min-width: 11.571rem;
-    min-height: 17.847rem;
-    height: auto;
+    overflow: hidden;
     transform: translateY(0px);
 
     &__content {
@@ -445,6 +473,7 @@
 
       &__title {
         width: 100%;
+        height: 50px;
         font-weight: 700;
         font-size: 13px;
         color: #000000;
@@ -459,6 +488,10 @@
         white-space: normal;
       }
       &__desc {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 81px;
         padding-top: 8px;
         width: 100%;
         font-weight: 400;
@@ -466,12 +499,35 @@
         line-height: 18.4px;
         color: #515151;
 
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
-        white-space: normal;
+        .wrap {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          justify-content: flex-start;
+
+          .label {
+            white-space: nowrap;
+            overflow: hidden;
+            min-width: 30px;
+          }
+
+          .host {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            white-space: normal;
+          }
+          .date {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            white-space: normal;
+          }
+        }
       }
 
       &__bottom {
@@ -486,8 +542,14 @@
           display: flex;
           flex-direction: row;
           visibility: visible;
+
           & button:nth-child(n + 3) {
             visibility: hidden;
+          }
+          @media (max-width: 360px) {
+            & button:nth-child(n + 2) {
+              visibility: hidden;
+            }
           }
         }
       }

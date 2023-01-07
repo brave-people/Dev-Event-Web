@@ -85,7 +85,7 @@ const Item = ({
     }
     if (!data.start_date_time && data.end_date_time) {
       const endDateType = data.use_end_date_time_yn === 'Y' ? DateType.dateTime : DateType.date;
-      eventDate = convertDateFormat(data.end_date_time, endDateType) + '까지';
+      eventDate = convertDateFormat(data.end_date_time, endDateType) + ' 까지';
     }
     if (data.start_date_time && data.end_date_time) {
       const isSameDay = DateUtil.getDateFormat(data.start_date_time) === DateUtil.getDateFormat(data.end_date_time);
@@ -98,7 +98,7 @@ const Item = ({
 
       eventDate =
         convertDateFormat(data.start_date_time, startDateType) +
-        '~' +
+        ' ~ ' +
         convertDateFormat(data.end_date_time, endDateType);
     }
     return eventDate;
@@ -164,10 +164,13 @@ const Item = ({
               <div>
                 <span className={cn('item__content__title')}>{data.title}</span>
                 <div className={cn('item__content__desc')}>
-                  <span>주최 : {data.organizer}</span>
-                  <br className={cn('divider')} />
-                  <span>
-                    {data.event_time_type === 'RECRUIT' ? '모집' : '일시'} : {getEventDate()}{' '}
+                  <span className={cn('wrap')}>
+                    <div className={cn('label')}>주최 : </div>
+                    <div className={cn('host')}>{data.organizer}</div>
+                  </span>
+                  <span className={cn('wrap')}>
+                    <div className={cn('label')}>{data.event_time_type === 'RECRUIT' ? '모집 : ' : '일시 : '}</div>
+                    <div className={cn('date')}> {getEventDate()} </div>
                     <DdayTag startDateTime={data.start_date_time} endDateTime={data.end_date_time} />
                   </span>
                 </div>

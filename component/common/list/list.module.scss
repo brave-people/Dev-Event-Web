@@ -7,17 +7,34 @@
 
 @include mobile {
   .list {
-    display: grid;
-    grid-gap: 12px;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px 2%;
   }
-  @media (min-width: 605px) {
-    .list {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
+
   .wrapper {
     padding-top: 1.143rem;
-    width: 100%;
+    width: 49%;
+  }
+
+  @media (min-width: 605px) {
+    .list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px 2%;
+    }
+    .wrapper {
+      width: 32%;
+    }
+  }
+  @media (max-width: 360px) {
+    .list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px 4%;
+    }
+    .wrapper {
+      width: 48%;
+    }
   }
 }
