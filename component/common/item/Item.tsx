@@ -14,6 +14,11 @@ import DdayTag from 'component/common/tag/DdayTag';
 
 const cn = classNames.bind(style);
 
+const DateType = {
+  dateTime: 'dateTime',
+  date: 'date',
+  time: 'time',
+};
 const Item = ({
   data,
   isFavorite,
@@ -74,59 +79,40 @@ const Item = ({
 
   const getEventDate = () => {
     let eventDate;
-    //당일치기 행사
     if (data.start_date_time && !data.end_date_time) {
-      if (data.use_start_date_time_yn === 'N' && data.use_end_date_time_yn === null) {
-        eventDate = DateUtil.getDateFormat(data.start_date_time, { hasWeek: true });
-      }
-      if (data.use_start_date_time_yn === 'Y' && data.use_end_date_time_yn === null) {
-        eventDate = DateUtil.getDateTimeFormat(data.start_date_time);
-      }
-
-      return eventDate;
+      const startDateType = data.use_start_date_time_yn === 'Y' ? DateType.dateTime : DateType.date;
+      eventDate = convertDateFormat(data.start_date_time, startDateType);
     }
-
-    //마감일만 있는 행사
     if (!data.start_date_time && data.end_date_time) {
-      if (!data.use_start_date_time_yn) {
-        if (data.use_end_date_time_yn === 'N') {
-          eventDate = DateUtil.getDateFormat(data.end_date_time, { hasWeek: true });
-        }
-        if (data.use_end_date_time_yn === 'Y') {
-          eventDate = DateUtil.getDateTimeFormat(data.end_date_time);
-        }
-      }
-      return `${eventDate} 까지`;
+      const endDateType = data.use_end_date_time_yn === 'Y' ? DateType.dateTime : DateType.date;
+      eventDate = convertDateFormat(data.end_date_time, endDateType) + ' 까지';
     }
-
-    //시작, 종료일이 있는 행사
     if (data.start_date_time && data.end_date_time) {
-      if (data.use_start_date_time_yn === 'N' && data.use_end_date_time_yn === 'N') {
-        eventDate = DateUtil.getPeriodFormat({
-          startDate: data.start_date_time,
-          endDate: data.end_date_time,
-          type: 'date',
-        });
-      }
-      if (data.use_start_date_time_yn === 'Y' && data.use_start_date_time_yn === 'Y') {
-        if (DateUtil.getDateFormat(data.start_date_time) === DateUtil.getDateFormat(data.end_date_time)) {
-          eventDate = DateUtil.getPeriodFormat({
-            startDate: data.start_date_time,
-            endDate: data.end_date_time,
-            type: 'time',
-          });
-        } else {
-          eventDate = DateUtil.getPeriodFormat({
-            startDate: data.start_date_time,
-            endDate: data.end_date_time,
-            type: 'dateTime',
-          });
-        }
-      }
-      return eventDate;
-    }
+      const isSameDay = DateUtil.getDateFormat(data.start_date_time) === DateUtil.getDateFormat(data.end_date_time);
+      const startDateType = data.use_start_date_time_yn === 'Y' ? DateType.dateTime : DateType.date;
+      const endDateType = isSameDay
+        ? DateType.time
+        : data.use_end_date_time_yn === 'Y'
+        ? DateType.dateTime
+        : DateType.date;
 
-    return '';
+      eventDate =
+        convertDateFormat(data.start_date_time, startDateType) +
+        ' ~ ' +
+        convertDateFormat(data.end_date_time, endDateType);
+    }
+    return eventDate;
+  };
+
+  const convertDateFormat = (date: string, type: string) => {
+    switch (type) {
+      case 'time':
+        return DateUtil.getTimeFormat(date);
+      case 'date':
+        return DateUtil.getDateFormat(date, { hasWeek: true });
+      case 'dateTime':
+        return DateUtil.getDateTimeFormat(date);
+    }
   };
 
   return (
@@ -178,10 +164,13 @@ const Item = ({
               <div>
                 <span className={cn('item__content__title')}>{data.title}</span>
                 <div className={cn('item__content__desc')}>
-                  <span>주최 : {data.organizer}</span>
-                  <br className={cn('divider')} />
-                  <span>
-                    {data.event_time_type === 'RECRUIT' ? '모집' : '일시'} : {getEventDate()}{' '}
+                  <span className={cn('wrap')}>
+                    <div className={cn('label')}>주최 : </div>
+                    <div className={cn('host')}>{data.organizer}</div>
+                  </span>
+                  <span className={cn('wrap')}>
+                    <div className={cn('label')}>{data.event_time_type === 'RECRUIT' ? '모집 : ' : '일시 : '}</div>
+                    <div className={cn('date')}> {getEventDate()} </div>
                     <DdayTag startDateTime={data.start_date_time} endDateTime={data.end_date_time} />
                   </span>
                 </div>

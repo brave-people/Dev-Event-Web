@@ -21,14 +21,21 @@
       padding-top: 5.125rem;
 
       &__content {
+        margin: 12px 0px;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: space-between;
         align-items: flex-start;
+
         h1 {
+          margin: 0px;
           font-weight: 500;
           font-size: 1.5rem;
           line-height: 2.188rem;
           color: #000000;
+        }
+        .profile {
+          border-radius: 50%;
         }
       }
     }
@@ -145,10 +152,13 @@
         padding-top: 5.125rem;
 
         &__content {
+          margin: 12px 0px;
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
+          justify-content: space-between;
           align-items: flex-start;
           h1 {
+            margin: 0px;
             font-weight: 500;
             font-size: 18px;
             line-height: 2.563rem;
@@ -223,10 +233,13 @@
         padding-top: 5.125rem;
 
         &__content {
+          margin: 12px 0px;
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
+          justify-content: space-between;
           align-items: flex-start;
           h1 {
+            margin: 0px;
             font-weight: 500;
             font-size: 18px;
             line-height: 2.563rem;

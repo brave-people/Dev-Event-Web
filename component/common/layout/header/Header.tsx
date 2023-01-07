@@ -79,7 +79,7 @@ function Header() {
           </span>
         </div>
       </div>
-      <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
+      <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
       <SearchModal isOpen={searchModalIsOpen} onClick={() => setSearchModalIsOpen(false)} />
     </header>
   );

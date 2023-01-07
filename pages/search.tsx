@@ -51,7 +51,7 @@ const Search = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
         {isFilteredByTag && <FilteredEventList type="tag" filter={String(isFilteredByTag)} />}
         {isFilteredBySearch && <FilteredEventList type="search" filter={String(isFilteredBySearch)} />}
       </section>
-      <LoginModal isOpen={loginModalIsOpen} onClick={() => setLoginModalIsOpen(false)}></LoginModal>
+      <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
     </>
   );
 };

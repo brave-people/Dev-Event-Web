@@ -2,8 +2,8 @@
 
 .modal {
   position: absolute;
-  width: 67.5rem;
-  height: 39.188rem;
+  width: 45rem;
+  min-height: 39rem;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -16,16 +16,28 @@
   align-items: center;
   z-index: 20;
 
-  &__close-button {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    align-self: flex-end;
+  &__buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .button {
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      align-self: flex-end;
+    }
+
+    .button.hidden {
+      visibility: hidden;
+    }
   }
 
   &__title {
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     line-height: 2.25rem;
     text-align: center;
     color: #000000;
@@ -37,22 +49,58 @@
     align-items: center;
     justify-content: center;
     width: 28.25rem;
-    height: 27.125rem;
 
     .login-form {
       width: 28.25rem;
-      height: 19.25rem;
-      margin-top: 3.375rem;
+      margin-top: 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
 
+      &__item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        span {
+          color: #535353;
+          font-weight: 500;
+          font-size: 0.95rem;
+          line-height: 1.438rem;
+          padding-bottom: 0.7rem;
+        }
+
+        .input {
+          background: #ecf6ff;
+          border-radius: 10px;
+          border: none;
+          width: 26rem;
+          height: 3rem;
+          padding-left: 1.375rem;
+          font-weight: 400;
+          font-size: 1rem;
+          line-height: 1.438rem;
+          color: #535353;
+
+          .size--small {
+            width: 23.5rem;
+          }
+          .size--regular {
+            width: 30rem;
+          }
+        }
+      }
+
+      &__item:not(:first-child) {
+        margin-top: 1rem;
+      }
+
       &__button {
         padding: 0;
         margin: 0px;
-        width: 28.25rem;
-        height: 3.875rem;
+        width: 26rem;
+        height: 3.5rem;
         border-radius: 16px;
         display: flex;
         flex-direction: row;
@@ -95,10 +143,42 @@
             color: #ffffff;
           }
         }
+        &.email {
+          background: #ffffff;
+          border: 1px solid #d8d8d8;
+          border-radius: 12.64px;
+          span {
+            color: #000000;
+          }
+        }
+
+        &.login {
+          background: #479ef1;
+          border-radius: 8px;
+          border: none;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 160%;
+          text-align: center;
+          width: 26rem;
+          span {
+            color: #ffffff;
+          }
+        }
+
+        &.signup {
+          width: fit-content;
+          height: fit-content;
+          padding-top: 11px;
+          padding-bottom: 30px;
+          border: none;
+          background-color: transparent;
+          text-decoration-line: underline;
+        }
       }
 
       &__button:not(:first-child) {
-        margin-top: 1.25rem;
+        margin-top: 1rem;
       }
     }
   }
@@ -107,14 +187,13 @@
   .modal {
     position: absolute;
     width: 43rem;
-    height: 39.5rem;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    padding: 1.063rem 0.938rem;
+    padding: 1.813rem 1.688rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -125,12 +204,10 @@
       align-items: center;
       justify-content: center;
       width: 28.25rem;
-      height: 27.125rem;
-      padding-top: 1.783rem;
+
       .login-form {
         width: 28.25rem;
-        height: 19.25rem;
-        margin-top: 3.375rem;
+        margin-top: 2rem;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -139,8 +216,8 @@
         &__button {
           padding: 0;
           margin: 0px;
-          width: 28.25rem;
-          height: 3.875rem;
+          width: 26rem;
+          height: 3.5rem;
           border-radius: 16px;
           display: flex;
           flex-direction: row;
@@ -156,7 +233,6 @@
   .modal {
     position: absolute;
     width: 24.143rem;
-    height: 32.643rem;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -199,20 +275,57 @@
       align-items: center;
       justify-content: center;
       width: 19.071rem;
-      height: 24.429rem;
+      // height: 24.429rem;
       margin-top: 1.2rem;
 
       .login-form {
         width: 19.071rem;
-        height: 16.571rem;
-        margin-top: 4.429rem;
+        margin-top: 3.4rem;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
 
+        &__item {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          span {
+            color: #535353;
+            font-weight: 500;
+            font-size: 0.95rem;
+            line-height: 1.438rem;
+            padding-bottom: 0.7rem;
+          }
+
+          .input {
+            background: #ecf6ff;
+            border-radius: 10px;
+            border: none;
+            width: 19.071rem;
+            height: 2.857rem;
+            padding-left: 1.375rem;
+            font-weight: 400;
+            font-size: 1rem;
+            line-height: 1.438rem;
+            color: #535353;
+
+            .size--small {
+              width: 23.5rem;
+            }
+            .size--regular {
+              width: 30rem;
+            }
+          }
+        }
+
+        &__item:not(:first-child) {
+          margin-top: 1rem;
+        }
+
         &__button {
-          padding: 0;
+          padding: 0px;
           margin: 0px;
           width: 19.071rem;
           height: 2.857rem;
@@ -254,6 +367,19 @@
             background: #03c75a;
             border-radius: 12.64px;
             border: none;
+            span {
+              color: #ffffff;
+            }
+          }
+          &.login {
+            background: #479ef1;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 160%;
+            text-align: center;
+            width: 19.071rem;
             span {
               color: #ffffff;
             }
