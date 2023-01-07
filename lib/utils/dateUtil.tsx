@@ -42,37 +42,6 @@ const DateUtil = {
     const formatDate = `${DateUtil.getDateFormat(date, { hasWeek: true })} ${DateUtil.getTimeFormat(date)}`;
     return formatDate;
   },
-
-  getPeriodFormat: ({
-    startDate,
-    endDate,
-    type,
-  }: {
-    startDate: string;
-    endDate: string;
-    type: 'dateTime' | 'date' | 'time';
-  }) => {
-    let formatDate;
-    if (type === 'dateTime') {
-      formatDate = `${DateUtil.getDateFormat(startDate, { hasWeek: true })} ${DateUtil.getTimeFormat(
-        startDate
-      )} ~ ${DateUtil.getDateFormat(endDate, { hasWeek: true })} ${DateUtil.getTimeFormat(endDate)}`;
-    }
-
-    if (type === 'date') {
-      formatDate = `${DateUtil.getDateFormat(startDate, { hasWeek: true })} ~ ${DateUtil.getDateFormat(endDate, {
-        hasWeek: true,
-      })}`;
-    }
-
-    if (type === 'time') {
-      formatDate = `${DateUtil.getDateFormat(startDate, { hasWeek: true })} ${DateUtil.getTimeFormat(
-        startDate
-      )} ~ ${DateUtil.getTimeFormat(endDate)}`;
-    }
-
-    return formatDate;
-  },
 };
 
 export { DateUtil };
