@@ -138,6 +138,9 @@
           overflow: hidden;
           min-width: 30px;
         }
+        .host {
+          padding: 0px 4px;
+        }
         .date {
           padding: 0px 4px;
         }
@@ -518,6 +521,7 @@
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
             white-space: normal;
+            padding: 0px 2px;
           }
           .date {
             overflow: hidden;
@@ -526,6 +530,7 @@
             -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
             white-space: normal;
+            padding: 0px 2px;
           }
         }
       }

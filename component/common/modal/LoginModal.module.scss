@@ -28,6 +28,7 @@
       background-color: transparent;
       cursor: pointer;
       align-self: flex-end;
+      padding: 0px;
     }
 
     .button.hidden {
@@ -143,6 +144,16 @@
             color: #ffffff;
           }
         }
+
+        &.apple {
+          background: #000000;
+          border-radius: 16px;
+          border: none;
+          span {
+            color: #ffffff;
+          }
+        }
+
         &.email {
           background: #ffffff;
           border: 1px solid #d8d8d8;
@@ -266,7 +277,7 @@
       line-height: 151.8%;
       text-align: center;
       color: #000000;
-      padding-top: 24px;
+      padding-top: 1rem;
     }
 
     &__inner {
@@ -276,11 +287,11 @@
       justify-content: center;
       width: 19.071rem;
       // height: 24.429rem;
-      margin-top: 1.2rem;
+      margin-top: 1rem;
 
       .login-form {
         width: 19.071rem;
-        margin-top: 3.4rem;
+        margin-top: 2rem;
         display: flex;
         flex-direction: column;
         align-items: center;

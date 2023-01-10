@@ -8,6 +8,7 @@ import KakaoIcon from 'public/icon/kakao.svg';
 import GithubIcon from 'public/icon/github.svg';
 import NaverIcon from 'public/icon/naver.svg';
 import EmailIcon from 'public/icon/email.svg';
+import AppleIcon from 'public/icon/apple.svg';
 import ArrowBackIcon from 'public/icon/arrow_back_regular.svg';
 import router from 'next/router';
 import * as ga from 'lib/utils/gTag';
@@ -98,6 +99,15 @@ const SocialLoginContainer = ({ onChangeState }: any) => {
             <span> 구글 로그인</span>
           </button>
           <button
+            className={cx('login-form__button', 'naver')}
+            onClick={() => {
+              requestSocialLogin('naver');
+            }}
+          >
+            <NaverIcon />
+            <span>네이버 로그인</span>
+          </button>
+          <button
             className={cx('login-form__button', 'github')}
             onClick={() => {
               requestSocialLogin('github');
@@ -107,13 +117,13 @@ const SocialLoginContainer = ({ onChangeState }: any) => {
             <span> github 로그인</span>
           </button>
           <button
-            className={cx('login-form__button', 'naver')}
+            className={cx('login-form__button', 'apple')}
             onClick={() => {
-              requestSocialLogin('naver');
+              requestSocialLogin('apple');
             }}
           >
-            <NaverIcon />
-            <span>네이버 로그인</span>
+            <AppleIcon />
+            <span>애플 로그인</span>
           </button>
           <button
             className={cx('login-form__button', 'email')}
