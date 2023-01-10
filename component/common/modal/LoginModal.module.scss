@@ -277,7 +277,7 @@
       line-height: 151.8%;
       text-align: center;
       color: #000000;
-      padding-top: 24px;
+      padding-top: 1rem;
     }
 
     &__inner {
@@ -287,11 +287,11 @@
       justify-content: center;
       width: 19.071rem;
       // height: 24.429rem;
-      margin-top: 1.2rem;
+      margin-top: 1rem;
 
       .login-form {
         width: 19.071rem;
-        margin-top: 3.4rem;
+        margin-top: 2rem;
         display: flex;
         flex-direction: column;
         align-items: center;
