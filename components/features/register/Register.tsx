@@ -1,13 +1,16 @@
 import Link from "next/link";
 import * as ga from 'lib/utils/gTag';
-import TextButton from "components/common/buttons/TextButton";
+import FillButton from "components/common/buttons/FillButton";
 
 function Register() {
   return (
     <Link href={'https://forms.gle/UUjUVg1tTrKhemKu9'}>
-    <a>
-      <TextButton
-        label="행사등록"
+    <a target="__blank">
+      <FillButton
+        label="행사추가요청"
+        color="default"
+        icon="plus"
+        iconStyle="register"
         onClick={() => {
           ga.event({
             action: 'web_event_행사등록버튼클릭',
@@ -15,7 +18,7 @@ function Register() {
             event_label: '행사등록',
           });
         }}
-      ></TextButton>
+      ></FillButton>
     </a>
   </Link>
   )
