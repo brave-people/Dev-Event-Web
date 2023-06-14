@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { getTagsApi } from "lib/api/handler";
 import { TagResponse } from "model/tag";
 import classNames from "classnames/bind";
-import style from './jobGroupFilter.module.scss'
+import style from './FilterByJobGroup.module.scss'
 import Tag from "components/common/tag/Tag";
 
 const cx = classNames.bind(style);
 
-function TagListByJobGroup() {
+function FilterByJobGroup() {
   const [tagList, setTagList] = useState<TagResponse[] | undefined>(undefined);
   const fetchTagList = async () => {
     const result = await getTagsApi("/front/v1/events/tags");
@@ -31,4 +31,4 @@ function TagListByJobGroup() {
   )
 }
 
-export default TagListByJobGroup;
+export default FilterByJobGroup;
