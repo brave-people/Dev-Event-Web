@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { EventContext } from "context/event";
 import classNames from "classnames/bind";
-import style from './JobTag.module.scss';
+import style from './Tag.module.scss';
 
 type Prop = {
   tagName: string;
