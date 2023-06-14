@@ -8,7 +8,7 @@ import { ThreeDots } from 'react-loader-spinner';
 import List from 'components/common/list/list';
 import { DateUtil } from 'lib/utils/dateUtil';
 import Register from 'components/features/register/Register';
-import FilterByJobGroup from 'components/features/filterByJobGroup/FilterByJobGroup';
+import FilterByJobGroup from 'components/features/filters/filterByJobGroup/FilterByJobGroup';
 import SearchEvent from 'components/features/searchEvent/SearchEvent';
 const cn = classNames.bind(style);
 
