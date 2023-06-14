@@ -12,11 +12,15 @@
   align-self: flex-start;
   padding: 0px 20px 0px 20px;
   z-index: 0;
+  overflow: hidden;
 
   &__image {
     position: absolute;
     height: 462px;
     width: 100%;
+    background-image: url('/default/banner_img.png');
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 
   &__title {
