@@ -1,0 +1,65 @@
+@import '~styles/_mixin.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  min-width: 68.75rem;
+  min-height: 100vh;
+  position: relative;
+}
+
+.main {
+  padding-top: 3.5rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+@include tablet {
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    min-width: 768px;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .main {
+    padding-top: 3.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+}
+
+@include mobile {
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    min-width: 25.714rem;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .main {
+    padding-top: 3.5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
+}

@@ -1,0 +1,230 @@
+@import '~styles/_mixin.scss';
+
+$color-background: #002034;
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 3.5rem;
+  width: 100%;
+  padding: 0px 20px 0px 20px;
+  background-color: $color-background;
+
+  &__inner {
+    width: 68.75rem;
+    height: 3.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .wrapper {
+      padding-left: 24px;
+    }
+
+    .search-button {
+      border: none;
+      background-color: transparent;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+    }
+  }
+}
+
+.profile {
+  position: relative;
+  padding: 0px;
+  margin: 0px;
+  height: 24px;
+  .profile-button {
+    border: none;
+    background-color: transparent;
+    width: 24px;
+    height: 24px;
+    padding: 0px;
+    cursor: pointer;
+  }
+
+  .profile-menu {
+    animation-name: appearIn;
+    animation-duration: 0.2s;
+    animation-timing-function: linear;
+
+    border-radius: 10px;
+    width: 136px;
+    height: 135px;
+    padding: 0;
+    left: 50%;
+    top: 42px;
+    margin-left: -102px;
+    text-align: center;
+    position: absolute;
+    z-index: 1;
+    background-color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+
+    &__item {
+      padding: 0.5rem 1.813rem 0.5rem 1.813rem;
+      background-color: #fff;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-size: 0.875rem;
+      color: #757575;
+      font-weight: 400;
+      cursor: pointer;
+      height: 45px;
+
+      &:hover {
+        background: #ebebeb;
+      }
+      &:focus {
+        background-color: #ebebeb;
+      }
+    }
+
+    &__item:first-child {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    &__item:last-child {
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+  }
+
+  .profile-menu::after {
+    content: ' ';
+    position: absolute;
+    bottom: 100%;
+    left: 102px;
+    margin-left: -10px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #ffffff transparent;
+  }
+}
+
+@keyframes appearIn {
+  0% {
+    height: 0px;
+    opacity: 0%;
+  }
+
+  100% {
+    height: 135px;
+    opacity: 100%;
+  }
+}
+@include tablet {
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 3.5rem;
+    width: 100%;
+    padding: 0px 20px 0px 20px;
+    background-color: $color-background;
+
+    &__inner {
+      width: 100%;
+      height: 3.5rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+  }
+}
+
+@include mobile {
+  .header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 3.5rem;
+    width: 100%;
+    padding: 0px 20px 0px 20px;
+    background-color: $color-background;
+
+    &__inner {
+      width: 100%;
+      height: 3.5rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &__buttons {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+
+      .wrapper {
+        padding-left: 15px;
+      }
+
+      .search-button {
+        border: none;
+        background-color: transparent;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        padding: 0px;
+        svg {
+          height: 24px;
+          width: 24px;
+        }
+      }
+    }
+
+    .profile {
+      position: relative;
+      padding: 0px;
+      margin: 0px;
+      height: 24px;
+      .profile-button {
+        border: none;
+        background-color: transparent;
+        width: 24px;
+        height: 24px;
+        padding: 0px;
+        cursor: pointer;
+      }
+    }
+  }
+}
