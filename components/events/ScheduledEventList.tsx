@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import { ThreeDots } from 'react-loader-spinner';
 import List from 'components/common/list/list';
 import { DateUtil } from 'lib/utils/dateUtil';
-import EventFilters from './EventFilters';
+import Register from 'components/features/register/Register';
 const cn = classNames.bind(style);
 
 const ScheduledEventList = ({ fallbackData }: { fallbackData: EventResponse[] }) => {
@@ -61,12 +61,15 @@ const ScheduledEventList = ({ fallbackData }: { fallbackData: EventResponse[] })
 
   return (
     <>
-      <div className={cn('section__header')}>
-        <span className={cn('section__header__desc')}>
-          현재&nbsp;<span>{totalCount}개</span>의 개발자 행사 진행 중
-        </span>
-        <div className={cn('section__header__filters')}>
-          <EventFilters />
+      <div className={cn('header')}>
+        <div className={cn('header__container')}>
+          <span className={cn('header__container__desc')}>
+              전체 행사
+          </span>
+          <Register />
+        </div>
+        <div className={cn('header__container')}>
+
         </div>
       </div>
       {scheduledEvents ? (
