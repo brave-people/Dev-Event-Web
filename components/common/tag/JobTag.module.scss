@@ -1,0 +1,22 @@
+@import '~styles/_mixin.scss';
+
+.tag {
+  padding: 4px 16px;
+  margin: 0.25rem .825rem;
+  font-weight: 500;
+  border: 1px solid rgba(49, 50, 52, 1);
+  border-radius: 15px;
+
+  &:hover {
+    cursor: pointer;
+    border-color: rgba(44, 76, 239, 1);
+    color: rgba(44, 76, 239, 1);
+    background-color: #EDEFFF;;
+  }
+}
+
+.checked {
+  border-color: rgba(44, 76, 239, 1);
+  color: rgba(44, 76, 239, 1);
+  background-color: #EDEFFF;
+}
