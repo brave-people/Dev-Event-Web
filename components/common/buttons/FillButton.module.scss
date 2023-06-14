@@ -1,12 +1,11 @@
 @import '~styles/_mixin.scss';
 
 .button {
-  border: none;
-  border-radius: 30px;
+  border-radius: 2px;
   cursor: pointer;
 
   &.size--large {
-    padding: 0.938rem 3.625rem 1rem 3.625rem;
+    padding: 0.938rem 1.625rem 1rem 1.625rem;
     height: 3.75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -18,7 +17,7 @@
   }
 
   &.size--regular {
-    padding: 0.813rem 2.5rem 0.813rem 2.5rem;
+    padding: 0.813rem 1.5rem 0.813rem 1.5rem;
     height: 3rem;
     font-weight: 500;
     font-size: 0.875rem;
@@ -28,6 +27,12 @@
 }
 
 // color
+
+.default {
+  color: #ffffff;
+  background-color: rgba(49, 50, 52, 1);
+}
+
 .primary {
   color: #ffffff;
   background: #479ef1;
