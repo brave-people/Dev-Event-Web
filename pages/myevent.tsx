@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import Layout from 'component/common/layout';
+import Layout from 'components/common/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Myevent.module.scss';
 import Link from 'next/link';
 import { MdOutlineArrowForwardIos } from 'react-icons/md';
-import EventBody from 'component/myEvent/EventBody';
+import EventBody from 'components/myEvent/EventBody';
 import cookie from 'cookie';
-import EventTab from 'component/myEvent/EventTab';
+import EventTab from 'components/myEvent/EventTab';
 import { GetServerSideProps } from 'next';
 import { AuthContext } from 'context/auth';
 import Head from 'next/head';

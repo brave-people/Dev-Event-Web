@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
-import Dropdown from 'component/common/dropdown/Dropdown';
+import Dropdown from 'components/common/dropdown/Dropdown';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import { BiPurchaseTagAlt } from 'react-icons/bi';
 import { useRouter } from 'next/router';

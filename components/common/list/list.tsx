@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import classNames from 'classnames/bind';
-import style from 'component/common/list/list.module.scss';
+import style from 'components/common/list/list.module.scss';
 import { useMyEvent } from 'lib/hooks/useSWR';
-import Item from 'component/common/item/Item';
+import Item from 'components/common/item/Item';
 import dayjs from 'dayjs';
 import { Event, EventDate } from 'model/event';
 import { mutate } from 'swr';
 import { createMyEventApi } from 'lib/api/post';
 import { deleteMyEventApi } from 'lib/api/delete';
-import LoginModal from 'component/common/modal/LoginModal';
+import LoginModal from 'components/common/modal/LoginModal';
 import { AuthContext } from 'context/auth';
 import * as ga from 'lib/utils/gTag';
-import ShareModal from 'component/common/modal/ShareModal';
+import ShareModal from 'components/common/modal/ShareModal';
 import { DateUtil } from 'lib/utils/dateUtil';
 
 const cn = classNames.bind(style);

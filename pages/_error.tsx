@@ -1,4 +1,4 @@
-import Layout from 'component/common/layout';
+import Layout from 'components/common/layout';
 import { NextPage, NextPageContext } from 'next';
 import { ReactElement } from 'react';
 

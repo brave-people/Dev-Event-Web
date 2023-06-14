@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
 import dayjs from 'dayjs';
 import { ThreeDots } from 'react-loader-spinner';
-import List from 'component/common/list/list';
+import List from 'components/common/list/list';
 import { DateUtil } from 'lib/utils/dateUtil';
 import EventFilters from './EventFilters';
 const cn = classNames.bind(style);

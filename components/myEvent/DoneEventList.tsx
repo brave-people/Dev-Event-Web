@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import style from 'styles/Myevent.module.scss';
 import classNames from 'classnames/bind';
-import Item from 'component/common/item/Item';
+import Item from 'components/common/item/Item';
 import { useMyEvent } from 'lib/hooks/useSWR';
 import { deleteMyEventApi } from 'lib/api/delete';
 import { MyEvent, EventDate } from 'model/event';
 import { mutate } from 'swr';
 import { ThreeDots } from 'react-loader-spinner';
 import * as ga from 'lib/utils/gTag';
-import ShareModal from 'component/common/modal/ShareModal';
+import ShareModal from 'components/common/modal/ShareModal';
 import { DateUtil } from 'lib/utils/dateUtil';
 
 const cn = classNames.bind(style);

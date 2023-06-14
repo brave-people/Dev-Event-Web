@@ -10,7 +10,7 @@ import { MdContentCopy } from 'react-icons/md';
 import { DateUtil } from 'lib/utils/dateUtil';
 import { useOnClickOutside } from 'lib/hooks/useOnClickOutside';
 import * as ga from 'lib/utils/gTag';
-import DdayTag from 'component/common/tag/DdayTag';
+import DdayTag from 'components/common/tag/DdayTag';
 
 const cn = classNames.bind(style);
 

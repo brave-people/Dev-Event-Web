@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import Layout from 'component/common/layout';
+import Layout from 'components/common/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
 import { GetServerSideProps } from 'next';
 import cookie from 'cookie';
 import { AuthContext } from 'context/auth';
-import LoginModal from 'component/common/modal/LoginModal';
-import FilteredEventList from 'component/events/FilteredEventList';
+import LoginModal from 'components/common/modal/LoginModal';
+import FilteredEventList from 'components/events/FilteredEventList';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import Banner from 'component/common/banner/banner';
+import Banner from 'components/common/banner/banner';
 
 const cn = classNames.bind(style);
 

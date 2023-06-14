@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import React, { useEffect } from 'react';
-import Layout from 'component/common/layout/index';
+import Layout from 'components/common/layout/index';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Myinfo.module.scss';
-import DeleteAccountModal from 'component/common/modal/DeleteAccountModal';
+import DeleteAccountModal from 'components/common/modal/DeleteAccountModal';
 import { useUser } from 'lib/hooks/useSWR';
 import dayjs from 'dayjs';
 import { deleteAccountApi } from 'lib/api/delete';
