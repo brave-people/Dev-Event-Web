@@ -8,6 +8,8 @@ import { ThreeDots } from 'react-loader-spinner';
 import List from 'components/common/list/list';
 import { DateUtil } from 'lib/utils/dateUtil';
 import Register from 'components/features/register/Register';
+import FilterByJobGroup from 'components/features/filterByJobGroup/FilterByJobGroup';
+import SearchEvent from 'components/features/searchEvent/SearchEvent';
 const cn = classNames.bind(style);
 
 const ScheduledEventList = ({ fallbackData }: { fallbackData: EventResponse[] }) => {
@@ -69,7 +71,10 @@ const ScheduledEventList = ({ fallbackData }: { fallbackData: EventResponse[] })
           <Register />
         </div>
         <div className={cn('header__container')}>
-
+          <FilterByJobGroup />
+        </div>
+        <div className={cn('header__container')}>
+          <SearchEvent />
         </div>
       </div>
       {scheduledEvents ? (

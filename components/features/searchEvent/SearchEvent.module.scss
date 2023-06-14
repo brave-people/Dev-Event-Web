@@ -1,0 +1,9 @@
+@import '~styles/_mixin.scss';
+
+.container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
