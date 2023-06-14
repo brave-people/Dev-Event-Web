@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import React from 'react';
 import style from './banner.module.scss';
-import Image from 'next/image';
+
 const cn = classNames.bind(style);
 
 function Banner() {
