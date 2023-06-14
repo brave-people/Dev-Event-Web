@@ -1,7 +1,5 @@
-import SearchIcon from "./SearchIcon";
-import PeopleIcon from "./PeopleIcon";
+import PlusIcon from "./PlusIcon";
 
 export {
-  SearchIcon,
-  PeopleIcon
+  PlusIcon,
 }
