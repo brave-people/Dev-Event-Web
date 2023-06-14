@@ -8,38 +8,26 @@
   align-items: center;
   justify-content: flex-start;
 
-  &__header {
+  .header {
     width: 68.75rem;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
     background-color: transparent;
-    padding-top: 2.688rem;
+    padding-top: 4.688rem;
     margin: 0px;
 
-    &__desc {
+    &__container {
+      width: 100%;
       display: flex;
-      flex-direction: row;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      font-weight: 500;
-      font-size: 1.23rem;
-      line-height: 1.8rem;
-      color: #0066c6;
 
-      span {
+      &__desc {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
         font-weight: 700;
-      }
-    }
-
-    &__filters {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-end;
-      .wrapper {
-        padding-left: 0.625rem;
+        font-size: 2.5rem;
+        line-height: 3rem;
       }
     }
   }
