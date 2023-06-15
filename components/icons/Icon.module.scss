@@ -10,3 +10,13 @@
   left: 5px;
   transform: translate(50%, 50%);
 }
+
+.active {
+  transform: rotate(180deg);
+  transition: transform .2s linear;
+}
+
+.unactive {
+  transform: rotate(360deg);
+  transition: transform .2s linear;
+}
