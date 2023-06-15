@@ -1,24 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { getTagsApi } from "lib/api/handler";
-import { TagResponse } from "model/tag";
+import React, { useState } from "react";
 import classNames from "classnames/bind";
 import style from './FilterByJobGroup.module.scss'
 import Tag from "components/common/tag/Tag";
+import { TagResponse } from "model/tag";
 
-const cx = classNames.bind(style);
+const cn = classNames.bind(style);
 
-function FilterByJobGroup() {
-  const [tagList, setTagList] = useState<TagResponse[] | undefined>(undefined);
-  const fetchTagList = async () => {
-    const result = await getTagsApi("/front/v1/events/tags");
-    console.log(result);
-    setTagList(result);
-  }
-  useEffect(() => {
-    fetchTagList();
-  }, []);
+type Props = {
+  tagList: TagResponse[] | undefined;
+}
+
+function FilterByJobGroup({ tagList }: Props) {
   return (
-    <div className={cx('taglist')}>
+    <div className={cn('taglist')}>
       {tagList?.map((tag) => {
         return (
           <Tag

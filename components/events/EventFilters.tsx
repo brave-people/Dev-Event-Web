@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
-import Dropdown from 'components/common/dropdown/Dropdown';
+import DefaultDropdown from 'components/common/dropdown/Dropdown';
 import { AiTwotoneCalendar } from 'react-icons/ai';
 import { BiPurchaseTagAlt } from 'react-icons/bi';
 import { useRouter } from 'next/router';
@@ -72,7 +72,7 @@ const EventFilters = () => {
 
   return (
     <>
-      <Dropdown
+      <DefaultDropdown
         options={getDateList()}
         placeholder="전체"
         value={filter.date}
@@ -90,9 +90,9 @@ const EventFilters = () => {
             router.replace(`/calender?year=${date[0]}&month=${date[1]}`);
           }
         }}
-      ></Dropdown>
+      ></DefaultDropdown>
       <span className={cn('wrapper')}>
-        <Dropdown
+        <DefaultDropdown
           options={getTagList()}
           placeholder="태그"
           icon={<BiPurchaseTagAlt size={16} />}
@@ -110,7 +110,7 @@ const EventFilters = () => {
               router.replace(`/search?tag=${tag}`);
             }
           }}
-        ></Dropdown>
+        ></DefaultDropdown>
       </span>
     </>
   );
