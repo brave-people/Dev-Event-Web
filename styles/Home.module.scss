@@ -29,6 +29,11 @@
         font-size: 2.5rem;
         line-height: 3rem;
       }
+      &__filter {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
     }
   }
 

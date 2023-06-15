@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from 'components/common/layout';
+import Layout from 'components/layout';
 import type { ReactElement } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';

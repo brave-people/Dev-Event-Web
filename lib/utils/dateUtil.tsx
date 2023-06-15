@@ -44,4 +44,29 @@ const DateUtil = {
   },
 };
 
-export { DateUtil };
+const getStartDate = () => {
+  const year = new Date().getFullYear() - 1;
+  let month = new Date().getMonth();
+  if (month === 12)
+    month = 1;
+  else
+    month += 1;
+  return (`${year}-${month}-01`)
+}
+
+
+const getDateList = () => {
+  const list = ['전체'];
+  let currentDate = dayjs();
+  const startDate = dayjs(getStartDate());
+  while (startDate.isBefore(currentDate)) {
+    list.push(currentDate.format('YYYY년 MM월'));
+    currentDate = currentDate.subtract(1, 'M');
+  }
+  return list;
+};
+
+export { 
+  DateUtil,
+  getDateList
+ };
