@@ -33,10 +33,12 @@ function DateBoard({ options }: Props) {
 
   const handleCurrentDate = (date: string) => {
     const current = options.indexOf(date);
-    if (current === 0) {
+    if (current === 1) {
       setIsFirstEl(true);
-    } else if (current === options.length) {
+      setIsLastEl(false)
+    } else if (current === options.length - 1) {
       setIsLastEl(true)
+      setIsFirstEl(false)
     } else {
       setIsFirstEl(false);
       setIsLastEl(false);
@@ -47,6 +49,16 @@ function DateBoard({ options }: Props) {
 
   const handleArrowBtn = (date: string, type: string) => {
     const current = options.indexOf(date);
+    if (current === 0) {
+      if (type === 'right') {
+        setCurrentDate(options[current + 1]);
+        setIsFirstEl(true);
+      } else if (type === 'left') {
+        setCurrentDate(options[options.length - 1]);
+        setIsLastEl(true);
+      }
+      return ;
+    }
     if (type === 'right' && current !== 1) {
       if (current !== 1) {
         setCurrentDate(options[current - 1]);
@@ -88,13 +100,15 @@ function DateBoard({ options }: Props) {
               return (
                 <div
                   key={idx}
-                  onClick={() => handleCurrentDate(option)}
+                  onClick={() => {
+                    handleCurrentDate(option)
+                    setIsOpen(false)
+                  }} 
                   className={cn('dropdown__list__element')}>
                     {option}
                   </div>
               )
             })}
-            <div></div>
           </div>
         )}
       </div>
