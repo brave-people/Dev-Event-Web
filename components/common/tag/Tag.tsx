@@ -1,7 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { EventContext } from "context/event";
 import classNames from "classnames/bind";
 import style from './Tag.module.scss';
+import { useRouter } from "next/router";
+import { parseUrl } from "lib/utils/UrlUtil";
 
 type Prop = {
   tagName: string;
@@ -10,6 +12,7 @@ type Prop = {
 const cx = classNames.bind(style);
 
 function Tag({ tagName }: Prop) {
+  const router = useRouter();
   const { jobGroupList, updateJobGroupList, deleteJobGroupList } = useContext(EventContext);
   const handleOnClick = () => {
     handleJobGroupList(tagName);
@@ -23,11 +26,18 @@ function Tag({ tagName }: Prop) {
      updateJobGroupList(tag); 
     }
   }
+  useEffect(() => {
+
+  }, [jobGroupList])
   return (
     <div
-      onClick={handleOnClick}
-      className={cx('tag',
-      `${jobGroupList?.includes(tagName) && 'checked'}`)}>
+      onClick={() => {
+        const key = "tag";
+        const value = tagName;
+        router.replace(`${parseUrl(`${router.asPath}`, key, value, jobGroupList)}`)
+        handleOnClick();
+      }}
+      className={cx('tag', `${jobGroupList && jobGroupList.includes(tagName) && 'checked'}`)}>
       {tagName}
     </div>   
   )
