@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from 'components/common/layout';
+import Layout from 'components/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
@@ -8,7 +8,6 @@ import { useMonthlyEvent } from 'lib/hooks/useSWR';
 import { MdClose } from 'react-icons/md';
 import { ThreeDots } from 'react-loader-spinner';
 import List from 'components/common/list/list';
-import EventFilters from './EventFilters';
 import { Event } from 'model/event';
 import { Calender } from 'model/calender';
 const cn = classNames.bind(style);
@@ -29,9 +28,6 @@ const MonthlyEventList = ({ fallbackData, date }: { fallbackData: Event[]; date:
         <span className={cn('section__header__desc')}>
           <span>검색결과</span>
         </span>
-        <div className={cn('section__header__filters')}>
-          <EventFilters />
-        </div>
       </div>
       <div className={cn('section__list')}>
         <div className={cn('section__list__title')}>

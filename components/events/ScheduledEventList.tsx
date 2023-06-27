@@ -3,32 +3,16 @@ import { useScheduledEvents } from 'lib/hooks/useSWR';
 import { EventResponse, EventDate } from 'model/event';
 import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
-import { DateUtil, getDateList } from 'lib/utils/dateUtil';
-import Register from 'components/features/register/Register';
-import FilterByJobGroup from 'components/features/filters/filterByJobGroup/FilterByJobGroup';
-import SearchEvent from 'components/features/searchEvent/SearchEvent';
-import FilterByEventType from 'components/features/filters/filterByEventType/FilterByEventType';
-import FilterByLocation from 'components/features/filters/filterByLocation/FilterByLocation';
-import FilterByCoast from 'components/features/filters/filterByCoast/FilterByCoast';
-import { getTagsApi } from "lib/api/handler";
-import { TagResponse } from "model/tag";
-import DateBoard from 'components/common/date/DateBoard';
+import { DateUtil } from 'lib/utils/dateUtil';
+import EventFilter from 'components/features/filters/EventFilter';
 
 const cn = classNames.bind(style);
 
 const ScheduledEventList = ({ fallbackData }: { fallbackData: EventResponse[] }) => {
   const [totalCount, setTotalCount] = useState(0);
-  const [tagList, setTagList] = useState<TagResponse[] | undefined>(undefined);
   const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
-  
-  const fetchTagList = async () => {
-    const result = await getTagsApi("/front/v1/events/tags");
-    console.log(result);
-    setTagList(result);
-  }
 
   useEffect(() => {
-    fetchTagList();
     composeTotalCount();
   }, [scheduledEvents]);
 
@@ -75,30 +59,7 @@ const ScheduledEventList = ({ fallbackData }: { fallbackData: EventResponse[] })
 
   return (
     <>
-      <div className={cn('header')}>
-        <div className={cn('header__container')}>
-          <span className={cn('header__container__desc')}>
-              전체 행사
-          </span>
-          <Register />
-        </div>
-        <div className={cn('header__container')}>
-          <FilterByJobGroup
-            tagList={tagList}
-          />
-        </div>
-        <div className={cn('header__container')}>
-          <div className={cn('header__container__filter')}>
-            <SearchEvent />
-            <FilterByEventType />
-            <FilterByLocation />
-            <FilterByCoast />
-          </div>
-          <DateBoard
-            options={getDateList()}
-          />
-        </div>
-      </div>
+      <EventFilter />
     </>
   )
 };
