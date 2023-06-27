@@ -7,8 +7,10 @@ type Props = {
 }
 
 function FilteredEvent({ condition }: Props) {
-  const { jobGroupList, eventType, location, coast } = useContext(EventContext);
-  console.log(jobGroupList, eventType, location, coast)
+  const { jobGroupList, eventType, location, coast, date } = useContext(EventContext);
+  useEffect(() => {
+    console.log(jobGroupList, eventType, location, coast, date)
+  }, [date])
   return (
     <div>
       <EventFilter />

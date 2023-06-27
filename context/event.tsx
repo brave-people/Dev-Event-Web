@@ -11,6 +11,8 @@ interface EventContext {
   handleLocation: (location: string | undefined) => void;
   coast: string | undefined;
   handleCoast: (coast: string | undefined) => void;
+  date: string | undefined;
+  handleDate: (date: string | undefined) => void;
 }
 
 const defaultValue: EventContext = {
@@ -23,7 +25,9 @@ const defaultValue: EventContext = {
   location: undefined,
   handleLocation: () => {},
   coast: undefined,
-  handleCoast: () => {}
+  handleCoast: () => {},
+  date: undefined,
+  handleDate: () => {}
 }
 
 const EventContext = createContext(defaultValue);
@@ -33,7 +37,7 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
   const [eventType, setEventType] = useState<string | undefined>(undefined);
   const [location, setLocation] = useState<string | undefined>(undefined);
   const [coast, setCoast] = useState<string | undefined>(undefined);
-
+  const [date, setDate] = useState<string | undefined>(undefined);
   const updateJobGroupList = (job: string | string[] | undefined) => {
     if (typeof(job) === "undefined")
       return ;
@@ -77,6 +81,10 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
     setCoast(coast);
   }
 
+  const handleDate = (date: string | undefined) => {
+    setDate(date);
+  }
+
   const contextValue = {
     jobGroupList,
     updateJobGroupList,
@@ -87,7 +95,9 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
     location,
     handleLocation,
     coast,
-    handleCoast
+    handleCoast,
+    date,
+    handleDate
   }
   return (
     <>
