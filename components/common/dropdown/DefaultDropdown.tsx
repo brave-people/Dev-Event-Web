@@ -1,20 +1,50 @@
 import { useOnClickOutside } from "lib/hooks/useOnClickOutside";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import style from './DefaultDropdown.module.scss'
 import classNames from "classnames/bind";
 import DownArrowIcon from "components/icons/DownArowIcon";
+import * as ga from 'lib/utils/gTag';
+import { useRouter } from "next/router";
+import { parseUrl } from "lib/utils/UrlUtil";
+import { EventContext } from "context/event";
 
 const cn = classNames.bind(style);
 
 type DefaultDropdownProps = {
   title: string;
-  options?: string[];
-  size?: string;
+  options: string[];
+  type: string;
+  context: (event: string | undefined) => void;
+  gaParam: {
+    action: string;
+    event_category: string;
+    event_label: string;
+  }
 }
 
-function DefaultDropdown({ title, options, size }: DefaultDropdownProps) {
+function DefaultDropdown({ title, options, type, context, gaParam }: DefaultDropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [currentState, setCurrentState] = useState<string | undefined>(undefined);
+  const { jobGroupList, eventType, location, coast } = useContext(EventContext)
   const outSideRef = useRef(null);
+  const router = useRouter();
+  const getCollectTitle = () => {
+    if (type === "type") {
+      if (currentState === undefined)
+        return (eventType ? eventType : title);
+      return (currentState);
+    } else if (type === "location") {
+      if (currentState === undefined)
+        return (location ? location : title);
+      return (currentState);
+    } else if (type === "coast") {
+      if (currentState === undefined)
+        return (coast ? coast : title);
+      return (currentState);
+    }
+    return (title);
+  }
+  const name = getCollectTitle();
 
   const handleClickOutside = () => {
     if (isOpen) {
@@ -30,13 +60,12 @@ function DefaultDropdown({ title, options, size }: DefaultDropdownProps) {
   };
 
   useOnClickOutside({ ref: outSideRef, handler: handleClickOutside, mouseEvent: 'click' });
-
   return (
     <>
       <div className={cn('dropdown')} ref={outSideRef}>
         <div className={cn('dropdown__header')} onClick={handleClickDropdown}>
           <span className={cn('dropdown__header__placeholder')}>
-            <span>{title}</span>
+            <span>{name !== '전체' ? name : title}</span>
           </span>
           <DownArrowIcon
             color="rgba(49, 50, 52, 1)"
@@ -49,7 +78,16 @@ function DefaultDropdown({ title, options, size }: DefaultDropdownProps) {
               return (
                 <div 
                   key={idx}
-                  className={cn('dropdown__list__element')}>
+                  className={cn('dropdown__list__element')}
+                  onClick={() => {
+                    const key = `${type}`
+                    const value = `${option}`
+                    ga.event(gaParam)
+                    setCurrentState(option);
+                    context(option)
+                    setIsOpen(false);
+                    router.replace(`${parseUrl(`${router.asPath}`, key, value, jobGroupList)}`)
+                  }}>
                   {option}
                 </div>
               )
