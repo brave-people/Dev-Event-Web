@@ -2,20 +2,22 @@ import React, { createContext, ReactNode, useState } from 'react'
 
 interface EventContext {
   jobGroupList: string[] | undefined;
-  updateJobGroupList: (job: string) => void;
+  updateJobGroupList: (job: string | string[] | undefined) => void;
   deleteJobGroupList: (nJob: string) => void;
+  initJobGroupList: () => void;
   eventType: string | undefined;
-  handleEventType: (event: string) => void;
+  handleEventType: (event: string | undefined) => void;
   location: string | undefined;
-  handleLocation: (location: string) => void;
+  handleLocation: (location: string | undefined) => void;
   coast: string | undefined;
-  handleCoast: (coast: string) => void;
+  handleCoast: (coast: string | undefined) => void;
 }
 
 const defaultValue: EventContext = {
   jobGroupList: undefined,
   updateJobGroupList: () => {},
   deleteJobGroupList: () => {},
+  initJobGroupList: () => {},
   eventType: undefined,
   handleEventType: () => {},
   location: undefined,
@@ -32,27 +34,46 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
   const [location, setLocation] = useState<string | undefined>(undefined);
   const [coast, setCoast] = useState<string | undefined>(undefined);
 
-  const updateJobGroupList = (job: string) => {
-    if (jobGroupList === undefined) {
-      setJobGroupList([job]);
+  const updateJobGroupList = (job: string | string[] | undefined) => {
+    if (typeof(job) === "undefined")
+      return ;
+    if (typeof(job) === "string") {
+      if (jobGroupList === undefined) {
+        setJobGroupList([job]);
+      } else {
+        if (jobGroupList.includes(job) === false) {
+          setJobGroupList(jobGroupList?.concat(job));
+        }
+      }
     } else {
-      setJobGroupList(jobGroupList?.concat(job));
+      if (jobGroupList === undefined) {
+        setJobGroupList(job)
+      } else {
+        for (let i = 0; i < job.length; i++) {
+          if (jobGroupList.includes(job[i]) === false)
+            setJobGroupList(jobGroupList?.concat(job[i]));
+        }
+      }
     }
+  }
+
+  const initJobGroupList = () => {
+    setJobGroupList([]);
   }
 
   const deleteJobGroupList = (nJob: string) => {
     setJobGroupList(jobGroupList?.filter((job) => job !== nJob));
   }
 
-  const handleEventType = (event: string) => {
+  const handleEventType = (event: string | undefined) => {
     setEventType(event);
   }
 
-  const handleLocation = (location: string) => {
+  const handleLocation = (location: string | undefined) => {
     setLocation(location)
   }
 
-  const handleCoast = (coast: string) => {
+  const handleCoast = (coast: string | undefined) => {
     setCoast(coast);
   }
 
@@ -60,6 +81,7 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
     jobGroupList,
     updateJobGroupList,
     deleteJobGroupList,
+    initJobGroupList,
     eventType,
     handleEventType,
     location,

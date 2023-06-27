@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Layout from 'components/common/layout';
+import Layout from 'components/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Myevent.module.scss';
@@ -10,7 +10,6 @@ import cookie from 'cookie';
 import EventTab from 'components/myEvent/EventTab';
 import { GetServerSideProps } from 'next';
 import { AuthContext } from 'context/auth';
-import Head from 'next/head';
 import * as ga from 'lib/utils/gTag';
 
 const cn = classNames.bind(style);

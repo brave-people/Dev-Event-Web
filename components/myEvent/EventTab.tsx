@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import React, { useEffect } from 'react';
-import Layout from 'components/common/layout';
+import Layout from 'components/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Myevent.module.scss';

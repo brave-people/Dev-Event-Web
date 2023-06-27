@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Layout from 'components/common/layout';
+import Layout from 'components/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
