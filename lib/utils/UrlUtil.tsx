@@ -1,4 +1,27 @@
 import { UrlContext } from "types/UrlContext";
+import { handleUndefined } from "./eventUtil";
+
+export const handleUrl = (
+	url: string,
+	type: string,
+	jobGroupList: string[] | undefined,
+	eventType: string | undefined,
+	location: string | undefined,
+	coast: string | undefined
+) => {
+	if (handleUndefined(jobGroupList?.join(', '), eventType, location, coast))
+		return ('/events');
+	if (url.includes(type) === false)
+		return (url);
+	else {
+		const sepUrls = url.split('?').filter((sepUrl) => {
+			return (
+				sepUrl.includes(type) === false
+			)
+		})
+		return (sepUrls.join('?'));
+	}
+}
 
 export const parseUrl = (
     url: string, 
@@ -19,6 +42,9 @@ export const parseUrl = (
 		if (value === true) {
 			const newUrl = deleteUrl(jobGroupList, option);
 			const currentUrl = getCurrentUrl(url);
+			if ((newUrl === undefined || newUrl.length === 0) 
+			&& (currentUrl === undefined || currentUrl?.length === 0))
+				return ('/events');
 			return (
 				`/search${(newUrl === undefined 
 				|| newUrl?.length === 0) ? "" : `?tag=${newUrl?.join('?tag=')}`}
