@@ -5,7 +5,7 @@ import classNames from "classnames/bind";
 import DownArrowIcon from "components/icons/DownArowIcon";
 import * as ga from 'lib/utils/gTag';
 import { useRouter } from "next/router";
-import { parseUrl } from "lib/utils/UrlUtil";
+import { handleUrl, parseUrl } from "lib/utils/UrlUtil";
 import { EventContext } from "context/event";
 
 const cn = classNames.bind(style);
@@ -65,7 +65,7 @@ function DefaultDropdown({ title, options, type, context, gaParam }: DefaultDrop
       <div className={cn('dropdown')} ref={outSideRef}>
         <div className={cn('dropdown__header')} onClick={handleClickDropdown}>
           <span className={cn('dropdown__header__placeholder')}>
-            <span>{name !== '전체' ? name : title}</span>
+            <span>{name !== '선택 안함' ? name : title}</span>
           </span>
           <DownArrowIcon
             color="rgba(49, 50, 52, 1)"
@@ -80,13 +80,19 @@ function DefaultDropdown({ title, options, type, context, gaParam }: DefaultDrop
                   key={idx}
                   className={cn('dropdown__list__element')}
                   onClick={() => {
+                    ga.event(gaParam)
                     const key = `${type}`
                     const value = `${option}`
-                    ga.event(gaParam)
-                    setCurrentState(option);
-                    context(option)
+                    if (option === "선택 안함") {
+                      setCurrentState(undefined);
+                      context(undefined);
+                      router.replace(`${handleUrl(`${router.asPath}`, key, jobGroupList, eventType, location, coast)}`)
+                    } else {
+                      setCurrentState(option);
+                      context(option)
+                      router.replace(`${parseUrl(`${router.asPath}`, key, value, jobGroupList)}`)
+                    }
                     setIsOpen(false);
-                    router.replace(`${parseUrl(`${router.asPath}`, key, value, jobGroupList)}`)
                   }}>
                   {option}
                 </div>

@@ -1,15 +1,37 @@
 @import '~styles/_mixin.scss';
 
 .container {
-  min-width: 280px;
+  width: 100%;
+  min-width: 210px;
   height: 40px;
-  margin-right: 1rem;
   &__input {
     width: 100%;
     height: 100%;
     outline: none;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1.5px solid #cecece;
+    border-radius: 8.9881px;
+    box-sizing: border-box;
   }
   input[type=text] {
     padding-left: 35px;
+  }
+}
+
+@include mobile {
+  .container {
+    height: 35px;
+    font-size: 0.857rem;
+    display: flex;
+    align-items: center;
+  }
+  @media (max-width: 555px) {
+    .container {
+      height: 30px;
+      line-height: 30px;
+      input[type=text] {
+        font-size: .5rem;
+      }
+    }
   }
 }

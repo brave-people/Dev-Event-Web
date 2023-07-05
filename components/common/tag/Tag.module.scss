@@ -20,3 +20,23 @@
   color: rgba(44, 76, 239, 1);
   background-color: #EDEFFF;
 }
+
+@include tablet {
+  .tag {
+    padding: 3px 12px;
+    font-size: 1rem;
+  }
+}
+
+@include mobile {
+  .tag {
+    padding: 2.5px 10px;
+    font-size: .8rem;
+  }
+  @media (max-width: 360px) {
+    .tag {
+      padding: 2px 8px;
+      font-size: .5rem;
+    }
+  }
+}
