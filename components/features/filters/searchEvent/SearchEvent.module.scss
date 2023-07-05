@@ -2,8 +2,22 @@
 
 .container {
   position: relative;
-  width: 100%;
+  width: 280px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  transition: all ease-in .3s;
 }
+
+@media (max-width: 1075px) {
+  .container {
+    width: 250px;
+  }
+}
+
+@media (max-width: 950px) {
+  .container {
+    width: 100%;
+  }
+}
+

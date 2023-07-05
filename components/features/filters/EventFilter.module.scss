@@ -5,6 +5,7 @@
   background-color: transparent;
   padding-top: 4.688rem;
   margin: 0px;
+  transition: all ease-in .3s;
 
   .block {
     width: 100%;
@@ -21,10 +22,118 @@
       font-size: 2.5rem;
       line-height: 3rem;
     }
-    &__filter {
+  }
+  .filter {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &__search {
+      min-width: 280px;
+    }
+    &__tags {
       display: flex;
-      justify-content: space-around;
+      justify-content: space-between;
       align-items: center;
+      &__group {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+    }
+  }
+}
+
+@media (max-width: 1075px) {
+  .container {
+    width: 60.75rem;
+    .filter {
+      &__tags {
+        display: flex;
+        align-items: center;
+        &__group {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 955px) {
+  .container {
+    width: 52.75rem;
+    padding-top: 3.88rem;
+    .block {
+      &__desc {
+        font-size: 2rem;
+        line-height: 2.5rem;
+      }
+    }
+    .filter {
+      width: 100%;
+      display: block;
+      &__search {
+        display: block;
+        width: 100%;
+      }
+      &__tags {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &__group {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
+@include mobile {
+  .container {
+    width: 42rem;
+    padding-top: 2.688rem;
+    .block {
+      &__desc {
+        font-size: 2rem;
+        line-height: 2.5rem;
+      }
+    }
+  }
+  @media (max-width: 600px) {
+    .container {
+      width: 36rem;
+    }
+  }
+  @media (max-width: 555px) {
+    .container {
+      width: 30rem;
+      .filter {
+        &__tags {
+          display: block;
+          &__group {
+            padding-bottom: .5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+        }
+      }
+    }
+  }
+  @media (max-width: 360px) {
+    .container {
+      width: 20rem;
+      padding-top: .88rem;
+      .block {
+        &__desc {
+          font-size: 1.3rem;
+        }
+      }
     }
   }
 }

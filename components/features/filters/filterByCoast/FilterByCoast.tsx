@@ -8,7 +8,7 @@ type Props = {
 }
 
 function FilterByCoast({ context }: Props) {
-  const coast = ["전체", "유료", "무료"];
+  const coast = ["유료", "무료", "선택 안함"];
   const { handleCoast } = useContext(EventContext);
   const ga = {
     action: 'web_event_비용',

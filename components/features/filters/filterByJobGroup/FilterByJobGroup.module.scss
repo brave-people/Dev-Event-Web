@@ -4,7 +4,13 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-start;
   font-family: 'Pretendard Variable';
   margin: 2.688rem 0;
+}
+
+@media (max-width: 360px) {
+  .taglist {
+    margin: .688rem 0;
+  }
 }

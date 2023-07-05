@@ -8,7 +8,7 @@ type Props = {
 }
 
 function FilterByEventType({ context }: Props) {
-  const eventType = ["전체", "스터디", "대회", "교육", "모임", "웨비나", "컨퍼런스", "해커톤", "공모전", "이벤트", "포럼"]
+  const eventType = ["스터디", "대회", "교육", "모임", "웨비나", "컨퍼런스", "해커톤", "공모전", "이벤트", "포럼", "선택 안함"]
   const { handleEventType } = useContext(EventContext);
     const ga = {
     action: 'web_event_행사유형',

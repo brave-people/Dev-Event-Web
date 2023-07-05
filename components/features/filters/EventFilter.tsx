@@ -33,22 +33,26 @@ function EventFilter() {
         context={context}
       />
     </div>
-    <div className={cn('block')}>
-      <div className={cn('block__filter')}>
+    <div className={cn('filter')}>
+      <div className={cn('filter__search')}>
         <SearchEvent />
-        <FilterByEventType
-          context={context}
-        />
-        <FilterByLocation 
-          context={context}
-        />
-        <FilterByCoast
-          context={context}
+      </div>
+      <div className={cn('filter__tags')}>
+        <div className={cn('filter__tags__group')}>
+          <FilterByEventType
+            context={context}
+          />
+          <FilterByLocation 
+            context={context}
+          />
+          <FilterByCoast
+            context={context}
+          />
+        </div>
+        <DateBoard
+          options={getDateList()}
         />
       </div>
-      <DateBoard
-        options={getDateList()}
-      />
     </div>
   </div>
   )
