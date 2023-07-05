@@ -1,12 +1,20 @@
+import React, { useContext, useEffect } from 'react'
 import Link from "next/link";
 import * as ga from 'lib/utils/gTag';
 import FillButton from "components/common/buttons/FillButton";
+import { FilledPlusIcon } from "components/icons";
+import { WindowContext } from "context/window";
 
 function Register() {
+  const { windowX, handleWindowX } = useContext(WindowContext)
+  useEffect(() => {
+    handleWindowX(window.innerWidth);
+  }, [windowX])
   return (
     <Link href={'https://forms.gle/UUjUVg1tTrKhemKu9'}>
     <a target="__blank">
-      <FillButton
+      {windowX >= 400 ? (
+        <FillButton
         label="행사추가요청"
         color="default"
         icon="plus"
@@ -19,6 +27,11 @@ function Register() {
           });
         }}
       ></FillButton>
+      ): (
+        <FilledPlusIcon
+          color="#333"
+        />
+      )}
     </a>
   </Link>
   )
