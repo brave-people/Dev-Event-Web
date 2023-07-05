@@ -8,11 +8,12 @@ type Props = {
 }
 
 function Logo({ color, ...rest }: Props) {
-  const { initJobGroupList, handleEventType, handleLocation, handleCoast } = useContext(EventContext);
+  const { initJobGroupList, handleEventType, handleLocation, handleCoast, handleSearch } = useContext(EventContext);
   const handleOnClick = () => {
     handleEventType(undefined);
     handleLocation(undefined);
     handleCoast(undefined);
+    handleSearch(undefined)
     initJobGroupList();
   }
   return (
