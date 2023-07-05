@@ -1,4 +1,5 @@
 @import '~styles/_mixin.scss';
+
 .list {
   .wrapper {
     padding-top: 1.75rem;
@@ -9,32 +10,15 @@
   .list {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px 2%;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  .wrapper {
-    padding-top: 1.143rem;
-    width: 49%;
-  }
-
-  @media (min-width: 605px) {
+  @media (max-width: 620px) {
     .list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px 2%;
-    }
-    .wrapper {
-      width: 32%;
-    }
-  }
-  @media (max-width: 360px) {
-    .list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px 4%;
-    }
-    .wrapper {
-      width: 48%;
+      display: block;
+      width: 19.571rem;
+      margin: 0 auto;
     }
   }
 }

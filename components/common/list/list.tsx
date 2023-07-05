@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import style from 'components/common/list/list.module.scss';
 import { useMyEvent } from 'lib/hooks/useSWR';
@@ -11,7 +11,6 @@ import { deleteMyEventApi } from 'lib/api/delete';
 import LoginModal from 'components/common/modal/LoginModal';
 import { AuthContext } from 'context/auth';
 import * as ga from 'lib/utils/gTag';
-import ShareModal from 'components/common/modal/ShareModal';
 import { DateUtil } from 'lib/utils/dateUtil';
 
 const cn = classNames.bind(style);
@@ -19,15 +18,8 @@ const cn = classNames.bind(style);
 const List = ({ data }: { data: any }) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
-  const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
-  const [sharedEvent, setSharedEvent] = useState({});
   const param = { filter: '' };
   const { myEvent, isError } = useMyEvent(param, authContext.isLoggedIn);
-
-  const handleShareInMobileSize = (data: Event) => {
-    setSharedEvent(data);
-    setShareModalIsOpen(true);
-  };
 
   const checkEventNew = ({ createdDate }: { createdDate: string }) => {
     const todayDate = dayjs();
@@ -122,9 +114,8 @@ const List = ({ data }: { data: any }) => {
     <div className={cn('list')}>
       {data.map((item: Event) => {
         return (
-          <div className={cn('wrapper')}>
+          <div className={cn('wrapper')} key={item.id}>
             <Item
-              key={item.id}
               data={item}
               isEventNew={() => {
                 return checkEventNew({ createdDate: item.create_date_time });
@@ -152,13 +143,11 @@ const List = ({ data }: { data: any }) => {
                   setLoginModalIsOpen(true);
                 }
               }}
-              onClickShareInMobileSize={handleShareInMobileSize}
             />
           </div>
         );
       })}
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
-      <ShareModal isOpen={shareModalIsOpen} onClick={() => setShareModalIsOpen(false)} data={sharedEvent}></ShareModal>
     </div>
   );
 };
