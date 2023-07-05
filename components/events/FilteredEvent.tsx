@@ -1,20 +1,24 @@
-import React, { useContext, useEffect } from "react";
-import EventFilter from "components/features/filters/EventFilter";
+import React, { useContext } from "react";
 import { EventContext } from "context/event";
+import { EventResponse } from "model/event";
+import ItemList from "components/common/item/ItemList";
 
 type Props = {
-  condition: string;
+  fallbackData: EventResponse[]
 }
 
-function FilteredEvent({ condition }: Props) {
-  const { jobGroupList, eventType, location, coast, date } = useContext(EventContext);
-  useEffect(() => {
-    console.log(jobGroupList, eventType, location, coast, date)
-  }, [date])
+function FilteredEvent({ fallbackData } : Props) {
+  const { jobGroupList, eventType, location, coast } = useContext(EventContext);
   return (
-    <div>
-      <EventFilter />
-    </div>
+    <>
+      <ItemList
+        fallbackData={fallbackData}
+        jobGroups={`${jobGroupList?.join(', ')}`}
+        eventType={eventType}
+        location={location}
+        coast={coast}
+      />
+    </>
   )
 }
 
