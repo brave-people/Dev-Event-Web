@@ -1,24 +1,20 @@
 @import '~styles/_mixin.scss';
 
 .item {
+  width: 100%;
   display: flex;
-  flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  width: 68.75rem;
   height: 11.25rem;
-  background: #ffffff;
+  background-color: #fff;
   box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
   cursor: pointer;
-  transform: translateY(0px);
 
   &__content {
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    height: 100%;
     position: relative;
 
     &__flag {
@@ -100,14 +96,12 @@
       flex-direction: column;
       align-items: flex-start;
       justify-content: center;
-      width: 45.1rem;
       height: 100%;
       padding-left: 3rem;
       position: relative;
     }
     &__title {
       display: block;
-      width: 38.063rem;
       font-weight: 700;
       font-size: 18px;
       color: #000000;
@@ -119,7 +113,6 @@
     &__desc {
       display: block;
       padding-top: 13px;
-      width: 38.063rem;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -166,12 +159,10 @@
 
   &__buttons {
     display: flex;
+    align-items: center;
     flex-direction: column;
-    justify-items: flex-start;
     padding-top: 17px;
-    position: relative;
     padding-right: 1.875rem;
-    overflow: visible;
 
     .like-button {
       border: none;
@@ -218,49 +209,6 @@
         background-repeat: no-repeat;
       }
     }
-
-    .share-modal {
-      position: absolute;
-      align-self: flex-end;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: center;
-      top: 95px;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-      border: solid 1px #e0e0e0;
-      width: 376px;
-      padding: 15px 10px 15px 10px;
-
-      animation-name: appearIn;
-      animation-duration: 0.2s;
-      animation-timing-function: linear;
-
-      &__link {
-        width: 300px;
-        min-height: 37px;
-        padding: 9px 10px 9px 10px;
-        word-break: break-all;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        background-color: #ecf6ff;
-        border: none;
-        outline: none;
-      }
-      &__button {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        padding: 7px 7px 7px 7px;
-        border: 1.5px solid #ecf6ff;
-        background-color: #fff;
-        cursor: pointer;
-      }
-    }
   }
 }
 
@@ -270,14 +218,12 @@
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between;
-    min-width: 43rem;
     width: 100%;
     height: 11.25rem;
-    background: #ffffff;
+    background-color: #ffffff;
     box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.05);
     border-radius: 10px;
     cursor: pointer;
-    transform: translateY(0px);
 
     &__content {
       display: flex;
@@ -292,7 +238,6 @@
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
-        width: 30rem; //calc(100% - 20rem);
         height: 100%;
         padding-left: 3rem;
         position: relative;
@@ -418,14 +363,14 @@
           align-items: center;
           justify-content: center;
           font-weight: 700;
-          font-size: 0.7rem;
+          font-size: 0.857rem;
           color: #ffffff;
         }
       }
 
       &__img {
         width: 100%;
-        min-width: 11.571rem;
+        min-width: 9.571rem;
         height: auto;
         position: relative;
         .mask {
@@ -470,19 +415,15 @@
         height: 100%;
         padding-left: 1.071rem;
         padding-right: 0.929rem;
-        padding-top: 15px;
+        padding-top: 10px;
         position: relative;
-      }
 
-      &__title {
+      .item__content__title {
         width: 100%;
-        height: 50px;
         font-weight: 700;
         font-size: 13px;
         color: #000000;
         text-align: left;
-        padding-top: 1rem;
-
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
@@ -490,11 +431,10 @@
         -webkit-box-orient: vertical;
         white-space: normal;
       }
-      &__desc {
+      .item__content__desc {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        height: 81px;
         padding-top: 8px;
         width: 100%;
         font-weight: 400;
@@ -503,10 +443,12 @@
         color: #515151;
 
         .wrap {
+          width: 100%;
           display: flex;
           flex-direction: row;
           align-items: flex-start;
           justify-content: flex-start;
+          white-space: normal;
 
           .label {
             white-space: nowrap;
@@ -532,8 +474,15 @@
             white-space: normal;
             padding: 0px 2px;
           }
+          .tag {
+            width: 50px;
+            position: absolute;
+            top: 5px;
+            right: 10px;
+          }
         }
       }
+    }
 
       &__bottom {
         margin-top: 8px;
@@ -662,6 +611,11 @@
           cursor: pointer;
         }
       }
+    }
+  }
+  @media (max-width: 600px) {
+    .item {
+      width: 100%;
     }
   }
 }

@@ -1,16 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Link from 'next/link';
 import { Event } from 'model/event';
 import classNames from 'classnames/bind';
 import style from './Item.module.scss';
 import Image from 'next/image';
 import FilterTag from '../tag/FilterTag';
-import router from 'next/router';
-import { MdContentCopy } from 'react-icons/md';
 import { DateUtil } from 'lib/utils/dateUtil';
-import { useOnClickOutside } from 'lib/hooks/useOnClickOutside';
 import * as ga from 'lib/utils/gTag';
 import DdayTag from 'components/common/tag/DdayTag';
+import { WindowContext } from 'context/window';
 
 const cn = classNames.bind(style);
 
@@ -25,57 +23,26 @@ const Item = ({
   isEventDone,
   isEventNew = () => false,
   onClickFavorite,
-  onClickShareInMobileSize,
 }: {
   data: Event;
   isEventDone: () => boolean;
   isEventNew?: () => boolean;
   isFavorite: () => boolean;
   onClickFavorite?: any;
-  onClickShareInMobileSize?: any;
 }) => {
-  const [isShareModalOpenInDesktop, setShareModalOpenInDesktop] = useState(false);
-
-  const outsideRef = useRef(null);
-  const handleClickOutside = () => {
-    if (isShareModalOpenInDesktop) {
-      setShareModalOpenInDesktop(false);
-    }
-  };
-  useOnClickOutside({ ref: outsideRef, handler: handleClickOutside, mouseEvent: 'click' });
-
-  const checkMobile = () => {
-    return navigator.maxTouchPoints; //&& window.innerHeight !== defaultInnerHeight;
-  };
-
+  const { windowX, handleWindowX } = useContext(WindowContext);
   const handleShare = async () => {
-    const isMobile = checkMobile();
-    if (isMobile) {
-      if (navigator.share) {
-        try {
-          await navigator
-            .share({ title: data.title, url: data.event_link })
-            .then(() => console.log('Hooray! Your content was shared to tha world'));
-        } catch (error) {
-          console.log(`공유 중 문제가 발생했습니다!`);
-        }
-      } else {
-        onClickShareInMobileSize(data);
-      }
-    } else {
-      const innerWidth = window.innerWidth;
-      if (innerWidth < 768) {
-        onClickShareInMobileSize(data);
-      } else {
-        setShareModalOpenInDesktop(!isShareModalOpenInDesktop);
-      }
-    }
+    navigator.clipboard.writeText(data.event_link)
     ga.event({
       action: 'web_event_공유버튼클릭',
       event_category: 'web_event',
       event_label: '공유',
     });
   };
+
+  useEffect(() => {
+    handleWindowX(window.innerWidth);
+  }, [windowX])
 
   const getEventDate = () => {
     let eventDate;
@@ -161,8 +128,7 @@ const Item = ({
               ) : null}
             </div>
             <div className={cn('item__content__body')}>
-              <div>
-                <span className={cn('item__content__title')}>{data.title}</span>
+                <span className={cn('item__content__title')}>{(data.title.length >= 30 && windowX <= 750) ? `${data.title.slice(0, 30)}...` : data.title}</span>
                 <div className={cn('item__content__desc')}>
                   <span className={cn('wrap')}>
                     <div className={cn('label')}>주최 : </div>
@@ -171,9 +137,10 @@ const Item = ({
                   <span className={cn('wrap')}>
                     <div className={cn('label')}>{data.event_time_type === 'RECRUIT' ? '모집 : ' : '일시 : '}</div>
                     <div className={cn('date')}> {getEventDate()} </div>
-                    <DdayTag startDateTime={data.start_date_time} endDateTime={data.end_date_time} />
+                    <div className={cn('tag')}>
+                      <DdayTag startDateTime={data.start_date_time} endDateTime={data.end_date_time} />
+                    </div>
                   </span>
-                </div>
               </div>
               <div className={cn('item__content__bottom')}>
                 <div className={cn('tags')}>
@@ -183,14 +150,12 @@ const Item = ({
                         key={tag.id}
                         label={tag.tag_name}
                         color={tag.tag_color}
-                        onClick={(event: any) => {
+                        onClick={() => {
                           ga.event({
                             action: 'web_event_이벤트태그클릭',
                             event_category: 'web_event',
                             event_label: '검색',
                           });
-                          const tag = event.target.innerText.replace(/[\t\s\#]/g, '');
-                          router.replace(`/search?tag=${tag}`);
                         }}
                       />
                     );
@@ -204,33 +169,6 @@ const Item = ({
       <div className={cn('item__buttons')}>
         <button className={cn(`like-button`, isFavorite() ? '--selected' : null)} onClick={onClickFavorite} />
         <button className={cn('share-button')} onClick={handleShare} />
-        {isShareModalOpenInDesktop ? (
-          <div className={cn('share-modal')} ref={outsideRef}>
-            {' '}
-            <input className={cn('share-modal__link')} value={data.event_link} readOnly></input>
-            <button
-              className={cn('share-modal__button')}
-              onClick={(event) => {
-                const copyLink = data.event_link;
-                navigator.clipboard
-                  .writeText(copyLink)
-                  .then(() => {
-                    alert('링크가 복사되었습니다');
-                  })
-                  .catch((err) => {
-                    console.log('링크복사 실패', err);
-                  });
-                ga.event({
-                  action: 'web_event_url복사버튼클릭',
-                  event_category: 'web_event',
-                  event_label: '공유',
-                });
-              }}
-            >
-              <MdContentCopy color="#757575" size={20} />
-            </button>
-          </div>
-        ) : null}
       </div>
     </div>
   );
