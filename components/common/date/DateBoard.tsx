@@ -32,8 +32,8 @@ function DateBoard({ options }: Props) {
     }
   };
 
-  const handleCurrentDate = (date: string) => {
-    const current = options.indexOf(date);
+  const handleCurrentDate = (currentDate: string) => {
+    const current = options.indexOf(currentDate);
     if (current === 1) {
       setIsFirstEl(true);
       setIsLastEl(false)
@@ -61,18 +61,16 @@ function DateBoard({ options }: Props) {
       return ;
     }
     if (type === 'right' && current !== 1) {
-      if (current !== 1) {
+      if (current !== 1)
         handleDate(options[current - 1]);
-      }
       if (current - 1 === 1)
         setIsFirstEl(true);
       else
         setIsFirstEl(false);
       setIsLastEl(false);
     } else if (type === 'left' && current !== options.length - 1) {
-      if (current - 1 !== options.length - 1) {
+      if (current - 1 !== options.length - 1)
         handleDate(options[current + 1]);
-      }
       if (current + 1 === options.length - 1)
         setIsLastEl(true);
       else
@@ -83,12 +81,13 @@ function DateBoard({ options }: Props) {
 
   useOnClickOutside({ ref: outSideRef, handler: handleClickOutside, mouseEvent: 'click' });
   useEffect(() => {
-    handleDate(options[1])
-  }, [])
+    if (date === undefined)
+      handleDate(options[1]);
+  }, [date])
   return (
     <div className={cn('container')} ref={outSideRef}>
       <div 
-        className={cn('key--left', `${isLastEl ? 'key--disactive' : 'key--active'}`)}
+        className={cn('key', 'key--left', `${isLastEl ? 'key--disactive' : 'key--active'}`)}
         onClick={() => {
           if (date !== undefined) {
             handleArrowBtn(options[options.indexOf(date)], 'left')
@@ -121,7 +120,7 @@ function DateBoard({ options }: Props) {
         )}
       </div>
       <div 
-        className={cn('key--right', `${isFirstEl ? 'key--disactive' : 'key--active'}`)}
+        className={cn('key', 'key--right', `${isFirstEl ? 'key--disactive' : 'key--active'}`)}
         onClick={() => {
           if (date !== undefined) {
             handleArrowBtn(options[options.indexOf(date)], 'right')
