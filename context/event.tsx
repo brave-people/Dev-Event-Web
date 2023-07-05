@@ -13,6 +13,8 @@ interface EventContext {
   handleCoast: (coast: string | undefined) => void;
   date: string | undefined;
   handleDate: (date: string | undefined) => void;
+  search: string | undefined;
+  handleSearch: (search: string | undefined) => void;
 }
 
 const defaultValue: EventContext = {
@@ -27,7 +29,9 @@ const defaultValue: EventContext = {
   coast: undefined,
   handleCoast: () => {},
   date: undefined,
-  handleDate: () => {}
+  handleDate: () => {},
+  search: undefined,
+  handleSearch: () => {}
 }
 
 const EventContext = createContext(defaultValue);
@@ -38,21 +42,22 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
   const [location, setLocation] = useState<string | undefined>(undefined);
   const [coast, setCoast] = useState<string | undefined>(undefined);
   const [date, setDate] = useState<string | undefined>(undefined);
+  const [search, setSearch] = useState<string | undefined>(undefined);
+
   const updateJobGroupList = (job: string | string[] | undefined) => {
     if (typeof(job) === "undefined")
       return ;
     if (typeof(job) === "string") {
-      if (jobGroupList === undefined) {
+      if (jobGroupList === undefined)
         setJobGroupList([job]);
-      } else {
-        if (jobGroupList.includes(job) === false) {
+      else {
+        if (jobGroupList.includes(job) === false)
           setJobGroupList(jobGroupList?.concat(job));
-        }
       }
     } else {
-      if (jobGroupList === undefined) {
+      if (jobGroupList === undefined)
         setJobGroupList(job)
-      } else {
+      else {
         for (let i = 0; i < job.length; i++) {
           if (jobGroupList.includes(job[i]) === false)
             setJobGroupList(jobGroupList?.concat(job[i]));
@@ -85,6 +90,11 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
     setDate(date);
   }
 
+  const handleSearch = (search: string | undefined) => {
+    
+    setSearch(search);
+  }
+
   const contextValue = {
     jobGroupList,
     updateJobGroupList,
@@ -97,7 +107,9 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
     coast,
     handleCoast,
     date,
-    handleDate
+    handleDate,
+    search,
+    handleSearch
   }
   return (
     <>
