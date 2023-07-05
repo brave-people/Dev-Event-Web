@@ -14,7 +14,12 @@ import Banner from 'components/common/banner/banner';
 
 const cn = classNames.bind(style);
 
-const Events = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackData: EventResponse[] }) => {
+type Props = {
+  isLoggedIn: boolean;
+  fallbackData: EventResponse[]
+}
+
+const Events = ({ isLoggedIn, fallbackData }: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   useEffect(() => {

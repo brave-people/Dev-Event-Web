@@ -10,15 +10,20 @@ import LoginModal from 'components/common/modal/LoginModal';
 import { useRouter } from 'next/router';
 import Banner from 'components/common/banner/banner';
 import FilteredEvent from 'components/events/FilteredEvent';
-import Router from 'next/router';
+import { EventResponse } from 'model/event';
 
 const cn = classNames.bind(style);
 
-const Search = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
-  const authContext = React.useContext(AuthContext);
-  const router = useRouter();
+type Props = {
+  isLoggedIn: boolean;
+  fallbackData: EventResponse[]
+}
 
+const Search = ({ isLoggedIn, fallbackData }: Props) => {
+  const router = useRouter();
+  const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
+ 
   useEffect(() => {
     if (isLoggedIn) {
       authContext.login();
@@ -31,8 +36,8 @@ const Search = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
     <>
       <Banner />
       <section className={cn('section')}>
-        <FilteredEvent
-          condition={router.asPath}
+        <FilteredEvent 
+          fallbackData={fallbackData}
         />
       </section>
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
@@ -42,6 +47,9 @@ const Search = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = context.req.headers.cookie || '';
+  const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/current`);
+  const events = await res.json();
+
   if (cookies) {
     const parsedCookies = cookie.parse(cookies);
     const access_token = parsedCookies.access_token;
@@ -51,6 +59,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       return {
         props: {
           isLoggedIn: true,
+          fallbackData: events
         },
       };
     }
@@ -59,6 +68,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       isLoggedIn: false,
+      fallbackData: events
     },
   };
 };
