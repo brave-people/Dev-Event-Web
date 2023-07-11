@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import Banner from 'components/common/banner/banner';
 import FilteredEvent from 'components/events/FilteredEvent';
 import { EventResponse } from 'model/event';
+import Letter from 'components/features/letter/Letter';
 
 const cn = classNames.bind(style);
 

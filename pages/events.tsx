@@ -11,6 +11,7 @@ import { EventResponse } from 'model/event';
 import ScheduledEventList from 'components/events/ScheduledEventList';
 import Head from 'next/head';
 import Banner from 'components/common/banner/banner';
+import Letter from 'components/features/letter/Letter';
 
 const cn = classNames.bind(style);
 
