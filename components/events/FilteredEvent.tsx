@@ -9,6 +9,7 @@ type Props = {
 
 function FilteredEvent({ fallbackData } : Props) {
   const { jobGroupList, eventType, location, coast } = useContext(EventContext);
+  console.log(jobGroupList, eventType, location, coast);
   return (
     <>
       <ItemList
