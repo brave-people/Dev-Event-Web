@@ -15,7 +15,7 @@ function Register() {
     <a target="__blank">
       {windowX >= 400 ? (
         <FillButton
-        label="행사추가요청"
+        label="행사 추가 요청"
         color="default"
         icon="plus"
         iconStyle="register"
