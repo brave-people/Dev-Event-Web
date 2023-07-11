@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import React, { useEffect } from 'react';
+import React from 'react';
 import style from './ShareModal.module.scss';
 import Modal from 'react-modal';
 import { MdContentCopy } from 'react-icons/md';
@@ -15,7 +15,7 @@ function ShareModal({ isOpen, onClick, data }: any) {
         <input className={cn('modal__content__link')} value={data.event_link} readOnly></input>
         <button
           className={cn('modal__content__button')}
-          onClick={(event) => {
+          onClick={() => {
             const copyLink = data.event_link;
             navigator.clipboard
               .writeText(copyLink)

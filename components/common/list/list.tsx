@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import style from 'components/common/list/list.module.scss';
 import { useMyEvent } from 'lib/hooks/useSWR';
@@ -19,7 +19,7 @@ const List = ({ data }: { data: any }) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const param = { filter: '' };
-  const { myEvent, isError } = useMyEvent(param, authContext.isLoggedIn);
+  const { myEvent } = useMyEvent(param, authContext.isLoggedIn);
 
   const checkEventNew = ({ createdDate }: { createdDate: string }) => {
     const todayDate = dayjs();
@@ -112,10 +112,12 @@ const List = ({ data }: { data: any }) => {
 
   return (
     <div className={cn('list')}>
-      {data.map((item: Event) => {
+      {data.map((item: Event, index: number) => {
+        const isLast = index === data.length - 1 ? true : false;
         return (
-          <div className={cn('wrapper')} key={item.id}>
             <Item
+              isLast={isLast}
+              key={item.id}
               data={item}
               isEventNew={() => {
                 return checkEventNew({ createdDate: item.create_date_time });
@@ -144,7 +146,6 @@ const List = ({ data }: { data: any }) => {
                 }
               }}
             />
-          </div>
         );
       })}
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>

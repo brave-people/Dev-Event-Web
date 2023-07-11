@@ -3,7 +3,8 @@ import { EventContext } from "context/event";
 import classNames from "classnames/bind";
 import style from './Tag.module.scss';
 import { useRouter } from "next/router";
-import { parseUrl } from "lib/utils/UrlUtil";
+import { parseUrl } from "lib/utils/urlUtil";
+import { WindowContext } from "context/window";
 
 type Prop = {
   tagName: string;
@@ -14,6 +15,7 @@ const cx = classNames.bind(style);
 function Tag({ tagName }: Prop) {
   const router = useRouter();
   const { jobGroupList, updateJobGroupList, deleteJobGroupList } = useContext(EventContext);
+  const { windowTheme } = useContext(WindowContext);
   const handleOnClick = () => {
     handleJobGroupList(tagName);
   }
@@ -26,9 +28,6 @@ function Tag({ tagName }: Prop) {
      updateJobGroupList(tag); 
     }
   }
-  useEffect(() => {
-
-  }, [jobGroupList])
   return (
     <div
       onClick={() => {
@@ -37,7 +36,11 @@ function Tag({ tagName }: Prop) {
         router.replace(`${parseUrl(`${router.asPath}`, key, value, jobGroupList)}`)
         handleOnClick();
       }}
-      className={cx('tag', `${jobGroupList && jobGroupList.includes(tagName) && 'checked'}`)}>
+      className={cx(
+        'tag',
+        windowTheme ? 'tag--light' : 'tag--dark', 
+        `${jobGroupList && jobGroupList.includes(tagName) 
+        && (windowTheme ? 'checked--light' : 'checked--dark')}`)}>
       {tagName}
     </div>   
   )

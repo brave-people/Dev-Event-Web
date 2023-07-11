@@ -5,7 +5,7 @@ import classNames from "classnames/bind";
 import DownArrowIcon from "components/icons/DownArowIcon";
 import * as ga from 'lib/utils/gTag';
 import { useRouter } from "next/router";
-import { handleUrl, parseUrl } from "lib/utils/UrlUtil";
+import { handleUrl, parseUrl } from "lib/utils/urlUtil";
 import { EventContext } from "context/event";
 
 const cn = classNames.bind(style);

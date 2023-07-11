@@ -6,7 +6,8 @@
   flex-direction: row;
   align-items: flex-start;
   border: none;
-  color: #fff;
+  color: var(--gray-1);
+  background-color: var(--gray-5);
   cursor: pointer;
   font-weight: 500;
   text-align: center;
@@ -14,9 +15,8 @@
   &.size--large {
     font-size: 14px;
     line-height: 16px;
-    padding: 6px 18px;
-    height: 28px;
-    border-radius: 10px;
+    padding: 4px 12px;
+    border-radius: 4px;
 
     overflow: hidden;
     white-space: nowrap;
@@ -26,22 +26,52 @@
   &.size--regular {
     font-size: 14px;
     line-height: 16px;
-    padding: 6px 18px;
-    height: 28px;
-    border-radius: 10px;
+    padding: 4px 12px;
+    border-radius: 4px;
 
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+
+  &.type--location {
+    color: var(--gray-2);
+    border-radius: 0;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+
+    &:after {
+      content: "";
+      display: block;
+      border-right: 1px solid;
+      border-color: var(--gray-4);
+      height: 10px;
+      padding: 0 5px;
+    }
+    &::before {
+      content: "";
+      display: block;
+      border-left: 1px solid;
+      border-color: var(--gray-4);
+      height: 10px;
+      padding: 0 5px;
+    }
+  }
+
+  &.type--jobGroup {
+    color: var(--gray-1);
+    background-color: transparent;
+  }
 }
+
 @include tablet {
   .tag.size--large {
     font-size: 14px;
     line-height: 16px;
-    padding: 6px 18px;
+    padding: 4px 12px;
     height: 28px;
-    border-radius: 10px;
+    border-radius: 4px;
 
     overflow: hidden;
     white-space: nowrap;
@@ -54,11 +84,19 @@
     height: 24px;
     font-size: 13px;
     line-height: 12px;
-    border-radius: 8px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+  .tag {
+    &.type--location {
+      padding-left: 0;
+    }
   }
 }
 @include mobile {
@@ -67,7 +105,7 @@
     line-height: 16px;
     padding: 9px 15px;
     height: 34px;
-    border-radius: 10px;
+    border-radius: 4px;
 
     overflow: hidden;
     white-space: nowrap;
@@ -79,10 +117,15 @@
     height: 20px;
     font-size: 11px;
     line-height: 12px;
-    border-radius: 6px;
+    border-radius: 3px;
     max-width: 110px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+  .tag {
+    &.type--location {
+      padding-left: 0;
+    }
   }
 }

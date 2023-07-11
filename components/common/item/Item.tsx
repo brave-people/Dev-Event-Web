@@ -7,8 +7,10 @@ import Image from 'next/image';
 import FilterTag from '../tag/FilterTag';
 import { DateUtil } from 'lib/utils/dateUtil';
 import * as ga from 'lib/utils/gTag';
-import DdayTag from 'components/common/tag/DdayTag';
 import { WindowContext } from 'context/window';
+import { TagResponse } from 'model/tag';
+import { BookmarkIcon, ShareIcon } from 'components/icons';
+import { getTagName, getTagType } from 'lib/utils/tagUtil';
 
 const cn = classNames.bind(style);
 
@@ -23,14 +25,17 @@ const Item = ({
   isEventDone,
   isEventNew = () => false,
   onClickFavorite,
+  isLast
 }: {
   data: Event;
   isEventDone: () => boolean;
   isEventNew?: () => boolean;
   isFavorite: () => boolean;
   onClickFavorite?: any;
+  isLast: boolean
 }) => {
   const { windowX, handleWindowX } = useContext(WindowContext);
+  console.log(data)
   const handleShare = async () => {
     navigator.clipboard.writeText(data.event_link)
     ga.event({
@@ -81,94 +86,113 @@ const Item = ({
         return DateUtil.getDateTimeFormat(date);
     }
   };
-
   return (
-    <div className={cn('item')}>
-      <Link href={String(data.event_link)}>
-        <a
-          onClick={(event: any) => {
-            if (event.target.tagName !== 'SPAN' && event.target.tagName !== 'DIV' && event.target.tagName !== 'IMG') {
-              event.preventDefault();
-            }
-            ga.event({
-              action: 'web_event_이벤트클릭',
-              event_category: 'web_event',
-              event_label: '이벤트클릭',
-            });
-          }}
-          target="_blank"
-        >
-          <div className={cn('item__content')}>
-            <div className={cn('item__content__img')}>
-              <Image
-                className={cn('mask')}
-                alt="/default/event_img.png"
-                src={
-                  data.cover_image_link.includes('brave-people-3.s3.ap-northeast-2.amazonaws.com')
-                    ? data.cover_image_link
-                    : '/default/event_img.png'
-                }
-                width={280}
-                height={157.5}
-              ></Image>
-              {isEventDone() ? (
-                <div className={cn('item__content__img--isDone')}>
-                  <span>종료된 행사입니다</span>
-                </div>
-              ) : null}
-              {isEventNew() ? (
-                <div className={cn('item__content__flag', 'new')}>
-                  <span>NEW</span>
-                </div>
-              ) : null}
-              {isFavorite() ? (
-                <div className={cn('item__content__flag', 'my')}>
-                  <span>MY</span>
-                </div>
-              ) : null}
-            </div>
-            <div className={cn('item__content__body')}>
+    <div className={cn('item__container', `${isLast && 'item-last'}`)}>
+      <div className={cn('item')}>
+        <Link href={String(data.event_link)}>
+          <a
+            onClick={(event: any) => {
+              if (event.target.tagName !== 'SPAN' && event.target.tagName !== 'DIV' && event.target.tagName !== 'IMG') {
+                event.preventDefault();
+              }
+              ga.event({
+                action: 'web_event_이벤트클릭',
+                event_category: 'web_event',
+                event_label: '이벤트클릭',
+              });
+            }}
+            target="_blank"
+          >
+            <div className={cn('item__content')}>
+              <div className={cn('item__content__img')}>
+                <Image
+                  className={cn('mask')}
+                  alt="/default/event_img.png"
+                  src={
+                    data.cover_image_link.includes('brave-people-3.s3.ap-northeast-2.amazonaws.com')
+                      ? data.cover_image_link
+                      : '/default/event_img.png'
+                  }
+                  width={200}
+                  height={112}
+                ></Image>
+                {isEventDone() ? (
+                  <div className={cn('item__content__img--isDone')}>
+                    <span>종료된 행사입니다</span>
+                  </div>
+                ) : null}
+                {isEventNew() ? (
+                  <div className={cn('item__content__flag', 'new')}>
+                    <span>NEW</span>
+                  </div>
+                ) : null}
+                {isFavorite() ? (
+                  <div className={cn('item__content__flag', 'my')}>
+                    <span>MY</span>
+                  </div>
+                ) : null}
+              </div>
+              <div className={cn('item__content__body')}>
+                <span className={cn('wrap')}>
+                  <div className={cn('host')}>{data.organizer}</div>
+                </span>
                 <span className={cn('item__content__title')}>{(data.title.length >= 30 && windowX <= 750) ? `${data.title.slice(0, 30)}...` : data.title}</span>
                 <div className={cn('item__content__desc')}>
                   <span className={cn('wrap')}>
-                    <div className={cn('label')}>주최 : </div>
-                    <div className={cn('host')}>{data.organizer}</div>
+                    <div className={cn('date')}> 일시 {getEventDate()} </div>
                   </span>
-                  <span className={cn('wrap')}>
-                    <div className={cn('label')}>{data.event_time_type === 'RECRUIT' ? '모집 : ' : '일시 : '}</div>
-                    <div className={cn('date')}> {getEventDate()} </div>
-                    <div className={cn('tag')}>
-                      <DdayTag startDateTime={data.start_date_time} endDateTime={data.end_date_time} />
-                    </div>
-                  </span>
-              </div>
-              <div className={cn('item__content__bottom')}>
-                <div className={cn('tags')}>
-                  {data.tags.map((tag) => {
-                    return (
-                      <FilterTag
-                        key={tag.id}
-                        label={tag.tag_name}
-                        color={tag.tag_color}
-                        onClick={() => {
-                          ga.event({
-                            action: 'web_event_이벤트태그클릭',
-                            event_category: 'web_event',
-                            event_label: '검색',
-                          });
-                        }}
-                      />
-                    );
-                  })}
+                  <div className={cn('item__content__desc__tags')}>
+                    <FilterTag
+                      label={getTagName(data.tags, "location")}
+                      size='regular'
+                      type='location'
+                    />
+                    <FilterTag
+                      label={getTagName(data.tags, "eventType")}
+                      size='regular'
+                      type='eventType'
+                    />
+                    <FilterTag
+                      label={getTagName(data.tags, "coast")}
+                      size='regular'
+                      type='eventType'
+                    />
+                    {data.tags.map((tag: TagResponse) => {
+                      const type = getTagType(tag.tag_name);
+                      if (type !== "jobGroup")
+                        return null;
+                      return (
+                        <FilterTag
+                          key={tag.id}
+                          type={type}
+                          label={tag.tag_name}
+                          size='regular'
+                        />
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </a>
-      </Link>
-      <div className={cn('item__buttons')}>
-        <button className={cn(`like-button`, isFavorite() ? '--selected' : null)} onClick={onClickFavorite} />
-        <button className={cn('share-button')} onClick={handleShare} />
+          </a>
+        </Link>
+        <div className={cn('item__buttons')}>
+          <button 
+            className={cn(`button`, `like-button`)} 
+            onClick={onClickFavorite}>
+            <ShareIcon
+              color='rgba(171, 172, 178, 1)'
+              className='button'
+              isFavorite={isFavorite()}
+            />
+          </button>
+          <button className={cn(`button`, 'share-button')} onClick={handleShare}>
+            <BookmarkIcon
+              color='rgba(171, 172, 178, 1)'
+              className='button'
+            />
+          </button>
+        </div>
       </div>
     </div>
   );

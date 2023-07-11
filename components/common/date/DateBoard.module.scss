@@ -1,13 +1,14 @@
 @import '~styles/_mixin.scss';
 
 .container {
-  height: 3rem;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: rgba(255, 255, 255, 0.5);
-  border: 1.5px solid #cecece;
-  border-radius: 8.9881px;
+  background-color: var(--background-1);
+  border: 1.5px solid;
+  border-color: var(--gray-4);
+  border-radius: 2.9881px;
   
   .key--active {
     min-width: 3rem;
@@ -18,16 +19,16 @@
     transition: all .1s linear;
     &:hover {
       cursor: pointer;
-      background-color: #ccc;
+      background-color: var(--background-2);
     }
   }
 
   .key--left {
-    border-radius: 8.9881px 0 0 8.9881px;
+    border-radius: 2.9881px 0 0 2.9881px;
   }
 
   .key--right {
-    border-radius: 0 8.9881px 8.9881px 0;
+    border-radius: 0 2.9881px 2.9881px 0;
   }
 
   .key--disactive {
@@ -53,7 +54,7 @@
     align-items: center;
     padding: 0 1.125rem 0 1.125rem;
     font-size: 1rem;
-    color: #757575;
+    color: var(--gray-1);
     font-weight: 400;
     cursor: pointer;
 
@@ -69,8 +70,10 @@
     animation-timing-function: linear;
     max-height: 7.5rem;
     overflow-y: scroll;
-    background-color: #ffffff;
-    border-radius: 8.9881px;
+    background-color: var(--background-1);
+    border-radius: 2.9881px;
+    border: 1.5px solid;
+    border-color: var(--gray-4);
 
     &__element {
       display: flex;
@@ -78,10 +81,11 @@
       align-items: center;
       min-width: 11rem;
       height: 3rem;
+      color: var(--gray-1);
       
       &:hover {
         cursor: pointer;
-        background-color: #cecece;
+        background-color: var(--background-2);
       }
     }
     &::-webkit-scrollbar {
@@ -97,7 +101,6 @@
     &::-webkit-scrollbar-track {
       width: 3px;
       background-color: transparent;
-      /* padding-left: 2px; */
     }
   }  
 }
@@ -162,8 +165,10 @@
         animation-timing-function: linear;
         max-height: 8rem;
         overflow-y: scroll;
-        background-color: #ffffff;
-        border-radius: 8.9881px; 
+        background-color: var(--background-1);
+        border: 1.5px solid;
+        border-color: var(--gray-4);
+        border-radius: 2.9881px;
         &__element {
           display: flex;
           justify-content: center;
@@ -175,9 +180,117 @@
       }
     }
   }
+
   @media (max-width: 555px) {
     .container {
-      height: 30px;
+      height: 27px;
+      display: flex;
+      flex-direction: row;
+      position: relative;
+      .key--active {
+        min-width: 27px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+  
+      .key--disactive {
+        opacity: 0.5;
+        user-select: none;
+        min-width: 27px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .dropdown {
+        &__header {
+          font-size: 0.5rem;
+          font-weight: 400;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+        }
+    
+        &__list {
+          position: absolute;
+          left: 50%;
+          bottom: 0;
+          transform: translate(-50%, -1.7rem);
+          animation-name: appearIn;
+          animation-duration: 0.2s;
+          animation-timing-function: linear;
+          max-height: 8rem;
+          overflow-y: scroll;
+          background-color: #ffffff;
+          border: 1.5px solid #cecece;
+          border-radius: 2.9881px;
+          &__element {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 8rem;
+            height: 2.229rem;
+            font-size: 0.857rem;
+         }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 555px) {
+  .container {
+    height: 27px;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    .key--active {
+      min-width: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .key--disactive {
+      opacity: 0.5;
+      user-select: none;
+      min-width: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .dropdown {
+      &__header {
+        font-size: 0.857rem;
+        font-weight: 400;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      }
+  
+      &__list {
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translate(-50%, 110%);
+        animation-name: appearIn;
+        animation-duration: 0.2s;
+        animation-timing-function: linear;
+        max-height: 8rem;
+        overflow-y: scroll;
+        background-color: #ffffff;
+        border: 1.5px solid #cecece;
+        border-radius: 2.9881px;
+        z-index: 999;
+        &__element {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-width: 8rem;
+          height: 2.229rem;
+          font-size: 0.857rem;
+       }
+      }
     }
   }
 }

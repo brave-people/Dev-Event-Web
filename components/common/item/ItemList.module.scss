@@ -1,7 +1,7 @@
 @import '~styles/_mixin.scss';
 
 .section__list {
-  padding-top: 1.813rem;
+  padding-top: 2.813rem;
   width: 68.75rem;
   transition: all ease-in .3s;
 
@@ -9,7 +9,7 @@
     font-weight: 700;
     font-size: 1.5rem;
     line-height: 2.188rem;
-    color: #3b3b3b;
+    color: var(--gray-1);
     display: flex;
     flex-direction: row;
   }
@@ -25,7 +25,7 @@
   font-weight: 400;
   font-size: 1.5rem;
   line-height: 1.8rem;
-  color: #a8a8a8;
+  color: var(--gray-1);
 }
 
 @media (max-width: 1075px) {
@@ -53,19 +53,23 @@
       width: 36rem;
     }
   }
+
   @media (max-width: 555px) {
     .section__list {
       width: 30rem;
     }
   }
-  @media (max-width: 360px) {
-    .sectoin__list {
-      width: 10rem;
-      .section__list__title {
-        font-size: .8rem;
-        line-height: 1.7rem;
-      }
+
+
+  @media (max-width: 455px) {
+    .section__list {
+      width: 25rem;
     }
-    
+  }
+
+  @media (max-width: 360px) {
+    .section__list {
+      width: 20rem;
+    }
   }
 }

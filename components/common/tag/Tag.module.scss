@@ -4,21 +4,39 @@
   padding: 4px 16px;
   margin: 0.25rem .425rem;
   font-weight: 500;
+  color: var(--gray-1);
   border: 1px solid rgba(49, 50, 52, 1);
   border-radius: 15px;
+}
 
+.tag--light {
   &:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background-color: rgba(237, 239, 255, 1);
     cursor: pointer;
-    border-color: rgba(44, 76, 239, 1);
-    color: rgba(44, 76, 239, 1);
-    background-color: #EDEFFF;;
   }
 }
 
-.checked {
+.tag--dark {
+  &:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background-color: rgba(34, 35, 38, 1);
+    cursor: pointer;
+  }
+}
+
+.checked--light {
   border-color: rgba(44, 76, 239, 1);
   color: rgba(44, 76, 239, 1);
   background-color: #EDEFFF;
+}
+
+.checked--dark {
+  border-color: rgba(79, 108, 255, 1);
+  color: rgba(79, 108, 255, 1);
+  background-color: rgba(34, 35, 38, 1);
 }
 
 @include tablet {

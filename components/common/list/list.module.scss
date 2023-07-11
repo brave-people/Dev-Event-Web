@@ -1,24 +1,11 @@
 @import '~styles/_mixin.scss';
 
-.list {
-  .wrapper {
-    padding-top: 1.75rem;
-  }
-}
-
 @include mobile {
   .list {
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-  }
-
-  @media (max-width: 620px) {
-    .list {
-      display: block;
-      width: 19.571rem;
-      margin: 0 auto;
-    }
   }
 }

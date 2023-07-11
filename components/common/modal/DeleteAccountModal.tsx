@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import React, { useEffect } from 'react';
+import React from 'react';
 import style from './DeleteAccountModal.module.scss';
 import Modal from 'react-modal';
 import FillButton from '../buttons/FillButton';
