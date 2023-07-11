@@ -16,7 +16,7 @@ type FillButtonProps = {
 
 function FillButton({ onClick, size = 'regular', label, color, icon, iconStyle }: FillButtonProps) {
   return (
-    <button className={cx('button', `size--${size}`, color)} onClick={onClick}>
+    <button className={cx('button', `size--${size}`, color, 'default')} onClick={onClick}>
       {getIconByName('plus', iconStyle, '#ffffff')}
       {label}
     </button>

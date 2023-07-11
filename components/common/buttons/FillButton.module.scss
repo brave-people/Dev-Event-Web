@@ -3,44 +3,27 @@
 .button {
   border-radius: 2px;
   cursor: pointer;
+  border: none;
+  color: var(--background-1);
+  background-color: var(--gray-1);
+  font-weight: 700;
 
   &.size--large {
     padding: 0.938rem 1.625rem 1rem 1.625rem;
     height: 3.75rem;
     font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.438rem;
-    font-weight: 400;
     font-size: 1.25rem;
-    line-height: 1.813rem;
-    text-align: center;
+    display: flex;
+    align-items: center;
   }
 
   &.size--regular {
     padding: 0.813rem 1.5rem 0.813rem 1.5rem;
     height: 3rem;
-    font-weight: 500;
     font-size: 0.875rem;
-    line-height: 1.25rem;
-    text-align: center;
+    display: flex;
+    align-items: center;
   }
-}
-
-// color
-
-.default {
-  color: #ffffff;
-  background-color: rgba(49, 50, 52, 1);
-}
-
-.primary {
-  color: #ffffff;
-  background: #479ef1;
-}
-
-.error {
-  color: #ffffff;
-  background: #cb1c1c;
 }
 
 @include mobile {
@@ -49,15 +32,35 @@
     min-width: 8.357rem;
     height: 2.5rem;
     font-size: 0.857rem;
+    line-height: 1.214rem;
+    text-align: center;
+  }
+  
+  .button.size--regular {
+    padding: 0.3rem 1rem 0.3rem 1rem;
+    height: 2.2rem;
+    font-size: 0.775rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 455px) {
+  .button.size--large {
+    padding: 0px;
+    min-width: 8.357rem;
+    height: 2.2rem;
+    font-size: 0.857rem;
     font-weight: 400;
     line-height: 1.214rem;
     text-align: center;
   }
   .button.size--regular {
-    padding: 0.3rem 1.5rem 0.3rem 1.5rem;
-    height: 2.2rem;
+    padding: 0.1rem .5rem 0.1rem .5rem;
+    height: 2rem;
     font-weight: 400;
-    font-size: 0.775rem;
+    font-size: 0.475rem;
     display: flex;
     align-items: center;
     justify-content: center;
