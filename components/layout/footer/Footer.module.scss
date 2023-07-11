@@ -1,22 +1,40 @@
 @import '~styles/_mixin.scss';
 
-$color-background: #002034;
-
 .footer {
-  background-color: $color-background;
-  width: 100vw;
-  height: 3.5rem;
-  min-width: 68.75rem;
-  position: absolute;
-  bottom: 0;
+  background-color: var(--background-1);
+  height: 200px;
+  width: 68.75rem;
+  margin: 0 auto;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  color: #e8e8e8;
-  font-size: 1rem;
-  a {
-    text-decoration: underline;
+  justify-content: space-between;
+  position: relative;
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+
+    .footer__desc {
+      color: var(--gray-2);
+      font-size: 16px;
+      margin-top: 1rem;
+    }
+    .footer__copyright {
+      color: var(--gray-3);
+      font-size: 16px;
+      margin-top: 3rem;
+    }
+  }
+  &__row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    top: 40px;
+    right: 0;
+
   }
 }
 @include tablet {
@@ -28,7 +46,7 @@ $color-background: #002034;
 }
 @include mobile {
   .footer {
-    background-color: $color-background;
+    background-color: var(--background-1);
     width: 100vw;
     height: 3.5rem;
     min-width: 25.714rem;
