@@ -20,3 +20,13 @@
   transform: rotate(360deg);
   transition: transform .2s linear;
 }
+
+.github__icon {
+  margin-right: 1rem;
+}
+
+@media (max-width: 455px) {
+  .register {
+    margin-right: .5rem;
+  }
+}

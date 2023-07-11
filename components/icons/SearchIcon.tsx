@@ -1,7 +1,7 @@
 import React from "react"
 import { Icon } from "types/icon"
 import classNames from "classnames/bind"
-import style from './Icon.module.scss'
+import style from 'components/icons/Icon.module.scss';
 
 const cn = classNames.bind(style);
 
