@@ -1,0 +1,25 @@
+.toggle{
+  input[type=checkbox] {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+  }
+
+  label {
+      cursor: pointer;
+      text-indent: -9999px;
+      width: 55px;
+      height: 30px;
+      color: var(--gray-1);
+    }
+    
+    input:checked + label:after {
+      left: calc(100% - 5px);
+      -webkit-transform: translateX(-100%);
+      -moz-transform: translateX(-100%);
+      -ms-transform: translateX(-100%);
+      -o-transform: translateX(-100%);
+      transform: translateX(-100%);
+    }
+    
+}
