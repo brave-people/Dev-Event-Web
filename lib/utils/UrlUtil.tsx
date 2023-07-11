@@ -19,22 +19,26 @@ export const handleUrl = (
 				sepUrl.includes(type) === false
 			)
 		})
-		return (sepUrls.join('?'));
+		const joinUrl = sepUrls.join('?');
+		if (joinUrl === '/search')
+			return ('/events')
+		return (joinUrl);
 	}
 }
 
 export const parseUrl = (
     url: string, 
-    type: string , 
+    type: string,
     option: string, 
     jobGroupList: string[] | undefined,
   ) => {
 	if (url.includes('/event')) {
+		console.log(url)
 		return (`${url.replace('/events','/search')}?${type}=${option}`)
 	}
 	if (url.includes(`${type}`) && type !== 'tag') {
 		const key = getKey(url, type);
-	    if (key !== undefined) {
+		if (key !== undefined) {
 			return (url.replace(key, `${type}=${option}`));
 		}
 	} else if (url.includes(`${type}`) && type === 'tag') {
