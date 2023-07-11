@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import style from './Header.module.scss';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import ProfileIcon from 'public/icon/profile_outlined_regular.svg';
 import { useRouter } from 'next/router';
 import axios from 'axios';

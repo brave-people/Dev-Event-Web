@@ -7,6 +7,7 @@ import { AuthContext } from 'context/auth';
 import Profile from './Profile';
 import Logo from 'components/common/logo/Logo';
 import Login from 'components/features/login/Login'
+import ThemeToggle from 'components/features/ThemeToggle/ThemeToggle';
 
 const cn = classNames.bind(style);
 
@@ -19,7 +20,7 @@ function Header() {
       <div className={cn('header__inner')}>
         <Link href="/" passHref>
           <div className={cn('header__logo')}>
-            <Logo color='#313234' />
+            <Logo />
           </div>
         </Link>
         <div className={cn('header__buttons')}>
@@ -32,6 +33,7 @@ function Header() {
               />
             )}
           </span>
+          <ThemeToggle />
         </div>
       </div>
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
