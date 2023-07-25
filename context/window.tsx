@@ -7,6 +7,8 @@ interface WindowContext {
   handleWindowX: (event: number) => void;
   windowTheme: boolean;
   handleWindowTheme: (event: boolean) => void;
+  isNotice: boolean;
+  handleIsNotice: (event: boolean) => void;
 }
 
 const defaultValue: WindowContext = {
@@ -15,7 +17,9 @@ const defaultValue: WindowContext = {
   windowX: 0,
   handleWindowX: () => {},
   windowTheme: true,
-  handleWindowTheme: () => {}
+  handleWindowTheme: () => {},
+  isNotice: true,
+  handleIsNotice: () => {}
 }
 
 const WindowContext = createContext(defaultValue);
@@ -24,6 +28,7 @@ const WindowProvider = ({ children }: { children: ReactNode }) => {
   const [isClient, setIsClient] = useState<boolean>(false);
   const [windowX, setWindowX] = useState<number>(0);
   const [windowTheme, setWindowTheme] = useState<boolean>(true);
+  const [isNotice, setIsNotice] = useState<boolean>(true);
 
   const handleIsClient = (event: boolean) => {
     setIsClient(event);
@@ -36,13 +41,19 @@ const WindowProvider = ({ children }: { children: ReactNode }) => {
     setWindowTheme(!event);
   }
 
+  const handleIsNotice = (event: boolean) => {
+    setIsNotice(event)
+  }
+
   const contextValue = {
     isClient,
     windowX,
     windowTheme,
+    isNotice,
     handleIsClient,
     handleWindowX,
-    handleWindowTheme
+    handleWindowTheme,
+    handleIsNotice
   }
   return (
     <>
