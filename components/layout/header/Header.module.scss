@@ -5,19 +5,15 @@
   top: 0;
   left: 0;
   z-index: 10;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  height: 3.5rem;
+  min-height: 3.5rem;
   width: 100%;
-  padding: 0px 20px 0px 20px;
   background-color: var(--background-1);
 
   &__inner {
     width: 68.75rem;
-    height: 3.5rem;
     display: flex;
+    min-height: 3.5rem;
+    margin: 0 auto;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -37,6 +33,16 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+
+    .toggle__container {
+      height: 2.7rem;
+      width: 2.7rem;
+      border-radius: 50%;
+
+      &:hover {
+        background-color: var(--gray-4);
+      }
+    }
 
     .wrapper {
       padding-left: 24px;
@@ -129,19 +135,15 @@
     opacity: 100%;
   }
 }
+
 @include tablet {
   .header {
     position: fixed;
     top: 0;
     left: 0;
     z-index: 10;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 3.5rem;
+    min-height: 3.5rem;
     width: 100%;
-    padding: 0px 20px 0px 20px;
     background-color: var(--background-1);
 
     &__inner {
@@ -161,13 +163,8 @@
     top: 0;
     left: 0;
     z-index: 10;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 3.5rem;
+    min-height: 3.5rem;
     width: 100%;
-    padding: 0px 20px 0px 20px;
     background-color: var(--background-1);
 
     &__inner {
@@ -177,28 +174,32 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-    }
-
-    &__buttons {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-
-      .wrapper {
-        padding-left: 15px;
-      }
-
-      .search-button {
-        border: none;
-        background-color: transparent;
-        width: 24px;
-        height: 24px;
-        cursor: pointer;
-        padding: 0px;
-        svg {
-          height: 24px;
+      
+      .header__buttons {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+  
+        .toggle__container {
+          background-color: #757575;
+        }
+  
+        .wrapper {
+          padding-left: 15px;
+        }
+  
+        .search-button {
+          border: none;
+          background-color: transparent;
           width: 24px;
+          height: 24px;
+          cursor: pointer;
+          padding: 0px;
+          svg {
+            height: 24px;
+            width: 24px;
+          }
         }
       }
     }
