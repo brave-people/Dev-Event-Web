@@ -431,10 +431,10 @@
 
 @media (max-width: 555px) {
   .item__container {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     padding: 0;
     width: 50%;
-    height: 20rem;
+    height: 24.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -559,6 +559,7 @@
               margin-top: 5px;
               display: flex;
               justify-content: flex-start;
+              flex-wrap: wrap;
             }
           }
         }
@@ -581,7 +582,7 @@
   .item__container {
     margin: 2rem auto 0 auto;
     width: 70%;
-    height: 21.5rem;
+    height: 24.5rem;
     border-bottom: 1px solid #ccc;
   }
   .item-last {
@@ -593,7 +594,7 @@
   .item__container {
     margin: 2rem auto 0 auto;
     width: 70%;
-    height: 21.5rem;
+    height: 24.5rem;
     border-bottom: 1px solid #ccc;
   }
   .item-last {

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 import { Event } from 'model/event';
 import classNames from 'classnames/bind';
@@ -11,6 +11,7 @@ import { WindowContext } from 'context/window';
 import { TagResponse } from 'model/tag';
 import { BookmarkIcon, ShareIcon } from 'components/icons';
 import { getTagName, getTagType } from 'lib/utils/tagUtil';
+import ShareModal from '../modal/ShareModal';
 
 const cn = classNames.bind(style);
 
@@ -34,20 +35,20 @@ const Item = ({
   onClickFavorite?: any;
   isLast: boolean
 }) => {
-  const { windowX, handleWindowX } = useContext(WindowContext);
-  console.log(data)
-  const handleShare = async () => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { windowX } = useContext(WindowContext);
+  const handleShare = () => {
+    setIsOpen(true);
     navigator.clipboard.writeText(data.event_link)
     ga.event({
       action: 'web_event_공유버튼클릭',
       event_category: 'web_event',
       event_label: '공유',
     });
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 1000);
   };
-
-  useEffect(() => {
-    handleWindowX(window.innerWidth);
-  }, [windowX])
 
   const getEventDate = () => {
     let eventDate;
@@ -88,6 +89,7 @@ const Item = ({
   };
   return (
     <div className={cn('item__container', `${isLast && 'item-last'}`)}>
+      {isOpen && <ShareModal />}
       <div className={cn('item')}>
         <Link href={String(data.event_link)}>
           <a
@@ -139,14 +141,24 @@ const Item = ({
                 <span className={cn('item__content__title')}>{(data.title.length >= 30 && windowX <= 750) ? `${data.title.slice(0, 30)}...` : data.title}</span>
                 <div className={cn('item__content__desc')}>
                   <span className={cn('wrap')}>
-                    <div className={cn('date')}> 일시 {getEventDate()} </div>
+                    <div className={cn('date')}> 
+                      <span>{data.event_time_type === "DATE" ? "일시 " : "접수 "}</span>
+                      <span>{getEventDate()}</span> 
+                    </div>
                   </span>
                   <div className={cn('item__content__desc__tags')}>
-                    <FilterTag
-                      label={getTagName(data.tags, "location")}
-                      size='regular'
-                      type='location'
-                    />
+                    {data.tags.map((tag: TagResponse) => {
+                      const type = getTagType(tag.tag_name);
+                      if (type !== "location")
+                        return ;
+                      return (
+                        <FilterTag
+                          key={tag.id}
+                          label={getTagName(data.tags, "location")}
+                          size='regular'
+                          type='location'
+                        />
+                      )})}
                     <FilterTag
                       label={getTagName(data.tags, "eventType")}
                       size='regular'
@@ -155,16 +167,16 @@ const Item = ({
                     <FilterTag
                       label={getTagName(data.tags, "coast")}
                       size='regular'
-                      type='eventType'
+                      type='coast'
                     />
                     {data.tags.map((tag: TagResponse) => {
                       const type = getTagType(tag.tag_name);
                       if (type !== "jobGroup")
-                        return null;
+                        return ;
                       return (
                         <FilterTag
                           key={tag.id}
-                          type={type}
+                          type="jobGroup"
                           label={tag.tag_name}
                           size='regular'
                         />
@@ -179,14 +191,14 @@ const Item = ({
         <div className={cn('item__buttons')}>
           <button 
             className={cn(`button`, `like-button`)} 
-            onClick={onClickFavorite}>
+            onClick={handleShare}>
             <ShareIcon
               color='rgba(171, 172, 178, 1)'
               className='button'
               isFavorite={isFavorite()}
             />
           </button>
-          <button className={cn(`button`, 'share-button')} onClick={handleShare}>
+          <button className={cn(`button`, 'share-button')} onClick={onClickFavorite}>
             <BookmarkIcon
               color='rgba(171, 172, 178, 1)'
               className='button'

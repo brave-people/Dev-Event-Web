@@ -26,8 +26,8 @@ function ItemList({ fallbackData, jobGroups, eventType, location, coast }: Props
   const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
   const { search, date } = useContext(EventContext);
 
-  console.log(jobGroups, eventType, location, coast);
   useEffect(() => {
+    console.log(fallbackData)
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
