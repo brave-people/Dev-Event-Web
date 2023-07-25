@@ -4,7 +4,6 @@ import classNames from "classnames/bind";
 import style from './SearchEvent.module.scss'
 import * as ga from 'lib/utils/gTag';
 import { EventContext } from "context/event";
-import { useRouter } from "next/router";
 
 const cn = classNames.bind(style);
 
@@ -12,6 +11,8 @@ function SearchEvent() {
   const [input, setInput] = useState<string | undefined>(undefined)
   const { handleSearch } = useContext(EventContext);
   const submitInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (input?.length === 1 && (event.code === 'Backspace'))
+      handleSearch(undefined)
     if (event.code == 'Enter') {
       if (input) {
         ga.event({
@@ -21,10 +22,7 @@ function SearchEvent() {
         });
         handleSearch(input);
       }
-    } else if (event.code === 'Backspace' || event.code === 'Delete') {
-      if (input?.length === 0)
-        handleSearch(undefined);
-    }
+    } 
   };
   const updateInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);

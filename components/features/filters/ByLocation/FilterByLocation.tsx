@@ -8,7 +8,7 @@ type Props = {
 }
 
 function FilterByLocation({ context }: Props) {
-  const location = ["오프라인", "온라인", "선택 안함"];
+  const location = ["오프라인", "온라인", "전체"];
   const { handleLocation } = useContext(EventContext);
   const ga = {
     action: 'web_event_참여방법',

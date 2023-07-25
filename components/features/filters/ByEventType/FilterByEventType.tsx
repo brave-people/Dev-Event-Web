@@ -2,13 +2,13 @@ import React, { useContext, useEffect } from 'react';
 import DefaultDropdown from "components/common/dropdown/DefaultDropdown";
 import { EventContext } from 'context/event';
 import { UrlContext } from 'types/UrlContext';
+import { eventType } from '../eventType';
 
 type Props = {
   context: UrlContext | undefined;
 }
 
 function FilterByEventType({ context }: Props) {
-  const eventType = ["스터디", "대회", "교육", "모임", "웨비나", "컨퍼런스", "해커톤", "공모전", "이벤트", "포럼", "선택 안함"]
   const { handleEventType } = useContext(EventContext);
     const ga = {
     action: 'web_event_행사유형',

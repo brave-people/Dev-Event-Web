@@ -21,3 +21,16 @@
   }
 }
 
+@include mobile {
+  @media (max-width: 555px) {
+    .container {
+      width: 240px;
+    } 
+  }
+
+  @media (max-width: 455px) {
+    .container {
+      width: 220px;
+    } 
+  }
+}

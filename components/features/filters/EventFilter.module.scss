@@ -110,11 +110,30 @@
     .container {
       width: 30rem;
       .filter {
+        width: 100%;
+        position: relative;
+
+        &__search {
+          min-width: 210px;
+        }
         &__group {
           padding-bottom: .5rem;
           display: flex;
           align-items: center;
           justify-content: space-between;
+
+          &__tag {
+            width: 30rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+          
+          &__date {
+            position: absolute;
+            top: 0;
+            right: 0;
+          }
         }
       }
     }

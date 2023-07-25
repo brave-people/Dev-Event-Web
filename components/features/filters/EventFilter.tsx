@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import classNames from "classnames/bind";
 import style from './EventFilter.module.scss';
 import Register from "../register/Register";
-import FilterByJobGroup from "./filterByJobGroup/FilterByJobGroup";
-import FilterByEventType from './filterByEventType/FilterByEventType';
-import FilterByLocation from './filterByLocation/FilterByLocation';
-import FilterByCoast from './filterByCoast/FilterByCoast';
+import FilterByJobGroup from "./ByJobGroup/FilterByJobGroup";
+import FilterByEventType from './ByEventType/FilterByEventType';
+import FilterByLocation from './ByLocation/FilterByLocation';
+import FilterByCoast from './ByCoast/FilterByCoast';
 import SearchEvent from './searchEvent/SearchEvent';
 import DateBoard from 'components/common/date/DateBoard';
 import { getDateList } from 'lib/utils/dateUtil';
@@ -46,9 +46,11 @@ function EventFilter() {
                 context={context}
               />
           </div>
-           <DateBoard
-              options={getDateList()}
-            />
+          <div className={cn('filter__group__date')}>
+            <DateBoard
+                options={getDateList()}
+              />
+          </div>
         </div>
     </div>
   </div>
