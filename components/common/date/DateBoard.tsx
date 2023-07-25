@@ -4,25 +4,35 @@ import classNames from "classnames/bind";
 import { LeftArrowIcon, RightArrowIcon } from "components/icons";
 import { useOnClickOutside } from "lib/hooks/useOnClickOutside";
 import { EventContext } from "context/event";
+import { getCurrentDate, getMonth } from "lib/utils/dateUtil";
+import DateElement from "./DateElement";
 
 const cn = classNames.bind(style);
 
 type Props = {
-  options: string[]
+  options: string[];
 }
 
 function DateBoard({ options }: Props) {
+  const year = new Date().getFullYear().toString();
+  const month = getMonth();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isFirstEl, setIsFirstEl] = useState<boolean>(true);
+  const [isFirstEl, setIsFirstEl] = useState<boolean>(false);
   const [isLastEl, setIsLastEl] = useState<boolean>(false);
+  const [currentYear, setCurrentYear] = useState<string>(year);
+  const [currentMonth, setCurrentMonth] = useState<string>(month);
   const { date, handleDate } = useContext(EventContext);
   const outSideRef = useRef(null);
-  
-  const handleClickOutside = () => {
+
+  const handleClose = () => {
     if (isOpen) {
       setIsOpen(false);
     }
   };
+
+  const handleIsOpen = (isOpen: boolean) => {
+    setIsOpen(isOpen);
+  }
 
   const handleClickDropdown = () => {
     if (isOpen) {
@@ -32,35 +42,9 @@ function DateBoard({ options }: Props) {
     }
   };
 
-  const handleCurrentDate = (currentDate: string) => {
-    const current = options.indexOf(currentDate);
-    if (current === 1) {
-      setIsFirstEl(true);
-      setIsLastEl(false)
-    } else if (current === options.length - 1) {
-      setIsLastEl(true)
-      setIsFirstEl(false)
-    } else {
-      setIsFirstEl(false);
-      setIsLastEl(false);
-    }
-    handleDate(options[current]);
-    setIsOpen(false);
-  }
-
   const handleArrowBtn = (date: string, type: string) => {
     const current = options.indexOf(date);
-    if (current === 0) {
-      if (type === 'right') {
-        handleDate(options[current + 1]);
-        setIsFirstEl(true);
-      } else if (type === 'left') {
-        handleDate(options[options.length - 1]);
-        setIsLastEl(true);
-      }
-      return ;
-    }
-    if (type === 'right' && current !== 1) {
+    if (type === 'prev' && current !== 1) {
       if (current !== 1)
         handleDate(options[current - 1]);
       if (current - 1 === 1)
@@ -68,7 +52,7 @@ function DateBoard({ options }: Props) {
       else
         setIsFirstEl(false);
       setIsLastEl(false);
-    } else if (type === 'left' && current !== options.length - 1) {
+    } else if (type === 'next' && current !== options.length - 1) {
       if (current - 1 !== options.length - 1)
         handleDate(options[current + 1]);
       if (current + 1 === options.length - 1)
@@ -79,19 +63,20 @@ function DateBoard({ options }: Props) {
     }
   }
 
-  useOnClickOutside({ ref: outSideRef, handler: handleClickOutside, mouseEvent: 'click' });
+  useOnClickOutside({ ref: outSideRef, handler: handleClose, mouseEvent: 'click' });
+  
   useEffect(() => {
+    const initDate = `${currentYear}년 ${currentMonth.length === 2 ? currentMonth : `0${currentMonth}`}월`;
     if (date === undefined)
-      handleDate(options[1]);
-  }, [date])
+      handleDate(initDate);
+  }, [])
+
   return (
     <div className={cn('container')} ref={outSideRef}>
-      <div 
+      <div
         className={cn('key', 'key--left', `${isLastEl ? 'key--disactive' : 'key--active'}`)}
         onClick={() => {
-          if (date !== undefined) {
-            handleArrowBtn(options[options.indexOf(date)], 'left')
-          }
+          (date !== undefined) && handleArrowBtn(date, 'prev');
         }}>
         <LeftArrowIcon
           color="#313234"
@@ -99,32 +84,54 @@ function DateBoard({ options }: Props) {
       </div>
       <div className={cn('dropdown')}>
         <div className={cn('dropdown__header')} onClick={handleClickDropdown}>
-          {date ? <span>{date}</span> : <span>{options[1]}</span>}
+          {date ? <span>{date}</span> : <span>{`${currentYear}년 ${currentMonth}월`}</span>}
         </div>
         {isOpen && (
           <div className={cn('dropdown__list')}>
-            {options?.map((option, idx) => {
-              return (
-                <div
-                  key={idx}
-                  onClick={() => {
-                    handleCurrentDate(option)
-                    setIsOpen(false)
-                  }}
-                  className={cn('dropdown__list__element')}>
-                    {option}
-                  </div>
-              )
-            })}
+            <div className={cn("dropdown__list__year")}>
+              <div
+                className={cn(`${parseInt(currentYear) === parseInt(year) - 1 ? "unvalid__key" : "year__key"}`)}
+                onClick={() => {
+                  if (parseInt(currentYear) === parseInt(year) - 1) return ;
+                  const prev = parseInt(currentYear) - 1;
+                  setCurrentYear(prev.toString());
+                }}>
+                <LeftArrowIcon
+                  color="#313234"
+                />
+              </div>
+              <div
+                className={cn('year__text')}>
+                {currentYear}
+              </div>
+              <div
+                className={cn(`${parseInt(currentYear) === parseInt(year) ? "unvalid__key" : "year__key"}`)}
+                onClick={() => {
+                  if (parseInt(currentYear) === parseInt(year)) return ;
+                  const next = parseInt(currentYear) + 1;
+                  setCurrentYear(next.toString());
+                }}>
+                <RightArrowIcon
+                  color="#313234"
+                />
+              </div>
+            </div>
+            <DateElement
+              options={options}
+              currentYear={currentYear}
+              setIsFirst={setIsFirstEl}
+              setIsLast={setIsLastEl}
+              handleIsOpen={handleIsOpen}
+            />
           </div>
         )}
       </div>
       <div 
-        className={cn('key', 'key--right', `${isFirstEl ? 'key--disactive' : 'key--active'}`)}
+        className={cn('key--right', `${date && date >= getCurrentDate() ? 'key--disactive' : 'key--active'}`)}
         onClick={() => {
-          if (date !== undefined) {
-            handleArrowBtn(options[options.indexOf(date)], 'right')
-          }
+          if (date === undefined || date >= getCurrentDate())
+            return ;
+          handleArrowBtn(options[options.indexOf(date)], 'next')
         }}>
         <RightArrowIcon
           color="#313234"

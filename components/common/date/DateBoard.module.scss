@@ -1,6 +1,7 @@
 @import '~styles/_mixin.scss';
 
 .container {
+  width: 14rem;
   height: 40px;
   display: flex;
   align-items: center;
@@ -41,99 +42,107 @@
     align-items: center;
   }
 
-.dropdown {
-  display: flex;
-  justify-content: center;
-  min-width: 8rem;
-  position: relative;
-  user-select: none;
-
-  &__header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 0 1.125rem 0 1.125rem;
-    font-size: 1rem;
-    color: var(--gray-1);
-    font-weight: 400;
-    cursor: pointer;
-
-  }
-
-  &__list {
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translate(-50%, -2.5rem);
-    animation-name: appearIn;
-    animation-duration: 0.2s;
-    animation-timing-function: linear;
-    max-height: 7.5rem;
-    overflow-y: scroll;
-    background-color: var(--background-1);
-    border-radius: 2.9881px;
-    border: 1.5px solid;
-    border-color: var(--gray-4);
-
-    &__element {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-width: 11rem;
-      height: 3rem;
-      color: var(--gray-1);
-      
-      &:hover {
-        cursor: pointer;
-        background-color: var(--background-2);
-      }
-    }
-    &::-webkit-scrollbar {
-      background-color: transparent;
-      width: 5px;
-    }
-    &::-webkit-scrollbar-thumb {
-      width: 3px;
-      border-radius: 4px;
-      background-color: #c4c4c4;
-    }
-
-    &::-webkit-scrollbar-track {
-      width: 3px;
-      background-color: transparent;
-    }
-  }  
-}
-}
-
-@media (max-width: 1075px) {
- .container {
-  .key--active {
-    min-width: 2.5rem;
-  }
-  .key--disactive {
-    min-width: 2.5rem;
-  }
   .dropdown {
     display: flex;
     justify-content: center;
-    min-width: 6rem;
+    min-width: 8rem;
+    height: 100%;
+    position: relative;
+    user-select: none;
+
     &__header {
-      padding: 0 0.825rem 0 0.825rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-size: 1rem;
+      color: var(--gray-1);
+      font-weight: 400;
+      cursor: pointer;
+
     }
+
+    &__list {
+      width: 14rem;
+      height: 265px;
+      position: absolute;
+      left: 50%;
+      top: 45px;
+      transform: translateX(-50%);
+      overflow: hidden;
+      animation-name: appearIn;
+      animation-duration: 0.2s;
+      animation-timing-function: linear;
+      background-color: var(--background-1);
+      border-radius: 2.9881px;
+      border: 1.5px solid;
+      border-color: var(--gray-4);
+      z-index: 999;
+
+      &__year {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        
+        .year__text {
+          line-height: 14px;
+          font-size: 14px;
+        }
+
+        .year__key {
+          width: 3rem;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        .unvalid__key {
+          opacity: 50%;
+          width: 3rem;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          user-select: none;
+        }
+      }
+    }  
+  }
+}
+
+@media (max-width: 1075px) {
+  .container {
+    .key--active {
+      min-width: 2.5rem;
+    }
+    .key--disactive {
+      min-width: 2.5rem;
+    }
+    .dropdown {
+      display: flex;
+      justify-content: center;
+    
+      &__list {
+        width: 14rem;
+      }
     }
   } 
 }
 
 @include mobile {
   .container {
-    height: 2.429rem;
     display: flex;
     flex-direction: row;
     position: relative;
+    height: 35px;
 
     .key--active {
-      min-width: 2.429rem;
+      width: 35px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -142,7 +151,7 @@
     .key--disactive {
       opacity: 0.5;
       user-select: none;
-      min-width: 2.429rem;
+      width: 35px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -158,37 +167,33 @@
       &__list {
         position: absolute;
         left: 50%;
-        bottom: 0;
-        transform: translate(-50%, -2rem);
+        top: 38px;
+        transform: translateX(-50%);
         animation-name: appearIn;
         animation-duration: 0.2s;
         animation-timing-function: linear;
-        max-height: 8rem;
         overflow-y: scroll;
         background-color: var(--background-1);
         border: 1.5px solid;
         border-color: var(--gray-4);
         border-radius: 2.9881px;
-        &__element {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          min-width: 8rem;
-          height: 2.229rem;
-          font-size: 0.857rem;
-       }
+        height: 245px;
+        overflow: hidden;
+
       }
     }
   }
 
   @media (max-width: 555px) {
     .container {
-      height: 27px;
+      width: 12rem;
+      height: 30px;
       display: flex;
       flex-direction: row;
       position: relative;
+
       .key--active {
-        min-width: 27px;
+        min-width: 30px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -197,99 +202,39 @@
       .key--disactive {
         opacity: 0.5;
         user-select: none;
-        min-width: 27px;
+        min-width: 30px;
         display: flex;
         justify-content: center;
         align-items: center;
       }
+
       .dropdown {
+        min-width: 6rem;
         &__header {
-          font-size: 0.5rem;
+          width: 100%;
+          font-size: 0.9rem;
           font-weight: 400;
           display: flex;
           flex-direction: row;
           align-items: center;
+          justify-content: center;
         }
     
         &__list {
+          width: 12rem;
           position: absolute;
           left: 50%;
-          bottom: 0;
-          transform: translate(-50%, -1.7rem);
+          top: 32px;
+          transform: translateX(-50%);
           animation-name: appearIn;
           animation-duration: 0.2s;
           animation-timing-function: linear;
-          max-height: 8rem;
           overflow-y: scroll;
           background-color: #ffffff;
           border: 1.5px solid #cecece;
           border-radius: 2.9881px;
-          &__element {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-width: 8rem;
-            height: 2.229rem;
-            font-size: 0.857rem;
-         }
+          overflow: hidden;
         }
-      }
-    }
-  }
-}
-
-@media (max-width: 555px) {
-  .container {
-    height: 27px;
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    .key--active {
-      min-width: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .key--disactive {
-      opacity: 0.5;
-      user-select: none;
-      min-width: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .dropdown {
-      &__header {
-        font-size: 0.857rem;
-        font-weight: 400;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-      }
-  
-      &__list {
-        position: absolute;
-        left: 50%;
-        bottom: 0;
-        transform: translate(-50%, 110%);
-        animation-name: appearIn;
-        animation-duration: 0.2s;
-        animation-timing-function: linear;
-        max-height: 8rem;
-        overflow-y: scroll;
-        background-color: #ffffff;
-        border: 1.5px solid #cecece;
-        border-radius: 2.9881px;
-        z-index: 999;
-        &__element {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          min-width: 8rem;
-          height: 2.229rem;
-          font-size: 0.857rem;
-       }
       }
     }
   }
