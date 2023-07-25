@@ -32,10 +32,8 @@ export const parseUrl = (
     option: string, 
     jobGroupList: string[] | undefined,
   ) => {
-	if (url.includes('/event')) {
-		console.log(url)
+	if (url.includes('/event'))
 		return (`${url.replace('/events','/search')}?${type}=${option}`)
-	}
 	if (url.includes(`${type}`) && type !== 'tag') {
 		const key = getKey(url, type);
 		if (key !== undefined) {

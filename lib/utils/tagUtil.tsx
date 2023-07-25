@@ -1,5 +1,6 @@
 import { Tag } from "model/tag"
 import { jobGroups } from 'components/features/filters/jobGroup';
+import { eventType } from "components/features/filters/eventType";
 
 export const getTagName = (tagList: Tag[], tagType: string) => {
   for (let i = 0; i < tagList.length; i++) {
@@ -13,7 +14,9 @@ export const getTagType = (label: string) => {
     return ('location');
   else if (label === '무료' || label === '유료')
     return ('coast');
-  else if (jobGroups.toString().includes(label))
+  else if (JSON.stringify(jobGroups).includes(label))
     return ('jobGroup');
-  return ('eventType');
+  else if (eventType.includes(label))
+    return ('eventType');
+  return (undefined)
 }

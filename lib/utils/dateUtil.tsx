@@ -44,29 +44,48 @@ const DateUtil = {
   },
 };
 
+const getEndDate = () => {
+  const year = new Date().getFullYear();
+  return (`${year}-12`)
+}
+
 const getStartDate = () => {
   const year = new Date().getFullYear() - 1;
+  return (`${year}-01`)
+}
+
+const getDateList = () => {
+  const list = ['전체'];
+  let currentDate = dayjs(getStartDate());
+  for (let i = 0; i < 24; i++) {
+    list.push(currentDate.format('YYYY년 MM월'));
+    currentDate = currentDate.subtract(-1, 'M');
+  }
+  return list;
+};
+
+const getMonth = () => {
   let month = new Date().getMonth();
   if (month === 12)
     month = 1;
   else
     month += 1;
-  return (`${year}-${month}-01`)
+  if (month.toString().length !== 2)
+    return (`0${month}`)
+  return (month.toString());
 }
 
-
-const getDateList = () => {
-  const list = ['전체'];
-  let currentDate = dayjs();
-  const startDate = dayjs(getStartDate());
-  while (startDate.isBefore(currentDate)) {
-    list.push(currentDate.format('YYYY년 MM월'));
-    currentDate = currentDate.subtract(1, 'M');
-  }
-  return list;
-};
+const getCurrentDate = () => {
+  const year = new Date().getFullYear();
+  const month = getMonth();
+  return (`${year}년 ${month}월`);
+}
 
 export { 
   DateUtil,
-  getDateList
- };
+  getDateList,
+  getStartDate,
+  getEndDate,
+  getCurrentDate,
+  getMonth
+};
