@@ -5,7 +5,7 @@ import style from './ItemList.module.scss';
 import { ThreeDots } from 'react-loader-spinner';
 import { checkCondition, checkDate, checkEventDone, getEventEndDate } from 'lib/utils/eventUtil';
 import EventFilter from 'components/features/filters/EventFilter';
-import { Event, EventResponse } from 'model/event';
+import { EventResponse } from 'model/event';
 import List from '../list/list';
 import { checkSearch } from 'lib/utils/searchUtil';
 import { EventContext } from 'context/event';
@@ -33,17 +33,19 @@ function ItemList({ fallbackData, jobGroups, eventType, location, coast }: Props
       setIsLoading(false);
       composeTotalCount();
     }, 300);
-  }, [scheduledEvents, search, totalCount, date]);
+  }, [search, totalCount, date]);
 
   if (isError) {
     return <div className={cn('null-container')}>이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
   }
 
   const composeTotalCount = () => {
-    if (scheduledEvents && !isError && scheduledEvents.length !== 0) {
-      const result = scheduledEvents?.reduce(function add(sum, currValue) {
-        const filteredEvents = currValue.dev_event.filter(
-          (item) =>
+    console.log(scheduledEvents)
+    if (scheduledEvents === undefined || scheduledEvents.length === 0){
+      setTotalCount(0);
+    } else {
+      const result = scheduledEvents.reduce(function add(sum, currValue) {
+        const filteredEvents = currValue.dev_event.filter((item) =>
             !checkEventDone({
               endDate: getEventEndDate({
                 start_date_time: item.start_date_time,
@@ -68,7 +70,7 @@ function ItemList({ fallbackData, jobGroups, eventType, location, coast }: Props
           <ThreeDots color="#479EF1" height={60} width={60} />
         </div>
       ) : (
-      scheduledEvents && totalCount !== 0 ? (
+      scheduledEvents && totalCount ? (
         scheduledEvents.map((event: EventResponse, index) => {
           const lists =
             event &&
@@ -86,7 +88,7 @@ function ItemList({ fallbackData, jobGroups, eventType, location, coast }: Props
                   && checkSearch(search, item) && checkDate(date, item)
                 ) 
             );
-          return lists.length > 0 ? (
+          return lists.length !== 0 ? (
             <div key={index}>
               <div className={cn('section__list')}>
                 <div className={cn('section__list__title')}>

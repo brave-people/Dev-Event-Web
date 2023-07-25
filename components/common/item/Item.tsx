@@ -20,6 +20,7 @@ const DateType = {
   date: 'date',
   time: 'time',
 };
+
 const Item = ({
   data,
   isFavorite,
@@ -109,15 +110,16 @@ const Item = ({
               <div className={cn('item__content__img')}>
                 <Image
                   className={cn('mask')}
-                  alt="/default/event_img.png"
+                  alt="이벤트 이미지"
                   src={
                     data.cover_image_link.includes('brave-people-3.s3.ap-northeast-2.amazonaws.com')
                       ? data.cover_image_link
                       : '/default/event_img.png'
                   }
+                  priority={true}
                   width={200}
                   height={112}
-                ></Image>
+                />
                 {isEventDone() ? (
                   <div className={cn('item__content__img--isDone')}>
                     <span>종료된 행사입니다</span>
