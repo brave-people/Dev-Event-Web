@@ -7,6 +7,7 @@ import * as ga from 'lib/utils/gTag';
 import { useRouter } from "next/router";
 import { handleUrl, parseUrl } from "lib/utils/urlUtil";
 import { EventContext } from "context/event";
+import { WindowContext } from "context/window";
 
 const cn = classNames.bind(style);
 
@@ -26,6 +27,7 @@ function DefaultDropdown({ title, options, type, context, gaParam }: DefaultDrop
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [currentState, setCurrentState] = useState<string | undefined>(undefined);
   const { jobGroupList, eventType, location, coast } = useContext(EventContext)
+  const { windowTheme } = useContext(WindowContext);
   const outSideRef = useRef(null);
   const router = useRouter();
   const getCollectTitle = () => {
@@ -59,13 +61,21 @@ function DefaultDropdown({ title, options, type, context, gaParam }: DefaultDrop
     }
   };
 
+  const checkContext = (current: string) => {
+    if (type === 'type')
+      return (eventType === current);
+    else if (type === 'location')
+      return (location === current);
+    return (coast === current);
+  }
+
   useOnClickOutside({ ref: outSideRef, handler: handleClickOutside, mouseEvent: 'click' });
   return (
     <>
       <div className={cn('dropdown')} ref={outSideRef}>
         <div className={cn('dropdown__header')} onClick={handleClickDropdown}>
           <span className={cn('dropdown__header__placeholder')}>
-            <span>{name !== '선택 안함' ? name : title}</span>
+            <span>{name !== '전체' ? name : title}</span>
           </span>
           <DownArrowIcon
             color="rgba(49, 50, 52, 1)"
@@ -76,14 +86,17 @@ function DefaultDropdown({ title, options, type, context, gaParam }: DefaultDrop
         <div className={cn('dropdown__list')}>
             {options?.map((option, idx) => {
               return (
-                <div 
+                <div
                   key={idx}
-                  className={cn('dropdown__list__element')}
+                  className={cn(
+                    'dropdown__list__element', 
+                    checkContext(option) && 
+                    `${windowTheme ? 'selected__light' : 'selected__dark'}`)}
                   onClick={() => {
                     ga.event(gaParam)
                     const key = `${type}`
                     const value = `${option}`
-                    if (option === "선택 안함") {
+                    if (option === "전체") {
                       setCurrentState(undefined);
                       context(undefined);
                       router.replace(`${handleUrl(`${router.asPath}`, key, jobGroupList, eventType, location, coast)}`)

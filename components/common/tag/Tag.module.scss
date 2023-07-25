@@ -1,12 +1,20 @@
 @import '~styles/_mixin.scss';
 
 .tag {
-  padding: 4px 16px;
-  margin: 0.25rem .425rem;
+  min-width: 40px;
+  padding-right: 16px;
+  padding-left: 16px;
+  height: 36px;
   font-weight: 500;
   color: var(--gray-1);
-  border: 1px solid rgba(49, 50, 52, 1);
-  border-radius: 15px;
+  border: 1px solid;
+  border-color: var(--gray-4);
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  margin-top: 10px;
 }
 
 .tag--light {

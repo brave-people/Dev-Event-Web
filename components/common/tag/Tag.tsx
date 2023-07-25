@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { EventContext } from "context/event";
 import classNames from "classnames/bind";
 import style from './Tag.module.scss';
