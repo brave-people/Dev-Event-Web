@@ -10,6 +10,7 @@ body {
   width: 100vw;
   overflow-x: hidden;
   background-color: var(--background-1);
+  transition: background 0.095s linear;
 }
 
 a {
