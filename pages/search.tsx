@@ -7,7 +7,6 @@ import { GetServerSideProps } from 'next';
 import cookie from 'cookie';
 import { AuthContext } from 'context/auth';
 import LoginModal from 'components/common/modal/LoginModal';
-import { useRouter } from 'next/router';
 import Banner from 'components/common/banner/banner';
 import FilteredEvent from 'components/events/FilteredEvent';
 import { EventResponse } from 'model/event';
@@ -21,7 +20,6 @@ type Props = {
 }
 
 const Search = ({ isLoggedIn, fallbackData }: Props) => {
-  const router = useRouter();
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
  
@@ -41,6 +39,7 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
           fallbackData={fallbackData}
         />
       </section>
+      <Letter />
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
     </>
   );

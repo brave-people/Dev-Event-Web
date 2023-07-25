@@ -57,6 +57,7 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
       <section className={cn('section')}>
         <ScheduledEventList fallbackData={fallbackData} />
       </section>
+      <Letter />
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
     </>
   );
