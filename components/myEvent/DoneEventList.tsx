@@ -89,7 +89,8 @@ const DoneEventList = () => {
           {myEvent && !isError && oldEvent ? (
             oldEvent.length !== 0 ? (
               <div className={cn('section__list__items')}>
-                {oldEvent.map((event: MyEvent) => {
+                {oldEvent.map((event: MyEvent, idx: number) => {
+                  const isLast = idx === oldEvent.length - 1;
                   return (
                     <div className={cn('wrapper')}>
                       <Item
@@ -104,7 +105,7 @@ const DoneEventList = () => {
                         onClickFavorite={() => {
                           deleteMyEvent({ favoriteId: event.favorite_id });
                         }}
-                        onClickShareInMobileSize={handleShareInMobileSize}
+                        isLast={isLast}
                       />
                     </div>
                   );
@@ -120,7 +121,7 @@ const DoneEventList = () => {
           )}
         </div>
       </section>
-      <ShareModal isOpen={shareModalIsOpen} onClick={() => setShareModalIsOpen(false)} data={sharedEvent}></ShareModal>
+      <ShareModal />
     </div>
   );
 };

@@ -1,19 +1,12 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import Link from "next/link";
 import * as ga from 'lib/utils/gTag';
 import FillButton from "components/common/buttons/FillButton";
-import { FilledPlusIcon } from "components/icons";
-import { WindowContext } from "context/window";
 
 function Register() {
-  const { windowX, handleWindowX } = useContext(WindowContext)
-  useEffect(() => {
-    handleWindowX(window.innerWidth);
-  }, [windowX])
   return (
     <Link href={'https://forms.gle/UUjUVg1tTrKhemKu9'}>
-    <a target="__blank">
-      {windowX >= 400 ? (
+      <a target="__blank">
         <FillButton
           label="행사 추가 요청"
           color="gray1"
@@ -29,11 +22,6 @@ function Register() {
           }}
           rounded={false}
        />
-      ): (
-        <FilledPlusIcon
-          color="#333"
-        />
-      )}
     </a>
   </Link>
   )

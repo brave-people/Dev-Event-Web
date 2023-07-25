@@ -30,6 +30,7 @@ function DefaultDropdown({ title, options, type, context, gaParam }: DefaultDrop
   const { windowTheme } = useContext(WindowContext);
   const outSideRef = useRef(null);
   const router = useRouter();
+  
   const getCollectTitle = () => {
     if (type === "type") {
       if (currentState === undefined)
@@ -99,13 +100,14 @@ function DefaultDropdown({ title, options, type, context, gaParam }: DefaultDrop
                     if (option === "전체") {
                       setCurrentState(undefined);
                       context(undefined);
+                      setIsOpen(false);
                       router.replace(`${handleUrl(`${router.asPath}`, key, jobGroupList, eventType, location, coast)}`)
                     } else {
                       setCurrentState(option);
                       context(option)
+                      setIsOpen(false);
                       router.replace(`${parseUrl(`${router.asPath}`, key, value, jobGroupList)}`)
                     }
-                    setIsOpen(false);
                   }}>
                   {option}
                 </div>

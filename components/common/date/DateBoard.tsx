@@ -92,9 +92,12 @@ function DateBoard({ options }: Props) {
               <div
                 className={cn(`${parseInt(currentYear) === parseInt(year) - 1 ? "unvalid__key" : "year__key"}`)}
                 onClick={() => {
-                  if (parseInt(currentYear) === parseInt(year) - 1) return ;
-                  const prev = parseInt(currentYear) - 1;
-                  setCurrentYear(prev.toString());
+                  if (parseInt(currentYear) === parseInt(year) - 1) 
+                    return ;
+                  else {
+                    const prev = parseInt(currentYear) - 1;
+                    setCurrentYear(prev.toString());
+                  }
                 }}>
                 <LeftArrowIcon
                   color="#313234"
@@ -107,9 +110,12 @@ function DateBoard({ options }: Props) {
               <div
                 className={cn(`${parseInt(currentYear) === parseInt(year) ? "unvalid__key" : "year__key"}`)}
                 onClick={() => {
-                  if (parseInt(currentYear) === parseInt(year)) return ;
-                  const next = parseInt(currentYear) + 1;
-                  setCurrentYear(next.toString());
+                  if (parseInt(currentYear) === parseInt(year)) 
+                    return ;
+                  else {
+                    const next = parseInt(currentYear) + 1;
+                    setCurrentYear(next.toString());
+                  }
                 }}>
                 <RightArrowIcon
                   color="#313234"

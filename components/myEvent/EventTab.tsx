@@ -27,7 +27,7 @@ const EventTab = ({}: any) => {
     <div className={cn('tab__header')}>
       <div
         className={cn('tab__header--menu', tabMenu.ongoing === true ? 'selected' : null)}
-        onClick={(event) => {
+        onClick={() => {
           setTabMenu({ ongoing: true, done: false });
           router.replace('/myevent?tab=ongoing');
           ga.event({

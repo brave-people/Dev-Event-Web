@@ -45,8 +45,8 @@ const Profile = () => {
                 event_category: 'web_event',
                 event_label: '내이벤트이동',
               });
-              router.push('/myevent');
               setProfileMenuIsOpen(false);
+              router.push('/myevent');
             }}
           >
             내 이벤트
@@ -59,8 +59,8 @@ const Profile = () => {
                 event_category: 'web_event',
                 event_label: '내정보이동',
               });
-              router.push('/myinfo');
               setProfileMenuIsOpen(false);
+              router.push('/myinfo');
             }}
           >
             내 정보
