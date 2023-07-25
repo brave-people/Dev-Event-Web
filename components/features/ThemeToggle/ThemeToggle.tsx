@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
+import Image from "next/image";
 import classNames from "classnames/bind";
 import style from 'components/features/ThemeToggle/ThemeToggle.module.scss'
 import { WindowContext } from "context/window";
+import { MoonIcon, SunIcon } from "components/icons";
 
 const cn = classNames.bind(style);
 
@@ -22,7 +24,15 @@ function Theme() {
           onClick={() => 
             handleWindowTheme(windowTheme)} 
           onChange={onChange} />
-        <label htmlFor="switch">Toggle</label>
+        <label htmlFor="switch">
+          {windowTheme 
+            ? <MoonIcon /> 
+            : <Image
+              src={'/icon/sun.png'}
+              width={28}
+              height={28}
+            />}
+        </label>
       </div>
     </>
   )

@@ -15,18 +15,20 @@ function Register() {
     <a target="__blank">
       {windowX >= 400 ? (
         <FillButton
-        label="행사 추가 요청"
-        color="default"
-        icon="plus"
-        iconStyle="register"
-        onClick={() => {
-          ga.event({
-            action: 'web_event_행사등록버튼클릭',
-            event_category: 'web_event',
-            event_label: '행사등록',
-          });
-        }}
-      ></FillButton>
+          label="행사 추가 요청"
+          color="gray1"
+          icon="plus"
+          size='regular'
+          iconStyle="register"
+          onClick={() => {
+            ga.event({
+              action: 'web_event_행사등록버튼클릭',
+              event_category: 'web_event',
+              event_label: '행사등록',
+            });
+          }}
+          rounded={false}
+       />
       ): (
         <FilledPlusIcon
           color="#333"

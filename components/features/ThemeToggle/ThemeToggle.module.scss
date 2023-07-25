@@ -1,15 +1,18 @@
 .toggle{
   input[type=checkbox] {
-    height: 0;
     width: 0;
-    visibility: hidden;
+    height: 0;
+    display: none;
   }
 
   label {
+      width: 2.7rem;
+      height: 2.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
       text-indent: -9999px;
-      width: 55px;
-      height: 30px;
       color: var(--gray-1);
     }
     

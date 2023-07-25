@@ -1,4 +1,120 @@
+@import '~styles/_mixin.scss';
+
 .letter {
   width: 100%;
-  background-color: var(--background-1);
+  height: 291px;
+  background-color: var(--background-2);
+  display: flex;
+  align-items: center;
+  .inner {
+    width: 68rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .letter__container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      .letter__title {
+        font-size: 32px;
+        color: var(--gray-1);
+        span {
+          margin: 0 5px;
+          font-weight: bold;
+        }
+      }
+      .letter__desc {
+        margin-top: 10px;
+        font-size: 18px;
+        color: var(--gray-1);
+      }
+      .image__container {
+        position: relative;
+        width: 146px;
+        height: 109px;
+      }
+    }
+  }
+}
+
+@media (max-width: 1075px) {
+  .letter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 271px;
+    .inner {
+      width: 60.75rem;
+      .letter__container {
+        .letter__title {
+          font-size: 28px;
+        }
+        .letter__desc {
+          font-size: 16px;
+        }
+        .image__container {
+          width: 120px;
+          height: 92px;
+        }
+      }
+    }
+  }
+}
+
+
+@media (max-width: 955px) {
+  .letter {
+    height: 211px;
+    .inner {
+      width: 52.75rem;
+      .letter__container {
+        .letter__title {
+          font-size: 22px;
+        }
+        .letter__desc {
+          font-size: 12px;
+        }
+        .image__container {
+          width: 98px;
+          height: 68px;
+        }
+      }
+    }
+  }
+}
+
+@include mobile {
+  .letter {
+    height: 181px;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 2.5rem;
+    .inner {
+      width: 42rem;
+      display: block;
+      margin: 0 auto;
+      .letter__container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .letter__title {
+          font-size: 22px;
+        }
+        .letter__desc {
+          font-size: 12px;
+        }
+        .image__container {
+          width: 98px;
+          height: 68px;
+        }
+      }
+      .button__container {
+        margin-top: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
 }
