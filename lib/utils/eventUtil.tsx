@@ -1,4 +1,4 @@
-import { Event, EventDate } from "model/event";
+import { Event, EventDate, EventResponse } from "model/event";
 import { DateUtil } from 'lib/utils/dateUtil';
 
 export const getEventEndDate = (EventDate: EventDate) => {
