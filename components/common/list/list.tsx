@@ -4,7 +4,7 @@ import style from 'components/common/list/list.module.scss';
 import { useMyEvent } from 'lib/hooks/useSWR';
 import Item from 'components/common/item/Item';
 import dayjs from 'dayjs';
-import { Event, EventDate } from 'model/event';
+import { Event, EventDate, EventResponse } from 'model/event';
 import { mutate } from 'swr';
 import { createMyEventApi } from 'lib/api/post';
 import { deleteMyEventApi } from 'lib/api/delete';
@@ -15,7 +15,7 @@ import { DateUtil } from 'lib/utils/dateUtil';
 
 const cn = classNames.bind(style);
 
-const List = ({ data }: { data: any }) => {
+const List = ({ data }: { data: Event[] }) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const param = { filter: '' };

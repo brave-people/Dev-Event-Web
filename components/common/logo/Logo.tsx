@@ -9,14 +9,16 @@ function Logo() {
     handleEventType, 
     handleLocation, 
     handleCoast, 
-    handleSearch 
+    handleSearch,
+    handleDate
   } = useContext(EventContext);
   const { windowTheme } = useContext(WindowContext);
   const handleOnClick = () => {
     handleEventType(undefined);
     handleLocation(undefined);
     handleCoast(undefined);
-    handleSearch(undefined)
+    handleSearch(undefined);
+    handleDate(undefined);
     initJobGroupList();
   }
   return (

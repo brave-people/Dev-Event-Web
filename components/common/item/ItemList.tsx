@@ -41,7 +41,7 @@ function ItemList({ fallbackData, jobGroups, eventType, location, coast }: Props
 
   const composeTotalCount = () => {
     if (scheduledEvents && !isError && scheduledEvents.length !== 0) {
-      const result = scheduledEvents.reduce(function add(sum, currValue) {
+      const result = scheduledEvents?.reduce(function add(sum, currValue) {
         const filteredEvents = currValue.dev_event.filter(
           (item) =>
             !checkEventDone({
@@ -51,8 +51,7 @@ function ItemList({ fallbackData, jobGroups, eventType, location, coast }: Props
                 use_start_date_time_yn: item.use_start_date_time_yn,
                 use_end_date_time_yn: item.use_end_date_time_yn,
               }),
-            }) && (
-              checkCondition(jobGroups, eventType, location, coast, item))
+            }) && (checkCondition(jobGroups, eventType, location, coast, item))
               && checkSearch(search, item) && checkDate(date, item)
             ) 
         return sum + filteredEvents.length;
