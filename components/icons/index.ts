@@ -7,6 +7,9 @@ import ShareIcon from "./ShareIcon";
 import BookmarkIcon from "./BookmarkIcon";
 import GithubIcon from "./GithubIcon";
 import NaverWhaleIcon from "./NaverWhaleIcon";
+import MoonIcon from "./MoonIcon";
+import SunIcon from "./SunIcon";
+import DeleteIcon from "./DeleteIcon";
 
 export {
   PlusIcon,
@@ -17,5 +20,8 @@ export {
   ShareIcon,
   BookmarkIcon,
   GithubIcon,
-  NaverWhaleIcon
+  NaverWhaleIcon,
+  MoonIcon,
+  SunIcon,
+  DeleteIcon
 }
