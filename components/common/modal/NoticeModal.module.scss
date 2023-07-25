@@ -1,0 +1,62 @@
+@import '~styles/_mixin.scss';
+
+.notice {
+  position: static;
+  background-color: rgba(237, 239, 255, 1);
+  height: 44px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  animation: appearIn;
+  animation-duration: .5s;
+  animation-timing-function: linear;
+
+  &__inner {
+    width: 68.75rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .notice__content {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .notice__title {
+        font-size: 16px;
+        font-weight: bold;
+        color: var(--primary);
+      }
+    }
+
+    .icon {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      &:hover {
+        background-color: rgb(213, 215, 229);
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.status--delete {
+  display: none;
+}
+
+@keyframes appearIn {
+  0% {
+    transform: translateY(-48px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

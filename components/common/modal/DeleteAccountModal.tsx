@@ -16,9 +16,20 @@ function DeleteAccountModal({ isOpen, onClick, onCancel }: any) {
         <br /> 삭제된 정보는 다시 복구할 수 없습니다.
       </span>
       <div className={cx('modal__buttons')}>
-        <OutlineButton label="취소하기" color="grey" onClick={onCancel}></OutlineButton>
+        <OutlineButton 
+          label="취소하기" 
+          color="grey" 
+          size='regular'
+          onClick={onCancel}
+          />
         <div className={cx('wrapper')}>
-          <FillButton label="탈퇴하기" color="error" onClick={onClick}></FillButton>
+          <FillButton 
+            onClick={onClick}
+            label="탈퇴하기"
+            size='regular'
+            color="error"
+            rounded={false}
+          />
         </div>
       </div>
     </Modal>
