@@ -27,11 +27,7 @@ function Theme() {
         <label htmlFor="switch">
           {windowTheme 
             ? <MoonIcon /> 
-            : <Image
-              src={'/icon/sun.png'}
-              width={28}
-              height={28}
-            />}
+            : <SunIcon /> }
         </label>
       </div>
     </>
