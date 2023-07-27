@@ -6,10 +6,11 @@ import FilledPlusIcon from "./FilledPlusIcon";
 import ShareIcon from "./ShareIcon";
 import BookmarkIcon from "./BookmarkIcon";
 import GithubIcon from "./GithubIcon";
-import NaverWhaleIcon from "./NaverWhaleIcon";
 import MoonIcon from "./MoonIcon";
 import SunIcon from "./SunIcon";
 import DeleteIcon from "./DeleteIcon";
+import CheckIcon from "./CheckIcon";
+import SaveIcon from "./SaveIcon";
 
 export {
   PlusIcon,
@@ -20,8 +21,9 @@ export {
   ShareIcon,
   BookmarkIcon,
   GithubIcon,
-  NaverWhaleIcon,
   MoonIcon,
   SunIcon,
-  DeleteIcon
+  DeleteIcon,
+  CheckIcon,
+  SaveIcon
 }

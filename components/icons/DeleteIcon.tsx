@@ -12,7 +12,7 @@ function DeleteIcon({ color, className, ...rest }: Icon) {
     >
       <g clipPath="url(#a)">
         <path
-          stroke="#313234"
+          stroke={color}
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={1.5}
@@ -21,7 +21,7 @@ function DeleteIcon({ color, className, ...rest }: Icon) {
       </g>
       <defs>
         <clipPath id="a">
-          <path fill="#fff" d="M0 0h24v24H0z" />
+          <path fill={color} d="M0 0h24v24H0z" />
         </clipPath>
       </defs>
     </svg>
