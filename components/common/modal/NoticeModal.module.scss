@@ -2,7 +2,6 @@
 
 .notice {
   position: static;
-  background-color: rgba(237, 239, 255, 1);
   height: 36px;
   width: 100%;
   top: 0;
@@ -13,6 +12,7 @@
   animation: appearIn;
   animation-duration: .5s;
   animation-timing-function: linear;
+  z-index: 999;
 
   &__inner {
     width: 68.75rem;
@@ -40,6 +40,7 @@
       align-items: center;
       justify-content: center;
       border-radius: 50%;
+      
       &:hover {
         background-color: rgb(213, 215, 229);
         cursor: pointer;
@@ -52,11 +53,60 @@
   display: none;
 }
 
+.notice--light {
+  background-color: rgba(237, 239, 255, 1);
+}
+
+.notice--dark {
+  background-color: rgba(24, 27, 40, 1);
+}
+
 @keyframes appearIn {
   0% {
     transform: translateY(-48px);
   }
   100% {
     transform: translateY(0);
+  }
+}
+
+@include tablet {
+  .notice {
+    &__inner {
+      width: 52.75rem;
+      .notice__content {
+        .notice__title {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+@include mobile {
+  .notice {
+    &__inner {
+      width: 42rem;
+      .notice__content {
+        .notice__title {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+  @media (max-width: 600px) {
+    .notice {
+      &__inner {
+        width: 36rem;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .notice {
+      &__inner {
+        width: 30rem;
+      }
+    }
   }
 }

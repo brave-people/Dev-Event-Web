@@ -4,6 +4,7 @@ import { EventContext } from "context/event";
 import { WindowContext } from "context/window";
 import classNames from "classnames/bind";
 import style from 'components/common/date/DateElement.module.scss'
+import invalidEvent from "components/events/invalidEvent";
 
 const cn = classNames.bind(style)
 
@@ -43,13 +44,13 @@ function DateElement({ options, currentYear, setIsFirst, setIsLast, handleIsOpen
           <div
             key={idx}
             onClick={() => {
-              if (option > getCurrentDate())
+              if (option > getCurrentDate() || invalidEvent.includes(option))
                 return ;
               handleCurrentDate(option)
               handleIsOpen(false);
             }}
             className={cn('date__element', 
-            `${option > getCurrentDate() && "date__invalid"}`,
+            `${(option > getCurrentDate() || invalidEvent.includes(option)) && "date__invalid"}`,
             `${date === option && 
             (windowTheme ? "light--selected" : "dark--selected")}`)}>
               {option.split(' ')[1]}

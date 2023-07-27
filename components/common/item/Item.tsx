@@ -144,8 +144,8 @@ const Item = ({
                 <div className={cn('item__content__desc')}>
                   <span className={cn('wrap')}>
                     <div className={cn('date')}> 
-                      <span>{data.event_time_type === "DATE" ? "일시 " : "접수 "}</span>
-                      <span>{getEventDate()}</span> 
+                      <span className={cn('date__type')}>{data.event_time_type === "DATE" ? "일시 " : "접수 "}</span>
+                      <span className={cn('date__date')}>{getEventDate()}</span> 
                     </div>
                   </span>
                   <div className={cn('item__content__desc__tags')}>
@@ -156,7 +156,7 @@ const Item = ({
                       return (
                         <FilterTag
                           key={tag.id}
-                          label={getTagName(data.tags, "location")}
+                          label={tag.tag_name}
                           size='regular'
                           type='location'
                         />

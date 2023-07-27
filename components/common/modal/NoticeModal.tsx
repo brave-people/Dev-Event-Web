@@ -8,12 +8,13 @@ import { WindowContext } from "context/window"
 const cn = classNames.bind(style)
 
 function NoticeModal() {
-  const { isNotice, handleIsNotice } = useContext(WindowContext)
+  const { isNotice, windowTheme, handleIsNotice } = useContext(WindowContext);
+  
   const handleModal = () => {
     handleIsNotice(false)
   }
   return (
-    <div className={cn('notice', !isNotice && 'status--delete')}>
+    <div className={cn('notice', !isNotice && 'status--delete', windowTheme ? "notice--light" : "notice--dark")}>
       <div className={cn('notice__inner')}>
         <div className={cn('notice__content')}>
           <span className={cn('notice__title')}>
@@ -26,7 +27,9 @@ function NoticeModal() {
           />
         </div>
         <div className={cn('icon')} onClick={handleModal}>
-          <DeleteIcon />
+          <DeleteIcon
+            color={windowTheme ? "rgba(49, 50, 52, 1)" : "rgba(203, 203, 206, 1)"}
+          />
         </div>
       </div>
     </div>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useScheduledEvents } from 'lib/hooks/useSWR';
 import classNames from 'classnames/bind';
 import style from './ItemList.module.scss';
 import { ThreeDots } from 'react-loader-spinner';
@@ -9,25 +8,26 @@ import { EventResponse } from 'model/event';
 import List from '../list/list';
 import { checkSearch } from 'lib/utils/searchUtil';
 import { EventContext } from 'context/event';
+import EventNull from '../modal/EventNull';
 
 const cn = classNames.bind(style);
 
 type Props = {
-  fallbackData: EventResponse[];
+  events: EventResponse[] | undefined;
+  isError?: boolean;
   jobGroups?: string;
   eventType?: string;
   location?: string;
   coast?: string;
 }
 
-function ItemList({ fallbackData, jobGroups, eventType, location, coast }: Props) {
+function ItemList({ events, isError, jobGroups, eventType, location, coast }: Props) {
   const [ totalCount, setTotalCount] = useState<number>(0);
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
-  const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
   const { search, date } = useContext(EventContext);
 
+
   useEffect(() => {
-    console.log(fallbackData)
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
@@ -40,11 +40,11 @@ function ItemList({ fallbackData, jobGroups, eventType, location, coast }: Props
   }
 
   const composeTotalCount = () => {
-    console.log(scheduledEvents)
-    if (scheduledEvents === undefined || scheduledEvents.length === 0){
+    console.log(events)
+    if (events === undefined || events.length === 0){
       setTotalCount(0);
     } else {
-      const result = scheduledEvents.reduce(function add(sum, currValue) {
+      const result = events.reduce(function add(sum, currValue) {
         const filteredEvents = currValue.dev_event.filter((item) =>
             !checkEventDone({
               endDate: getEventEndDate({
@@ -70,8 +70,8 @@ function ItemList({ fallbackData, jobGroups, eventType, location, coast }: Props
           <ThreeDots color="#479EF1" height={60} width={60} />
         </div>
       ) : (
-      scheduledEvents && totalCount ? (
-        scheduledEvents.map((event: EventResponse, index) => {
+      events && totalCount ? (
+        events.map((event: EventResponse, index) => {
           const lists =
             event &&
             event.dev_event.filter(
@@ -96,12 +96,14 @@ function ItemList({ fallbackData, jobGroups, eventType, location, coast }: Props
                 </div>
                 <List data={lists} />
               </div>
-              {index === scheduledEvents.length - 1 ? null : <hr className={cn('divider')} />}
+              {index === events.length - 1 ? null : <hr className={cn('divider')} />}
             </div>
           ) : null;
         })
       ) : (
-        <div className={cn('null-container')}>조건에 맞는 개발자 행사를 찾을 수 없습니다 📂</div>
+        <div>
+          <EventNull />
+        </div>
       ))}
     </>
   )

@@ -3,7 +3,9 @@
 .container {
   width: 100%;
   min-width: 210px;
-  height: 40px;
+  height: 36px;
+  position: relative;
+
   &__input {
     width: 100%;
     height: 100%;
@@ -14,14 +16,29 @@
     border-radius: 2.9881px;
     box-sizing: border-box;
   }
+
   input[type=text] {
     padding-left: 55px;
     color: var(--gray-1);
   }
+
   input::-webkit-input-placeholder {
     font-weight: bold;
     color: var(--gray-3);
     font-weight: 500;
+  }
+
+  .delete {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 

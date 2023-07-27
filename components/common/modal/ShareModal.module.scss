@@ -1,24 +1,45 @@
 @import '~styles/_mixin.scss';
+@import '~styles/_color.scss';
 
 .modal {
   position: fixed;
-  top: 10%;
+  min-width: 246px;
+  min-height: 45px;
+  bottom: 10%;
   left: 50%;
   transform: translateX(-50%);
-  padding: 0.5rem 2rem;
-  border-radius: 9px;
-  background-color: var(--background-1);
-  color: var(--gray-1);
-  box-shadow: 1px 1px 1px .5px var(--gray-2);
+  border-radius: 4px;
   animation-name: appearIn;
-  animation-duration: .6s;
+  animation-duration: .8s;
   animation-timing-function: ease;
+  animation-fill-mode: forwards;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 999;
+
+  &__text {
+    padding-left: 8px;
+  }
+}
+
+.light--modal {
+  color: $light-background-1;
+  background-color: $light-gray-1;
+}
+
+.dark--modal {
+  color: $light-gray-1;
+  background-color: $light-background-1;
 }
 
 @keyframes appearIn {
   0% {
     opacity: 0%;
-    transform: translate(-50%, -4rem);
+    transform: translate(-50%, 4rem);
   }
 
   100% {
