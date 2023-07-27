@@ -1,5 +1,6 @@
 import { Event, EventDate, EventResponse } from "model/event";
 import { DateUtil } from 'lib/utils/dateUtil';
+import { Calender } from "model/calender";
 
 export const getEventEndDate = (EventDate: EventDate) => {
   if (EventDate.use_start_date_time_yn && EventDate.use_end_date_time_yn) {
@@ -13,6 +14,14 @@ export const getEventEndDate = (EventDate: EventDate) => {
   }
   return EventDate.end_date_time;
 };
+
+export const getEventByDate = (Events: EventResponse[], date: Calender): Event[] => {
+  for (let i = 0; i < Events.length; i++) {
+    if (date.year === Events[i].metadata.year && date.month === Events[i].metadata.month)
+      return (Events[i].dev_event);
+  }
+  return (Events[Events.length - 1].dev_event);
+}
 
 export const checkEventDone = ({ endDate }: { endDate: string }) => {
   return DateUtil.isDone(endDate);
