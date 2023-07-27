@@ -69,7 +69,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { year, month } = context.query;
   const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/${year}/${month}`);
   const events = await res.json();
-
   const cookies = context.req.headers.cookie || '';
 
   if (cookies) {

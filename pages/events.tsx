@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import Layout from 'components/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
@@ -12,6 +12,9 @@ import ScheduledEventList from 'components/events/ScheduledEventList';
 import Head from 'next/head';
 import Banner from 'components/common/banner/banner';
 import Letter from 'components/features/letter/Letter';
+import { EventContext } from 'context/event';
+import MonthlyEventList from 'components/events/MonthlyEventList';
+import { getCurrentDate } from 'lib/utils/dateUtil';
 
 const cn = classNames.bind(style);
 
@@ -23,6 +26,8 @@ type Props = {
 const Events = ({ isLoggedIn, fallbackData }: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
+  const { date } = useContext(EventContext);
+
   useEffect(() => {
     if (isLoggedIn) {
       authContext.login();
@@ -55,7 +60,17 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
       </Head>
       <Banner />
       <section className={cn('section')}>
-        <ScheduledEventList fallbackData={fallbackData} />
+        {(date === undefined || date === getCurrentDate())
+          ? (<ScheduledEventList
+              fallbackData={fallbackData}
+            />
+          ) : (
+            <MonthlyEventList
+              fallbackData={fallbackData}
+              date={date}
+            />
+          ) 
+        }
       </section>
       <Letter />
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>

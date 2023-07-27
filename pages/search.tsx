@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Layout from 'components/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
@@ -8,22 +8,27 @@ import cookie from 'cookie';
 import { AuthContext } from 'context/auth';
 import LoginModal from 'components/common/modal/LoginModal';
 import Banner from 'components/common/banner/banner';
-import FilteredEvent from 'components/events/FilteredEvent';
+import FilteredEventList from 'components/events/FilteredEventList';
 import { EventResponse } from 'model/event';
 import Letter from 'components/features/letter/Letter';
+import { EventContext } from 'context/event';
+import MonthlyEventList from 'components/events/MonthlyEventList';
+import { getCurrentDate } from 'lib/utils/dateUtil';
 
 const cn = classNames.bind(style);
 
 type Props = {
   isLoggedIn: boolean;
-  fallbackData: EventResponse[]
+  fallbackData: EventResponse[];
 }
 
 const Search = ({ isLoggedIn, fallbackData }: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
- 
+  const { date } = useContext(EventContext);
+
   useEffect(() => {
+    console.log(date)
     if (isLoggedIn) {
       authContext.login();
     } else {
@@ -35,9 +40,17 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
     <>
       <Banner />
       <section className={cn('section')}>
-        <FilteredEvent 
-          fallbackData={fallbackData}
-        />
+        {(date === undefined || date === getCurrentDate())
+          ? (<FilteredEventList
+              fallbackData={fallbackData}
+            />
+          ) : (
+            <MonthlyEventList
+              fallbackData={fallbackData}
+              date={date}
+            />
+          ) 
+        }
       </section>
       <Letter />
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
@@ -68,7 +81,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       isLoggedIn: false,
-      fallbackData: events
+      fallbackData: events,
     },
   };
 };
@@ -76,4 +89,5 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 Search.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
+
 export default Search;
