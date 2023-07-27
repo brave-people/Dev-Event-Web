@@ -1,7 +1,8 @@
 import classNames from 'classnames/bind';
 import style from './Footer.module.scss';
 import Logo from 'components/common/logo/Logo';
-import { GithubIcon, NaverWhaleIcon } from 'components/icons';
+import Image from 'next/image';
+import { GithubIcon } from 'components/icons';
 import Link from 'next/link';
 
 const cn = classNames.bind(style);
@@ -19,16 +20,21 @@ function Footer() {
         </div>
       </div>
       <div className={cn('footer__row')}>
-        <Link href={"https://github.com/brave-people"}>
+        <Link href={"https://github.com/brave-people/Dev-Event"}>
           <a target='_blank'>
             <GithubIcon
               className='github__icon'
             />
           </a>
         </Link>
-        <Link href={"/event"}>
+        <Link href={"https://store.whale.naver.com/detail/dfhagfnmecmkhdoeggeokfmmkbpiahek"}>
           <a target='_blank'>
-            <NaverWhaleIcon />
+            <Image
+              src={"/icon/whale.png"}
+              alt="naver whale extension"
+              width={36}
+              height={36}
+            />
           </a>
         </Link>
       </div>

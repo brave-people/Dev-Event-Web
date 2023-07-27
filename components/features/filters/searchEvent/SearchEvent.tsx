@@ -27,6 +27,10 @@ function SearchEvent() {
   const updateInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
   };
+
+  const initInput = () => {
+    setInput("");
+  }
   return (
     <div className={cn('container')}>
       <DefaultInput
@@ -36,6 +40,8 @@ function SearchEvent() {
         iconStyle="searchEvent"
         updateInput={updateInput}
         submitInput={submitInput}
+        initInput={initInput}
+        input={input}
       />
     </div>
   )  

@@ -40,7 +40,7 @@
       border-radius: 5px;
 
       &:hover {
-        background-color: var(--gray-4);
+        background-color: var(--gray-5);
       }
     }
 
@@ -147,7 +147,7 @@
     background-color: var(--background-1);
 
     &__inner {
-      width: 100%;
+      width: 52.75rem;
       height: 3.5rem;
       display: flex;
       flex-direction: row;
@@ -168,7 +168,7 @@
     background-color: var(--background-1);
 
     &__inner {
-      width: 100%;
+      width: 42rem;
       height: 3.5rem;
       display: flex;
       flex-direction: row;
@@ -180,10 +180,6 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-  
-        .toggle__container {
-          background-color: #757575;
-        }
   
         .wrapper {
           padding-left: 15px;
@@ -216,6 +212,22 @@
         height: 24px;
         padding: 0px;
         cursor: pointer;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .header {
+      &__inner {
+        width: 36rem;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .header {
+      &__inner {
+        width: 30rem;
       }
     }
   }

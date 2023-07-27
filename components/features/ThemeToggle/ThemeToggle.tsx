@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import Image from "next/image";
 import classNames from "classnames/bind";
 import style from 'components/features/ThemeToggle/ThemeToggle.module.scss'
 import { WindowContext } from "context/window";
