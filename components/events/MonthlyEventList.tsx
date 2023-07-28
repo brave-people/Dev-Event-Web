@@ -19,7 +19,7 @@ type Props = {
   date: string;
 }
 
-function MonthlyEventList({ fallbackData, date } : Props) {
+function MonthlyEventList({ date } : Props) {
   const year = parseInt(date.slice(0, 4));
   const month = parseInt(date.slice(6, 8));  
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
@@ -41,6 +41,7 @@ function MonthlyEventList({ fallbackData, date } : Props) {
   }
 
   useEffect(() => {
+    console.log(events)
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
@@ -59,16 +60,18 @@ function MonthlyEventList({ fallbackData, date } : Props) {
         <div className={cn('null-container')}>
           <ThreeDots color="#479EF1" height={60} width={60} />
         </div>
-      ) : ( events ? (
+      ) : ( events !== undefined && events.length !== 0 ? (
         <div className={cn('section__list')}>
           <div className={cn('section__list__title')}>
-            <span>{`${year}년 ${month}월`}</span>
+            <span>{search !== undefined ? search : `${year}년 ${month}월`}</span>
           </div>
           <List data={events} /> 
         </div> 
       ) : (
         <div>
-          <EventNull />
+          <EventNull
+            search={search}
+          />
         </div>
       ))}
     </>

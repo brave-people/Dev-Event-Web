@@ -29,6 +29,7 @@ function Letter() {
               src="/icon/letter_icon.svg"
               alt="letter__icon"
               layout="fill"
+              priority={true}
             />
           </div>
         </div>

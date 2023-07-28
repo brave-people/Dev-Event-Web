@@ -40,7 +40,6 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast }: Pr
   }
 
   const composeTotalCount = () => {
-    console.log(events)
     if (events === undefined || events.length === 0){
       setTotalCount(0);
     } else {
@@ -88,11 +87,11 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast }: Pr
                   && checkSearch(search, item) && checkDate(date, item)
                 ) 
             );
-          return lists.length !== 0 ? (
+          return lists !== undefined && lists.length !== 0 ? (
             <div key={index}>
               <div className={cn('section__list')}>
                 <div className={cn('section__list__title')}>
-                  <span>{`${event.metadata.year}년 ${event.metadata.month}월`}</span>
+                  <span>{search !== undefined ? search : `${event.metadata.year}년 ${event.metadata.month}월`}</span>
                 </div>
                 <List data={lists} />
               </div>
@@ -102,7 +101,9 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast }: Pr
         })
       ) : (
         <div>
-          <EventNull />
+          <EventNull
+            search={search}
+          />
         </div>
       ))}
     </>
