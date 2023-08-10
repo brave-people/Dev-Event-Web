@@ -2,7 +2,7 @@
 
 .banner {
   position: relative;
-  height: 27rem;
+  height: 30rem;
   width: 100%;
   min-width: 68.75rem;
   display: flex;
@@ -13,16 +13,7 @@
   padding: 0px 20px 0px 20px;
   z-index: 0;
   overflow: hidden;
-
-  &__image {
-    position: absolute;
-    height: 462px;
-    width: 100%;
-    background-image: url('/default/banner_img.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-
+  
   &__title {
     font-size: 3.8rem;
     font-weight: 700;
@@ -104,4 +95,12 @@
       }
     }
   }
+}
+
+.notice--true {
+  margin-top: 36px;
+}
+
+.notice--false {
+  margin-top: 0;
 }

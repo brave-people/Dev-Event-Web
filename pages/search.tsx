@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from 'components/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
@@ -11,9 +11,6 @@ import Banner from 'components/common/banner/banner';
 import FilteredEventList from 'components/events/FilteredEventList';
 import { EventResponse } from 'model/event';
 import Letter from 'components/features/letter/Letter';
-import { EventContext } from 'context/event';
-import MonthlyEventList from 'components/events/MonthlyEventList';
-import { getCurrentDate } from 'lib/utils/dateUtil';
 
 const cn = classNames.bind(style);
 
@@ -25,10 +22,8 @@ type Props = {
 const Search = ({ isLoggedIn, fallbackData }: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
-  const { date } = useContext(EventContext);
 
   useEffect(() => {
-    console.log(date)
     if (isLoggedIn) {
       authContext.login();
     } else {
@@ -40,17 +35,9 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
     <>
       <Banner />
       <section className={cn('section')}>
-        {(date === undefined || date === getCurrentDate())
-          ? (<FilteredEventList
-              fallbackData={fallbackData}
-            />
-          ) : (
-            <MonthlyEventList
-              fallbackData={fallbackData}
-              date={date}
-            />
-          ) 
-        }
+        <FilteredEventList
+          fallbackData={fallbackData}
+        />
       </section>
       <Letter />
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>

@@ -1,9 +1,9 @@
 import React, { useEffect, useContext } from "react";
 import classNames from "classnames/bind";
-import style from './FilterByJobGroup.module.scss'
-import Tag from "components/common/tag/Tag";
-import { jobGroups } from "../jobGroup";
-import { UrlContext } from "types/UrlContext";
+import style from 'components/features/filters/ByJobGroup/FilterByJobGroup.module.scss'
+import JobGroupTag from "components/common/tag/JobGroupTag";
+import { jobGroups } from "components/features/filters/jobGroup";
+import { UrlContext } from "types/Context";
 import { EventContext } from "context/event";
 import { useRouter } from "next/router";
 
@@ -36,7 +36,7 @@ function FilterByJobGroup({ context }: Props) {
     <div className={cn('taglist')}>
       {jobGroups?.map((tag) => {
         return (
-          <Tag
+          <JobGroupTag
             key={tag.tag_id}
             tagName={tag.tag_name}
           />

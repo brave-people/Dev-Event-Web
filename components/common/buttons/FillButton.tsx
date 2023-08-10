@@ -1,12 +1,12 @@
 import React from 'react';
 import classNames from 'classnames/bind';
-import style from './FillButton.module.scss';
+import style from 'components/common/buttons/FillButton.module.scss'
 import getIconByName from 'lib/utils/iconUtil';
-import { DefaultButton } from 'types/Button';
+import { ButtonProps } from 'types/Button';
 
 const cx = classNames.bind(style);
 
-type FillButtonProps = DefaultButton & {
+type FillButtonProps = ButtonProps & {
   color: string;
   icon?: string;
   iconStyle?: string;

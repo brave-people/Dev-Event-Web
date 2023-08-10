@@ -58,7 +58,10 @@ const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackD
       </Head>
       <Banner />
       <section className={cn('section')}>
-        <MonthlyEventList fallbackData={fallbackData} date={filteredDate} />
+        <MonthlyEventList 
+          events={fallbackData} 
+          date={filteredDate}
+        />
       </section>
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
     </>

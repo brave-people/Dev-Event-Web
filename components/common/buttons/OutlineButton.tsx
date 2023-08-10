@@ -1,10 +1,11 @@
 import classNames from 'classnames/bind';
 import React from 'react';
-import style from './OutlineButton.module.scss';
-import { DefaultButton } from 'types/Button';
+import style from 'components/common/buttons/OutlineButton.module.scss'
+import { ButtonProps } from 'types/Button';
+
 const cx = classNames.bind(style);
 
-type OutlineButtonProps = DefaultButton & {
+type OutlineButtonProps = ButtonProps & {
   color: string;
 }
 

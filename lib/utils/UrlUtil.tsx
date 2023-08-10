@@ -1,5 +1,5 @@
-import { UrlContext } from "types/UrlContext";
-import { handleUndefined } from "./eventUtil";
+import { UrlContext } from "types/Context";
+import { handleUndefined } from "lib/utils/eventUtil";
 
 export const handleUrl = (
 	url: string,
@@ -7,9 +7,10 @@ export const handleUrl = (
 	jobGroupList: string[] | undefined,
 	eventType: string | undefined,
 	location: string | undefined,
-	coast: string | undefined
+	coast: string | undefined,
+	search: string | undefined	
 ) => {
-	if (handleUndefined(jobGroupList?.join(', '), eventType, location, coast))
+	if (handleUndefined(jobGroupList?.join(', '), eventType, location, coast, search))
 		return ('/events');
 	if (url.includes(type) === false)
 		return (url);
@@ -32,8 +33,8 @@ export const parseUrl = (
     option: string, 
     jobGroupList: string[] | undefined,
   ) => {
-	if (url.includes('/event'))
-		return (`${url.replace('/events','/search')}?${type}=${option}`)
+	if (url.includes('/event') || url.includes('/calender')) 
+		return (`/search?${type}=${option}`);
 	if (url.includes(`${type}`) && type !== 'tag') {
 		const key = getKey(url, type);
 		if (key !== undefined) {
@@ -93,7 +94,8 @@ export const reflactUrlContext = (url: string): UrlContext => {
 		tagList: [],
 		type: undefined,
 		location: undefined,
-		coast: undefined
+		coast: undefined,
+		kwd: undefined,
 	}
 	const context = url.split('?');
 	for (let i = 0; i < context.length; i++) {
@@ -104,7 +106,9 @@ export const reflactUrlContext = (url: string): UrlContext => {
 		} else if (context[i].includes('location')) {
 			result.location = context[i].split('=')[1];
 		} else if (context[i].includes('coast')) {
-			result.coast = context[i].split('=')[1]
+			result.coast = context[i].split('=')[1];
+		} else if (context[i].includes('kwd')) {
+			result.kwd = context[i].split('=')[1];
 		}
 	}
 	return (result);

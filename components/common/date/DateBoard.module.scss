@@ -10,6 +10,10 @@
   border: 1.5px solid;
   border-color: var(--gray-4);
   border-radius: 2.9881px;
+
+  &:hover {
+    border-color: rgba(170, 184, 255, 1);
+  }
   
   .key--active {
     min-width: 3rem;
@@ -58,7 +62,6 @@
       color: var(--gray-1);
       font-weight: 400;
       cursor: pointer;
-
     }
 
     &__list {
@@ -76,7 +79,7 @@
       border-radius: 2.9881px;
       border: 1.5px solid;
       border-color: var(--gray-4);
-      z-index: 999;
+      z-index: 50;
 
       &__year {
         width: 100%;
@@ -113,6 +116,13 @@
         }
       }
     }  
+  }
+}
+
+.container__focus {
+  border-color: var(--primary);
+  &:hover {
+    border-color: var(--primary);
   }
 }
 

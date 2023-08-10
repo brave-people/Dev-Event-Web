@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
-import DefaultDropdown from "components/common/dropdown/DefaultDropdown";
+import BasicDropdown from "components/common/dropdown/BasicDropdown";
 import { EventContext } from 'context/event';
-import { UrlContext } from 'types/UrlContext';
+import { UrlContext } from 'types/Context';
 
 type Props = {
   context: UrlContext | undefined;
@@ -29,7 +29,7 @@ function FilterByLocation({ context }: Props) {
   }, [])
   return (
     <div>
-      <DefaultDropdown
+      <BasicDropdown
         title="참여 방법"
         options={location}
         type='location'

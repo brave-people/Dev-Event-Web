@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import style from './Footer.module.scss';
+import style from 'components/layout/footer/Footer.module.scss';
 import Logo from 'components/common/logo/Logo';
 import Image from 'next/image';
 import { GithubIcon } from 'components/icons';

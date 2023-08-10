@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { EventContext } from "context/event";
 import { EventResponse } from "model/event";
 import ItemList from "components/common/item/ItemList";
@@ -10,7 +10,7 @@ type Props = {
 
 function FilteredEvent({ fallbackData } : Props) {
   const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
-  const { jobGroupList, eventType, location, coast } = useContext(EventContext);
+  const { jobGroupList, eventType, location, coast, search } = useContext(EventContext);
   return (
     <>
       <ItemList
@@ -20,6 +20,7 @@ function FilteredEvent({ fallbackData } : Props) {
         eventType={eventType}
         location={location}
         coast={coast}
+        search={search}
       />
     </>
   )

@@ -34,7 +34,7 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
     } else {
       authContext.logout();
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, date]);
 
   return (
     <>
@@ -60,17 +60,9 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
       </Head>
       <Banner />
       <section className={cn('section')}>
-        {(date === undefined || date === getCurrentDate())
-          ? (<ScheduledEventList
-              fallbackData={fallbackData}
-            />
-          ) : (
-            <MonthlyEventList
-              fallbackData={fallbackData}
-              date={date}
-            />
-          ) 
-        }
+        <ScheduledEventList
+          fallbackData={fallbackData}
+        />
       </section>
       <Letter />
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>

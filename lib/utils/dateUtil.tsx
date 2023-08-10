@@ -55,7 +55,7 @@ const getStartDate = () => {
 }
 
 const getDateList = () => {
-  const list = ['전체'];
+  const list = [];
   let currentDate = dayjs(getStartDate());
   for (let i = 0; i < 24; i++) {
     list.push(currentDate.format('YYYY년 MM월'));
@@ -81,11 +81,34 @@ const getCurrentDate = () => {
   return (`${year}년 ${month}월`);
 }
 
+const removeDupDate = (eventDate: string | undefined) => {
+  if (eventDate === undefined)
+    return ;
+  if (eventDate?.length !== 43) {
+    const sepDate = eventDate?.split('.');
+    const month = sepDate[1][0] === '0' ? `${sepDate[1][1]}월` : `${sepDate[1]}월`;
+    const date = sepDate[2][0] === '0' ? `${sepDate[2][1]}일` : `${sepDate[2].slice(0, 2)}일`;
+    const time = sepDate[2].slice(2, sepDate[2].length);
+    return (`${month} ${date}${time}`);
+  }
+  const startDate = eventDate.split('~')[0].split('.');
+  const endDate = eventDate.split('~')[1].split('.');
+  const prevMonth = startDate[1][0] === '0' ? `${startDate[1][1]}월` : `${startDate[1]}월`;
+  const nextMonth = endDate[1][0] === '0' ? `${endDate[1][1]}월` : `${endDate[1]}월`;
+  const prevDate = startDate[2][0] === '0' ? `${startDate[2][1]}일` : `${startDate[2].slice(0, 2)}일`;
+  const nextDate = endDate[2][0] === '0' ? `${endDate[2][1]}일` : `${endDate[2].slice(0, 2)}일`;
+  if (startDate[1] === endDate[1]) {
+    return (`${prevMonth}${prevDate}${startDate[2].slice(2, startDate[2].length)}~ ${nextDate}${endDate[2].slice(2, endDate[2].length)}`);
+  }
+  return (`${prevMonth}${prevDate}${startDate[2].slice(2, startDate[2].length)}~ ${nextMonth}${nextDate}${endDate[2].slice(2, endDate[2].length)}`);
+}
+
 export { 
   DateUtil,
   getDateList,
   getStartDate,
   getEndDate,
   getCurrentDate,
-  getMonth
+  getMonth,
+  removeDupDate
 };

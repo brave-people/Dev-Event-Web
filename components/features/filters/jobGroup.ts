@@ -1,5 +1,9 @@
 export const jobGroups = [
   {
+    tag_id: 0,
+    tag_name: "전체"
+  },
+  {
     tag_id: 1,
     tag_name: "AI"
   },

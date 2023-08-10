@@ -1,9 +1,9 @@
 import classNames from 'classnames/bind';
 import React from 'react';
-import style from './DeleteAccountModal.module.scss';
+import style from 'components/common/modal/DeleteAccountModal.module.scss';
 import Modal from 'react-modal';
-import FillButton from '../buttons/FillButton';
-import OutlineButton from '../buttons/OutlineButton';
+import FillButton from 'components/common/buttons/FillButton';
+import OutlineButton from 'components/common/buttons/OutlineButton';
 
 const cx = classNames.bind(style);
 

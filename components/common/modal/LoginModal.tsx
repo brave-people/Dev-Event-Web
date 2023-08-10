@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import React, { useState } from 'react';
-import style from './LoginModal.module.scss';
+import style from 'components/common/modal/LoginModal.module.scss';
 import Modal from 'react-modal';
 import { MdClose } from 'react-icons/md';
 import GoogleIcon from 'public/icon/google.svg';

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
-import DefaultDropdown from "components/common/dropdown/DefaultDropdown";
+import BasicDropdown from "components/common/dropdown/BasicDropdown";
 import { EventContext } from 'context/event';
-import { UrlContext } from 'types/UrlContext';
-import { eventType } from '../eventType';
+import { UrlContext } from 'types/Context';
+import { eventType } from 'components/features/filters/eventType';
 
 type Props = {
   context: UrlContext | undefined;
@@ -21,16 +21,16 @@ function FilterByEventType({ context }: Props) {
     } else if (context.type !== undefined) {
       const decode = decodeURIComponent(context.type);
       if (eventType.includes(decode)) {
-        handleEventType(decode)
+        handleEventType(decode);
       } else {
         handleEventType(undefined);
       }
     }
-  }, [])
+  }, []);
   
   return (
     <div>
-      <DefaultDropdown
+      <BasicDropdown
         title="행사 유형"
         options={eventType}
         type='type'

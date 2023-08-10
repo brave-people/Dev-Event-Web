@@ -1,15 +1,24 @@
-import React, { useContext, useState  } from "react";
-import DefaultInput from "components/common/input/DefaultInput";
+import React, { useContext, useEffect, useState  } from "react";
+import BasicInput from "components/common/input/BasicInput";
 import classNames from "classnames/bind";
-import style from './SearchEvent.module.scss'
+import style from 'components/features/filters/searchEvent/SearchEvent.module.scss'
 import * as ga from 'lib/utils/gTag';
 import { EventContext } from "context/event";
+import { useRouter } from "next/router";
+import { parseUrl } from "lib/utils/urlUtil";
+import { UrlContext } from "types/Context";
 
 const cn = classNames.bind(style);
 
-function SearchEvent() {
+type Props = {
+  context: UrlContext | undefined;
+}
+
+function SearchEvent( { context }: Props) {
   const [input, setInput] = useState<string | undefined>(undefined)
-  const { handleSearch } = useContext(EventContext);
+  const { jobGroupList, date, handleDate, handleSearch } = useContext(EventContext);
+  const router = useRouter();
+
   const submitInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (input?.length === 1 && (event.code === 'Backspace'))
       handleSearch(undefined)
@@ -21,9 +30,13 @@ function SearchEvent() {
           event_label: '검색',
         });
         handleSearch(input);
+        if (date !== undefined)
+          handleDate(undefined);
+        router.replace(`${parseUrl(`${router.asPath}`, 'kwd', input, jobGroupList)}`)
       }
     } 
   };
+
   const updateInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
   };
@@ -31,9 +44,17 @@ function SearchEvent() {
   const initInput = () => {
     setInput("");
   }
+  useEffect(() => {
+    if (context?.kwd === undefined) {
+      handleSearch(undefined)
+    } else if (context.kwd !== undefined) {
+      const decode = decodeURIComponent(context.kwd);
+      handleSearch(decode)
+    }
+  }, [])
   return (
     <div className={cn('container')}>
-      <DefaultInput
+      <BasicInput
         label="행사 검색하기"
         size="large"
         icon="search"

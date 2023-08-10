@@ -32,8 +32,9 @@ export const handleUndefined = (
   eventType: string | undefined,
   location: string | undefined,
   coast: string | undefined,
+  search: string | undefined,
 ) => {
-  if (jobGroups === undefined && eventType === undefined && location === undefined && coast === undefined)
+  if (jobGroups === undefined && eventType === undefined && location === undefined && coast === undefined && search === undefined)
     return (true);
   return (false);
 }
@@ -43,10 +44,11 @@ export const checkCondition = (
   eventType: string | undefined,
   location: string | undefined,
   coast: string | undefined,
+  search: string | undefined,
   event: Event
   ) => {
   const eventTag = event.tags;
-  if (handleUndefined(jobGroups, eventType, location, coast))
+  if (handleUndefined(jobGroups, eventType, location, coast, search))
     return (true);
   for (let i = 0; i < eventTag.length; i++) {
     if (jobGroups !== undefined && jobGroups.includes(eventTag[i].tag_name))
@@ -56,6 +58,8 @@ export const checkCondition = (
     if (location !== undefined && location === eventTag[i].tag_name)
       return (true);
     if (coast !== undefined && coast === eventTag[i].tag_name)
+      return (true);
+    if (search !== undefined && search === eventTag[i].tag_name)
       return (true);
     }
   return (false);

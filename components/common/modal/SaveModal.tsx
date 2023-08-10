@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import React, { useContext } from 'react';
-import style from './ShareModal.module.scss';
+import style from 'components/common/modal/ShareModal.module.scss';
 import { SaveIcon } from 'components/icons';
 import { WindowContext } from 'context/window';
 
