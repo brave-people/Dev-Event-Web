@@ -1,6 +1,6 @@
 import { MouseEventHandler } from "react"
 
-export type DefaultButton = {
+export type ButtonProps = {
   onClick: MouseEventHandler<HTMLButtonElement>;
   label: string;
   size: string;
