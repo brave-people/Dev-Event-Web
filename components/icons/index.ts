@@ -13,6 +13,7 @@ import CheckIcon from "./CheckIcon";
 import SaveIcon from "./SaveIcon";
 import NewBulletIcon from "./NewBulletIcon";
 import EndBulletIcon from "./EndBulletIcon";
+import ReviewIcon from "./ReviewIcon";
 
 export {
   PlusIcon,
@@ -29,5 +30,6 @@ export {
   CheckIcon,
   SaveIcon,
   NewBulletIcon,
-  EndBulletIcon
+  EndBulletIcon,
+  ReviewIcon
 }
