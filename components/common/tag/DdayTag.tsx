@@ -1,19 +1,20 @@
 import classNames from 'classnames/bind';
 import { DateUtil } from 'lib/utils/dateUtil';
 import React from 'react';
-import style from './DdayTag.module.scss';
+import style from 'components/common/tag/DdayTag.module.scss';
+
 const cn = classNames.bind(style);
 
-interface props {
+type Props = {
   startDateTime: string;
   endDateTime: string;
-}
+} 
 
-function DdayTag(props: props) {
+function DdayTag({ startDateTime, endDateTime }: Props) {
   const calculateEventDday = () => {
     const todayDate = DateUtil.setDateTimeToDate();
-    const startDate = DateUtil.setDateTimeToDate(props.startDateTime);
-    const endDate = DateUtil.setDateTimeToDate(props.endDateTime);
+    const startDate = DateUtil.setDateTimeToDate(startDateTime);
+    const endDate = DateUtil.setDateTimeToDate(endDateTime);
     const ddayByStart = startDate.diff(todayDate, 'day');
     const ddayByEnd = endDate.diff(todayDate, 'day');
 
@@ -37,17 +38,17 @@ function DdayTag(props: props) {
 
     switch (type.type) {
       case 'approach':
-        return <span className={cn('tag--approach')}>D-{type.diff}</span>;
+        return <div>D-{type.diff}</div>;
       case 'scheduled':
-        return <span className={cn('tag--scheduled')}>D-{type.diff}</span>;
+        return <div>D-{type.diff}</div>;
       case 'ongoing':
-        return <span className={cn('tag--ongoing')}>Today</span>;
+        return <div>Today</div>;
       default:
-        return <span></span>;
+        return <div></div>;
     }
   };
 
-  return <span className={cn('tag')}>{getEventDdayTag()}</span>;
+  return <div className={cn('tag')}>{getEventDdayTag()}</div>;
 }
 
 export default DdayTag;
