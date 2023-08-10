@@ -1,17 +1,19 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Event } from 'model/event';
 import classNames from 'classnames/bind';
-import style from './Item.module.scss';
+import style from 'components/common/item/Item.module.scss';
 import Image from 'next/image';
-import FilterTag from '../tag/FilterTag';
-import { DateUtil } from 'lib/utils/dateUtil';
-import * as ga from 'lib/utils/gTag';
+import FilterTag from 'components/common/tag/FilterTag';
+import { DateUtil, removeDupDate } from 'lib/utils/dateUtil';
 import { WindowContext } from 'context/window';
 import { TagResponse } from 'model/tag';
-import { BookmarkIcon, ShareIcon } from 'components/icons';
+import { BookmarkIcon, EndBulletIcon, NewBulletIcon, ShareIcon } from 'components/icons';
 import { getTagName, getTagType } from 'lib/utils/tagUtil';
-import ShareModal from '../modal/ShareModal';
+import ShareModal from 'components/common/modal/ShareModal'
+import { EventContext } from 'context/event';
+import * as ga from 'lib/utils/gTag';
+import DdayTag from '../tag/DdayTag';
 
 const cn = classNames.bind(style);
 
@@ -21,23 +23,24 @@ const DateType = {
   time: 'time',
 };
 
-const Item = ({
-  data,
-  isFavorite,
-  isEventDone,
-  isEventNew = () => false,
-  onClickFavorite,
-  isLast
-}: {
+type Props = {
   data: Event;
   isEventDone: () => boolean;
   isEventNew?: () => boolean;
   isFavorite: () => boolean;
   onClickFavorite?: any;
-  isLast: boolean
-}) => {
+  childLast: boolean;
+  parentLast: boolean;
+}
+
+const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClickFavorite, childLast, parentLast }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { windowX } = useContext(WindowContext);
+  const [isLast, setIsLast] = useState<boolean>(false);
+  const [isDone, setIsDone] = useState<boolean>(isEventDone());
+  const [isNew, setIsNew] = useState<boolean>(isEventNew());
+  const { windowX, windowTheme } = useContext(WindowContext);
+  const { search } = useContext(EventContext);
+  const imgPath = windowTheme ? "/default/event-thumbnail-light.svg" : "/default/event-thumbnail-dark.svg";
   const handleShare = () => {
     setIsOpen(true);
     navigator.clipboard.writeText(data.event_link)
@@ -75,7 +78,7 @@ const Item = ({
         ' ~ ' +
         convertDateFormat(data.end_date_time, endDateType);
     }
-    return eventDate;
+    return removeDupDate(eventDate)
   };
 
   const convertDateFormat = (date: string, type: string) => {
@@ -88,8 +91,13 @@ const Item = ({
         return DateUtil.getDateTimeFormat(date);
     }
   };
+  useEffect(() => {
+    if ((!search && childLast) || (search && parentLast)) {
+      setIsLast(true);
+    }
+  }, [search])
   return (
-    <div className={cn('item__container', `${isLast && 'item-last'}`)}>
+    <div className={cn('item__container', `${isLast && 'item__last'}`)}>
       {isOpen && <ShareModal />}
       <div className={cn('item')}>
         <Link href={String(data.event_link)}>
@@ -109,25 +117,32 @@ const Item = ({
             <div className={cn('item__content')}>
               <div className={cn('item__content__img')}>
                 <Image
-                  className={cn('mask')}
+                  className={cn('item__content__img__mask')}
                   alt="이벤트 이미지"
                   src={
                     data.cover_image_link.includes('brave-people-3.s3.ap-northeast-2.amazonaws.com')
                       ? data.cover_image_link
-                      : '/default/event_img.png'
+                      : imgPath
                   }
                   priority={true}
                   width={200}
                   height={112}
                 />
-                {isEventDone() ? (
-                  <div className={cn('item__content__img--isDone')}>
-                    <span>종료된 행사입니다</span>
+                {isDone && <div className={cn('item__content__img__done')} />}
+                {isDone ? (
+                  <div className={cn('item__content__flag')}>
+                    <EndBulletIcon
+                      color={windowTheme ? "rgba(203, 203, 206, 1)" : "rgba(49, 50, 52, 1)"}
+                      backgroundColor={windowTheme ? "rgba(49, 50, 52, 1)" : "rgba(203, 203, 206, 1)"}
+                    />
                   </div>
                 ) : null}
-                {isEventNew() ? (
-                  <div className={cn('item__content__flag', 'new')}>
-                    <span>NEW</span>
+                {isNew ? (
+                  <div className={cn('item__content__flag')}>
+                    <NewBulletIcon
+                      color={windowTheme ? "rgba(203, 203, 206, 1)" : "rgba(49, 50, 52, 1)"}
+                      backgroundColor={windowTheme ? "rgba(44, 76, 239, 1)" : "rgba(79, 108, 255, 1)"}
+                    />
                   </div>
                 ) : null}
                 {isFavorite() ? (
@@ -138,14 +153,17 @@ const Item = ({
               </div>
               <div className={cn('item__content__body')}>
                 <span className={cn('wrap')}>
-                  <div className={cn('host')}>{data.organizer}</div>
+                  <div className={cn(isDone ? 'host__done' : 'host')}>{data.organizer}</div>
                 </span>
-                <span className={cn('item__content__title')}>{(data.title.length >= 30 && windowX <= 750) ? `${data.title.slice(0, 30)}...` : data.title}</span>
+                <div className={cn('item__content_title__container')}>
+                  <div className={cn(isDone ? 'item__content__title__done' :'item__content__title')}>{(data.title.length >= 30 && windowX <= 750) ? `${data.title.slice(0, 30)}...` : data.title}</div>
+                  {isDone ? null : <DdayTag startDateTime={data.start_date_time} endDateTime={data.end_date_time} />}
+                </div>
                 <div className={cn('item__content__desc')}>
                   <span className={cn('wrap')}>
                     <div className={cn('date')}> 
-                      <span className={cn('date__type')}>{data.event_time_type === "DATE" ? "일시 " : "접수 "}</span>
-                      <span className={cn('date__date')}>{getEventDate()}</span> 
+                      <span className={cn(isDone ? 'date__type__done' : 'date__type')}>{data.event_time_type === "DATE" ? "일시 " : "접수 "}</span>
+                      <span className={cn(isDone ? 'date__date__done' : 'date__date')}>{getEventDate()}</span> 
                     </div>
                   </span>
                   <div className={cn('item__content__desc__tags')}>
@@ -197,13 +215,13 @@ const Item = ({
             <ShareIcon
               color='rgba(171, 172, 178, 1)'
               className='button'
-              isFavorite={isFavorite()}
             />
           </button>
           <button className={cn(`button`, 'share-button')} onClick={onClickFavorite}>
             <BookmarkIcon
               color='rgba(171, 172, 178, 1)'
               className='button'
+              isFavorite={isFavorite()}
             />
           </button>
         </div>

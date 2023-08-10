@@ -1,18 +1,30 @@
 @import '~styles/_mixin.scss';
 
+.search__header {
+  padding-top: 1.806rem;
+  width: 68.75rem;
+  transition: all ease-in .3s;
+}
+
 .section__list {
   padding-top: 2.813rem;
   width: 68.75rem;
   transition: all ease-in .3s;
+}
 
-  &__title {
-    font-weight: 700;
-    font-size: 1.5rem;
-    line-height: 2.188rem;
-    color: var(--gray-1);
-    display: flex;
-    flex-direction: row;
-  }
+.search__list {
+  // padding-top: 1.406rem;
+  width: 68.75rem;
+  transition: all ease-in .3s;
+}
+
+.list__title {
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 2.188rem;
+  color: var(--gray-1);
+  display: flex;
+  flex-direction: row;
 }
 
 .null-container {
@@ -28,8 +40,18 @@
   color: var(--gray-1);
 }
 
+.divider {
+  border-top: 1px solid var(--gray-4);
+}
+
 @media (max-width: 1075px) {
   .section__list {
+    width: 60.75rem;
+  }
+  .search__header {
+    width: 60.75rem;
+  }
+  .search__list {
     width: 60.75rem;
   }
 }
@@ -37,10 +59,16 @@
 @media (max-width: 955px) {
   .section__list {
     width: 52.75rem;
-    .section__list__title {
-      font-size: 1.3rem;
-      line-height: 1.7rem;
-    }
+  }
+  .search__header {
+    width: 52.75rem;
+  }
+  .search__list {
+    width: 52.75rem;
+  }
+  .list__title {
+    font-size: 1.3rem;
+    line-height: 1.7rem;
   }
 }
 
@@ -48,14 +76,33 @@
   .section__list {
     width: 42rem;
   }
+  .search__header {
+    width: 42rem;
+  }
+  .search__list {
+    width: 42rem;
+  }
+
   @media (max-width: 600px) {
     .section__list {
+      width: 36rem;
+    }
+    .search__header {
+      width: 36rem;
+    }
+    .search__list {
       width: 36rem;
     }
   }
 
   @media (max-width: 555px) {
     .section__list {
+      width: 30rem;
+    }
+    .search__header {
+      width: 30rem;
+    }
+    .search__list {
       width: 30rem;
     }
   }
@@ -65,10 +112,22 @@
     .section__list {
       width: 25rem;
     }
+    .search__header {
+      width: 25rem;
+    }
+    .search__list {
+      width: 25rem;
+    }
   }
 
   @media (max-width: 360px) {
     .section__list {
+      width: 20rem;
+    }
+    .search__header {
+      width: 20rem;
+    }
+    .search__list {
       width: 20rem;
     }
   }

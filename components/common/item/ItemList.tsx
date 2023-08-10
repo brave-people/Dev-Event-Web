@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import classNames from 'classnames/bind';
-import style from './ItemList.module.scss';
+import style from 'components/common/item/ItemList.module.scss'
 import { ThreeDots } from 'react-loader-spinner';
-import { checkCondition, checkDate, checkEventDone, getEventEndDate } from 'lib/utils/eventUtil';
+import { checkCondition, checkEventDone, getEventEndDate } from 'lib/utils/eventUtil';
 import EventFilter from 'components/features/filters/EventFilter';
 import { EventResponse } from 'model/event';
-import List from '../list/list';
+import List from 'components/common/item/List';
 import { checkSearch } from 'lib/utils/searchUtil';
 import { EventContext } from 'context/event';
 import EventNull from '../modal/EventNull';
@@ -19,13 +19,14 @@ type Props = {
   eventType?: string;
   location?: string;
   coast?: string;
+  search?: string;
 }
 
-function ItemList({ events, isError, jobGroups, eventType, location, coast }: Props) {
+function ItemList({ events, isError, jobGroups, eventType, location, coast, search }: Props) {
   const [ totalCount, setTotalCount] = useState<number>(0);
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
-  const { search, date } = useContext(EventContext);
-
+  const { date } = useContext(EventContext);
+  let eventCount = 0;
 
   useEffect(() => {
     setIsLoading(true);
@@ -40,7 +41,7 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast }: Pr
   }
 
   const composeTotalCount = () => {
-    if (events === undefined || events.length === 0){
+    if (events === undefined || events.length === 0) {
       setTotalCount(0);
     } else {
       const result = events.reduce(function add(sum, currValue) {
@@ -52,8 +53,7 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast }: Pr
                 use_start_date_time_yn: item.use_start_date_time_yn,
                 use_end_date_time_yn: item.use_end_date_time_yn,
               }),
-            }) && (checkCondition(jobGroups, eventType, location, coast, item))
-              && checkSearch(search, item) && checkDate(date, item)
+            }) && (checkCondition(jobGroups, eventType, location, coast, search, item) || checkSearch(search, item))
             ) 
         return sum + filteredEvents.length;
       }, 0);
@@ -64,6 +64,11 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast }: Pr
   return (
     <>
       <EventFilter />
+      {search && (
+        <div className={cn('search__header')}>
+          <span className={cn('list__title')}>{search}</span>
+        </div>
+      )}
       {isLoading ? (
         <div className={cn('null-container')}>
           <ThreeDots color="#479EF1" height={60} width={60} />
@@ -82,28 +87,30 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast }: Pr
                     use_start_date_time_yn: item.use_start_date_time_yn,
                     use_end_date_time_yn: item.use_end_date_time_yn,
                   }),
-                }) && (
-                  checkCondition(jobGroups, eventType, location, coast, item)
-                  && checkSearch(search, item) && checkDate(date, item)
-                ) 
+                }) && (checkCondition(jobGroups, eventType, location, coast, search, item) || checkSearch(search, item)) 
             );
-          return lists !== undefined && lists.length !== 0 ? (
+          eventCount += lists.length;
+          const isLast = eventCount === totalCount ? true : false;
+          return  (
             <div key={index}>
-              <div className={cn('section__list')}>
-                <div className={cn('section__list__title')}>
-                  <span>{search !== undefined ? search : `${event.metadata.year}년 ${event.metadata.month}월`}</span>
-                </div>
-                <List data={lists} />
-              </div>
-              {index === events.length - 1 ? null : <hr className={cn('divider')} />}
+              {lists !== undefined && lists.length !== 0
+                ? ( <div className={cn(`${search ? 'search__list' : 'section__list'}`)}>
+                      {search === undefined &&
+                       <div className={cn('list__title')}>
+                        <span>{search || `${event.metadata.year}년 ${event.metadata.month}월`}</span>
+                      </div>}
+                      <List
+                        data={lists}
+                        parentLast={search ? isLast : false}
+                      />
+                    </div>
+                ) : null
+              }
             </div>
-          ) : null;
-        })
+        )})
       ) : (
         <div>
-          <EventNull
-            search={search}
-          />
+          <EventNull />
         </div>
       ))}
     </>
