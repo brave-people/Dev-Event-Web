@@ -10,18 +10,21 @@ function DownArrowIcon({ color, className, ...rest }: Icon ) {
   const { windowTheme } = useContext(WindowContext);
   return (
     <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={13}
-    height={13}
-    fill="none"
-    className={cn(className)}
-    {...rest}
-  >
-    <path
-      fill={`${windowTheme ? "rgba(49, 50, 52, 1)" : "rgba(203, 203, 206, 1)"}`}
-      d="M2.153 4.184a.449.449 0 0 0-.122.285c0 .203 4.266 4.468 4.469 4.468.203 0 4.469-4.275 4.469-4.478 0-.193-.203-.396-.396-.396-.092 0-1.036.883-2.113 1.95L6.5 7.973l-1.96-1.96c-1.077-1.067-2.021-1.95-2.113-1.95a.446.446 0 0 0-.274.121Z"
-    />
-  </svg>
+      xmlns="http://www.w3.org/2000/svg"
+      width={10}
+      height={6}
+      fill="none"
+      className={cn(className)}
+      {...rest}
+    >
+      <path
+        stroke={`${windowTheme ? "rgba(49, 50, 52, 1)" : "rgba(203, 203, 206, 1)"}`}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.3}
+        d="m1 1 3.646 3.646a.5.5 0 0 0 .708 0L9 1"
+      />
+    </svg>
   )
 }
 

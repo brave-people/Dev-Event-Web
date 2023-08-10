@@ -11,6 +11,8 @@ import SunIcon from "./SunIcon";
 import DeleteIcon from "./DeleteIcon";
 import CheckIcon from "./CheckIcon";
 import SaveIcon from "./SaveIcon";
+import NewBulletIcon from "./NewBulletIcon";
+import EndBulletIcon from "./EndBulletIcon";
 
 export {
   PlusIcon,
@@ -25,5 +27,7 @@ export {
   SunIcon,
   DeleteIcon,
   CheckIcon,
-  SaveIcon
+  SaveIcon,
+  NewBulletIcon,
+  EndBulletIcon
 }
