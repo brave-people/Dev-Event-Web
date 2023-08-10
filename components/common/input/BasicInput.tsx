@@ -1,28 +1,21 @@
-import React, { useContext, useRef, Dispatch, SetStateAction } from 'react';
+import React, { useContext, useRef } from 'react';
 import classNames from 'classnames/bind';
-import style from './DefaultInput.module.scss'
+import style from 'components/common/input/BasicInput.module.scss'
 import getIconByName from 'lib/utils/iconUtil';
 import { DeleteIcon } from 'components/icons';
 import { WindowContext } from 'context/window';
 import { EventContext } from 'context/event';
+import { useRouter } from 'next/router';
+import { handleUrl } from 'lib/utils/urlUtil';
+import { InputProps } from 'types/Input';
 
 const cn = classNames.bind(style);
 
-type InputProps = {
-  updateInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  submitInput: (event: React.KeyboardEvent<HTMLInputElement>) => void;
-  label: string;
-  size?: string;
-  icon?: string;
-  iconStyle?: string;
-  initInput: () => void;
-  input: string | undefined;
-}
-
-function DefaultInput({ updateInput, submitInput, label, size, icon, iconStyle, input, initInput }: InputProps) {
+function BasicInput({ updateInput, submitInput, label, size, icon, iconStyle, input, initInput }: InputProps) {
   const searchRef = useRef<HTMLInputElement | null>(null);
   const { windowTheme } = useContext(WindowContext)
-  const { search, handleSearch } = useContext(EventContext);
+  const { jobGroupList, eventType, location, coast, search, handleSearch } = useContext(EventContext);
+  const router = useRouter();
   return (
     <>
       <div className={cn('container')}>
@@ -44,6 +37,7 @@ function DefaultInput({ updateInput, submitInput, label, size, icon, iconStyle, 
               initInput();
             if (search !== undefined )
               handleSearch(undefined);
+            router.replace(handleUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
           }}>
           <DeleteIcon
             color={`${windowTheme ? "#d3d4d8" : "#797a81"}`}
@@ -54,4 +48,4 @@ function DefaultInput({ updateInput, submitInput, label, size, icon, iconStyle, 
   )
 }
 
-export default DefaultInput;
+export default BasicInput;

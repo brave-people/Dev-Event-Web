@@ -15,6 +15,12 @@
     border-color: var(--gray-4);
     border-radius: 2.9881px;
     box-sizing: border-box;
+    &:hover {
+      border-color: rgba(170, 184, 255, 1);
+    }
+    &:focus {
+      border-color: var(--primary);
+    }
   }
 
   input[type=text] {
