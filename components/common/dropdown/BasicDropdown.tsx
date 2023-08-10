@@ -1,17 +1,17 @@
 import { useOnClickOutside } from "lib/hooks/useOnClickOutside";
 import { useContext, useRef, useState } from "react";
-import style from './DefaultDropdown.module.scss'
+import style from 'components/common/dropdown/BasicDropdown.module.scss'
 import classNames from "classnames/bind";
 import DownArrowIcon from "components/icons/DownArowIcon";
-import * as ga from 'lib/utils/gTag';
 import { useRouter } from "next/router";
 import { handleUrl, parseUrl } from "lib/utils/urlUtil";
 import { EventContext } from "context/event";
 import { WindowContext } from "context/window";
+import * as ga from 'lib/utils/gTag';
 
 const cn = classNames.bind(style);
 
-type DefaultDropdownProps = {
+type BasicDropdownProps = {
   title: string;
   options: string[];
   type: string;
@@ -23,10 +23,10 @@ type DefaultDropdownProps = {
   }
 }
 
-function DefaultDropdown({ title, options, type, context, gaParam }: DefaultDropdownProps) {
+function BasicDropdown({ title, options, type, context, gaParam }: BasicDropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [currentState, setCurrentState] = useState<string | undefined>(undefined);
-  const { jobGroupList, eventType, location, coast } = useContext(EventContext)
+  const { jobGroupList, eventType, location, coast, search, date, handleDate } = useContext(EventContext)
   const { windowTheme } = useContext(WindowContext);
   const outSideRef = useRef(null);
   const router = useRouter();
@@ -74,7 +74,7 @@ function DefaultDropdown({ title, options, type, context, gaParam }: DefaultDrop
   return (
     <>
       <div className={cn('dropdown')} ref={outSideRef}>
-        <div className={cn('dropdown__header')} onClick={handleClickDropdown}>
+        <div className={cn('dropdown__header', isOpen && 'dropdown__header__focus')} onClick={handleClickDropdown}>
           <span className={cn('dropdown__header__placeholder')}>
             <span>{name !== '전체' ? name : title}</span>
           </span>
@@ -97,11 +97,13 @@ function DefaultDropdown({ title, options, type, context, gaParam }: DefaultDrop
                     ga.event(gaParam)
                     const key = `${type}`
                     const value = `${option}`
+                    if (date !== undefined)
+                      handleDate(undefined);
                     if (option === "전체") {
                       setCurrentState(undefined);
                       context(undefined);
                       setIsOpen(false);
-                      router.replace(`${handleUrl(`${router.asPath}`, key, jobGroupList, eventType, location, coast)}`)
+                      router.replace(`${handleUrl(`${router.asPath}`, key, jobGroupList, eventType, location, coast, search)}`)
                     } else {
                       setCurrentState(option);
                       context(option)
@@ -120,4 +122,4 @@ function DefaultDropdown({ title, options, type, context, gaParam }: DefaultDrop
   );
 }
 
-export default DefaultDropdown;
+export default BasicDropdown;
