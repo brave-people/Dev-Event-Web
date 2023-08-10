@@ -8,12 +8,13 @@ import FilterTag from 'components/common/tag/FilterTag';
 import { DateUtil, removeDupDate } from 'lib/utils/dateUtil';
 import { WindowContext } from 'context/window';
 import { TagResponse } from 'model/tag';
-import { BookmarkIcon, EndBulletIcon, NewBulletIcon, ShareIcon } from 'components/icons';
+import { BookmarkIcon, EndBulletIcon, NewBulletIcon, ReviewIcon, ShareIcon } from 'components/icons';
 import { getTagName, getTagType } from 'lib/utils/tagUtil';
 import ShareModal from 'components/common/modal/ShareModal'
 import { EventContext } from 'context/event';
 import * as ga from 'lib/utils/gTag';
 import DdayTag from '../tag/DdayTag';
+import DoneTag from '../tag/DoneTag';
 
 const cn = classNames.bind(style);
 
@@ -157,7 +158,9 @@ const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClick
                 </span>
                 <div className={cn('item__content_title__container')}>
                   <div className={cn(isDone ? 'item__content__title__done' :'item__content__title')}>{(data.title.length >= 30 && windowX <= 750) ? `${data.title.slice(0, 30)}...` : data.title}</div>
-                  {isDone ? null : <DdayTag startDateTime={data.start_date_time} endDateTime={data.end_date_time} />}
+                  {isDone 
+                    ? <DoneTag />
+                    : <DdayTag startDateTime={data.start_date_time} endDateTime={data.end_date_time} />}
                 </div>
                 <div className={cn('item__content__desc')}>
                   <span className={cn('wrap')}>

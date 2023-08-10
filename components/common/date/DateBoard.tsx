@@ -79,7 +79,8 @@ function DateBoard({ options }: Props) {
           setIsFirstEl(false);
         setIsLastEl(false);
       } else if (type === 'next' && current !== options.length - 1) {
-        if (options[current] === `${initYear}년 ${initMonth}월`) {
+        console.log(options[current], `}월`)
+        if (options[current] === `${new Date().getFullYear().toString()}년 ${getMonth()}월`) {
           handleDate(undefined);
           setIsLastEl(true);
           router.replace('/events');
