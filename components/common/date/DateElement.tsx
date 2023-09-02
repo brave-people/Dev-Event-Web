@@ -14,11 +14,12 @@ type Props = {
   currentYear: string;
   setIsFirst: Dispatch<SetStateAction<boolean>>;
   setIsLast: Dispatch<SetStateAction<boolean>>;
+  reflactUrl: (urls: string) => void;
   handleIsOpen: (isOpen: boolean) => void;
   handleRemoveContext: () => void;
 }
 
-function DateElement({ options, currentYear, setIsFirst, setIsLast, handleIsOpen, handleRemoveContext }: Props) {
+function DateElement({ options, currentYear, setIsFirst, setIsLast, handleIsOpen, reflactUrl, handleRemoveContext }: Props) {
   const router = useRouter();
   const { date, handleDate } = useContext(EventContext);
   const { windowTheme } = useContext(WindowContext);
@@ -51,7 +52,7 @@ function DateElement({ options, currentYear, setIsFirst, setIsLast, handleIsOpen
                 return ;
               const year = option.slice(0, 4);
               const month = option.slice(6, 8);
-              router.replace(`/calender?year=${year}&month=${month}`);
+              reflactUrl(`/calender?year=${year}&month=${month}`);
               handleRemoveContext();
               handleCurrentDate(option);
               handleIsOpen(false);

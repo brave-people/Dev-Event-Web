@@ -1,7 +1,9 @@
 @import '~styles/_mixin.scss';
 
 .container {
-  width: 14rem;
+  position: relative;
+  width: 100%;
+  min-width: 14rem;
   height: 36px;
   display: flex;
   align-items: center;
@@ -13,6 +15,10 @@
 
   &:hover {
     border-color: rgba(170, 184, 255, 1);
+  }
+
+  .key  {
+    overflow: hidden;
   }
   
   .key--active {
@@ -49,7 +55,7 @@
   .dropdown {
     display: flex;
     justify-content: center;
-    min-width: 8rem;
+    width: 100%;
     height: 100%;
     position: relative;
     user-select: none;
@@ -117,6 +123,15 @@
       }
     }  
   }
+
+  .date__elements {
+    position: absolute;
+    bottom: 0;
+    transform: translateY(150%);
+    animation-name: focusIn;
+    animation-duration: .3s;
+    animation-timing-function: ease;
+  }
 }
 
 .container__focus {
@@ -126,132 +141,21 @@
   }
 }
 
-@media (max-width: 1075px) {
-  .container {
-    .key--active {
-      min-width: 2.5rem;
-    }
-    .key--disactive {
-      min-width: 2.5rem;
-    }
-    .dropdown {
-      display: flex;
-      justify-content: center;
-    
-      &__list {
-        width: 14rem;
-      }
-    }
-  } 
-}
-
-@include mobile {
-  .container {
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    height: 35px;
-
-    .key--active {
-      width: 35px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .key--disactive {
-      opacity: 0.5;
-      user-select: none;
-      width: 35px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .dropdown {
-      &__header {
-        font-size: 0.857rem;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-      }
-  
-      &__list {
-        position: absolute;
-        left: 50%;
-        top: 38px;
-        transform: translateX(-50%);
-        animation-name: appearIn;
-        animation-duration: 0.2s;
-        animation-timing-function: linear;
-        overflow-y: scroll;
-        background-color: var(--background-1);
-        border: 1.5px solid;
-        border-color: var(--gray-4);
-        border-radius: 2.9881px;
-        height: 245px;
-        overflow: hidden;
-
-      }
-    }
-  }
-
-  @media (max-width: 555px) {
-    .container {
-      width: 12rem;
-      height: 30px;
-      display: flex;
-      flex-direction: row;
-      position: relative;
-
-      .key--active {
-        min-width: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-  
-      .key--disactive {
-        opacity: 0.5;
-        user-select: none;
-        min-width: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .dropdown {
-        min-width: 6rem;
-        &__header {
-          width: 100%;
-          font-size: 0.9rem;
-          font-weight: 400;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
-        }
-    
-        &__list {
-          width: 12rem;
-          position: absolute;
-          left: 50%;
-          top: 32px;
-          transform: translateX(-50%);
-          animation-name: appearIn;
-          animation-duration: 0.2s;
-          animation-timing-function: linear;
-          overflow-y: scroll;
-          background-color: #ffffff;
-          border: 1.5px solid #cecece;
-          border-radius: 2.9881px;
-          overflow: hidden;
-        }
-      }
-    }
-  }
+.hidden {
+  display: none;
 }
 
 @keyframes appearIn {
+  0% {
+    opacity: 0%;
+  }
+
+  100% {
+    opacity: 100%;
+  }
+}
+
+@keyframes focusIn {
   0% {
     opacity: 0%;
   }

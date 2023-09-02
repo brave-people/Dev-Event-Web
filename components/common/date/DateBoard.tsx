@@ -1,12 +1,13 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState, Dispatch, SetStateAction } from "react";
 import style from 'components/common/date/DateBoard.module.scss'
 import classNames from "classnames/bind";
 import { LeftArrowIcon, RightArrowIcon } from "components/icons";
 import { useOnClickOutside } from "lib/hooks/useOnClickOutside";
 import { EventContext } from "context/event";
-import { getCurrentDate, getMonth } from "lib/utils/dateUtil";
+import { getMonth } from "lib/utils/dateUtil";
 import DateElement from "./DateElement";
 import { useRouter } from "next/router";
+import { WindowContext } from "context/window";
 
 const cn = classNames.bind(style);
 
@@ -16,17 +17,19 @@ type Props = {
 
 function DateBoard({ options }: Props) {
   const router = useRouter();
-
   const initYear = router.asPath.includes('calender') ? router.asPath.slice(15, 19) : new Date().getFullYear().toString();
   const initMonth = router.asPath.includes('calender') ? router.asPath.slice(26, 28) : getMonth();
+  const [dateElement, setDateElement] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isFirstEl, setIsFirstEl] = useState<boolean>(false);
   const [isLastEl, setIsLastEl] = useState<boolean>(false);
   const [currentYear, setCurrentYear] = useState<string>(initYear);
   const [currentMonth, setCurrentMonth] = useState<string>(initMonth);
   const { 
-    date, handleDate, handleSearch, handleLocation, handleEventType, handleCoast, initJobGroupList 
-  } = useContext(EventContext);  const outSideRef = useRef(null);
+    date, handleDate, handleSearch, handleLocation, handleEventType, handleCoast, initJobGroupList, handleUrl
+  } = useContext(EventContext);  
+  const { modalState, handleModalState } = useContext(WindowContext);
+  const outSideRef = useRef(null);
 
   const handleClose = () => {
     if (isOpen) {
@@ -47,16 +50,22 @@ function DateBoard({ options }: Props) {
   }
 
   const handleClickDropdown = () => {
-    if (isOpen) {
-      setIsOpen(false);
-    } else {
-      setIsOpen(true);
+    const windowX = window.innerWidth;
+
+    if (windowX < 600 && modalState.currentModal !== 3) {
+      setDateElement(true);
+      handleModalState({
+        currentModal: 3,
+        prevModal: modalState.currentModal,
+        type: false,
+      })
+    } else if (windowX >= 600) {
+      setIsOpen(!isOpen);
     }
   };
 
   const handleArrowBtn = (dateArg: string | undefined, type: string) => {
     if (type === "prev" && dateArg === undefined) {
-      const last = options.length - 1;
       handleDate(`${currentYear}년 ${currentMonth}월`);
       setIsLastEl(false);
       router.replace(`/calender?year=${currentYear}&month=${currentMonth}`);
@@ -64,7 +73,7 @@ function DateBoard({ options }: Props) {
     }
     if (dateArg !== undefined) {
       const current = options.indexOf(dateArg);
-      if (type === 'prev' && current !== 1) {
+      if (type === 'prev') {
         if (current !== 1) {
           const newYear = options[current - 1].slice(0, 4);
           const newMonth = options[current - 1].slice(6, 8);
@@ -78,12 +87,12 @@ function DateBoard({ options }: Props) {
         else
           setIsFirstEl(false);
         setIsLastEl(false);
-      } else if (type === 'next' && current !== options.length - 1) {
-        console.log(options[current], `}월`)
+      } else if (type === 'next') {
         if (options[current] === `${new Date().getFullYear().toString()}년 ${getMonth()}월`) {
+          router.replace('/events');
           handleDate(undefined);
           setIsLastEl(true);
-          router.replace('/events');
+          console.log("check");
         } else {
           const newYear = options[current + 1].slice(0, 4);
           const newMonth = options[current + 1].slice(6, 8);
@@ -97,11 +106,19 @@ function DateBoard({ options }: Props) {
     }
   }
 
+  const reflactUrl = (urls: string) => {
+    const windowX = window.innerWidth;
+    handleUrl(urls);
+    if (windowX < 600)
+      return ;
+    router.replace(urls)
+  }
+
   useOnClickOutside({ ref: outSideRef, handler: handleClose, mouseEvent: 'click' });
   
   useEffect(() => {
     if (date === undefined) {
-      if (router.asPath.includes('calender')) {
+      if (router.asPath.includes('calender') && isLastEl === false) {
         const initDate = `${router.asPath.slice(15, 19)}년 ${router.asPath.slice(26, 28)}월`
         handleDate(initDate);
       }
@@ -115,7 +132,7 @@ function DateBoard({ options }: Props) {
         setCurrentMonth(date.slice(6, 8));
       }
     }
-  }, [])
+  }, [date])
 
   return (
     <div className={cn('container', isOpen && 'container__focus')} ref={outSideRef}>
@@ -129,8 +146,8 @@ function DateBoard({ options }: Props) {
           color="#313234"
         />
       </div>
-      <div className={cn('dropdown')}>
-        <div className={cn('dropdown__header')} onClick={handleClickDropdown}>
+      <div className={cn('dropdown')} onClick={handleClickDropdown}>
+        <div className={cn('dropdown__header')}>
           {<span>{date === undefined ? "전체" :`${currentYear}년 ${currentMonth}월`}</span>}
         </div>
         {isOpen && (
@@ -172,6 +189,7 @@ function DateBoard({ options }: Props) {
               currentYear={currentYear}
               setIsFirst={setIsFirstEl}
               setIsLast={setIsLastEl}
+              reflactUrl={reflactUrl}
               handleIsOpen={handleIsOpen}
               handleRemoveContext={handleRemoveContext}
             />
@@ -190,6 +208,19 @@ function DateBoard({ options }: Props) {
           color="#313234"
         />
       </div>
+      {(modalState.currentModal === 3 && window.innerWidth < 600)
+        &&
+        <div className={cn('date__elements', dateElement && 'hidden')}>
+          <DateElement
+            options={options}
+            currentYear={currentYear}
+            setIsFirst={setIsFirstEl}
+            setIsLast={setIsLastEl}
+            reflactUrl={reflactUrl}
+            handleIsOpen={handleIsOpen}
+            handleRemoveContext={handleRemoveContext}
+          />
+      </div>}
     </div>
   )
 }
