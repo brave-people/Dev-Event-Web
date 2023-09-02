@@ -15,6 +15,8 @@ interface EventContext {
   handleDate: (date: string | undefined) => void;
   search: string | undefined;
   handleSearch: (search: string | undefined) => void;
+  url: string | undefined;
+  handleUrl: (url: string | undefined) => void;
 }
 
 const defaultValue: EventContext = {
@@ -31,7 +33,9 @@ const defaultValue: EventContext = {
   date: undefined,
   handleDate: () => {},
   search: undefined,
-  handleSearch: () => {}
+  handleSearch: () => {},
+  url: '',
+  handleUrl: () => {}
 }
 
 const EventContext = createContext(defaultValue);
@@ -43,7 +47,7 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
   const [coast, setCoast] = useState<string | undefined>(undefined);
   const [date, setDate] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
-
+  const [url, setUrl] = useState<string | undefined>(undefined);
   const updateJobGroupList = (job: string | string[] | undefined) => {
     if (typeof(job) === "undefined")
       return ;
@@ -91,8 +95,11 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const handleSearch = (search: string | undefined) => {
-    
     setSearch(search);
+  }
+
+  const handleUrl = (url: string | undefined) => {
+    setUrl(url);
   }
 
   const contextValue = {
@@ -109,7 +116,9 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
     date,
     handleDate,
     search,
-    handleSearch
+    handleSearch,
+    url,
+    handleUrl
   }
   return (
     <>

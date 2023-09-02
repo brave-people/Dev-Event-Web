@@ -1,5 +1,11 @@
 import React, { createContext, ReactNode, useState } from 'react'
 
+type ModalStateProps = {
+  currentModal: number,
+  prevModal: number,
+  type: boolean;
+}
+
 interface WindowContext {
   isClient: boolean;
   handleIsClient: (event: boolean) => void;
@@ -9,6 +15,8 @@ interface WindowContext {
   handleWindowTheme: (event: boolean) => void;
   isNotice: boolean;
   handleIsNotice: (event: boolean) => void;
+  modalState: ModalStateProps
+  handleModalState: (event: ModalStateProps) => void;
 }
 
 const defaultValue: WindowContext = {
@@ -19,7 +27,13 @@ const defaultValue: WindowContext = {
   windowTheme: true,
   handleWindowTheme: () => {},
   isNotice: true,
-  handleIsNotice: () => {}
+  handleIsNotice: () => {},
+  modalState: {
+    currentModal: 0,
+    prevModal: 0,
+    type: false
+  },
+  handleModalState: () => {}
 }
 
 const WindowContext = createContext(defaultValue);
@@ -29,6 +43,7 @@ const WindowProvider = ({ children }: { children: ReactNode }) => {
   const [windowX, setWindowX] = useState<number>(0);
   const [windowTheme, setWindowTheme] = useState<boolean>(true);
   const [isNotice, setIsNotice] = useState<boolean>(true);
+  const [modalState, setModalState] = useState<ModalStateProps>(defaultValue.modalState);
 
   const handleIsClient = (event: boolean) => {
     setIsClient(event);
@@ -45,6 +60,10 @@ const WindowProvider = ({ children }: { children: ReactNode }) => {
     setIsNotice(event)
   }
 
+  const handleModalState = (event: ModalStateProps) => {
+    setModalState(event);
+  }
+
   const contextValue = {
     isClient,
     windowX,
@@ -53,7 +72,9 @@ const WindowProvider = ({ children }: { children: ReactNode }) => {
     handleIsClient,
     handleWindowX,
     handleWindowTheme,
-    handleIsNotice
+    handleIsNotice,
+    modalState,
+    handleModalState
   }
   return (
     <>
