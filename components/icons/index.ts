@@ -14,6 +14,10 @@ import SaveIcon from "./SaveIcon";
 import NewBulletIcon from "./NewBulletIcon";
 import EndBulletIcon from "./EndBulletIcon";
 import ReviewIcon from "./ReviewIcon";
+import ToggleIcon from "./ToggleIcon";
+import ArrowBackIcon from "./ArrowBackIcon";
+import ShareIconMobile from "./ShareIconMobile";
+import BookmarkIconMobile from "./BookmarkIconMobile";
 
 export {
   PlusIcon,
@@ -31,5 +35,9 @@ export {
   SaveIcon,
   NewBulletIcon,
   EndBulletIcon,
-  ReviewIcon
+  ReviewIcon,
+  ToggleIcon,
+  ArrowBackIcon,
+  ShareIconMobile,
+  BookmarkIconMobile
 }

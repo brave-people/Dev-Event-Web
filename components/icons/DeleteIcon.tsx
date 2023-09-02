@@ -1,7 +1,9 @@
-import React from "react"
+import { WindowContext } from "context/window"
+import React, { useContext } from "react"
 import { Icon } from "types/icon"
 
 function DeleteIcon({ color, className, ...rest }: Icon) {
+  const { windowTheme } = useContext(WindowContext)
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -12,7 +14,7 @@ function DeleteIcon({ color, className, ...rest }: Icon) {
     >
       <g clipPath="url(#a)">
         <path
-          stroke={color}
+          stroke={`${windowTheme ? color : "#F2F2F2"}`}
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={1.5}
