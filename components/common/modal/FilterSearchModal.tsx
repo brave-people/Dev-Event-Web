@@ -92,6 +92,7 @@ function FilterSearchModal ({ events }: Props) {
                 src={'/icon/search.svg'}
                 alt='search'
                 layout='fill'
+                priority={true}
               />
             </div>
             <div className={cn('body__desc')}>
