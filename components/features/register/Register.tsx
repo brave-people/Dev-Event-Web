@@ -2,11 +2,15 @@ import React from 'react'
 import Link from "next/link";
 import * as ga from 'lib/utils/gTag';
 import FillButton from "components/common/buttons/FillButton";
+import style from 'components/features/register/Register.module.scss'
+import classNames from 'classnames/bind';
+
+const cn = classNames.bind(style)
 
 function Register() {
   return (
     <Link href={'https://forms.gle/UUjUVg1tTrKhemKu9'}>
-      <a target="__blank">
+      <a target="__blank" className={cn('register')}>
         <FillButton
           label="행사 추가 요청"
           color="gray1"
