@@ -1,15 +1,21 @@
 $mobile: 360px;
-$tablet: 768px;
-$laptop: 956px;
+$tablet: 600px;
+$laptop: 1440px;
 
 @mixin mobile {
-  @media (max-width: #{$tablet - 1px}) {
+  @media (max-width: #{$mobile}) {
     @content;
   }
 }
 
 @mixin tablet {
-  @media (min-width: #{$tablet}) and (max-width: #{$laptop - 1px}) {
+  @media (min-width: #{$mobile}) and (max-width: #{$tablet - 1px}) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (min-width: #{$tablet}) and (max-width: #{$laptop}) {
     @content;
   }
 }
