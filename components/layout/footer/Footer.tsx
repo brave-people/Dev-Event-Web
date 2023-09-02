@@ -16,7 +16,9 @@ function Footer() {
           개발자를 위한 행사 정보, 데브이벤트
         </div>
         <div className={cn('footer__copyright')}>
-          ⓒ 2022. 용감한 친구들 with 남송리 삼번지 all rights reserved.
+          ⓒ 2022. 용감한 친구들 with 남송리 삼번지 
+          <br className={cn('break__line')} />
+          all rights reserved.
         </div>
       </div>
       <div className={cn('footer__row')}>

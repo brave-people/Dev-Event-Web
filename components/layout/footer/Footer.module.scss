@@ -36,73 +36,88 @@
     right: 0;
   }
 }
+
+@include laptop {
+  @media (max-width: 1075px) {
+    .footer {
+      width: 58.75rem;
+    }
+  }
+  @media (max-width: 950px) {
+    .footer {
+      width: 50.75rem;
+    }
+  }
+  @media (max-width: 800px) {
+    .footer {
+      width: 42.75rem;
+      .break__line {
+        display: block;
+      }
+    }
+  }
+}
+
 @include tablet {
   .footer {
-    width: 52.75rem;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between
+    width: 34.75rem;
+    .break__line {
+      display: block;
+    }
+  }
+  @media (max-width: 500px) {
+    .footer {
+      width: 26.75rem;
+    }
+  }
+  @media (max-width: 450px) {
+    .footer {
+      width: 26.75rem;
+      height: 206px;
+      position: relative;
+      margin: 2rem auto ;
+      &__column {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 100%;
+      }
+      .footer__row {
+        display: flex;
+        align-items: flex-end;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+    }
   }
 }
 
 @include mobile {
   .footer {
-    background-color: var(--background-1);
-    width: 42rem;
-    height: 170px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
-    color: #e8e8e8;
-    font-size: 0.857rem;
-    &__column {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      height: 100%;
-  
-      .footer__desc {
-        color: var(--gray-2);
-        font-size: 14px;
-        margin-top: 1rem;
+    width: 20.75rem;
+    height: 206px;
+      position: relative;
+      margin: 2rem auto ;
+      &__column {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 100%;
       }
-      .footer__copyright {
-        color: var(--gray-3);
-        font-size: 13px;
-        margin-top: 3rem;
+      .footer__row {
+        display: flex;
+        align-items: flex-end;
+        position: absolute;
+        bottom: 0;
+        right: 0;
       }
-    }
-    &__row {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      position: absolute;
-      right: 0;
-      top: 40px;
-    }
-    a {
-      text-decoration: underline;
-    }
   }
-  @media (max-width: 555px) {
-    .footer {
-      width: 30rem;
-    }
+  .break__line {
+    display: block;
   }
+}
 
-
-  @media (max-width: 455px) {
-    .footer {
-      width: 25rem;
-    }
-  }
-
-  @media (max-width: 360px) {
-    .footer {
-      width: 20rem;
-    }
-  }
+.break__line {
+  display: none;
 }

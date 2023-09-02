@@ -136,98 +136,58 @@
   }
 }
 
+@include laptop {
+  @media (max-width: 1075px) {
+    .header {
+      &__inner {
+        width: 58.75rem;
+      }
+    }
+  }
+  @media (max-width: 950px) {
+    .header {
+      &__inner {
+        width: 50.75rem;
+      }
+    }
+  }
+  @media (max-width: 800px) {
+    .header {
+      &__inner {
+        width: 42.75rem;
+      }
+    }
+  }
+}
+
 @include tablet {
   .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    min-height: 3.5rem;
-    width: 100%;
-    background-color: var(--background-1);
-
     &__inner {
-      width: 52.75rem;
-      height: 3.5rem;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
+      width: 34.75rem;
+    }
+  }
+  @media (max-width: 500px) {
+    .header {
+      &__inner {
+        width: 26.75rem;
+        .header__buttons {
+          .toggle__container {
+            display: none;
+          }
+        }
+      }
     }
   }
 }
 
 @include mobile {
   .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    min-height: 3.5rem;
-    width: 100%;
-    background-color: var(--background-1);
-
     &__inner {
-      width: 42rem;
-      height: 3.5rem;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      
-      .header__buttons {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-  
-        .wrapper {
-          padding-left: 15px;
+      width: 20.75rem;
+        .header__buttons {
+          .toggle__container {
+            display: none;
         }
-  
-        .search-button {
-          border: none;
-          background-color: transparent;
-          width: 24px;
-          height: 24px;
-          cursor: pointer;
-          padding: 0px;
-          svg {
-            height: 24px;
-            width: 24px;
-          }
-        }
-      }
-    }
-
-    .profile {
-      position: relative;
-      padding: 0px;
-      margin: 0px;
-      height: 24px;
-      .profile-button {
-        border: none;
-        background-color: transparent;
-        width: 24px;
-        height: 24px;
-        padding: 0px;
-        cursor: pointer;
-      }
-    }
-  }
-
-  @media (max-width: 600px) {
-    .header {
-      &__inner {
-        width: 36rem;
-      }
-    }
-  }
-
-  @media (max-width: 600px) {
-    .header {
-      &__inner {
-        width: 30rem;
       }
     }
   }
