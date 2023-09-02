@@ -1,11 +1,15 @@
 @import '~styles/_mixin.scss';
 
 .container {
-  width: 68.75rem;
+  width: 100%;
   background-color: transparent;
   padding-top: 4.688rem;
-  margin: 0px;
   transition: all ease-in .3s;
+
+  .inner {
+    width: 68.75rem;
+    margin: 0 auto;
+  }
 
   .block {
     width: 100%;
@@ -34,50 +38,183 @@
     }
     &__group {
       width: 100%;
-      padding-left: .5rem;
       display: flex;
+      padding-left: .5rem;
       justify-content: space-between;
       align-items: center;
       &__tag {
         display: flex;
         justify-content: flex-start;
       }
+      &__toggle {
+        display: none;
+      }
     }
   }
 }
 
-@media (max-width: 1075px) {
+
+@include laptop {
   .container {
-    width: 60.75rem;
+    .inner {
+      width: 68.75rem;
+    }
+    .block {
+      &__desc {
+        font-size: 2.3rem;
+      }
+    }
+  }
+  @media (max-width: 1075px) {
+    .container {
+      .inner {
+        width: 58.75rem;
+      }
+      .block {
+        &__desc {
+          font-size: 2.3rem;
+        }
+      }
+    }
+  }
+  @media (max-width: 950px) {
+    .container {
+      .inner {
+        width: 50.75rem;
+      }
+      .block {
+        &__desc {
+          font-size: 2.1rem;
+        }
+      }
+      .filter {
+        display: block;
+        position: relative;
+        &__group {
+          margin-top: .7rem;
+          width: 100%;
+          padding-left: 0;
+        }
+      }
+    }
+  }
+  @media (max-width: 800px) {
+    .container {
+      padding-top: 3.688rem;
+      .inner {
+        width: 42.75rem;
+      }
+      .block {
+        &__desc {
+          font-size: 2rem;
+        }
+      }
+      
+    }
   }
 }
 
-@media (max-width: 955px) {
+@include tablet {
   .container {
-    width: 52.75rem;
-    margin-top: 1.88rem;
+    padding-top: 2.388rem;
+    .inner {
+      width: 38.75rem;
+    }
     .block {
       &__desc {
-        font-size: 2rem;
-        line-height: 2.5rem;
+        font-size: 1.8rem;
+      }
+      &__taglist {
+        display: none;
       }
     }
     .filter {
-      width: 100%;
       display: block;
-
-      .filter__search {
-        display: block;
-        width: 100%;
+      position: relative;
+      margin-top: 1.2rem;
+      &__search {
+        width: 90%;
       }
-      .filter__group {
-        margin-top: 1rem;
-        display: flex;
-        justify-content: space-between;
+      &__group {
+        width: 100%;
         padding-left: 0;
         &__tag {
+          display: none;
+        }
+        &__toggle {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 35px;
+          height: 35px;
           display: flex;
-          justify-content: flex-start;
+          align-items: center;
+          justify-content: center;
+          border-radius: 5px;
+          &:hover {
+            cursor: pointer;
+            background-color: var(--gray-5);
+          }
+        }
+        &__date {
+          margin-top: .7rem;
+          width: 100%;
+        }
+      }
+    }
+  }
+  @media (max-width: 550px) {
+    .container {
+      .inner {
+        width: 34.75rem;
+      }
+      .block {
+        &__desc {
+          font-size: 1.6rem;
+        }
+      }
+      .filter {
+        &__search {
+          width: 87%;
+        }
+      }
+    }
+  }
+  @media (max-width: 500px) {
+    .container {
+      .inner {
+        width: 26.75rem;
+      }
+      .block {
+        &__desc {
+          font-size: 1.6rem;
+        }
+      }
+      .filter {
+        &__search {
+          width: 87%;
+        }
+      }
+    }
+  }
+  @media (max-width: 450px) {
+    .container {
+      .inner {
+        width: 23.75rem;
+      }
+      .block {
+        &__desc {
+          font-size: 1.6rem;
+        }
+      }
+      .filter {
+        &__search {
+          width: 80%;
+        }
+        &__group {
+          &__tag {
+            display: none;
+          }
         }
       }
     }
@@ -86,108 +223,48 @@
 
 @include mobile {
   .container {
-    width: 42rem;
-    padding-top: 2.688rem;
+    padding-top: 1.688rem;
+    .inner {
+      width: 21.75rem;
+    }
     .block {
       &__desc {
-        font-size: 2rem;
-        line-height: 2.5rem;
+        font-size: 1.6rem;
+      }
+      &__taglist {
+        display: none;
       }
     }
     .filter {
-      &__group {
-        margin-top: 1rem;
+      display: block;
+      position: relative;
+      &__search {
+        width: 67%;
       }
-    }
-  }
-  @media (max-width: 600px) {
-    .container {
-      width: 36rem;
-    }
-  }
-
-  @media (max-width: 555px) {
-    .container {
-      width: 30rem;
-      .filter {
+      &__group {
         width: 100%;
-        position: relative;
-
-        &__search {
-          min-width: 210px;
+        padding-left: 0;
+        &__tag {
+          display: none;
         }
-        &__group {
-          padding-bottom: .5rem;
+        &__toggle {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 35px;
+          height: 35px;
           display: flex;
           align-items: center;
-          justify-content: space-between;
-
-          &__tag {
-            width: 30rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-          }
-          
-          &__date {
-            position: absolute;
-            top: 0;
-            right: 0;
+          justify-content: center;
+          border-radius: 5px;
+          &:hover {
+            cursor: pointer;
+            background-color: var(--gray-5);
           }
         }
-      }
-    }
-  }
-
-  @media (max-width: 455px) {
-    .container {
-      width: 25rem;
-      .block {
-        &__desc {
-          font-size: 1.6rem;
-        }
-      }
-      .filter {
-        &__search {
-          display: block;
-        }
-        .filter__group {
+        &__date {
+          margin-top: .7rem;
           width: 100%;
-          margin-top: .5rem;
-          display: block;
-          &__tag {
-            width: 100%;
-            justify-content: space-between;
-            margin-bottom: .5rem;
-          }
-        }
-      }
-    }
-  }
-
-  @media (max-width: 360px) {
-    .container {
-      display: block;
-      width: 20rem;
-      padding-top: 0;
-      .block {
-        &__desc {
-          font-size: 1.3rem;
-        }
-      }
-      .filter {
-        &__search {
-          display: block;
-        }
-        .filter__group {
-          width: 100%;
-          margin-top: .5rem;
-          display: block;
-          &__tag {
-            width: 100%;
-            justify-content: space-between;
-            margin-bottom: .5rem;
-          }
         }
       }
     }

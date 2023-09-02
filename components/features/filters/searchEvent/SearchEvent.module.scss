@@ -2,35 +2,15 @@
 
 .container {
   position: relative;
-  width: 280px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   transition: all ease-in .3s;
 }
 
-@media (max-width: 1075px) {
-  .container {
-    width: 250px;
-  }
-}
-
-@media (max-width: 950px) {
-  .container {
-    width: 100%;
-  }
-}
-
 @include mobile {
-  @media (max-width: 555px) {
-    .container {
-      width: 240px;
-    } 
-  }
-
-  @media (max-width: 455px) {
-    .container {
-      width: 220px;
-    } 
+  .container {
+    width: 95%;
   }
 }

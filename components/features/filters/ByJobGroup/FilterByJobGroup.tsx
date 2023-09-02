@@ -39,6 +39,7 @@ function FilterByJobGroup({ context }: Props) {
           <JobGroupTag
             key={tag.tag_id}
             tagName={tag.tag_name}
+            type="basic"
           />
         )
       })}

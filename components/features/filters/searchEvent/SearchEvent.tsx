@@ -7,6 +7,7 @@ import { EventContext } from "context/event";
 import { useRouter } from "next/router";
 import { parseUrl } from "lib/utils/urlUtil";
 import { UrlContext } from "types/Context";
+import { WindowContext } from "context/window";
 
 const cn = classNames.bind(style);
 
@@ -17,6 +18,7 @@ type Props = {
 function SearchEvent( { context }: Props) {
   const [input, setInput] = useState<string | undefined>(undefined)
   const { jobGroupList, date, handleDate, handleSearch } = useContext(EventContext);
+  const { modalState, handleModalState } = useContext(WindowContext)
   const router = useRouter();
 
   const submitInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -34,7 +36,14 @@ function SearchEvent( { context }: Props) {
           handleDate(undefined);
         router.replace(`${parseUrl(`${router.asPath}`, 'kwd', input, jobGroupList)}`)
       }
-    } 
+      if (window.innerWidth < 600) {
+        handleModalState({
+          currentModal: modalState.currentModal,
+          prevModal: modalState.currentModal,
+          type: false
+        })
+      }
+    }
   };
 
   const updateInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,6 +52,11 @@ function SearchEvent( { context }: Props) {
 
   const initInput = () => {
     setInput("");
+    handleModalState({
+      currentModal: 0,
+      prevModal: 0,
+      type: true
+    })
   }
   useEffect(() => {
     if (context?.kwd === undefined) {
@@ -53,7 +67,17 @@ function SearchEvent( { context }: Props) {
     }
   }, [])
   return (
-    <div className={cn('container')}>
+    <div
+      onClick={() => {
+        if (window.innerWidth < 600) {
+          handleModalState({
+            currentModal: 1,
+            prevModal: modalState.currentModal,
+            type: true
+          })
+        }
+      }} 
+      className={cn('container')}>
       <BasicInput
         label="행사 검색하기"
         size="large"
