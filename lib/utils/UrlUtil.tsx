@@ -1,7 +1,7 @@
 import { UrlContext } from "types/Context";
 import { handleUndefined } from "lib/utils/eventUtil";
 
-export const handleUrl = (
+export const initUrl = (
 	url: string,
 	type: string,
 	jobGroupList: string[] | undefined,
@@ -30,7 +30,7 @@ export const handleUrl = (
 export const parseUrl = (
     url: string, 
     type: string,
-    option: string, 
+    option: string,
     jobGroupList: string[] | undefined,
   ) => {
 	if (url.includes('/event') || url.includes('/calender')) 

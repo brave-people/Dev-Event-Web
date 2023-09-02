@@ -1,5 +1,11 @@
 import dayjs from 'dayjs';
 
+type EventDate = {
+  eventDate: string | undefined;
+  includeTime: boolean;
+  dayEvent: boolean;
+}
+
 const DateUtil = {
   isDone: (date: string) => {
     const todayDate = DateUtil.setDateTimeToDate();
@@ -81,23 +87,40 @@ const getCurrentDate = () => {
   return (`${year}년 ${month}월`);
 }
 
-const removeDupDate = (eventDate: string | undefined) => {
-  if (eventDate === undefined)
+const removeDupDate = (event: EventDate) => { // true false
+  if (event.eventDate === undefined)
     return ;
-  if (eventDate?.length !== 43) {
-    const sepDate = eventDate?.split('.');
+  // 2023.08.12 (토) ~ 2023.08.18 (금)
+  if (event.includeTime === false && event.dayEvent === true) {
+    const date = event.eventDate.split('~')[0].split('.');
+    const dateMonth = date[1][0] === '0' ? `${date[1][1]}월` : `${date[1]}월`;
+    const dateDate = date[1][0] === '0' ? `${date[2][1]}일` : `${date[2].slice(0, 2)}일`;
+    return (`${dateMonth}${dateDate}${date[2].slice(2, 6)}`);
+  } else if (event.includeTime === false && event.dayEvent === false) {
+    const startDate = event.eventDate.split('~')[0].split('.');
+    const endDate = event.eventDate.split('~')[1].split('.');
+    const prevMonth = startDate[1][0] === '0' ? `${startDate[1][1]}월` : `${startDate[1]}월`;
+    const nextMonth = endDate[1][0] === '0' ? `${endDate[1][1]}월` : `${endDate[1]}월`;
+    const prevDate = startDate[2][0] === '0' ? `${startDate[2][1]}일` : `${startDate[2].slice(0, 2)}일`;
+    const nextDate = endDate[2][0] === '0' ? `${endDate[2][1]}일` : `${endDate[2].slice(0, 2)}일`;
+    if (startDate[1] === endDate[1]) {
+     return (`${prevMonth}${prevDate}${startDate[2].slice(2, 6)} ~ ${nextDate}${endDate[2].slice(2, 6)}`);
+    }
+    return (`${prevMonth}${prevDate}~ ${nextMonth}${nextDate}`);    
+  } else if (event.includeTime === true && event.dayEvent === true) {
+    const sepDate = event.eventDate?.split('.');
     const month = sepDate[1][0] === '0' ? `${sepDate[1][1]}월` : `${sepDate[1]}월`;
     const date = sepDate[2][0] === '0' ? `${sepDate[2][1]}일` : `${sepDate[2].slice(0, 2)}일`;
     const time = sepDate[2].slice(2, sepDate[2].length);
     return (`${month} ${date}${time}`);
   }
-  const startDate = eventDate.split('~')[0].split('.');
-  const endDate = eventDate.split('~')[1].split('.');
+  const startDate = event.eventDate.split('~')[0].split('.');
+  const endDate = event.eventDate.split('~')[1].split('.');
   const prevMonth = startDate[1][0] === '0' ? `${startDate[1][1]}월` : `${startDate[1]}월`;
   const nextMonth = endDate[1][0] === '0' ? `${endDate[1][1]}월` : `${endDate[1]}월`;
   const prevDate = startDate[2][0] === '0' ? `${startDate[2][1]}일` : `${startDate[2].slice(0, 2)}일`;
   const nextDate = endDate[2][0] === '0' ? `${endDate[2][1]}일` : `${endDate[2].slice(0, 2)}일`;
-  if (startDate[1] === endDate[1]) {
+  if (startDate[0] === endDate[0] && startDate[1] === endDate[1]) {
     return (`${prevMonth}${prevDate}${startDate[2].slice(2, startDate[2].length)}~ ${nextDate}${endDate[2].slice(2, endDate[2].length)}`);
   }
   return (`${prevMonth}${prevDate}${startDate[2].slice(2, startDate[2].length)}~ ${nextMonth}${nextDate}${endDate[2].slice(2, endDate[2].length)}`);
