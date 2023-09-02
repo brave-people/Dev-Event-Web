@@ -19,7 +19,6 @@ function Banner() {
         src={'/default/banner_img.png'}
         alt='banner'
         layout='fill'
-        className={cn('banner_image')}
       />
     </div>
   );

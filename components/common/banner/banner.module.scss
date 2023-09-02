@@ -4,7 +4,6 @@
   position: relative;
   height: 30rem;
   width: 100%;
-  min-width: 68.75rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -42,57 +41,69 @@
   }
 }
 
+@include laptop {
+  @media (max-width: 1075px)  {
+    .banner {
+      width: 100%;
+      height: 28rem;
+    }
+  }
+  @media (max-width: 800px) {
+    .banner {
+      width: 100%;
+      height: 26rem;
+      &__title {
+        font-size: 3.4rem;
+        padding-top: 1.75rem;
+        line-height: 4.5rem;
+      }
+      &__desc {
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
 @include tablet {
   .banner {
-    position: relative;
-    height: 27rem;
     width: 100%;
-    min-width: 688px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-self: flex-start;
-    padding: 0px 20px 0px 20px;
+    height: 24rem;
+    &__title {
+      font-size: 3rem;
+      padding-top: 2rem;
+      line-height: 4rem;
+    }
+    &__desc {
+      font-size: 1rem;
+    }
+  }
+  @media (max-width: 500px) {
+    .banner {
+      width: 100%;
+      height: 22rem;
+      &__title {
+        font-size: 2.3rem;
+        padding-top: 3rem;
+        line-height: 3rem;
+      }
+      &__desc {
+        font-size: 1rem;
+      }
+    }
   }
 }
 
 @include mobile {
   .banner {
-    position: relative;
-    height: 17.429rem;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-self: flex-start;
-    min-width: 25.714rem;
-    padding: 0px 20px 0px 20px;
-
+    height: 18rem;
     &__title {
       font-size: 2rem;
-      font-weight: 700;
-      line-height: 120%;
-      letter-spacing: 0em;
-      text-align: center;
-      color: #ffffff;
-      padding: 0px;
-      margin: 0px;
+      padding-top: 2.7rem;
+      line-height: 2.5rem;
     }
-
     &__desc {
-      font-weight: 400;
-      font-size: 0.857rem;
-      line-height: 1rem;
-      text-align: center;
-      color: #ffffff;
-      padding-top: 1.571rem;
-      padding-bottom: 0px;
-      margin: 0px;
-      &--bold {
-        font-weight: bold;
-      }
+      font-size: .9rem;
     }
   }
 }
