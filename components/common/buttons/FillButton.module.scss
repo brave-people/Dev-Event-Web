@@ -8,33 +8,11 @@
   color: var(--background-1);
   background-color: var(--gray-1);
   font-weight: 500;
+  width: 100%;
+  height: 100%;
+  min-width: 12rem;
+  min-height: 3rem;
 
-  // size
-  &.size--large {
-    padding: 0.938rem 1.625rem 1rem 1.625rem;
-    height: 3.75rem;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-  }
-
-  &.size--regular {
-    padding: 0.813rem 1.5rem 0.813rem 1.5rem;
-    height: 3rem;
-    font-size: 0.875rem;
-    display: flex;
-    align-items: center;
-  }
-
-  &.size--long {
-    padding: 0.813rem 3.5rem 0.813rem 3.5rem;
-    height: 3rem;
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
-  }
-
-  // color
   &.color--primary {
     background-color: var(--primary);
   }
@@ -49,89 +27,39 @@
   }
 }
 
-@media (max-width: 955px) {
-  .button {
-    &.size--large {
-      padding: 0.638rem 1.125rem;
-      height: 3.15rem;
-      font-size: .8rem;
-      display: flex;
-      align-items: center;
+@include laptop {
+  @media (max-width: 950px) {
+    .button {
+      min-width: 10rem;
+      min-height: 2.7rem;
     }
-  
-    &.size--regular {
-      padding: 0.413rem .925rem;
-      height: 3rem;
-      font-size: 0.875rem;
-      display: flex;
-      align-items: center;
+  }
+  @media (max-width: 800px) {
+    .button {
+      min-width: 9.5rem;
+      min-height: 2.5rem;
+      font-size: 12px;
     }
+  }
+}
 
-    &.size--long {
-      padding: 0.313rem 2.7rem 0.313rem 2.7rem;
-      height: 2.5rem;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
+@include tablet {
+  .button {
+    min-width: 8rem;
+    min-height: 2.3rem;
+  }
+
+  @media (max-width: 450px) {
+    .button {
+      min-width: 7rem;
+      min-height: 2rem;
     }
   }
 }
 
 @include mobile {
   .button {
-    &.size--large {
-      padding: 0px;
-      min-width: 8.357rem;
-      height: 2.5rem;
-      font-size: 0.857rem;
-      line-height: 1.214rem;
-      text-align: center;
-    }
-    
-    &.size--regular {
-      padding: 0.3rem 1rem 0.3rem 1rem;
-      height: 2.2rem;
-      font-size: 0.775rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    &.size--long {
-      padding: 0.313rem 2.5rem 0.313rem 2.5rem;
-      height: 2.3rem;
-      font-size: .8rem;
-      display: flex;
-      align-items: center;
-    }
-  }
-}
-
-@media (max-width: 455px) {
-  .button {
-    &.size--large {
-      padding: 0px;
-      min-width: 8.357rem;
-      height: 2.2rem;
-      font-size: 0.857rem;
-      font-weight: 400;
-      line-height: 1.214rem;
-      text-align: center;
-    }
-    &.size--regular {
-      padding: 0.1rem .5rem;
-      height: 2rem;
-      font-weight: 400;
-      font-size: 0.475rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    &.size--long {
-      padding: 0.313rem 1.7rem;
-      height: 2rem;
-      font-size: .8rem;
-      display: flex;
-      align-items: center;
-    }
+    min-width: 6.5rem;
+    min-height: 1.8rem;
   }
 }
