@@ -6,7 +6,7 @@ import { DeleteIcon } from 'components/icons';
 import { WindowContext } from 'context/window';
 import { EventContext } from 'context/event';
 import { useRouter } from 'next/router';
-import { handleUrl } from 'lib/utils/urlUtil';
+import { initUrl } from 'lib/utils/urlUtil';
 import { InputProps } from 'types/Input';
 
 const cn = classNames.bind(style);
@@ -37,7 +37,7 @@ function BasicInput({ updateInput, submitInput, label, size, icon, iconStyle, in
               initInput();
             if (search !== undefined )
               handleSearch(undefined);
-            router.replace(handleUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
+            router.replace(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
           }}>
           <DeleteIcon
             color={`${windowTheme ? "#d3d4d8" : "#797a81"}`}
