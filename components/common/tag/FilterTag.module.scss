@@ -18,7 +18,6 @@
     line-height: 16px;
     padding: 4px 12px;
     border-radius: 4px;
-
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -77,129 +76,138 @@
   }
 }
 
-@include tablet {
-  .tag.size--large {
-    font-size: 14px;
-    line-height: 16px;
-    padding: 4px 12px;
-    height: 28px;
-    border-radius: 4px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-
-  .tag.size--regular {
-    padding-left: 10px;
-    padding-right: 10px;
-    height: 24px;
-    font-size: 13px;
-    line-height: 12px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  .tag {
-      &.type--location {
-      color: var(--gray-2);
-      border-radius: 0;
-      background-color: transparent;
-      display: flex;
-      padding-right: 8px;
-      padding-left: 8px;
-      margin-right: 8px;
-      margin-left: 8px;
-      position: relative;
-
-      &:after {
-        content: "";
-        display: block;
-        border-right: 1px solid;
-        border-color: var(--gray-4);
-        height: 10px;
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        margin-right: 1.5px;
+@include laptop {
+  @media (max-width: 800px) {
+    .tag {
+      &.size--regular {
+        font-size: 14px;
+        line-height: 16px;
+        padding: 3px 9px 3px 0px;
+        border-radius: 3px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
-      &::before {
-        content: "";
-        display: block;
-        border-left: 1px solid;
-        border-color: var(--gray-4);
-        height: 10px;
-        position: absolute;
-        left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        margin-left: 1.5px;
+      &.type--default {
+        color: var(--gray-2);
+        border-radius: 0;
+        background-color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        &::after {
+          content: "";
+          display: block;
+          border-right: 1px solid;
+          border-color: var(--gray-4);
+          height: 10px;
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+
+    &.type--default--last {
+        color: var(--gray-2);
+        border-radius: 0;
+        background-color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
       }
     }
   }
 }
-@include mobile {
-  .tag.size--large {
-    font-size: 13px;
-    line-height: 16px;
-    padding: 9px 15px;
-    height: 34px;
-    border-radius: 4px;
 
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
 
-  .tag.size--regular {
-    padding: 4.5px 7.5px;
-    height: 20px;
-    font-size: 11px;
-    line-height: 12px;
-    border-radius: 3px;
-    max-width: 110px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
+@include tablet {
   .tag {
-    &.type--location {
-    color: var(--gray-2);
-    border-radius: 0;
-    background-color: transparent;
-    display: flex;
-    padding-right: 8px;
-    padding-left: 8px;
-    position: relative;
+      &.size--regular {
+        font-size: 14px;
+        line-height: 16px;
+        padding: 3px 9px 3px 0px;
+        border-radius: 3px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      &.type--default {
+        color: var(--gray-2);
+        border-radius: 0;
+        background-color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        &::after {
+          content: "";
+          display: block;
+          border-right: 1px solid;
+          border-color: var(--gray-4);
+          height: 10px;
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
 
-    &:after {
-      content: "";
-      display: block;
-      border-right: 1px solid;
-      border-color: var(--gray-4);
-      height: 10px;
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      margin-right: 1.5px;
-    }
-    &::before {
-      content: "";
-      display: block;
-      border-left: 1px solid;
-      border-color: var(--gray-4);
-      height: 10px;
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      margin-left: 1.5px;
+    &.type--default--last {
+        color: var(--gray-2);
+        border-radius: 0;
+        background-color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
       }
     }
-  }
+}
+
+
+@include mobile {
+  .tag {
+      &.size--regular {
+        font-size: 14px;
+        line-height: 16px;
+        padding: 3px 9px 3px 0px;
+        border-radius: 3px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      &.type--default {
+        color: var(--gray-2);
+        border-radius: 0;
+        background-color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        &::after {
+          content: "";
+          display: block;
+          border-right: 1px solid;
+          border-color: var(--gray-4);
+          height: 10px;
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+
+    &.type--default--last {
+        color: var(--gray-2);
+        border-radius: 0;
+        background-color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+    }
 }

@@ -3,18 +3,19 @@ import { EventContext } from "context/event";
 import classNames from "classnames/bind";
 import style from 'components/common/tag/JobGroupTag.module.scss';
 import { useRouter } from "next/router";
-import { handleUrl, parseUrl } from "lib/utils/urlUtil";
+import { initUrl, parseUrl } from "lib/utils/urlUtil";
 import { WindowContext } from "context/window";
 
 type Prop = {
   tagName: string;
+  type: string;
 }
 
 const cx = classNames.bind(style);
 
-function JobGroupTag({ tagName }: Prop) {
+function JobGroupTag({ tagName, type }: Prop) {
   const router = useRouter();
-  const { jobGroupList, eventType, location, coast, search, date, updateJobGroupList, deleteJobGroupList, initJobGroupList, handleDate } = useContext(EventContext);
+  const { jobGroupList, eventType, location, coast, search, date, url, updateJobGroupList, deleteJobGroupList, initJobGroupList, handleDate, handleUrl } = useContext(EventContext);
   const { windowTheme } = useContext(WindowContext);
   const handleOnClick = () => {
     handleJobGroupList(tagName);
@@ -28,9 +29,18 @@ function JobGroupTag({ tagName }: Prop) {
      updateJobGroupList(tag); 
     }
   }
+
+  const reflactUrl = (urls: string) => {
+    const windowX = window.innerWidth;
+    handleUrl(urls);
+    if (windowX < 600)
+      return ;
+    router.replace(urls);
+  }
+
   const handleInit = useCallback(() => {
     initJobGroupList();
-  }, [])
+  }, []);
   return (
     <div
       onClick={() => {
@@ -39,10 +49,10 @@ function JobGroupTag({ tagName }: Prop) {
         if (date !== undefined)
           handleDate(undefined);
         if (value === "전체") {
-          router.replace(`${handleUrl(`${router.asPath}`, key, jobGroupList, eventType, location, coast, search)}`)
+          reflactUrl(`${initUrl(`${url ? url : router.asPath}`, key, jobGroupList, eventType, location, coast, search)}`)
           handleInit();
         } else {
-          router.replace(`${parseUrl(`${router.asPath}`, key, value, jobGroupList)}`)
+          reflactUrl(`${parseUrl(`${url ? url : router.asPath}`, key, value, jobGroupList)}`)
           handleOnClick();
         }
       }}
@@ -52,7 +62,7 @@ function JobGroupTag({ tagName }: Prop) {
         `${(jobGroupList && jobGroupList.includes(tagName) 
         || (jobGroupList === undefined || jobGroupList.length === 0) && tagName === "전체")
         && (windowTheme ? 'checked--light' : 'checked--dark')}`)}>
-      {tagName}
+      {type === "basic" ? `${tagName}` : `#${tagName}`}
     </div>   
   )
 }
