@@ -1,11 +1,42 @@
 @import '~styles/_mixin.scss';
 
+@include laptop {
+  .list {
+    width: 100%;
+  }
+  @media (max-width: 800px) {
+    .list {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    .skeleton {
+      width: 270px;
+    }
+  }
+}
+
+@include tablet {
+  .list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+  .skeleton {
+    width: 270px;
+  } 
+}
+
 @include mobile {
   .list {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-evenly;
   }
+  .skeleton {
+    width: 270px;
+  } 
 }

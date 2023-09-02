@@ -8,13 +8,12 @@ import FilterTag from 'components/common/tag/FilterTag';
 import { DateUtil, removeDupDate } from 'lib/utils/dateUtil';
 import { WindowContext } from 'context/window';
 import { TagResponse } from 'model/tag';
-import { BookmarkIcon, EndBulletIcon, NewBulletIcon, ReviewIcon, ShareIcon } from 'components/icons';
+import { BookmarkIcon, BookmarkIconMobile, EndBulletIcon, NewBulletIcon, ReviewIcon, ShareIcon, ShareIconMobile } from 'components/icons';
 import { getTagName, getTagType } from 'lib/utils/tagUtil';
 import ShareModal from 'components/common/modal/ShareModal'
 import { EventContext } from 'context/event';
 import * as ga from 'lib/utils/gTag';
-import DdayTag from '../tag/DdayTag';
-import DoneTag from '../tag/DoneTag';
+import DdayTag from 'components/common/tag/DdayTag';
 
 const cn = classNames.bind(style);
 
@@ -57,6 +56,14 @@ const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClick
 
   const getEventDate = () => {
     let eventDate;
+    if (data.start_date_time === null || data.end_date_time === null)
+      return ;
+    const includeTime = 
+    (data.start_date_time.slice(11, 16) === "00:00"
+    && data.end_date_time.slice(11, 16) === "00:00") 
+    ? false : true;
+    const dayEvent = data.start_date_time.slice(0, 10) === data.end_date_time.slice(0, 10) ? true : false;
+
     if (data.start_date_time && !data.end_date_time) {
       const startDateType = data.use_start_date_time_yn === 'Y' ? DateType.dateTime : DateType.date;
       eventDate = convertDateFormat(data.start_date_time, startDateType);
@@ -79,7 +86,11 @@ const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClick
         ' ~ ' +
         convertDateFormat(data.end_date_time, endDateType);
     }
-    return removeDupDate(eventDate)
+    return removeDupDate({
+      eventDate,
+      includeTime,
+      dayEvent
+    })
   };
 
   const convertDateFormat = (date: string, type: string) => {
@@ -126,8 +137,8 @@ const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClick
                       : imgPath
                   }
                   priority={true}
-                  width={200}
-                  height={112}
+                  width={270}
+                  height={150}
                 />
                 {isDone && <div className={cn('item__content__img__done')} />}
                 {isDone ? (
@@ -159,14 +170,15 @@ const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClick
                 <div className={cn('item__content_title__container')}>
                   <div className={cn(isDone ? 'item__content__title__done' :'item__content__title')}>{(data.title.length >= 30 && windowX <= 750) ? `${data.title.slice(0, 30)}...` : data.title}</div>
                   {isDone 
-                    ? <DoneTag />
+                    ? null
                     : <DdayTag startDateTime={data.start_date_time} endDateTime={data.end_date_time} />}
                 </div>
                 <div className={cn('item__content__desc')}>
                   <span className={cn('wrap')}>
                     <div className={cn('date')}> 
                       <span className={cn(isDone ? 'date__type__done' : 'date__type')}>{data.event_time_type === "DATE" ? "일시 " : "접수 "}</span>
-                      <span className={cn(isDone ? 'date__date__done' : 'date__date')}>{getEventDate()}</span> 
+                      <span className={cn(isDone ? `date__date__done` : 'date__date')}>{getEventDate()}</span> 
+                      <span className={cn(isDone ? 'date__date__done__mobile' : 'date__date__mobile')}>{getEventDate()}</span>
                     </div>
                   </span>
                   <div className={cn('item__content__desc__tags')}>
@@ -206,6 +218,18 @@ const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClick
                       );
                     })}
                   </div>
+                  <div className={cn("item__content__desc__tags__mobile")}>
+                    {data.tags.map((tag: TagResponse, index: number) => {
+                      return (
+                        <FilterTag
+                          key={tag.id}
+                          label={tag.tag_name}
+                          size='regular'
+                          type={`${index !== data.tags.length - 1 ? 'default' : 'default--last'}`}
+                        />
+                      )
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
@@ -213,15 +237,30 @@ const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClick
         </Link>
         <div className={cn('item__buttons')}>
           <button 
-            className={cn(`button`, `like-button`)} 
+            className={cn(`button`, `like-button`, 'laptop')} 
             onClick={handleShare}>
             <ShareIcon
               color='rgba(171, 172, 178, 1)'
               className='button'
             />
           </button>
-          <button className={cn(`button`, 'share-button')} onClick={onClickFavorite}>
+          <button 
+            className={cn(`button`, `like-button`, 'mobile')} 
+            onClick={handleShare}>
+            <ShareIconMobile
+              color='rgba(171, 172, 178, 1)'
+              className='button'
+            />
+          </button>
+          <button className={cn(`button`, 'share-button', 'laptop')} onClick={onClickFavorite}>
             <BookmarkIcon
+              color='rgba(171, 172, 178, 1)'
+              className='button'
+              isFavorite={isFavorite()}
+            />
+          </button>
+          <button className={cn(`button`, 'share-button', 'mobile')} onClick={onClickFavorite}>
+            <BookmarkIconMobile
               color='rgba(171, 172, 178, 1)'
               className='button'
               isFavorite={isFavorite()}

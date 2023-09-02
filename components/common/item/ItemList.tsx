@@ -3,7 +3,6 @@ import classNames from 'classnames/bind';
 import style from 'components/common/item/ItemList.module.scss'
 import { ThreeDots } from 'react-loader-spinner';
 import { checkCondition, checkEventDone, getEventEndDate } from 'lib/utils/eventUtil';
-import EventFilter from 'components/features/filters/EventFilter';
 import { EventResponse } from 'model/event';
 import List from 'components/common/item/List';
 import { checkSearch } from 'lib/utils/searchUtil';
@@ -25,7 +24,7 @@ type Props = {
 function ItemList({ events, isError, jobGroups, eventType, location, coast, search }: Props) {
   const [ totalCount, setTotalCount] = useState<number>(0);
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
-  const { date } = useContext(EventContext);
+  const { jobGroupList, date } = useContext(EventContext);
   let eventCount = 0;
 
   useEffect(() => {
@@ -34,7 +33,7 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
       setIsLoading(false);
       composeTotalCount();
     }, 300);
-  }, [search, totalCount, date]);
+  }, [search, totalCount, date, jobGroupList, eventType, location, coast]);
 
   if (isError) {
     return <div className={cn('null-container')}>이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
@@ -63,7 +62,6 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
 
   return (
     <>
-      <EventFilter />
       {search && (
         <div className={cn('search__header')}>
           <span className={cn('list__title')}>{search}</span>
