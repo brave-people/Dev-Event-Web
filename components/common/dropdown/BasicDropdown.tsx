@@ -4,7 +4,7 @@ import style from 'components/common/dropdown/BasicDropdown.module.scss'
 import classNames from "classnames/bind";
 import DownArrowIcon from "components/icons/DownArowIcon";
 import { useRouter } from "next/router";
-import { handleUrl, parseUrl } from "lib/utils/urlUtil";
+import { initUrl, parseUrl } from "lib/utils/urlUtil";
 import { EventContext } from "context/event";
 import { WindowContext } from "context/window";
 import * as ga from 'lib/utils/gTag';
@@ -26,7 +26,7 @@ type BasicDropdownProps = {
 function BasicDropdown({ title, options, type, context, gaParam }: BasicDropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [currentState, setCurrentState] = useState<string | undefined>(undefined);
-  const { jobGroupList, eventType, location, coast, search, date, handleDate } = useContext(EventContext)
+  const { jobGroupList, eventType, location, coast, search, date, url, handleDate, handleUrl } = useContext(EventContext)
   const { windowTheme } = useContext(WindowContext);
   const outSideRef = useRef(null);
   const router = useRouter();
@@ -70,6 +70,14 @@ function BasicDropdown({ title, options, type, context, gaParam }: BasicDropdown
     return (coast === current);
   }
 
+  const reflactUrl = (urls: string) => {
+    const windowX = window.innerWidth;
+    handleUrl(urls);
+    if (windowX < 600)
+      return ;
+    router.replace(urls);
+  }
+
   useOnClickOutside({ ref: outSideRef, handler: handleClickOutside, mouseEvent: 'click' });
   return (
     <>
@@ -85,37 +93,37 @@ function BasicDropdown({ title, options, type, context, gaParam }: BasicDropdown
         </div>
         {isOpen && (
         <div className={cn('dropdown__list')}>
-            {options?.map((option, idx) => {
-              return (
-                <div
-                  key={idx}
-                  className={cn(
-                    'dropdown__list__element', 
-                    checkContext(option) && 
-                    `${windowTheme ? 'selected__light' : 'selected__dark'}`)}
-                  onClick={() => {
-                    ga.event(gaParam)
-                    const key = `${type}`
-                    const value = `${option}`
-                    if (date !== undefined)
-                      handleDate(undefined);
-                    if (option === "전체") {
-                      setCurrentState(undefined);
-                      context(undefined);
-                      setIsOpen(false);
-                      router.replace(`${handleUrl(`${router.asPath}`, key, jobGroupList, eventType, location, coast, search)}`)
-                    } else {
-                      setCurrentState(option);
-                      context(option)
-                      setIsOpen(false);
-                      router.replace(`${parseUrl(`${router.asPath}`, key, value, jobGroupList)}`)
-                    }
-                  }}>
-                  {option}
-                </div>
-              )
-            })}
-          </div>
+          {options?.map((option, idx) => {
+            return (
+              <div
+                key={idx}
+                className={cn(
+                  'dropdown__list__element', 
+                  checkContext(option) && 
+                  `${windowTheme ? 'selected__light' : 'selected__dark'}`)}
+                onClick={() => {
+                  ga.event(gaParam);
+                  const key = `${type}`;
+                  const value = `${option}`;
+                  if (date !== undefined)
+                    handleDate(undefined);
+                  if (option === "전체") {
+                    setCurrentState(undefined);
+                    context(undefined);
+                    setIsOpen(false);
+                    reflactUrl(`${initUrl(`${url ? url : router.asPath}`, key, jobGroupList, eventType, location, coast, search)}`);
+                  } else {
+                    setCurrentState(option);
+                    context(option);
+                    setIsOpen(false);
+                    reflactUrl(`${parseUrl(`${url ? url : router.asPath}`, key, value, jobGroupList)}`);
+                  }
+                }}>
+                {option}
+              </div>
+            )
+          })}
+        </div>
       )}
       </div>
     </>
