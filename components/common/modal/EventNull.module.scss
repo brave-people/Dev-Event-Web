@@ -36,110 +36,58 @@
       margin-top: 30px;
       margin-bottom: 15px;
     }
+
+    .tag__container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
   }
 }
 
-@media (max-width: 1075px) {
-  .section__list {
-    width: 60.75rem;
+@include laptop {
+  @media (max-width: 1075px) {
+    .section__list {
+      width: 59.75rem;
+    }
   }
-}
-
-@media (max-width: 955px) {
-  .section__list {
-    width: 52.75rem;
-    .section__list__title {
-      font-size: 1.3rem;
-      line-height: 1.7rem;
+  @media (max-width: 950px) {
+    .section__list {
+      width: 50.75rem;
+    }
+  }
+  @media (max-width: 800px) {
+    .section__list {
+      width: 42.75rem;
     }
   }
 }
 
 @include tablet {
   .section__list {
-    width: 52.75rem;
-
-    &__title {
-      font-size: 1.3rem;
-      line-height: 1.7rem;
-
-      .container {
-        width: 100%;
-        height: 300px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        .title {
-          color: var(--gray-1);
-          font-size: 20px;
-          font-weight: 400;
-          margin: 16px auto;
-        }
-
-        .desc {
-          color: var(--gray-1);
-          font-size: 14px;
-          font-weight: 500;
-          margin-top: 25px;
-          margin-bottom: 10px;
-        }
+    width: 34.75rem;
+    margin: 0 auto;
+    .container {
+      .title {
+        font-size: 22px;
       }
+    }
+  }
+  @media (max-width: 500px) {
+    .section__list {
+      width: 26.75rem;
     }
   }
 }
 
 @include mobile {
   .section__list {
-    width: 42rem;
-  
+    width: 20.75rem;
+    margin: 0 auto;
     .container {
-      width: 100%;
-      height: 200px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
       .title {
-        color: var(--gray-1);
-        font-size: 16px;
-        font-weight: 400;
-        margin: 7px auto;
+        font-size: 18px;
       }
-
-      .desc {
-        color: var(--gray-1);
-        font-size: 12px;
-        font-weight: 500;
-        margin-top: 15px;
-        margin-bottom: 5px;
-      }
-    }
-  }
-  @media (max-width: 600px) {
-    .section__list {
-      width: 36rem;
-    }
-  }
-
-  @media (max-width: 555px) {
-    .section__list {
-      width: 30rem;
-    }
-  }
-
-
-  @media (max-width: 455px) {
-    .section__list {
-      width: 25rem;
-    }
-  }
-
-  @media (max-width: 360px) {
-    .section__list {
-      width: 20rem;
     }
   }
 }
