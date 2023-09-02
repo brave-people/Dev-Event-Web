@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Layout from 'components/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
@@ -11,6 +11,7 @@ import Banner from 'components/common/banner/banner';
 import FilteredEventList from 'components/events/FilteredEventList';
 import { EventResponse } from 'model/event';
 import Letter from 'components/features/letter/Letter';
+import { EventContext } from 'context/event';
 
 const cn = classNames.bind(style);
 
@@ -22,7 +23,7 @@ type Props = {
 const Search = ({ isLoggedIn, fallbackData }: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
-
+  const { jobGroupList, eventType, location, coast } = useContext(EventContext)
   useEffect(() => {
     if (isLoggedIn) {
       authContext.login();

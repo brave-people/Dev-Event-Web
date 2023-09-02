@@ -12,6 +12,7 @@ import { Event } from 'model/event';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Banner from 'components/common/banner/banner';
+import Letter from 'components/features/letter/Letter';
 
 const cn = classNames.bind(style);
 
@@ -63,6 +64,7 @@ const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackD
           date={filteredDate}
         />
       </section>
+      <Letter />
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
     </>
   );

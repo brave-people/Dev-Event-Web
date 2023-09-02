@@ -13,8 +13,6 @@ import Head from 'next/head';
 import Banner from 'components/common/banner/banner';
 import Letter from 'components/features/letter/Letter';
 import { EventContext } from 'context/event';
-import MonthlyEventList from 'components/events/MonthlyEventList';
-import { getCurrentDate } from 'lib/utils/dateUtil';
 
 const cn = classNames.bind(style);
 
@@ -74,6 +72,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = context.req.headers.cookie || '';
   const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/current`);
   const events = await res.json();
+
+  console.log(events)
 
   if (cookies) {
     const parsedCookies = cookie.parse(cookies);
