@@ -146,8 +146,8 @@ function DateBoard({ options }: Props) {
           color="#313234"
         />
       </div>
-      <div className={cn('dropdown')} onClick={handleClickDropdown}>
-        <div className={cn('dropdown__header')}>
+      <div className={cn('dropdown')}>
+        <div className={cn('dropdown__header')} onClick={handleClickDropdown}>
           {<span>{date === undefined ? "전체" :`${currentYear}년 ${currentMonth}월`}</span>}
         </div>
         {isOpen && (
