@@ -105,27 +105,28 @@
 
 @include tablet {
   .search__header {
-    width: 39.75rem;
-    margin: 0;
+    width: 34.75rem;
+    margin: 0 auto;
   }
   .section__list {
-    width: 39.75rem;
+    width: 37.75rem;
+    margin: 0 auto;
   }
   .search__list {
-    width: 39.75rem;
+    width: 35.75rem;
+    margin: 0 auto;
   }
   .list__title {
     font-weight: 700;
     font-size: 1.4rem;
     line-height: 2.188rem;
-    padding-left: 1.4rem;
     color: var(--gray-1);
     display: flex;
     flex-direction: row;
   }
   @media (max-width: 550px) {
     .search__header {
-      width: 34.75rem;
+      width: 30.75rem;
     }
     .section__list {
       margin-top: 1.5rem;

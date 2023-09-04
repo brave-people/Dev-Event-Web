@@ -164,6 +164,23 @@
   .header {
     &__inner {
       width: 34.75rem;
+      .header__buttons {
+        .wrapper {
+          padding-left: 12px;
+        }
+      }
+    }
+  }
+  @media (max-width: 550px) {
+    .header {
+      &__inner {
+        width: 30.75rem;
+        .header__buttons {
+          .wrapper {
+            padding-left: 10px;
+          }
+        }
+      }
     }
   }
   @media (max-width: 500px) {
@@ -171,8 +188,8 @@
       &__inner {
         width: 26.75rem;
         .header__buttons {
-          .toggle__container {
-            display: none;
+          .wrapper {
+            padding-left: 10px;
           }
         }
       }
@@ -185,9 +202,9 @@
     &__inner {
       width: 20.75rem;
         .header__buttons {
-          .toggle__container {
-            display: none;
-        }
+          .wrapper {
+            padding-left: 8px;
+          }
       }
     }
   }

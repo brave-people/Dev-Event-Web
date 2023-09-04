@@ -211,6 +211,7 @@
   
   @media (max-width: 450px) {
     .letter {
+      height: 241px;
       .inner {
         width: 28.75rem;
         height: 100%;
@@ -232,6 +233,34 @@
         bottom: 0;
         right: 0;
         transform: translateY(-100%);
+      }
+      }
+    }
+  }
+  @media (max-width: 400px) {
+    .letter {
+      height: 220px;
+      .inner {
+        width: 23.75rem;
+        height: 100%;
+        margin: 0 auto;
+        position: relative;
+        .letter__container {
+          position: relative;
+          .letter__title {
+            font-size: 20px;
+          }
+          .letter__desc {
+            font-size: 14px;
+          }
+        }
+      .button__container {
+        width: 160px;
+        height: 34px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        transform: translateY(-50%);
       }
       }
     }

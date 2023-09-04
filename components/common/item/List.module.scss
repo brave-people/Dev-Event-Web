@@ -22,11 +22,22 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: space-between;
   }
   .skeleton {
     width: 270px;
   } 
+  @media (max-width: 580px) {
+   .list {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .skeleton {
+    width: 270px;
+  } 
+  }
 }
 
 @include mobile {
@@ -34,7 +45,7 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
   }
   .skeleton {
     width: 270px;
