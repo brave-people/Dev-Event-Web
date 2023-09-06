@@ -24,6 +24,13 @@
   flex-direction: row;
 }
 
+.total__count {
+  font-weight: 600;
+  font-size: 1.7rem;
+  color: var(--gray-2);
+  margin-left: 1rem;
+}
+
 .null-container {
   height: 35vh;
   width: 100%;
@@ -44,6 +51,7 @@
 @include laptop {
   .search__header {
     width: 68.75rem;
+    display: flex;
   }
   .section__list {
     width: 68.75rem;
@@ -88,6 +96,24 @@
   @media (max-width: 800px) {
     .search__header {
       width: 42.75rem;
+      margin: 0 auto;
+      display: flex;
+    }
+    .search__header__modal {
+      width: 42.75rem;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      .total__count {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+      }
+      .list__title {
+        font-weight: 590;
+        font-size: 20px;
+        line-height: 24px;
+      }
     }
     .section__list {
       margin-top: 2rem;
@@ -105,24 +131,33 @@
 
 @include tablet {
   .search__header {
+    width: 37.75rem;
+    margin: 0 auto;
+    display: flex;
+  }
+  .search__header__modal {
     width: 34.75rem;
     margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    .total__count {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+    }
+    .list__title {
+      font-weight: 590;
+      font-size: 20px;
+      line-height: 24px;
+    }
   }
   .section__list {
     width: 37.75rem;
     margin: 0 auto;
   }
   .search__list {
-    width: 35.75rem;
+    width: 37.75rem;
     margin: 0 auto;
-  }
-  .list__title {
-    font-weight: 700;
-    font-size: 1.4rem;
-    line-height: 2.188rem;
-    color: var(--gray-1);
-    display: flex;
-    flex-direction: row;
   }
   @media (max-width: 550px) {
     .search__header {
@@ -176,6 +211,7 @@
 @include mobile {
   .search__header {
     width: 22.75rem;
+    display: flex;
   }
   .section__list {
     margin-top: 1.2rem;
@@ -193,5 +229,21 @@
     color: var(--gray-1);
     display: flex;
     flex-direction: row;
+  }
+  .search__header__modal {
+    width: 22.75rem;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    .total__count {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+    }
+    .list__title {
+      font-weight: 590;
+      font-size: 20px;
+      line-height: 24px;
+    }
   }
 }

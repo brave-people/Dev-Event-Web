@@ -8,7 +8,7 @@ import FilterTag from 'components/common/tag/FilterTag';
 import { DateUtil, removeDupDate } from 'lib/utils/dateUtil';
 import { WindowContext } from 'context/window';
 import { TagResponse } from 'model/tag';
-import { BookmarkIcon, BookmarkIconMobile, EndBulletIcon, NewBulletIcon, ReviewIcon, ShareIcon, ShareIconMobile } from 'components/icons';
+import { BookmarkIcon, BookmarkIconMobile, EndBulletIcon, NewBulletIcon, ShareIcon, ShareIconMobile } from 'components/icons';
 import { getTagName, getTagType } from 'lib/utils/tagUtil';
 import ShareModal from 'components/common/modal/ShareModal'
 import { EventContext } from 'context/event';

@@ -121,9 +121,9 @@ const List = ({ data, parentLast }: Props) => {
         const isLast = index === data.length - 1 ? true : false;
         return (
             <Item
+              key={index}
               childLast={isLast}
               parentLast={parentLast}
-              key={item.id}
               data={item}
               isEventNew={() => {
                 return checkEventNew({ createdDate: item.create_date_time });
