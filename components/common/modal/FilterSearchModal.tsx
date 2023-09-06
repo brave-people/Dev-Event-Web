@@ -37,6 +37,7 @@ function FilterSearchModal ({ events }: Props) {
       });
     }, 300);
     handleSearch(undefined);
+    document.body.classList.remove('body__no__scroll')
     if (search !== undefined) {
       router.replace(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
     }
@@ -50,7 +51,7 @@ function FilterSearchModal ({ events }: Props) {
       setHidden(false);
       setIsLoading(false)
     }
-  })
+  }, [])
   return (
     <main className={cn('container', hidden && 'hidden')}>
       <section className={cn('header')}>
@@ -66,10 +67,11 @@ function FilterSearchModal ({ events }: Props) {
         </div>
         <div 
           className={cn('header__button')}
-          onClick={() => {handleModalState({
-            currentModal: 2,
-            prevModal: modalState.currentModal,
-            type: true
+          onClick={() => {
+            handleModalState({
+              currentModal: 2,
+              prevModal: modalState.currentModal,
+              type: true
           })}}>
           <ToggleIcon />
         </div>

@@ -21,7 +21,12 @@
     height: 60px;
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    position: sticky;
+    background-color: var(--background-1);
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    justify-content: space-evenly;
     align-items: center;
 
     &__input {
@@ -95,5 +100,13 @@
   100% {
     opacity: 0%;
     transform: translateY(100%);
+  }
+}
+
+@media (min-width: 600px) {
+  .container {
+    .header {
+      width: 100%;
+    }
   }
 }

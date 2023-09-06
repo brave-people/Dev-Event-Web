@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import style from 'components/common/input/BasicInput.module.scss'
 import getIconByName from 'lib/utils/iconUtil';
@@ -15,7 +15,13 @@ function BasicInput({ updateInput, submitInput, label, size, icon, iconStyle, in
   const searchRef = useRef<HTMLInputElement | null>(null);
   const { windowTheme } = useContext(WindowContext)
   const { jobGroupList, eventType, location, coast, search, handleSearch } = useContext(EventContext);
+  const { modalState } = useContext(WindowContext)
   const router = useRouter();
+  useEffect(() => {
+    if (window.innerWidth < 600 && modalState.currentModal === 1) {
+      searchRef.current?.focus();
+    }
+  }, [])
   return (
     <>
       <div className={cn('container')}>

@@ -70,6 +70,7 @@ function SearchEvent( { context }: Props) {
     <div
       onClick={() => {
         if (window.innerWidth < 600) {
+          document.body.classList.add('body__no__scroll')
           handleModalState({
             currentModal: 1,
             prevModal: modalState.currentModal,
