@@ -54,6 +54,7 @@ function DateBoard({ options }: Props) {
 
     if (windowX < 600 && modalState.currentModal !== 3) {
       setDateElement(true);
+      document.body.classList.add('body__no__scroll')
       handleModalState({
         currentModal: 3,
         prevModal: modalState.currentModal,
