@@ -35,7 +35,7 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
   }, [isLoggedIn, date]);
 
   return (
-    <>
+    <main className={cn('main')}>
       <Head>
         <title>Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!</title>
         <meta
@@ -64,7 +64,7 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
       </section>
       <Letter />
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
-    </>
+    </main>
   );
 };
 

@@ -31,7 +31,7 @@ const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackD
   }, [isLoggedIn]);
 
   return (
-    <>
+    <main className={cn('main')}>
       <Head>
         <title>
           {filteredDate.year}년 {filteredDate.month}월 - 데브이벤트 행사 월별 검색
@@ -66,7 +66,7 @@ const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackD
       </section>
       <Letter />
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
-    </>
+    </main>
   );
 };
 
