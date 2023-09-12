@@ -91,6 +91,18 @@
       }
     }
   }
+  @media (max-width: 400px) {
+    .banner {
+      &__title {
+        font-size: 2.1rem;
+        padding-top: 3rem;
+        line-height: 3rem;
+      }
+      &__desc {
+        font-size: .9rem;
+      }
+    }
+  }
 }
 
 @include mobile {
