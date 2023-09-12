@@ -15,16 +15,24 @@
 
   &.color--primary {
     background-color: var(--primary);
+    font-size: 14px;
   }
 
   &.color--gray {
     background-color: var(--gray-1);
+    font-size: 14px;
+  }
+
+  &.color--white {
+    background-color: var(--background-1);
+    font-size: 14px;
+    color: var(--primary);
   }
 
   // rounded
   &.type--rounded {
     border-radius: 100px;
-  }
+  } 
 }
 
 @include laptop {
@@ -38,7 +46,10 @@
     .button {
       min-width: 9.5rem;
       min-height: 2.5rem;
-      font-size: 12px;
+      &.color--gray {
+        background-color: var(--gray-1);
+        font-size: 12px;
+      }
     }
   }
 }
