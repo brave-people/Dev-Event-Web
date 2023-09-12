@@ -259,7 +259,7 @@
           }
           &__desc {
             margin-top: 10px;
-            width: 270px;
+            width: 300px;
             display: flex;
             flex-wrap: wrap;
             &__tags {
@@ -279,7 +279,7 @@
    @media (max-width: 800px) {
     .item__container {
       margin-top: 2rem;
-      width: 20rem;
+      width: 270px;
       height: auto;
       min-height: 300px;
       padding: 0;

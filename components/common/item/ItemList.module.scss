@@ -2,17 +2,18 @@
 
 .search__header {
   padding-top: 1.806rem;
-  width: 68.75rem;
+  display: flex;
+  width: 100%;
 }
 
 .section__list {
   padding-top: 2.813rem;
-  width: 68.75rem;
+  width: 100%;
 }
 
 .search__list {
   // padding-top: 1.406rem;
-  width: 68.75rem;
+  width: 100%;
 }
 
 .list__title {
@@ -49,58 +50,9 @@
 }
 
 @include laptop {
-  .search__header {
-    width: 68.75rem;
-    display: flex;
-  }
-  .section__list {
-    width: 68.75rem;
-  }
-  .search__list {
-    width: 68.75rem;
-  }
-  .divider {
-    border-top: 1px solid var(--gray-4);
-  }
-
-  @media (max-width: 1075px) {
-    .search__header {
-      width: 58.75rem;
-    }
-    .section__list {
-      width: 58.75rem;
-    }
-    .search__list {
-      width: 58.75rem;
-    }
-  }
-  .divider {
-    border-top: 1px solid var(--gray-4);
-  }
-
-  @media (max-width: 950px) {
-    .search__header {
-      width: 50.75rem;
-    }
-    .section__list {
-      width: 50.75rem;
-    }
-    .search__list {
-      width: 50.75rem;
-    }
-    .divider {
-      border-top: 1px solid var(--gray-4);
-    }
-  }
-
   @media (max-width: 800px) {
-    .search__header {
-      width: 42.75rem;
-      margin: 0 auto;
-      display: flex;
-    }
     .search__header__modal {
-      width: 42.75rem;
+      width: 100%;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
@@ -115,28 +67,30 @@
         line-height: 24px;
       }
     }
-    .section__list {
-      margin-top: 2rem;
-      width: 42.75rem;
-    }
-    .search__list {
-      margin-top: 2rem;
-      width: 42.75rem;
-    }
-    .divider {
-      border-top: 1px solid var(--gray-4);
+  }
+  @media (max-width: 700px) {
+    .search__header__modal {
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      .total__count {
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 24px;
+      }
+      .list__title {
+        font-weight: 590;
+        font-size: 20px;
+        line-height: 24px;
+      }
     }
   }
 }
 
 @include tablet {
-  .search__header {
-    width: 37.75rem;
-    margin: 0 auto;
-    display: flex;
-  }
   .search__header__modal {
-    width: 34.75rem;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -144,46 +98,26 @@
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
+      margin-right: 2rem;
     }
     .list__title {
       font-weight: 590;
       font-size: 20px;
       line-height: 24px;
+      margin-left: 2rem;
     }
-  }
-  .section__list {
-    width: 37.75rem;
-    margin: 0 auto;
-  }
-  .search__list {
-    width: 37.75rem;
-    margin: 0 auto;
   }
   @media (max-width: 550px) {
-    .search__header {
-      width: 30.75rem;
-    }
-    .section__list {
-      margin-top: 1.5rem;
-      width: 34.75rem;
-    }
     .search__list {
       margin-top: 1.5rem;
-      width: 34.75rem;
-    } 
+      width: 100%;
+    }
+
   }
   @media (max-width: 500px) {
-    .search__header {
-      width: 26.75rem;
+    .search__header__modal {
+      padding: auto 1rem;
     }
-    .section__list {
-      margin-top: 1.5rem;
-      width: 26.75rem;
-    }
-    .search__list {
-      margin-top: 1.5rem;
-      width: 26.75rem;
-    } 
     .list__title {
       font-weight: 700;
       font-size: 1.4rem;
@@ -194,32 +128,21 @@
     }
   }
   @media (max-width: 450px) {
-    .search__header {
-      width: 23.75rem;
-    }
     .section__list {
       margin-top: 1.2rem;
-      width: 23.75rem;
-    }
-    .search__list {
-      margin-top: 1.2rem;
-      width: 23.75rem;
+      width: 100%;
     }
   }
 }
 
 @include mobile {
-  .search__header {
-    width: 22.75rem;
-    display: flex;
-  }
   .section__list {
     margin-top: 1.2rem;
-    width: 22.75rem;
+    width: 100%;
   }
   .search__list {
     margin-top: 1.2rem;
-    width: 22.75rem;
+    width: 100%;
   }
   .list__title {
     font-weight: 700;
@@ -231,7 +154,7 @@
     flex-direction: row;
   }
   .search__header__modal {
-    width: 22.75rem;
+    width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
