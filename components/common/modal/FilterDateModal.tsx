@@ -30,6 +30,7 @@ function FilterDateModal() {
         type: true
       })
     }, 300)
+    document.body.classList.remove('body__no__scroll')
     setHidden(true)
   }
 

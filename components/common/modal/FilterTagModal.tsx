@@ -32,6 +32,7 @@ function FilterTagModal() {
         type: modalState.prevModal === 0 ? true : false
       });
     }, 200);
+    document.body.classList.remove('body__no__scroll')
     setHidden(true);
   }
   return (
@@ -72,9 +73,17 @@ function FilterTagModal() {
           />
         </div>
       </div>
+      <div className={cn('initBtn')}>
+        <FillButton
+          label='초기화하기'
+          color='white'
+          onClick={deleteModal}
+          rounded={false}
+        />
+      </div>      
       <div className={cn('finishBtn')}>
         <FillButton
-          label='완료'
+          label='적용하기'
           color='primary'
           onClick={deleteModal}
           rounded={false}
