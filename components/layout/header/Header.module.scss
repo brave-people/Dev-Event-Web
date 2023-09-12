@@ -195,6 +195,18 @@
       }
     }
   }
+  @media (max-width: 450px) {
+    .header {
+      &__inner {
+        width: 23.75rem;
+        .header__buttons {
+          .wrapper {
+            padding-left: 10px;
+          }
+        }
+      }
+    }
+  }
 }
 
 @include mobile {

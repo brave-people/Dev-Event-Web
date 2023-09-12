@@ -65,6 +65,11 @@
       display: block;
     }
   }
+  @media (max-width: 550px) {
+    .footer {
+      width: 30.75rem;
+    }
+  }
   @media (max-width: 500px) {
     .footer {
       width: 26.75rem;
@@ -72,7 +77,7 @@
   }
   @media (max-width: 450px) {
     .footer {
-      width: 22.75rem;
+      width: 23.75rem;
       height: 206px;
       position: relative;
       margin: 2rem auto ;
