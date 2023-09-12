@@ -7,7 +7,7 @@
   transition: all ease-in .3s;
 
   .inner {
-    width: 68.75rem;
+    width: 100%;
     margin: 0 auto;
   }
 
@@ -56,9 +56,6 @@
 
 @include laptop {
   .container {
-    .inner {
-      width: 68.75rem;
-    }
     .block {
       &__desc {
         font-size: 2.3rem;
@@ -67,21 +64,24 @@
   }
   @media (max-width: 1075px) {
     .container {
-      .inner {
-        width: 58.75rem;
-      }
       .block {
         &__desc {
-          font-size: 2.3rem;
+          font-size: 2.1rem;
+        }
+      }
+      .filter {
+        display: block;
+        position: relative;
+        &__group {
+          margin-top: .7rem;
+          width: 100%;
+          padding-left: 0;
         }
       }
     }
   }
   @media (max-width: 950px) {
     .container {
-      .inner {
-        width: 50.75rem;
-      }
       .block {
         &__desc {
           font-size: 2.1rem;
@@ -101,9 +101,6 @@
   @media (max-width: 800px) {
     .container {
       padding-top: 3.688rem;
-      .inner {
-        width: 42.75rem;
-      }
       .block {
         &__desc {
           font-size: 2rem;
@@ -112,14 +109,58 @@
       
     }
   }
+  @media (max-width: 700px) {
+    .container {
+      padding-top: 2.388rem;
+      .block {
+        &__desc {
+          font-size: 1.8rem;
+        }
+        &__taglist {
+          display: none;
+        }
+      }
+      .filter {
+        display: block;
+        position: relative;
+        margin-top: 1.2rem;
+        &__search {
+          width: 90%;
+        }
+        &__group {
+          width: 100%;
+          padding-left: 0;
+          &__tag {
+            display: none;
+          }
+          &__toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            &:hover {
+              cursor: pointer;
+              background-color: var(--gray-5);
+            }
+          }
+          &__date {
+            margin-top: .7rem;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
 }
 
 @include tablet {
   .container {
     padding-top: 2.388rem;
-    .inner {
-    width: 37.75rem;
-    }
     .block {
       &__desc {
         font-size: 1.8rem;
@@ -165,9 +206,6 @@
   }
   @media (max-width: 550px) {
     .container {
-      .inner {
-        width: 30.75rem;
-      }
       .block {
         &__desc {
           font-size: 1.6rem;
@@ -182,9 +220,6 @@
   }
   @media (max-width: 500px) {
     .container {
-      .inner {
-        width: 26.75rem;
-      }
       .block {
         &__desc {
           font-size: 1.6rem;
@@ -199,9 +234,6 @@
   }
   @media (max-width: 450px) {
     .container {
-      .inner {
-        width: 23.75rem;
-      }
       .block {
         &__desc {
           font-size: 1.6rem;
@@ -224,9 +256,6 @@
 @include mobile {
   .container {
     padding-top: 1.688rem;
-    .inner {
-      width: 21.75rem;
-    }
     .block {
       &__desc {
         font-size: 1.6rem;

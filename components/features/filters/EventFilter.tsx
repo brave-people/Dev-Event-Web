@@ -72,6 +72,7 @@ function EventFilter({ events }: Props) {
             </div>
             <div
               onClick={() => {
+                document.body.classList.add('body__no__scroll')
                 handleModalState({
                   currentModal: 2,
                   prevModal: modalState.currentModal,

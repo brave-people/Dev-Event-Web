@@ -36,6 +36,10 @@
       }
     }
   }
+  .button__container {
+    width: 200px;
+    height: 42px;
+  }
 }
 
 .break__line {
@@ -63,6 +67,10 @@
             height: 92px;
           }
         }
+        .button__container {
+          width: 200px;
+          height: 42px;
+        }
       }
     }
   }
@@ -74,10 +82,10 @@
         width: 52.75rem;
         .letter__container {
           .letter__title {
-            font-size: 22px;
+            font-size: 26px;
           }
           .letter__desc {
-            font-size: 12px;
+            font-size: 16px;
           }
           .image__container {
             width: 98px;
@@ -85,28 +93,61 @@
           }
         }
       }
+      .button__container {
+        width: 200px;
+        height: 42px;
+      }
     }
   }
 
   @media (max-width: 800px) {
-    .letter {
-      width: 100%;
-      height: 197px;
-      background-color: var(--background-2);
-      display: flex;
-      align-items: center;
-      .inner {
-        width: 47.75rem;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
+  .letter {
+    width: 100%;
+    height: 197px;
+    display: flex;
+    align-items: flex-start;
+    .inner {
+      width: 46.75rem;
+      height: 100%;
+      margin: 0 auto;
+      position: relative;
+      .letter__container {
+        position: relative;
+        .letter__title {
+          white-space: wrap;
+          font-size: 22px;
+          line-height: 32px;
+          font-weight: bold;
+        }        
+        .break__line {
+          display: block;
+        }
+        .letter__desc {
+          font-size: 16px;
+          font-weight: 500;
+          color: var(--gray-2);
+        }
+        .image__container {
+          position: absolute;
+          width: 80px;
+          height: 80px;
+          top: 0;
+          left: 50%;
+          transform: translate(100%, -10%);
+        }
+      }
+      .button__container {
+        width: 200px;
+        height: 42px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        transform: translateY(-100%);
       }
     }
   }
 }
-
-@include tablet {
+@media (max-width: 700px) {
   .letter {
     width: 100%;
     height: 197px;
@@ -152,37 +193,59 @@
       }
     }
   }
+}
+}
 
-  @media (max-width: 550px) {
-    .letter {
-      .inner {
-        width: 34.75rem;
-        height: 100%;
-        margin: 0 auto;
+@include tablet {
+  .letter {
+    width: 100%;
+    height: 197px;
+    display: flex;
+    align-items: flex-start;
+    .inner {
+      width: 34.75rem;
+      height: 100%;
+      margin: 0 auto;
+      position: relative;
+      .letter__container {
         position: relative;
-        .letter__container {
-          position: relative;
-          .letter__title {
-            font-size: 20px;
-          }
-          .letter__desc {
-            font-size: 14px;
-          }
+        .letter__title {
+          white-space: wrap;
+          font-size: 22px;
+          line-height: 32px;
+          font-weight: bold;
+        }        
+        .break__line {
+          display: block;
         }
+        .letter__desc {
+          font-size: 16px;
+          font-weight: 500;
+          color: var(--gray-2);
+        }
+        .image__container {
+          position: absolute;
+          width: 80px;
+          height: 80px;
+          top: 0;
+          left: 50%;
+          transform: translate(100%, -10%);
+        }
+      }
       .button__container {
-        width: 170px;
-        height: 36px;
+        width: 200px;
+        height: 42px;
         position: absolute;
         bottom: 0;
         right: 0;
         transform: translateY(-100%);
       }
-      }
     }
   }
-  
-  @media (max-width: 500px) {
+
+  @media (max-width: 550px) {
     .letter {
+      height: 197px;
       .inner {
         width: 30.75rem;
         height: 100%;
@@ -198,8 +261,8 @@
           }
         }
       .button__container {
-        width: 170px;
-        height: 36px;
+        width: 190px;
+        height: 40px;
         position: absolute;
         bottom: 0;
         right: 0;
@@ -209,14 +272,17 @@
     }
   }
   
-  @media (max-width: 450px) {
+  @media (max-width: 500px) {
     .letter {
-      height: 241px;
+      height: 217px;
       .inner {
-        width: 28.75rem;
+        width: 26.75rem;
         height: 100%;
-        margin: 0 auto;
+        margin: 2rem auto;
         position: relative;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
         .letter__container {
           position: relative;
           .letter__title {
@@ -225,43 +291,119 @@
           .letter__desc {
             font-size: 14px;
           }
+          .image__container {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            top: 0;
+            right: 0;
+            transform: translate(270%, 0);
+          }
         }
       .button__container {
-        width: 160px;
-        height: 34px;
+        width: 190px;
+        height: 40px;
         position: absolute;
         bottom: 0;
         right: 0;
-        transform: translateY(-100%);
       }
+      }
+    }
+  }
+  
+  @media (max-width: 450px) {
+    .letter {
+      width: 100%;
+      height: 240px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      .inner {
+        width: 24.75rem;
+        height: 100%;
+        margin: 2rem auto;
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        .letter__container {
+          position: relative;
+          .letter__title {
+            font-size: 20px;
+          }
+          .letter__desc {
+            font-size: 14px;
+          }
+          .image__container {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            top: 0;
+            right: 0;
+            transform: translate(220%, 0);
+          }
+        }
+        .button__container {
+          width: 190px;
+          height: 40px;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          transform: translateY(0);
+        }
       }
     }
   }
   @media (max-width: 400px) {
     .letter {
-      height: 220px;
+      width: 100%;
+      height: 240px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       .inner {
-        width: 23.75rem;
+        width: 22.75rem;
         height: 100%;
-        margin: 0 auto;
+        margin: 2rem auto;
         position: relative;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
         .letter__container {
-          position: relative;
+          position: absolute;
           .letter__title {
+            white-space: wrap;
             font-size: 20px;
+            line-height: 28px;
+            font-weight: bold;
+            letter-spacing: -2%;
+          }        
+          .break__line {
+            display: block;
           }
           .letter__desc {
             font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-2);
+            letter-spacing: -.8px;
+          }
+          .image__container {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            top: -7px;
+            right: 0;
+            transform: translate(200%, 0);
           }
         }
-      .button__container {
-        width: 160px;
-        height: 34px;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        transform: translateY(-50%);
-      }
+        .button__container {
+          width: 190px;
+          height: 40px;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          transform: translateY(0);
+        }
       }
     }
   }
@@ -270,7 +412,7 @@
 @include mobile {
     .letter {
     width: 100%;
-    height: 260px;
+    height: 240px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -294,7 +436,7 @@
           display: block;
         }
         .letter__desc {
-          font-size: 16px;
+          font-size: 14px;
           font-weight: 500;
           color: var(--gray-2);
           letter-spacing: -.8px;
@@ -303,7 +445,7 @@
           position: absolute;
           width: 70px;
           height: 70px;
-          top: 0;
+          top: -7px;
           right: 5%;
         }
       }
@@ -313,7 +455,6 @@
         position: absolute;
         bottom: 0;
         right: 5%;
-        transform: translateY(-50%);
       }
     }
   }
