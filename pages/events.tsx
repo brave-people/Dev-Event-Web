@@ -73,8 +73,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/current`);
   const events = await res.json();
 
-  console.log(events)
-
   if (cookies) {
     const parsedCookies = cookie.parse(cookies);
     const access_token = parsedCookies.access_token;
