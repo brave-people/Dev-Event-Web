@@ -44,7 +44,7 @@
     position: relative;
 
     &:after {
-      content: "";
+      content: '';
       display: block;
       border-right: 1px solid;
       border-color: var(--gray-4);
@@ -56,7 +56,7 @@
       margin-right: 5px;
     }
     &::before {
-      content: "";
+      content: '';
       display: block;
       border-left: 1px solid;
       border-color: var(--gray-4);
@@ -97,7 +97,7 @@
         align-items: center;
         position: relative;
         &::after {
-          content: "";
+          content: '';
           display: block;
           border-right: 1px solid;
           border-color: var(--gray-4);
@@ -109,7 +109,7 @@
         }
       }
 
-    &.type--default--last {
+      &.type--default--last {
         color: var(--gray-2);
         border-radius: 0;
         background-color: transparent;
@@ -122,92 +122,90 @@
   }
 }
 
-
 @include tablet {
   .tag {
-      &.size--regular {
-        font-size: 14px;
-        line-height: 16px;
-        padding: 3px 9px 3px 0px;
-        border-radius: 3px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
-      &.type--default {
-        color: var(--gray-2);
-        border-radius: 0;
-        background-color: transparent;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        &::after {
-          content: "";
-          display: block;
-          border-right: 1px solid;
-          border-color: var(--gray-4);
-          height: 10px;
-          position: absolute;
-          right: 0;
-          top: 50%;
-          transform: translateY(-50%);
-        }
-      }
-
-    &.type--default--last {
-        color: var(--gray-2);
-        border-radius: 0;
-        background-color: transparent;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
+    &.size--regular {
+      font-size: 14px;
+      line-height: 16px;
+      padding: 3px 9px 3px 0px;
+      border-radius: 3px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    &.type--default {
+      color: var(--gray-2);
+      border-radius: 0;
+      background-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      &::after {
+        content: '';
+        display: block;
+        border-right: 1px solid;
+        border-color: var(--gray-4);
+        height: 10px;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
       }
     }
-}
 
+    &.type--default--last {
+      color: var(--gray-2);
+      border-radius: 0;
+      background-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+  }
+}
 
 @include mobile {
   .tag {
-      &.size--regular {
-        font-size: 14px;
-        line-height: 16px;
-        padding: 3px 9px 3px 0px;
-        border-radius: 3px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
-      &.type--default {
-        color: var(--gray-2);
-        border-radius: 0;
-        background-color: transparent;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        &::after {
-          content: "";
-          display: block;
-          border-right: 1px solid;
-          border-color: var(--gray-4);
-          height: 10px;
-          position: absolute;
-          right: 0;
-          top: 50%;
-          transform: translateY(-50%);
-        }
-      }
-
-    &.type--default--last {
-        color: var(--gray-2);
-        border-radius: 0;
-        background-color: transparent;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
+    &.size--regular {
+      font-size: 14px;
+      line-height: 16px;
+      padding: 3px 9px 3px 0px;
+      border-radius: 3px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    &.type--default {
+      color: var(--gray-2);
+      border-radius: 0;
+      background-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      &::after {
+        content: '';
+        display: block;
+        border-right: 1px solid;
+        border-color: var(--gray-4);
+        height: 10px;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
       }
     }
+
+    &.type--default--last {
+      color: var(--gray-2);
+      border-radius: 0;
+      background-color: transparent;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+  }
 }

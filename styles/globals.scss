@@ -1,4 +1,4 @@
-@use "/styles/Theme.scss" as *;
+@use '/styles/Theme.scss' as *;
 @import '~styles/_mixin.scss';
 
 html,
@@ -38,7 +38,9 @@ a {
 
 .body__no__scroll {
   overflow: hidden;
-  &::-webkit-scrollbar { display:none; }
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @media (max-width: 350px) {

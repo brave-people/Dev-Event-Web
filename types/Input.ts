@@ -7,4 +7,4 @@ export type InputProps = {
   iconStyle?: string;
   initInput: () => void;
   input: string | undefined;
-}
+};

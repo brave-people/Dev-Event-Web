@@ -1,8 +1,8 @@
 import { AxiosResponse } from 'axios';
+import axiosInstance from 'lib/api/axiosInstance';
 import axiosInstanceWithToken from 'lib/api/axiosInstanceWithToken';
 import { AuthProp, SignUpProps, SignUpResponse, TokenProp, TokenResponse } from 'model/auth';
 import { MyEventPostProps, MyEventResponse } from 'model/event';
-import axiosInstance from 'lib/api/axiosInstance';
 
 export const createMyEventApi = async (url: string, data: MyEventPostProps): Promise<MyEventResponse> => {
   try {

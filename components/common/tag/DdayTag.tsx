@@ -1,14 +1,14 @@
-import classNames from 'classnames/bind';
+import style from 'components/common/tag/DdayTag.module.scss';
 import { DateUtil } from 'lib/utils/dateUtil';
 import React from 'react';
-import style from 'components/common/tag/DdayTag.module.scss';
+import classNames from 'classnames/bind';
 
 const cn = classNames.bind(style);
 
 type Props = {
   startDateTime: string;
   endDateTime: string;
-} 
+};
 
 function DdayTag({ startDateTime, endDateTime }: Props) {
   const calculateEventDday = () => {

@@ -31,7 +31,7 @@
 
     &__input {
       width: 100%;
-      margin: 0 .8rem;
+      margin: 0 0.8rem;
     }
 
     &__button {
@@ -86,7 +86,7 @@
 
 .hidden {
   animation-name: focusOut;
-  animation-duration: .3s;
+  animation-duration: 0.3s;
   animation-timing-function: ease;
   animation-fill-mode: forwards;
 }

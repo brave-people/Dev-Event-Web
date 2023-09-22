@@ -17,17 +17,17 @@
     border-color: rgba(170, 184, 255, 1);
   }
 
-  .key  {
+  .key {
     overflow: hidden;
   }
-  
+
   .key--active {
     min-width: 3rem;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all .1s linear;
+    transition: all 0.1s linear;
     &:hover {
       cursor: pointer;
       background-color: var(--background-2);
@@ -94,7 +94,7 @@
         justify-content: space-between;
         align-items: center;
         color: var(--gray-1);
-        
+
         .year__text {
           line-height: 14px;
           font-size: 14px;
@@ -121,7 +121,7 @@
           user-select: none;
         }
       }
-    }  
+    }
   }
 
   .date__elements {
@@ -129,7 +129,7 @@
     bottom: 0;
     transform: translateY(150%);
     animation-name: focusIn;
-    animation-duration: .3s;
+    animation-duration: 0.3s;
     animation-timing-function: ease;
   }
 }

@@ -1,14 +1,14 @@
-import classNames from 'classnames/bind';
-import style from 'components/layout/header/Header.module.scss';
-import React, { useState } from 'react';
-import Link from 'next/link';
-import LoginModal from 'components/common/modal/LoginModal';
-import { AuthContext } from 'context/auth';
-import Profile from 'components/layout/header/Profile';
 import Logo from 'components/common/logo/Logo';
-import Login from 'components/features/login/Login'
-import ThemeToggle from 'components/features/ThemeToggle/ThemeToggle';
+import LoginModal from 'components/common/modal/LoginModal';
 import NoticeModal from 'components/common/modal/NoticeModal';
+import ThemeToggle from 'components/features/ThemeToggle/ThemeToggle';
+import Login from 'components/features/login/Login';
+import style from 'components/layout/header/Header.module.scss';
+import Profile from 'components/layout/header/Profile';
+import { AuthContext } from 'context/auth';
+import React, { useState } from 'react';
+import classNames from 'classnames/bind';
+import Link from 'next/link';
 
 const cn = classNames.bind(style);
 
@@ -30,13 +30,7 @@ function Header() {
             <ThemeToggle />
           </div>
           <span className={cn('wrapper')}>
-            {authContext.isLoggedIn ? (
-              <Profile />
-            ) : (
-              <Login
-              setLoginModalIsOpen={setLoginModalIsOpen}
-              />
-            )}
+            {authContext.isLoggedIn ? <Profile /> : <Login setLoginModalIsOpen={setLoginModalIsOpen} />}
           </span>
         </div>
       </div>

@@ -80,7 +80,7 @@
       width: 23.75rem;
       height: 206px;
       position: relative;
-      margin: 2rem auto ;
+      margin: 2rem auto;
       &__column {
         display: flex;
         flex-direction: column;
@@ -102,21 +102,21 @@
   .footer {
     width: 20.75rem;
     height: 206px;
-      position: relative;
-      margin: 2rem auto ;
-      &__column {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        height: 100%;
-      }
-      .footer__row {
-        display: flex;
-        align-items: flex-end;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-      }
+    position: relative;
+    margin: 2rem auto;
+    &__column {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: 100%;
+    }
+    .footer__row {
+      display: flex;
+      align-items: flex-end;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
   }
   .break__line {
     display: block;

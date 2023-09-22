@@ -1,9 +1,9 @@
-import classNames from 'classnames/bind';
-import React from 'react';
-import style from 'components/common/modal/DeleteAccountModal.module.scss';
-import Modal from 'react-modal';
 import FillButton from 'components/common/buttons/FillButton';
 import OutlineButton from 'components/common/buttons/OutlineButton';
+import style from 'components/common/modal/DeleteAccountModal.module.scss';
+import React from 'react';
+import Modal from 'react-modal';
+import classNames from 'classnames/bind';
 
 const cx = classNames.bind(style);
 
@@ -16,20 +16,9 @@ function DeleteAccountModal({ isOpen, onClick, onCancel }: any) {
         <br /> 삭제된 정보는 다시 복구할 수 없습니다.
       </span>
       <div className={cx('modal__buttons')}>
-        <OutlineButton 
-          label="취소하기" 
-          color="grey" 
-          size='regular'
-          onClick={onCancel}
-          />
+        <OutlineButton label="취소하기" color="grey" size="regular" onClick={onCancel} />
         <div className={cx('wrapper')}>
-          <FillButton 
-            onClick={onClick}
-            label="탈퇴하기"
-            size='regular'
-            color="error"
-            rounded={false}
-          />
+          <FillButton onClick={onClick} label="탈퇴하기" size="regular" color="error" rounded={false} />
         </div>
       </div>
     </Modal>

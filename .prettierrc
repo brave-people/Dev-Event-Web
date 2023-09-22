@@ -4,13 +4,5 @@
   "semi": true,
   "singleQuote": true,
   "printWidth": 120,
-  "importOrder": [
-    "react",
-    "classnames",
-    "@headlessui",
-    "next",
-    "jotai",
-    "^@(.*)$",
-    "^[./]"
-  ]
+  "importOrder": ["react", "classnames", "@headlessui", "next", "jotai", "^@(.*)$", "^[./]"]
 }

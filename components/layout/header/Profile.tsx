@@ -1,12 +1,12 @@
-import classNames from 'classnames/bind';
-import style from './Header.module.scss';
-import React, { useRef, useState } from 'react';
-import ProfileIcon from 'public/icon/profile_outlined_regular.svg';
-import { useRouter } from 'next/router';
 import axios from 'axios';
 import { AuthContext } from 'context/auth';
 import { useOnClickOutside } from 'lib/hooks/useOnClickOutside';
 import * as ga from 'lib/utils/gTag';
+import ProfileIcon from 'public/icon/profile_outlined_regular.svg';
+import React, { useRef, useState } from 'react';
+import classNames from 'classnames/bind';
+import { useRouter } from 'next/router';
+import style from './Header.module.scss';
 
 const cn = classNames.bind(style);
 

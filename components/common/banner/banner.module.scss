@@ -44,7 +44,7 @@
 }
 
 @include laptop {
-  @media (max-width: 1075px)  {
+  @media (max-width: 1075px) {
     .banner {
       width: 100%;
       height: 28rem;
@@ -101,7 +101,7 @@
         line-height: 3rem;
       }
       &__desc {
-        font-size: .9rem;
+        font-size: 0.9rem;
       }
     }
   }
@@ -117,7 +117,7 @@
       line-height: 2.5rem;
     }
     &__desc {
-      font-size: .9rem;
+      font-size: 0.9rem;
     }
   }
 }

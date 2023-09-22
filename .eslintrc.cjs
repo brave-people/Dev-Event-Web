@@ -6,11 +6,7 @@ module.exports = {
     es2022: true,
   },
   plugins: ['@typescript-eslint/eslint-plugin'],
-  extends: [
-    'eslint:recommended',
-    'plugin:prettier/recommended',
-    'plugin:@typescript-eslint/recommended',
-  ],
+  extends: ['eslint:recommended', 'plugin:prettier/recommended', 'plugin:@typescript-eslint/recommended'],
   parserOptions: {
     ecmaVersion: 9,
     sourceType: 'module',

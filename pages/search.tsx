@@ -1,38 +1,38 @@
-import React, { useEffect, useState, useContext } from 'react';
+import Banner from 'components/common/banner/banner';
+import LoginModal from 'components/common/modal/LoginModal';
+import FilteredEventList from 'components/events/FilteredEventList';
+import Letter from 'components/features/letter/Letter';
 import Layout from 'components/layout';
+import { AuthContext } from 'context/auth';
+import { EventContext } from 'context/event';
+import cookie from 'cookie';
+import { EventResponse } from 'model/event';
+import style from 'styles/Home.module.scss';
+import React, { useEffect, useState, useContext } from 'react';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
-import style from 'styles/Home.module.scss';
 import { GetServerSideProps } from 'next';
-import cookie from 'cookie';
-import { AuthContext } from 'context/auth';
-import LoginModal from 'components/common/modal/LoginModal';
-import Banner from 'components/common/banner/banner';
-import FilteredEventList from 'components/events/FilteredEventList';
-import { EventResponse } from 'model/event';
-import Letter from 'components/features/letter/Letter';
-import Head from "next/head";
-import { EventContext } from 'context/event';
+import Head from 'next/head';
 
 const cn = classNames.bind(style);
 
 type Props = {
   isLoggedIn: boolean;
   fallbackData: EventResponse[];
-}
+};
 
 const Search = ({ isLoggedIn, fallbackData }: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const [keyword, setKeyword] = useState<string>('');
-  const { jobGroupList, eventType, location, coast, search } = useContext(EventContext)
+  const { jobGroupList, eventType, location, coast, search } = useContext(EventContext);
   useEffect(() => {
     setKeyword(`
       ${jobGroupList?.join()}, 
       ${eventType && eventType}, 
       ${location && location}, 
       ${coast && coast}, 
-      ${search && search}`)
+      ${search && search}`);
     if (isLoggedIn) {
       authContext.login();
     } else {
@@ -58,9 +58,7 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
       </Head>
       <Banner />
       <section className={cn('section')}>
-        <FilteredEventList
-          fallbackData={fallbackData}
-        />
+        <FilteredEventList fallbackData={fallbackData} />
       </section>
       <Letter />
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
@@ -82,7 +80,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       return {
         props: {
           isLoggedIn: true,
-          fallbackData: events
+          fallbackData: events,
         },
       };
     }

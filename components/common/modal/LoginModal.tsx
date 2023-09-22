@@ -1,18 +1,18 @@
-import classNames from 'classnames/bind';
-import React, { useState } from 'react';
 import style from 'components/common/modal/LoginModal.module.scss';
-import Modal from 'react-modal';
-import { MdClose } from 'react-icons/md';
-import GoogleIcon from 'public/icon/google.svg';
-import KakaoIcon from 'public/icon/kakao.svg';
-import GithubIcon from 'public/icon/github.svg';
-import NaverIcon from 'public/icon/naver.svg';
-import EmailIcon from 'public/icon/email.svg';
+import { loginByEmail, signUpByEmail } from 'lib/api/post';
+import * as ga from 'lib/utils/gTag';
 import AppleIcon from 'public/icon/apple.svg';
 import ArrowBackIcon from 'public/icon/arrow_back_regular.svg';
+import EmailIcon from 'public/icon/email.svg';
+import GithubIcon from 'public/icon/github.svg';
+import GoogleIcon from 'public/icon/google.svg';
+import KakaoIcon from 'public/icon/kakao.svg';
+import NaverIcon from 'public/icon/naver.svg';
+import React, { useState } from 'react';
+import { MdClose } from 'react-icons/md';
+import Modal from 'react-modal';
+import classNames from 'classnames/bind';
 import router from 'next/router';
-import * as ga from 'lib/utils/gTag';
-import { loginByEmail, signUpByEmail } from 'lib/api/post';
 
 const cx = classNames.bind(style);
 

@@ -1,6 +1,6 @@
 import Layout from 'components/layout';
-import { NextPage, NextPageContext } from 'next';
 import { ReactElement } from 'react';
+import { NextPage, NextPageContext } from 'next';
 
 interface Props {
   statusCode?: number;

@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import Layout from 'components/layout';
-import type { ReactElement } from 'react';
-import classNames from 'classnames/bind';
-import style from 'styles/Home.module.scss';
-import { GetServerSideProps } from 'next';
-import cookie from 'cookie';
-import { AuthContext } from 'context/auth';
+import Banner from 'components/common/banner/banner';
 import LoginModal from 'components/common/modal/LoginModal';
 import MonthlyEventList from 'components/events/MonthlyEventList';
+import Letter from 'components/features/letter/Letter';
+import Layout from 'components/layout';
+import { AuthContext } from 'context/auth';
+import cookie from 'cookie';
 import { Event } from 'model/event';
+import style from 'styles/Home.module.scss';
+import React, { useEffect, useState } from 'react';
+import type { ReactElement } from 'react';
+import classNames from 'classnames/bind';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import Banner from 'components/common/banner/banner';
-import Letter from 'components/features/letter/Letter';
 
 const cn = classNames.bind(style);
 
@@ -59,10 +59,7 @@ const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackD
       </Head>
       <Banner />
       <section className={cn('section')}>
-        <MonthlyEventList 
-          events={fallbackData} 
-          date={filteredDate}
-        />
+        <MonthlyEventList events={fallbackData} date={filteredDate} />
       </section>
       <Letter />
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>

@@ -1,21 +1,21 @@
-import { useState } from 'react';
-import React, { useEffect } from 'react';
-import Layout from 'components/layout/index';
-import type { ReactElement } from 'react';
-import classNames from 'classnames/bind';
-import style from 'styles/Myinfo.module.scss';
+import axios from 'axios';
 import DeleteAccountModal from 'components/common/modal/DeleteAccountModal';
-import { useUser } from 'lib/hooks/useSWR';
+import Layout from 'components/layout/index';
+import { AuthContext } from 'context/auth';
+import cookie from 'cookie';
 import dayjs from 'dayjs';
 import { deleteAccountApi } from 'lib/api/delete';
-import { AuthContext } from 'context/auth';
-import { useRouter } from 'next/router';
-import axios from 'axios';
+import { useUser } from 'lib/hooks/useSWR';
+import * as ga from 'lib/utils/gTag';
+import style from 'styles/Myinfo.module.scss';
+import { useState } from 'react';
+import React, { useEffect } from 'react';
+import type { ReactElement } from 'react';
+import classNames from 'classnames/bind';
 import { GetServerSideProps } from 'next';
-import cookie from 'cookie';
 import Head from 'next/head';
 import Image from 'next/image';
-import * as ga from 'lib/utils/gTag';
+import { useRouter } from 'next/router';
 
 const cn = classNames.bind(style);
 

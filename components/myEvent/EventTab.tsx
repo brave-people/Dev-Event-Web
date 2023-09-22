@@ -1,11 +1,11 @@
+import Layout from 'components/layout';
+import * as ga from 'lib/utils/gTag';
+import style from 'styles/Myevent.module.scss';
 import { useState } from 'react';
 import React, { useEffect } from 'react';
-import Layout from 'components/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
-import style from 'styles/Myevent.module.scss';
 import { useRouter } from 'next/router';
-import * as ga from 'lib/utils/gTag';
 
 const cn = classNames.bind(style);
 

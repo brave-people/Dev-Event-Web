@@ -1,19 +1,26 @@
-import React, { useContext, useEffect, useState } from 'react';
-import Link from 'next/link';
-import { Event } from 'model/event';
-import classNames from 'classnames/bind';
 import style from 'components/common/item/Item.module.scss';
-import Image from 'next/image';
-import FilterTag from 'components/common/tag/FilterTag';
-import { DateUtil, removeDupDate } from 'lib/utils/dateUtil';
-import { WindowContext } from 'context/window';
-import { TagResponse } from 'model/tag';
-import { BookmarkIcon, BookmarkIconMobile, EndBulletIcon, NewBulletIcon, ShareIcon, ShareIconMobile } from 'components/icons';
-import { getTagName, getTagType } from 'lib/utils/tagUtil';
-import ShareModal from 'components/common/modal/ShareModal'
-import { EventContext } from 'context/event';
-import * as ga from 'lib/utils/gTag';
+import ShareModal from 'components/common/modal/ShareModal';
 import DdayTag from 'components/common/tag/DdayTag';
+import FilterTag from 'components/common/tag/FilterTag';
+import {
+  BookmarkIcon,
+  BookmarkIconMobile,
+  EndBulletIcon,
+  NewBulletIcon,
+  ShareIcon,
+  ShareIconMobile,
+} from 'components/icons';
+import { EventContext } from 'context/event';
+import { WindowContext } from 'context/window';
+import { DateUtil, removeDupDate } from 'lib/utils/dateUtil';
+import * as ga from 'lib/utils/gTag';
+import { getTagName, getTagType } from 'lib/utils/tagUtil';
+import { Event } from 'model/event';
+import { TagResponse } from 'model/tag';
+import React, { useContext, useEffect, useState } from 'react';
+import classNames from 'classnames/bind';
+import Image from 'next/image';
+import Link from 'next/link';
 
 const cn = classNames.bind(style);
 
@@ -31,19 +38,27 @@ type Props = {
   onClickFavorite?: any;
   childLast: boolean;
   parentLast: boolean;
-}
+};
 
-const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClickFavorite, childLast, parentLast }: Props) => {
+const Item = ({
+  data,
+  isFavorite,
+  isEventDone,
+  isEventNew = () => false,
+  onClickFavorite,
+  childLast,
+  parentLast,
+}: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isLast, setIsLast] = useState<boolean>(false);
   const [isDone, setIsDone] = useState<boolean>(isEventDone());
   const [isNew, setIsNew] = useState<boolean>(isEventNew());
   const { windowX, windowTheme } = useContext(WindowContext);
   const { search } = useContext(EventContext);
-  const imgPath = windowTheme ? "/default/event-thumbnail-light.svg" : "/default/event-thumbnail-dark.svg";
+  const imgPath = windowTheme ? '/default/event-thumbnail-light.svg' : '/default/event-thumbnail-dark.svg';
   const handleShare = () => {
     setIsOpen(true);
-    navigator.clipboard.writeText(data.event_link)
+    navigator.clipboard.writeText(data.event_link);
     ga.event({
       action: 'web_event_공유버튼클릭',
       event_category: 'web_event',
@@ -56,12 +71,9 @@ const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClick
 
   const getEventDate = () => {
     let eventDate;
-    if (data.start_date_time === null || data.end_date_time === null)
-      return ;
-    const includeTime = 
-    (data.start_date_time.slice(11, 16) === "00:00"
-    && data.end_date_time.slice(11, 16) === "00:00") 
-    ? false : true;
+    if (data.start_date_time === null || data.end_date_time === null) return;
+    const includeTime =
+      data.start_date_time.slice(11, 16) === '00:00' && data.end_date_time.slice(11, 16) === '00:00' ? false : true;
     const dayEvent = data.start_date_time.slice(0, 10) === data.end_date_time.slice(0, 10) ? true : false;
 
     if (data.start_date_time && !data.end_date_time) {
@@ -89,8 +101,8 @@ const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClick
     return removeDupDate({
       eventDate,
       includeTime,
-      dayEvent
-    })
+      dayEvent,
+    });
   };
 
   const convertDateFormat = (date: string, type: string) => {
@@ -107,7 +119,7 @@ const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClick
     if ((!search && childLast) || (search && parentLast)) {
       setIsLast(true);
     }
-  }, [search])
+  }, [search]);
   return (
     <div className={cn('item__container', `${isLast && 'item__last'}`)}>
       {isOpen && <ShareModal />}
@@ -144,16 +156,16 @@ const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClick
                 {isDone ? (
                   <div className={cn('item__content__flag')}>
                     <EndBulletIcon
-                      color={windowTheme ? "rgba(203, 203, 206, 1)" : "rgba(49, 50, 52, 1)"}
-                      backgroundColor={windowTheme ? "rgba(49, 50, 52, 1)" : "rgba(203, 203, 206, 1)"}
+                      color={windowTheme ? 'rgba(203, 203, 206, 1)' : 'rgba(49, 50, 52, 1)'}
+                      backgroundColor={windowTheme ? 'rgba(49, 50, 52, 1)' : 'rgba(203, 203, 206, 1)'}
                     />
                   </div>
                 ) : null}
                 {isNew ? (
                   <div className={cn('item__content__flag')}>
                     <NewBulletIcon
-                      color={windowTheme ? "rgba(203, 203, 206, 1)" : "rgba(49, 50, 52, 1)"}
-                      backgroundColor={windowTheme ? "rgba(44, 76, 239, 1)" : "rgba(79, 108, 255, 1)"}
+                      color={windowTheme ? 'rgba(203, 203, 206, 1)' : 'rgba(49, 50, 52, 1)'}
+                      backgroundColor={windowTheme ? 'rgba(44, 76, 239, 1)' : 'rgba(79, 108, 255, 1)'}
                     />
                   </div>
                 ) : null}
@@ -168,66 +180,47 @@ const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClick
                   <div className={cn(isDone ? 'host__done' : 'host')}>{data.organizer}</div>
                 </span>
                 <div className={cn('item__content_title__container')}>
-                  <div className={cn(isDone ? 'item__content__title__done' :'item__content__title')}>{(data.title.length >= 30 && windowX <= 750) ? `${data.title.slice(0, 30)}...` : data.title}</div>
-                  {isDone 
-                    ? null
-                    : <DdayTag startDateTime={data.start_date_time} endDateTime={data.end_date_time} />}
+                  <div className={cn(isDone ? 'item__content__title__done' : 'item__content__title')}>
+                    {data.title.length >= 30 && windowX <= 750 ? `${data.title.slice(0, 30)}...` : data.title}
+                  </div>
+                  {isDone ? null : <DdayTag startDateTime={data.start_date_time} endDateTime={data.end_date_time} />}
                 </div>
                 <div className={cn('item__content__desc')}>
                   <span className={cn('wrap')}>
-                    <div className={cn('date')}> 
-                      <span className={cn(isDone ? 'date__type__done' : 'date__type')}>{data.event_time_type === "DATE" ? "일시 " : "접수 "}</span>
-                      <span className={cn(isDone ? `date__date__done` : 'date__date')}>{getEventDate()}</span> 
-                      <span className={cn(isDone ? 'date__date__done__mobile' : 'date__date__mobile')}>{getEventDate()}</span>
+                    <div className={cn('date')}>
+                      <span className={cn(isDone ? 'date__type__done' : 'date__type')}>
+                        {data.event_time_type === 'DATE' ? '일시 ' : '접수 '}
+                      </span>
+                      <span className={cn(isDone ? `date__date__done` : 'date__date')}>{getEventDate()}</span>
+                      <span className={cn(isDone ? 'date__date__done__mobile' : 'date__date__mobile')}>
+                        {getEventDate()}
+                      </span>
                     </div>
                   </span>
                   <div className={cn('item__content__desc__tags')}>
                     {data.tags.map((tag: TagResponse) => {
                       const type = getTagType(tag.tag_name);
-                      if (type !== "location")
-                        return ;
-                      return (
-                        <FilterTag
-                          key={tag.id}
-                          label={tag.tag_name}
-                          size='regular'
-                          type='location'
-                        />
-                      )})}
-                    <FilterTag
-                      label={getTagName(data.tags, "eventType")}
-                      size='regular'
-                      type='eventType'
-                    />
-                    <FilterTag
-                      label={getTagName(data.tags, "coast")}
-                      size='regular'
-                      type='coast'
-                    />
+                      if (type !== 'location') return;
+                      return <FilterTag key={tag.id} label={tag.tag_name} size="regular" type="location" />;
+                    })}
+                    <FilterTag label={getTagName(data.tags, 'eventType')} size="regular" type="eventType" />
+                    <FilterTag label={getTagName(data.tags, 'coast')} size="regular" type="coast" />
                     {data.tags.map((tag: TagResponse) => {
                       const type = getTagType(tag.tag_name);
-                      if (type !== "jobGroup")
-                        return ;
-                      return (
-                        <FilterTag
-                          key={tag.id}
-                          type="jobGroup"
-                          label={tag.tag_name}
-                          size='regular'
-                        />
-                      );
+                      if (type !== 'jobGroup') return;
+                      return <FilterTag key={tag.id} type="jobGroup" label={tag.tag_name} size="regular" />;
                     })}
                   </div>
-                  <div className={cn("item__content__desc__tags__mobile")}>
+                  <div className={cn('item__content__desc__tags__mobile')}>
                     {data.tags.map((tag: TagResponse, index: number) => {
                       return (
                         <FilterTag
                           key={tag.id}
                           label={tag.tag_name}
-                          size='regular'
+                          size="regular"
                           type={`${index !== data.tags.length - 1 ? 'default' : 'default--last'}`}
                         />
-                      )
+                      );
                     })}
                   </div>
                 </div>
@@ -236,35 +229,17 @@ const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClick
           </a>
         </Link>
         <div className={cn('item__buttons')}>
-          <button 
-            className={cn(`button`, `like-button`, 'laptop')} 
-            onClick={handleShare}>
-            <ShareIcon
-              color='rgba(171, 172, 178, 1)'
-              className='button'
-            />
+          <button className={cn(`button`, `like-button`, 'laptop')} onClick={handleShare}>
+            <ShareIcon color="rgba(171, 172, 178, 1)" className="button" />
           </button>
-          <button 
-            className={cn(`button`, `like-button`, 'mobile')} 
-            onClick={handleShare}>
-            <ShareIconMobile
-              color='rgba(171, 172, 178, 1)'
-              className='button'
-            />
+          <button className={cn(`button`, `like-button`, 'mobile')} onClick={handleShare}>
+            <ShareIconMobile color="rgba(171, 172, 178, 1)" className="button" />
           </button>
           <button className={cn(`button`, 'share-button', 'laptop')} onClick={onClickFavorite}>
-            <BookmarkIcon
-              color='rgba(171, 172, 178, 1)'
-              className='button'
-              isFavorite={isFavorite()}
-            />
+            <BookmarkIcon color="rgba(171, 172, 178, 1)" className="button" isFavorite={isFavorite()} />
           </button>
           <button className={cn(`button`, 'share-button', 'mobile')} onClick={onClickFavorite}>
-            <BookmarkIconMobile
-              color='rgba(171, 172, 178, 1)'
-              className='button'
-              isFavorite={isFavorite()}
-            />
+            <BookmarkIconMobile color="rgba(171, 172, 178, 1)" className="button" isFavorite={isFavorite()} />
           </button>
         </div>
       </div>

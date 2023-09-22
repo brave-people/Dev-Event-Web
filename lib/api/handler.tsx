@@ -1,9 +1,9 @@
+import { AxiosResponse } from 'axios';
+import axiosInstance from 'lib/api/axiosInstance';
+import axiosInstanceWithToken from 'lib/api/axiosInstanceWithToken';
+import { User } from 'model/auth';
 import { Event, EventResponse, MyEvent, MyEventGetProps } from 'model/event';
 import { TagResponse } from 'model/tag';
-import { User } from 'model/auth';
-import { AxiosResponse } from 'axios';
-import axiosInstanceWithToken from 'lib/api/axiosInstanceWithToken';
-import axiosInstance from 'lib/api/axiosInstance';
 
 export const getEventsApi = async (url: string): Promise<EventResponse[]> => {
   try {

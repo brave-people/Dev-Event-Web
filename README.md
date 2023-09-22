@@ -7,21 +7,18 @@
 # 개발 환경
 
 > npm 6.14.15<br />
-react 17.0.2<br />
-next 12.1.2
-> 
+> react 17.0.2<br />
+> next 12.1.2
 
 # 사용 방법
 
 ### 라이브러리 설치
 
 > 'npm install'
-> 
 
 ### developer 환경으로 실행
 
 > 'npm run dev'
-> 
 
 # 개선사항 및 기타 의견
 

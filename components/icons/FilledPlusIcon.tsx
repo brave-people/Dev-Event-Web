@@ -1,14 +1,8 @@
-import * as React from "react"
-import { Icon } from "types/icon"
+import { Icon } from 'types/icon';
+import * as React from 'react';
 
 const FilledPlusIcon = ({ color, className, ...rest }: Icon) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={20}
-    height={20}
-    fill="none"
-    {...rest}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} fill="none" {...rest}>
     <circle cx={10} cy={10} r={10} fill="#333" />
     <g clipPath="url(#a)">
       <path
@@ -22,5 +16,5 @@ const FilledPlusIcon = ({ color, className, ...rest }: Icon) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default FilledPlusIcon;

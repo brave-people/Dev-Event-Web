@@ -1,6 +1,6 @@
-import React from 'react';
-import ScheduledEventList from 'components/myEvent/ScheduledEventList';
 import DoneEventList from 'components/myEvent/DoneEventList';
+import ScheduledEventList from 'components/myEvent/ScheduledEventList';
+import React from 'react';
 import { useRouter } from 'next/router';
 
 const EventBody = () => {

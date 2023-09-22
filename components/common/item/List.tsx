@@ -1,24 +1,24 @@
-import React, { useState } from 'react';
-import classNames from 'classnames/bind';
-import style from 'components/common/item/List.module.scss';
-import { useMyEvent } from 'lib/hooks/useSWR';
 import Item from 'components/common/item/Item';
-import dayjs from 'dayjs';
-import { Event, EventDate } from 'model/event';
-import { mutate } from 'swr';
-import { createMyEventApi } from 'lib/api/post';
-import { deleteMyEventApi } from 'lib/api/delete';
+import style from 'components/common/item/List.module.scss';
 import LoginModal from 'components/common/modal/LoginModal';
 import { AuthContext } from 'context/auth';
-import * as ga from 'lib/utils/gTag';
+import dayjs from 'dayjs';
+import { deleteMyEventApi } from 'lib/api/delete';
+import { createMyEventApi } from 'lib/api/post';
+import { useMyEvent } from 'lib/hooks/useSWR';
 import { DateUtil } from 'lib/utils/dateUtil';
+import * as ga from 'lib/utils/gTag';
+import { Event, EventDate } from 'model/event';
+import { mutate } from 'swr';
+import React, { useState } from 'react';
+import classNames from 'classnames/bind';
 
 const cn = classNames.bind(style);
 
 type Props = {
   data: Event[];
   parentLast: boolean;
-}
+};
 
 const List = ({ data, parentLast }: Props) => {
   const authContext = React.useContext(AuthContext);
@@ -120,38 +120,38 @@ const List = ({ data, parentLast }: Props) => {
       {data.map((item: Event, index: number) => {
         const isLast = index === data.length - 1 ? true : false;
         return (
-            <Item
-              key={index}
-              childLast={isLast}
-              parentLast={parentLast}
-              data={item}
-              isEventNew={() => {
-                return checkEventNew({ createdDate: item.create_date_time });
-              }}
-              isEventDone={() => {
-                return checkEventDone({
-                  endDate: getEventEndDate({
-                    start_date_time: item.start_date_time,
-                    end_date_time: item.end_date_time,
-                    use_start_date_time_yn: item.use_start_date_time_yn,
-                    use_end_date_time_yn: item.use_end_date_time_yn,
-                  }),
-                });
-              }}
-              isFavorite={() => {
-                if (authContext.isLoggedIn) {
-                  return getFavoriteId({ id: item.id }) !== 0 ? true : false;
-                }
-                return false;
-              }}
-              onClickFavorite={() => {
-                if (authContext.isLoggedIn) {
-                  return onClickFavorite({ item: item });
-                } else {
-                  setLoginModalIsOpen(true);
-                }
-              }}
-            />
+          <Item
+            key={index}
+            childLast={isLast}
+            parentLast={parentLast}
+            data={item}
+            isEventNew={() => {
+              return checkEventNew({ createdDate: item.create_date_time });
+            }}
+            isEventDone={() => {
+              return checkEventDone({
+                endDate: getEventEndDate({
+                  start_date_time: item.start_date_time,
+                  end_date_time: item.end_date_time,
+                  use_start_date_time_yn: item.use_start_date_time_yn,
+                  use_end_date_time_yn: item.use_end_date_time_yn,
+                }),
+              });
+            }}
+            isFavorite={() => {
+              if (authContext.isLoggedIn) {
+                return getFavoriteId({ id: item.id }) !== 0 ? true : false;
+              }
+              return false;
+            }}
+            onClickFavorite={() => {
+              if (authContext.isLoggedIn) {
+                return onClickFavorite({ item: item });
+              } else {
+                setLoginModalIsOpen(true);
+              }
+            }}
+          />
         );
       })}
       <div className={cn('skeleton')} />

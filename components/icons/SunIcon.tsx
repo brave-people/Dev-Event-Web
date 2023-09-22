@@ -1,15 +1,9 @@
-import React from 'react'
-import { Icon } from 'types/icon'
+import { Icon } from 'types/icon';
+import React from 'react';
 
 function SunIcon({ color, className, ...rest }: Icon) {
-  return  (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={24}
-      height={24}
-      fill="none"
-      {...rest}
-    >
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" {...rest}>
       <g clipPath="url(#a)">
         <path
           fill="#797A81"
@@ -24,6 +18,6 @@ function SunIcon({ color, className, ...rest }: Icon) {
         </clipPath>
       </defs>
     </svg>
-  )
+  );
 }
-export default SunIcon
+export default SunIcon;

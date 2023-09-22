@@ -26,17 +26,17 @@
   }
   .skeleton {
     width: 270px;
-  } 
+  }
   @media (max-width: 580px) {
-   .list {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    .list {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
     }
     .skeleton {
       width: 270px;
-    } 
+    }
   }
 }
 
@@ -49,5 +49,5 @@
   }
   .skeleton {
     width: 270px;
-  } 
+  }
 }

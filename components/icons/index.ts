@@ -1,23 +1,23 @@
-import PlusIcon from "./PlusIcon";
-import SearchIcon from "./SearchIcon";
-import RightArrowIcon from "./RightArrowIcon";
-import LeftArrowIcon from "./LeftArrowIcon";
-import FilledPlusIcon from "./FilledPlusIcon";
-import ShareIcon from "./ShareIcon";
-import BookmarkIcon from "./BookmarkIcon";
-import GithubIcon from "./GithubIcon";
-import MoonIcon from "./MoonIcon";
-import SunIcon from "./SunIcon";
-import DeleteIcon from "./DeleteIcon";
-import CheckIcon from "./CheckIcon";
-import SaveIcon from "./SaveIcon";
-import NewBulletIcon from "./NewBulletIcon";
-import EndBulletIcon from "./EndBulletIcon";
-import ReviewIcon from "./ReviewIcon";
-import ToggleIcon from "./ToggleIcon";
-import ArrowBackIcon from "./ArrowBackIcon";
-import ShareIconMobile from "./ShareIconMobile";
-import BookmarkIconMobile from "./BookmarkIconMobile";
+import ArrowBackIcon from './ArrowBackIcon';
+import BookmarkIcon from './BookmarkIcon';
+import BookmarkIconMobile from './BookmarkIconMobile';
+import CheckIcon from './CheckIcon';
+import DeleteIcon from './DeleteIcon';
+import EndBulletIcon from './EndBulletIcon';
+import FilledPlusIcon from './FilledPlusIcon';
+import GithubIcon from './GithubIcon';
+import LeftArrowIcon from './LeftArrowIcon';
+import MoonIcon from './MoonIcon';
+import NewBulletIcon from './NewBulletIcon';
+import PlusIcon from './PlusIcon';
+import ReviewIcon from './ReviewIcon';
+import RightArrowIcon from './RightArrowIcon';
+import SaveIcon from './SaveIcon';
+import SearchIcon from './SearchIcon';
+import ShareIcon from './ShareIcon';
+import ShareIconMobile from './ShareIconMobile';
+import SunIcon from './SunIcon';
+import ToggleIcon from './ToggleIcon';
 
 export {
   PlusIcon,
@@ -39,5 +39,5 @@ export {
   ToggleIcon,
   ArrowBackIcon,
   ShareIconMobile,
-  BookmarkIconMobile
-}
+  BookmarkIconMobile,
+};

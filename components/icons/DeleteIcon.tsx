@@ -1,20 +1,14 @@
-import { WindowContext } from "context/window"
-import React, { useContext } from "react"
-import { Icon } from "types/icon"
+import { WindowContext } from 'context/window';
+import { Icon } from 'types/icon';
+import React, { useContext } from 'react';
 
 function DeleteIcon({ color, className, ...rest }: Icon) {
-  const { windowTheme } = useContext(WindowContext)
+  const { windowTheme } = useContext(WindowContext);
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={24}
-      height={24}
-      fill="none"
-      {...rest}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} fill="none" {...rest}>
       <g clipPath="url(#a)">
         <path
-          stroke={`${windowTheme ? color : "#F2F2F2"}`}
+          stroke={`${windowTheme ? color : '#F2F2F2'}`}
           strokeLinecap="round"
           strokeLinejoin="round"
           strokeWidth={1.5}
@@ -27,7 +21,7 @@ function DeleteIcon({ color, className, ...rest }: Icon) {
         </clipPath>
       </defs>
     </svg>
-  )
-} 
+  );
+}
 
-export default DeleteIcon
+export default DeleteIcon;
