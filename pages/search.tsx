@@ -26,24 +26,26 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const [keyword, setKeyword] = useState<string>('');
   const { jobGroupList, eventType, location, coast, search } = useContext(EventContext);
+
   useEffect(() => {
-    setKeyword(`
-      ${jobGroupList?.join()}, 
-      ${eventType && eventType}, 
-      ${location && location}, 
-      ${coast && coast}, 
-      ${search && search}`);
+    const metaKeyword = [jobGroupList?.join(), eventType, location, coast, search].filter(Boolean);
+
+    setKeyword(metaKeyword.join(','));
+
     if (isLoggedIn) {
       authContext.login();
     } else {
       authContext.logout();
     }
-  }, [isLoggedIn]);
+  }, [jobGroupList, eventType, location, coast, search]);
 
   return (
     <main className={cn('main')}>
       <Head>
-        <title>{keyword} - 데브이벤트 행사 키워드 검색</title>
+        <title>
+          {keyword}
+          {keyword && ' - '}데브이벤트 행사 키워드 검색
+        </title>
         <meta name="description" content={`${keyword} 행사, 데브이벤트에서 찾아보세요!`} />
         <meta
           name="keywords"
