@@ -1,25 +1,25 @@
-import React, { useEffect, useContext, useState } from 'react';
+import Banner from 'components/common/banner/banner';
+import LoginModal from 'components/common/modal/LoginModal';
+import ScheduledEventList from 'components/events/ScheduledEventList';
+import Letter from 'components/features/letter/Letter';
 import Layout from 'components/layout';
+import { AuthContext } from 'context/auth';
+import { EventContext } from 'context/event';
+import cookie from 'cookie';
+import { EventResponse } from 'model/event';
+import style from 'styles/Home.module.scss';
+import React, { useEffect, useContext, useState } from 'react';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
-import style from 'styles/Home.module.scss';
 import { GetServerSideProps } from 'next';
-import cookie from 'cookie';
-import { AuthContext } from 'context/auth';
-import LoginModal from 'components/common/modal/LoginModal';
-import { EventResponse } from 'model/event';
-import ScheduledEventList from 'components/events/ScheduledEventList';
 import Head from 'next/head';
-import Banner from 'components/common/banner/banner';
-import Letter from 'components/features/letter/Letter';
-import { EventContext } from 'context/event';
 
 const cn = classNames.bind(style);
 
 type Props = {
   isLoggedIn: boolean;
-  fallbackData: EventResponse[]
-}
+  fallbackData: EventResponse[];
+};
 
 const Events = ({ isLoggedIn, fallbackData }: Props) => {
   const authContext = React.useContext(AuthContext);
@@ -58,9 +58,7 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
       </Head>
       <Banner />
       <section className={cn('section')}>
-        <ScheduledEventList
-          fallbackData={fallbackData}
-        />
+        <ScheduledEventList fallbackData={fallbackData} />
       </section>
       <Letter />
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>

@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useState } from 'react'
+import React, { createContext, ReactNode, useState } from 'react';
 
 interface EventContext {
   jobGroupList: string[] | undefined;
@@ -35,8 +35,8 @@ const defaultValue: EventContext = {
   search: undefined,
   handleSearch: () => {},
   url: '',
-  handleUrl: () => {}
-}
+  handleUrl: () => {},
+};
 
 const EventContext = createContext(defaultValue);
 
@@ -49,58 +49,53 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [url, setUrl] = useState<string | undefined>(undefined);
   const updateJobGroupList = (job: string | string[] | undefined) => {
-    if (typeof(job) === "undefined")
-      return ;
-    if (typeof(job) === "string") {
-      if (jobGroupList === undefined)
-        setJobGroupList([job]);
+    if (typeof job === 'undefined') return;
+    if (typeof job === 'string') {
+      if (jobGroupList === undefined) setJobGroupList([job]);
       else {
-        if (jobGroupList.includes(job) === false)
-          setJobGroupList(jobGroupList?.concat(job));
+        if (!jobGroupList.includes(job)) setJobGroupList(jobGroupList?.concat(job));
       }
     } else {
-      if (jobGroupList === undefined)
-        setJobGroupList(job)
+      if (jobGroupList === undefined) setJobGroupList(job);
       else {
         for (let i = 0; i < job.length; i++) {
-          if (jobGroupList.includes(job[i]) === false)
-            setJobGroupList(jobGroupList?.concat(job[i]));
+          if (!jobGroupList.includes(job[i])) setJobGroupList(jobGroupList?.concat(job[i]));
         }
       }
     }
-  }
+  };
 
   const initJobGroupList = () => {
     setJobGroupList([]);
-  }
+  };
 
   const deleteJobGroupList = (nJob: string) => {
     setJobGroupList(jobGroupList?.filter((job) => job !== nJob));
-  }
+  };
 
   const handleEventType = (event: string | undefined) => {
     setEventType(event);
-  }
+  };
 
   const handleLocation = (location: string | undefined) => {
-    setLocation(location)
-  }
+    setLocation(location);
+  };
 
   const handleCoast = (coast: string | undefined) => {
     setCoast(coast);
-  }
+  };
 
   const handleDate = (date: string | undefined) => {
     setDate(date);
-  }
+  };
 
   const handleSearch = (search: string | undefined) => {
     setSearch(search);
-  }
+  };
 
   const handleUrl = (url: string | undefined) => {
     setUrl(url);
-  }
+  };
 
   const contextValue = {
     jobGroupList,
@@ -118,16 +113,13 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
     search,
     handleSearch,
     url,
-    handleUrl
-  }
+    handleUrl,
+  };
   return (
     <>
       <EventContext.Provider value={contextValue}>{children}</EventContext.Provider>
     </>
-  )
-}
+  );
+};
 
-export {
-  EventContext,
-  EventProvider
-}
+export { EventContext, EventProvider };

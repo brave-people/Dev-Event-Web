@@ -1,29 +1,28 @@
-import React, { useContext, useEffect, useState  } from "react";
-import BasicInput from "components/common/input/BasicInput";
-import classNames from "classnames/bind";
-import style from 'components/features/filters/searchEvent/SearchEvent.module.scss'
+import BasicInput from 'components/common/input/BasicInput';
+import style from 'components/features/filters/searchEvent/SearchEvent.module.scss';
+import { EventContext } from 'context/event';
+import { WindowContext } from 'context/window';
+import { parseUrl } from 'lib/utils/UrlUtil';
 import * as ga from 'lib/utils/gTag';
-import { EventContext } from "context/event";
-import { useRouter } from "next/router";
-import { parseUrl } from "lib/utils/urlUtil";
-import { UrlContext } from "types/Context";
-import { WindowContext } from "context/window";
+import { UrlContext } from 'types/Context';
+import React, { useContext, useEffect, useState } from 'react';
+import classNames from 'classnames/bind';
+import { useRouter } from 'next/router';
 
 const cn = classNames.bind(style);
 
 type Props = {
   context: UrlContext | undefined;
-}
+};
 
-function SearchEvent( { context }: Props) {
-  const [input, setInput] = useState<string | undefined>(undefined)
+function SearchEvent({ context }: Props) {
+  const [input, setInput] = useState<string | undefined>(undefined);
   const { jobGroupList, date, handleDate, handleSearch } = useContext(EventContext);
-  const { modalState, handleModalState } = useContext(WindowContext)
+  const { modalState, handleModalState } = useContext(WindowContext);
   const router = useRouter();
 
   const submitInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (input?.length === 1 && (event.code === 'Backspace'))
-      handleSearch(undefined)
+    if (input?.length === 1 && event.code === 'Backspace') handleSearch(undefined);
     if (event.code == 'Enter') {
       if (input) {
         ga.event({
@@ -32,16 +31,15 @@ function SearchEvent( { context }: Props) {
           event_label: '검색',
         });
         handleSearch(input);
-        if (date !== undefined)
-          handleDate(undefined);
-        router.replace(`${parseUrl(`${router.asPath}`, 'kwd', input, jobGroupList)}`)
+        if (date !== undefined) handleDate(undefined);
+        router.replace(`${parseUrl(`${router.asPath}`, 'kwd', input, jobGroupList)}`, undefined, { scroll: false });
       }
       if (window.innerWidth < 600) {
         handleModalState({
           currentModal: modalState.currentModal,
           prevModal: modalState.currentModal,
-          type: false
-        })
+          type: false,
+        });
       }
     }
   };
@@ -51,34 +49,35 @@ function SearchEvent( { context }: Props) {
   };
 
   const initInput = () => {
-    setInput("");
+    setInput('');
     handleModalState({
       currentModal: 0,
       prevModal: 0,
-      type: true
-    })
-  }
+      type: true,
+    });
+  };
   useEffect(() => {
     if (context?.kwd === undefined) {
-      handleSearch(undefined)
-    } else if (context.kwd !== undefined) {
+      handleSearch(undefined);
+    } else {
       const decode = decodeURIComponent(context.kwd);
-      handleSearch(decode)
+      handleSearch(decode);
     }
-  }, [])
+  }, []);
   return (
     <div
       onClick={() => {
         if (window.innerWidth < 600) {
-          document.body.classList.add('body__no__scroll')
+          document.body.classList.add('body__no__scroll');
           handleModalState({
             currentModal: 1,
             prevModal: modalState.currentModal,
-            type: true
-          })
+            type: true,
+          });
         }
-      }} 
-      className={cn('container')}>
+      }}
+      className={cn('container')}
+    >
       <BasicInput
         label="행사 검색하기"
         size="large"
@@ -90,7 +89,7 @@ function SearchEvent( { context }: Props) {
         input={input}
       />
     </div>
-  )  
+  );
 }
 
 export default SearchEvent;
