@@ -1,4 +1,5 @@
 @import '~styles/_mixin.scss';
+@import '~styles/variables.scss';
 
 .footer {
   background-color: var(--background-1);
@@ -37,7 +38,20 @@
   }
 }
 
-@include laptop {
+@media (max-width: 1200px) {
+  .footer {
+    padding: 0 $tablet_padding;
+  }
+
+  .footer__column {
+    .footer__desc, .footer__copyright {
+      font-size: 14px;
+      font-weight: 500;
+    }
+  }
+}
+
+/*@include laptop {
   @media (max-width: 1075px) {
     .footer {
       width: 58.75rem;
@@ -125,4 +139,4 @@
 
 .break__line {
   display: none;
-}
+}*/

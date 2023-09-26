@@ -142,20 +142,16 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
               );
             eventCount += lists.length;
             const isLast = eventCount === totalCount;
-            return (
-              <div key={index}>
-                {lists.length !== 0 ? (
-                  <div className={cn(`${search ? 'search__list' : 'section__list'}`)}>
-                    {search === undefined && (
-                      <div className={cn('list__title')}>
-                        <span>{`${event.metadata.year}년 ${event.metadata.month}월`}</span>
-                      </div>
-                    )}
-                    <List data={lists} parentLast={search ? isLast : false} />
+            return lists.length !== 0 ? (
+              <div key={index} className={cn(`${search ? 'search__list' : 'section__list'}`)}>
+                {search === undefined && (
+                  <div className={cn('list__title')}>
+                    <span>{`${event.metadata.year}년 ${event.metadata.month}월`}</span>
                   </div>
-                ) : null}
+                )}
+                <List data={lists} parentLast={search ? isLast : false} />
               </div>
-            );
+            ) : null;
           }
         })
       ) : (

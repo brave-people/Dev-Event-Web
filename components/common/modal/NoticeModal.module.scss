@@ -1,4 +1,5 @@
 @import '~styles/_mixin.scss';
+@import '~styles/variables.scss';
 
 .notice {
   position: static;
@@ -15,7 +16,8 @@
   z-index: 999;
 
   &__inner {
-    width: 68.75rem;
+    width: 100%;
+    max-width: 68.75rem;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -49,7 +51,13 @@
   }
 }
 
-@include laptop {
+@media (max-width: 1200px) {
+  .notice__inner {
+    padding: 0 $tablet_padding;
+  }
+}
+
+/*@include laptop {
   @media (max-width: 1075px) {
     .notice {
       &__inner {
@@ -71,18 +79,25 @@
       }
     }
   }
-}
+  @media (max-width: 700px) {
+    .main {
+      .section {
+        width: 38.75rem;
+      }
+    }
+  }
+}*/
 
 @include tablet {
   .notice {
     &__inner {
-      width: 34.75rem;
+      //width: 34.75rem;
     }
   }
   @media (max-width: 500px) {
     .notice {
       &__inner {
-        width: 26.75rem;
+        //width: 26.75rem;
         .notice__content {
           .notice__title {
             font-size: 14px;
@@ -96,7 +111,7 @@
 @include mobile {
   .notice {
     &__inner {
-      width: 24.75rem;
+      //width: 24.75rem;
       .notice__content {
         .notice__title {
           font-size: 13px;

@@ -55,6 +55,7 @@
       transform: translateY(-50%);
       margin-right: 5px;
     }
+
     &::before {
       content: '';
       display: block;
@@ -76,7 +77,37 @@
   }
 }
 
-@include laptop {
+@media (max-width: 1024px) {
+  .tag {
+    position: relative;
+    background-color: inherit;
+
+    &.size--regular {
+      padding: 0 8px 0 0;
+      color: var(--gray-2);
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      border-right: 1px solid;
+      border-color: var(--gray-4);
+      height: 10px;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    &:last-child {
+      &::after {
+        display: none;
+      }
+    }
+  }
+}
+
+/*@include laptop {
   @media (max-width: 800px) {
     .tag {
       &.size--regular {
@@ -208,4 +239,4 @@
       position: relative;
     }
   }
-}
+}*/

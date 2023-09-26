@@ -1,4 +1,6 @@
+@import '~styles/_color.scss';
 @import '~styles/_mixin.scss';
+@import '~styles/variables.scss';
 
 .header {
   position: fixed;
@@ -8,9 +10,11 @@
   min-height: 3.5rem;
   width: 100%;
   background-color: var(--background-1);
+  border-bottom: 1px solid $light-gray-4;
 
   &__inner {
-    width: 68.75rem;
+    width: 100%;
+    max-width: 68.75rem;
     display: flex;
     min-height: 3.5rem;
     margin: 0 auto;
@@ -136,7 +140,13 @@
   }
 }
 
-@include laptop {
+@media (max-width: 1200px) {
+  .header__inner {
+    padding: 0 $tablet_padding;
+  }
+}
+
+/*@include laptop {
   @media (max-width: 1075px) {
     .header {
       &__inner {
@@ -158,9 +168,9 @@
       }
     }
   }
-}
+}*/
 
-@include tablet {
+/*@include tablet {
   .header {
     &__inner {
       width: 34.75rem;
@@ -220,4 +230,4 @@
       }
     }
   }
-}
+}*/

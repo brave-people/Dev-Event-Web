@@ -7,17 +7,17 @@
 }
 
 .section__list {
-  padding-top: 2.813rem;
+  padding-top: 40px;
+  padding-bottom: 6px;
   width: 100%;
 }
 
 .search__list {
-  // padding-top: 1.406rem;
   width: 100%;
 }
 
 .list__title {
-  font-weight: 700;
+  font-weight: 600;
   font-size: 1.5rem;
   line-height: 2.188rem;
   color: var(--gray-1);
@@ -49,7 +49,13 @@
   border-top: 1px solid var(--gray-4);
 }
 
-@include laptop {
+@media (max-width: 1200px) {
+  .section__list:last-child {
+    padding-bottom: 60px;
+  }
+}
+
+/*@include laptop {
   @media (max-width: 800px) {
     .search__header__modal {
       width: 100%;
@@ -168,4 +174,4 @@
       line-height: 24px;
     }
   }
-}
+}*/

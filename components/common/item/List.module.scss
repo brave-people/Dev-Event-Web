@@ -1,53 +1,49 @@
 @import '~styles/_mixin.scss';
+@import '~styles/variables.scss';
 
-@include laptop {
+.list {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.skeleton {
+  //width: 270px;
+}
+
+@media (max-width: 1024px) {
   .list {
-    width: 100%;
-  }
-  @media (max-width: 800px) {
-    .list {
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-    }
-    .skeleton {
-      width: 270px;
-    }
+    margin-top: 24px;
+    grid-template-columns: $image_width $image_width $image_width;
+    grid-column-gap: 16px;
+    grid-row-gap: 36px;
   }
 }
 
-@include tablet {
+@media (max-width: 900px) {
   .list {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    grid-template-columns: 1fr 1fr;
   }
+}
+
+@media (max-width: 600px) {
+  .list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*@include tablet {
   .skeleton {
-    width: 270px;
+    //width: 270px;
   }
   @media (max-width: 580px) {
-    .list {
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
     .skeleton {
-      width: 270px;
+      //width: 270px;
     }
   }
 }
 
 @include mobile {
-  .list {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
   .skeleton {
-    width: 270px;
+    //width: 270px;
   }
-}
+}*/

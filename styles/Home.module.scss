@@ -1,4 +1,5 @@
 @import '~styles/_mixin.scss';
+@import '~styles/variables.scss';
 
 .main {
   margin: 0 auto;
@@ -7,12 +8,19 @@
 }
 
 .section {
-  width: 68.75rem;
+  width: 100%;
+  max-width: 68.75rem;
   padding-bottom: 5.439rem;
   margin: 0 auto;
 }
 
-@include laptop {
+@media (max-width: 1200px) {
+  .main .section {
+    padding: 0 $tablet_padding;
+  }
+}
+
+/*@include laptop {
   @media (max-width: 1075px) {
     .main {
       .section {
@@ -78,4 +86,4 @@
       width: 20.75rem;
     }
   }
-}
+}*/

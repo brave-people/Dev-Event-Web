@@ -154,7 +154,6 @@ const List = ({ data, parentLast }: Props) => {
           />
         );
       })}
-      <div className={cn('skeleton')} />
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
     </div>
   );

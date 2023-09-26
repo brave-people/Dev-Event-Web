@@ -149,8 +149,7 @@ const Item = ({
                       : imgPath
                   }
                   priority={true}
-                  width={270}
-                  height={150}
+                  layout="fill"
                 />
                 {isDone && <div className={cn('item__content__img__done')} />}
                 {isDone ? (
@@ -176,14 +175,36 @@ const Item = ({
                 ) : null}
               </div>
               <div className={cn('item__content__body')}>
-                <span className={cn('wrap')}>
-                  <div className={cn(isDone ? 'host__done' : 'host')}>{data.organizer}</div>
-                </span>
-                <div className={cn('item__content_title__container')}>
-                  <div className={cn(isDone ? 'item__content__title__done' : 'item__content__title')}>
-                    {data.title.length >= 30 && windowX <= 750 ? `${data.title.slice(0, 30)}...` : data.title}
+                <div>
+                  <div className={cn('item__content--top')}>
+                    <div className={cn('wrap')}>
+                      <span className={cn(isDone ? 'host__done' : 'host')}>{data.organizer}</span>
+                    </div>
+                    <div className={cn('item__buttons')}>
+                      <button className={cn(`button`, `like-button`, 'laptop')} onClick={handleShare}>
+                        <ShareIcon color="rgba(171, 172, 178, 1)" className="button" />
+                      </button>
+                      <button className={cn(`button`, `like-button`, 'mobile')} onClick={handleShare}>
+                        <ShareIconMobile color="rgba(171, 172, 178, 1)" className="button" />
+                      </button>
+                      <button className={cn(`button`, 'share-button', 'laptop')} onClick={onClickFavorite}>
+                        <BookmarkIcon color="rgba(171, 172, 178, 1)" className="button" isFavorite={isFavorite()} />
+                      </button>
+                      <button className={cn(`button`, 'share-button', 'mobile')} onClick={onClickFavorite}>
+                        <BookmarkIconMobile
+                          color="rgba(171, 172, 178, 1)"
+                          className="button"
+                          isFavorite={isFavorite()}
+                        />
+                      </button>
+                    </div>
                   </div>
-                  {isDone ? null : <DdayTag startDateTime={data.start_date_time} endDateTime={data.end_date_time} />}
+                  <div className={cn('item__content_title__container')}>
+                    <div className={cn(isDone ? 'item__content__title__done' : 'item__content__title')}>
+                      {data.title.length >= 30 && windowX <= 750 ? `${data.title.slice(0, 30)}...` : data.title}
+                    </div>
+                    {isDone ? null : <DdayTag startDateTime={data.start_date_time} endDateTime={data.end_date_time} />}
+                  </div>
                 </div>
                 <div className={cn('item__content__desc')}>
                   <span className={cn('wrap')}>
@@ -228,20 +249,6 @@ const Item = ({
             </div>
           </a>
         </Link>
-        <div className={cn('item__buttons')}>
-          <button className={cn(`button`, `like-button`, 'laptop')} onClick={handleShare}>
-            <ShareIcon color="rgba(171, 172, 178, 1)" className="button" />
-          </button>
-          <button className={cn(`button`, `like-button`, 'mobile')} onClick={handleShare}>
-            <ShareIconMobile color="rgba(171, 172, 178, 1)" className="button" />
-          </button>
-          <button className={cn(`button`, 'share-button', 'laptop')} onClick={onClickFavorite}>
-            <BookmarkIcon color="rgba(171, 172, 178, 1)" className="button" isFavorite={isFavorite()} />
-          </button>
-          <button className={cn(`button`, 'share-button', 'mobile')} onClick={onClickFavorite}>
-            <BookmarkIconMobile color="rgba(171, 172, 178, 1)" className="button" isFavorite={isFavorite()} />
-          </button>
-        </div>
       </div>
     </div>
   );

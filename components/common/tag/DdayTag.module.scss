@@ -1,14 +1,13 @@
 @import '~styles/_mixin.scss';
 
 .tag {
-  margin-left: 25px;
+  margin-left: 6px;
   border: none;
-  font-size: 13px;
-  margin-left: 5px;
+  font-size: 12px;
   color: var(--primary);
   background-color: var(--background-2);
-  width: 3.5rem;
-  height: 1.7rem;
+  height: 24px;
+  padding: 0 8px;
   border-radius: 18px;
   font-weight: 500;
   display: flex;
