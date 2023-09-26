@@ -11,11 +11,15 @@ type FillButtonProps = ButtonProps & {
   icon?: string;
   iconStyle?: string;
   rounded: boolean;
+  large?: boolean;
 };
 
-function FillButton({ onClick, label, color, icon, iconStyle, rounded }: FillButtonProps) {
+function FillButton({ onClick, label, color, icon, iconStyle, rounded, large }: FillButtonProps) {
   return (
-    <button className={cx('button', `color--${color}`, 'default', `${rounded && 'type--rounded'}`)} onClick={onClick}>
+    <button
+      className={cx('button', `color--${color}`, 'default', `${rounded && 'type--rounded'}`, { large: large })}
+      onClick={onClick}
+    >
       {icon && getIconByName(icon, iconStyle, '#ffffff')}
       {label}
     </button>

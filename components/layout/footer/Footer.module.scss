@@ -2,14 +2,15 @@
 @import '~styles/variables.scss';
 
 .footer {
-  background-color: var(--background-1);
+  width: 100%;
+  max-width: 68.75rem;
   height: 200px;
-  width: 68.75rem;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
+  background-color: var(--background-1);
 
   &__column {
     display: flex;
@@ -48,6 +49,22 @@
       font-size: 14px;
       font-weight: 500;
     }
+  }
+
+  .footer__row {
+    right: $tablet_padding;
+  }
+}
+
+@media (max-width: 1200px) {
+  .footer {
+    height: inherit;
+    padding: 32px $tablet_padding 84px $tablet_padding;
+  }
+
+  .footer__row {
+    top: inherit;
+    bottom: $tablet_padding;
   }
 }
 

@@ -33,9 +33,29 @@
   &.type--rounded {
     border-radius: 100px;
   }
+
+  &.large {
+    width: 240px;
+    height: 56px;
+    font-size: 20px;
+    font-weight: 600;
+    min-width: inherit;
+    min-height: inherit;
+  }
 }
 
-@include laptop {
+@media (max-width: 900px) {
+  .button {
+    &.large {
+      width: 200px;
+      height: 48px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+  }
+}
+
+/*@include laptop {
   @media (max-width: 950px) {
     .button {
       min-width: 10rem;
@@ -73,4 +93,4 @@
     min-width: 6.5rem;
     min-height: 1.8rem;
   }
-}
+}*/

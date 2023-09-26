@@ -34,7 +34,7 @@ function Letter() {
         </div>
         <Link href={'https://github.com/brave-people/Dev-Event-Subscribe'}>
           <a className={cn('button__container')} target="_blank">
-            <FillButton onClick={onClick} label="무료 구독하기" color="primary" rounded={true} />
+            <FillButton onClick={onClick} label="무료 구독하기" color="primary" rounded={true} large />
           </a>
         </Link>
       </div>

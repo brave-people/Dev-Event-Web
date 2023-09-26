@@ -329,7 +329,7 @@
   .item__container {
     .item__content__img {
       width: $image_width-tablet;
-      height: calc($image_width-tablet * 0.66);
+      height: calc($image_width-tablet * 0.56);
     }
   }
 }
@@ -339,8 +339,8 @@
     max-width: inherit;
 
     .item__content__img {
-      width: 100%;
-      height: calc($image_width-tablet * 0.66);
+      width: $image_width-mobile;
+      height: calc($image_width-mobile * 0.56);
     }
   }
 }
