@@ -13,7 +13,7 @@ const BookmarkIconMobile = ({ color, className, isFavorite, ...rest }: BookmarkI
     <svg xmlns="http://www.w3.org/2000/svg" width={12} height={16} className={cn(className)} fill="none" {...rest}>
       <g clipPath="url(#a)">
         <path
-          fill={`${isFavorite ? '#2C4CEF' : '#ABACB3'}`}
+          {...(isFavorite ? { fill: '#2C4CEF' } : { stroke: '#ABACB3' })}
           strokeLinejoin="round"
           strokeWidth={2}
           d="M.75 15V.75h10.5V15L6 11.625.75 15Z"
