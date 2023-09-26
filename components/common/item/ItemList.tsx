@@ -38,7 +38,7 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
     setTimeout(() => {
       setIsLoading(false);
       composeTotalCount();
-    }, 200);
+    }, 300);
 
     return () => {
       setIsLoading(false);
@@ -95,9 +95,10 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
     });
     setSearchRes(res);
   };
+
   return (
     <>
-      {search && modalState.currentModal === 0 && searchRes && (
+      {search && modalState.currentModal === 0 && searchRes && searchRes.length > 0 && (
         <>
           <div className={cn('search__header')}>
             <span className={cn('list__title')}>{`${search}`}</span>
@@ -108,7 +109,7 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
           </div>
         </>
       )}
-      {search && modalState.currentModal === 1 && searchRes && (
+      {search && modalState.currentModal === 1 && searchRes && searchRes.length > 0 && (
         <>
           <div className={cn('search__header__modal')}>
             <div className={cn('list__title')}>`{`${search}`}` 검색결과</div>
@@ -142,7 +143,7 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
               );
             eventCount += lists.length;
             const isLast = eventCount === totalCount;
-            return lists.length !== 0 ? (
+            return lists.length > 0 ? (
               <div key={index} className={cn(`${search ? 'search__list' : 'section__list'}`)}>
                 {search === undefined && (
                   <div className={cn('list__title')}>
