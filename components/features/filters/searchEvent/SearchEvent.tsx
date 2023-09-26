@@ -16,10 +16,10 @@ type Props = {
 };
 
 function SearchEvent({ context }: Props) {
-  const [input, setInput] = useState<string | undefined>(undefined);
+  const router = useRouter();
+  const [input, setInput] = useState<string | undefined>(router.query.kwd?.toString() || undefined);
   const { jobGroupList, date, handleDate, handleSearch } = useContext(EventContext);
   const { modalState, handleModalState } = useContext(WindowContext);
-  const router = useRouter();
 
   const submitInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (input?.length === 1 && event.code === 'Backspace') handleSearch(undefined);
