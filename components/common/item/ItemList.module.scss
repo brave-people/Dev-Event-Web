@@ -49,9 +49,30 @@
   border-top: 1px solid var(--gray-4);
 }
 
+.search__header__modal {
+  margin-top: 16px;
+}
+
 @media (max-width: 1200px) {
   .section__list:last-child {
     padding-bottom: 60px;
+  }
+}
+
+@media (max-width: 600px) {
+  .search__header__modal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .list__title {
+    font-size: 20px;
+  }
+
+  .total__count {
+    font-size: 16px;
+    font-weight: 400;
   }
 }
 

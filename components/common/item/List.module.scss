@@ -4,6 +4,10 @@
 .list {
   display: grid;
   grid-template-columns: 1fr;
+
+  &:last-child {
+    margin-bottom: 60px;
+  }
 }
 
 .skeleton {
