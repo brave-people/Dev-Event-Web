@@ -13,7 +13,7 @@ function BookmarkIcon({ color, className, isFavorite, ...rest }: BookmarkIconPro
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={16} height={21} fill="none" className={cn(className)} {...rest}>
       <path
-        stroke={`${isFavorite ? '#230077e8' : '#ABACB3'}`}
+        fill={`${isFavorite ? '#2C4CEF' : '#ABACB3'}`}
         strokeLinejoin="round"
         strokeWidth={2}
         d="M1 20V1h14v19l-7-4.5L1 20Z"
