@@ -160,10 +160,10 @@ const Item = ({
                     />
                   </div>
                 ) : null}
-                {isNew ? (
+                {!isFavorite() && isNew ? (
                   <div className={cn('item__content__flag')}>
                     <NewBulletIcon
-                      color={windowTheme ? 'rgba(203, 203, 206, 1)' : 'rgba(49, 50, 52, 1)'}
+                      color={windowTheme ? 'rgba(255, 255, 255, 1)' : 'rgba(49, 50, 52, 1)'}
                       backgroundColor={windowTheme ? 'rgba(44, 76, 239, 1)' : 'rgba(79, 108, 255, 1)'}
                     />
                   </div>
