@@ -172,7 +172,6 @@ const LoginByEmailContainer = ({ onChangeState }: any) => {
     if (checkValid() === 'valid') {
       const tokens = await loginByEmail('/front/v1/users/login', user);
       if (tokens) {
-        alert('로그인이 완료되었습니다!');
         router.push(`/?accessToken=${tokens.access_token}&refreshToken=${tokens.refresh_token}`);
         onChangeState('close');
       }
