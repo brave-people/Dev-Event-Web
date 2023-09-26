@@ -1,5 +1,5 @@
 @import '~styles/_mixin.scss';
-@import '~styles/variables.scss';
+@import '~styles/_variables.scss';
 
 .list {
   display: grid;
@@ -14,14 +14,15 @@
   .list {
     margin-top: 24px;
     grid-template-columns: $image_width $image_width $image_width;
-    grid-column-gap: 16px;
     grid-row-gap: 36px;
+    align-content: space-around;
+    justify-content: space-between;
   }
 }
 
 @media (max-width: 900px) {
   .list {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: $image_width-tablet $image_width-tablet;
   }
 }
 

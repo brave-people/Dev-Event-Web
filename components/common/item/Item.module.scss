@@ -328,8 +328,8 @@
 @media (max-width: 900px) {
   .item__container {
     .item__content__img {
-      width: calc(100vw / 2 - $tablet_padding * 2);
-      height: calc((100vw / 2 - $tablet_padding * 2) * 0.66);
+      width: $image_width-tablet;
+      height: calc($image_width-tablet * 0.66);
     }
   }
 }
@@ -339,8 +339,8 @@
     max-width: inherit;
 
     .item__content__img {
-      width: calc(100vw - $tablet_padding * 2);
-      height: calc((100vw - $tablet_padding * 2) * 0.66);
+      width: 100%;
+      height: calc($image_width-tablet * 0.66);
     }
   }
 }

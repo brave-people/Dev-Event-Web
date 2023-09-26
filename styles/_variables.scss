@@ -4,3 +4,5 @@ $header_height: 49px;
 $tablet_padding: 20px;
 
 $image_width: 270px;
+
+$image_width-tablet: calc(100vw / 2 - $tablet_padding * 2);
