@@ -1,5 +1,5 @@
 @import '~styles/_mixin.scss';
-@import '~styles/variables.scss';
+@import '~styles/_variables.scss';
 
 .banner {
   position: relative;
@@ -10,7 +10,7 @@
   justify-content: center;
   align-items: center;
   align-self: flex-start;
-  padding: 0px 20px 0px 20px;
+  padding: 0 20px;
   margin-top: $header_height;
   z-index: 0;
   overflow: hidden;
@@ -56,7 +56,6 @@
       height: 26rem;
       &__title {
         font-size: 3.4rem;
-        padding-top: 1.75rem;
         line-height: 4.5rem;
       }
       &__desc {
@@ -72,7 +71,6 @@
     height: 24rem;
     &__title {
       font-size: 3rem;
-      padding-top: 2rem;
       line-height: 4rem;
     }
     &__desc {
@@ -85,7 +83,6 @@
       height: 22rem;
       &__title {
         font-size: 2.3rem;
-        padding-top: 3rem;
         line-height: 3rem;
       }
       &__desc {
@@ -97,7 +94,6 @@
     .banner {
       &__title {
         font-size: 2.1rem;
-        padding-top: 3rem;
         line-height: 3rem;
       }
       &__desc {
@@ -113,7 +109,6 @@
     height: 18rem;
     &__title {
       font-size: 2rem;
-      padding-top: 2.7rem;
       line-height: 2.5rem;
     }
     &__desc {
