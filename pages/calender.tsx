@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import Layout from 'components/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
@@ -13,6 +13,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Banner from 'components/common/banner/banner';
 import Letter from 'components/features/letter/Letter';
+import { WindowContext } from 'context/window';
+import { blockMouseScroll } from 'lib/utils/windowUtil';
 
 const cn = classNames.bind(style);
 
@@ -21,17 +23,31 @@ const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackD
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const router = useRouter();
   const filteredDate = { year: Number(router.query.year), month: Number(router.query.month) };
-
+  const { modalState } = useContext(WindowContext);
+  const bodyRef = useRef<HTMLDivElement>(null);
+  
   useEffect(() => {
     if (isLoggedIn) {
       authContext.login();
     } else {
       authContext.logout();
     }
-  }, [isLoggedIn]);
+    if (modalState.currentModal !== 0) {
+      document.body.style.position = 'fixed';
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.body.style.position = 'relative';
+      document.body.style.overflow = 'unset';
+      bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
+    }
+  }, [isLoggedIn, modalState]);
 
   return (
-    <main className={cn('main')}>
+    <main
+      ref={bodyRef} 
+      className={cn('main')}>
       <Head>
         <title>
           {filteredDate.year}년 {filteredDate.month}월 - 데브이벤트 행사 월별 검색

@@ -1,3 +1,4 @@
+import { jobGroups } from 'components/features/filters/jobGroup';
 import React, { createContext, ReactNode, useState } from 'react'
 
 interface EventContext {
@@ -48,6 +49,7 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
   const [date, setDate] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [url, setUrl] = useState<string | undefined>(undefined);
+  
   const updateJobGroupList = (job: string | string[] | undefined) => {
     if (typeof(job) === "undefined")
       return ;

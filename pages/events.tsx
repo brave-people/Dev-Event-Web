@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState, useRef } from 'react';
 import Layout from 'components/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
@@ -13,6 +13,8 @@ import Head from 'next/head';
 import Banner from 'components/common/banner/banner';
 import Letter from 'components/features/letter/Letter';
 import { EventContext } from 'context/event';
+import { WindowContext } from 'context/window';
+import { blockMouseScroll } from 'lib/utils/windowUtil';
 
 const cn = classNames.bind(style);
 
@@ -25,6 +27,9 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const { date } = useContext(EventContext);
+  const { modalState } = useContext(WindowContext);
+  const bodyRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -32,10 +37,23 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
     } else {
       authContext.logout();
     }
-  }, [isLoggedIn, date]);
+    if (modalState.currentModal !== 0) {
+      document.body.style.position = 'fixed';
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.body.style.position = 'relative';
+      document.body.style.overflow = 'unset';
+      bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
+    }
+  }, [isLoggedIn, date, modalState]);
+
 
   return (
-    <main className={cn('main')}>
+    <main 
+      ref={bodyRef}
+      className={cn('main')}>
       <Head>
         <title>Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!</title>
         <meta
@@ -57,7 +75,8 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
         />
       </Head>
       <Banner />
-      <section className={cn('section')}>
+      <section 
+        className={cn('section')}>
         <ScheduledEventList
           fallbackData={fallbackData}
         />
@@ -72,8 +91,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = context.req.headers.cookie || '';
   const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/current`);
   const events = await res.json();
-
-  console.log(events)
 
   if (cookies) {
     const parsedCookies = cookie.parse(cookies);

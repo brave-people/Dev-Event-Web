@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import Layout from 'components/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
@@ -13,6 +13,8 @@ import { EventResponse } from 'model/event';
 import Letter from 'components/features/letter/Letter';
 import Head from "next/head";
 import { EventContext } from 'context/event';
+import { WindowContext } from 'context/window';
+import { blockMouseScroll } from 'lib/utils/windowUtil';
 
 const cn = classNames.bind(style);
 
@@ -26,6 +28,9 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const [keyword, setKeyword] = useState<string>('');
   const { jobGroupList, eventType, location, coast, search } = useContext(EventContext)
+  const { modalState } = useContext(WindowContext);
+  const bodyRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     setKeyword(`
       ${jobGroupList?.join()}, 
@@ -38,10 +43,22 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
     } else {
       authContext.logout();
     }
-  }, [isLoggedIn]);
+    if (modalState.currentModal !== 0) {
+      document.body.style.position = 'fixed';
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.body.style.position = 'relative';
+      document.body.style.overflow = 'unset';
+      bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
+    }
+  }, [isLoggedIn, modalState]);
 
   return (
-    <main className={cn('main')}>
+    <main
+      ref={bodyRef}
+      className={cn('main')}>
       <Head>
         <title>{keyword} - 데브이벤트 행사 키워드 검색</title>
         <meta name="description" content={`${keyword} 행사, 데브이벤트에서 찾아보세요!`} />
@@ -57,7 +74,8 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
         <meta property="og:description" content={`${keyword} 개발자 행사, 데브이벤트에서 찾아보세요!`} />
       </Head>
       <Banner />
-      <section className={cn('section')}>
+      <section 
+        className={cn('section')}>
         <FilteredEventList
           fallbackData={fallbackData}
         />
