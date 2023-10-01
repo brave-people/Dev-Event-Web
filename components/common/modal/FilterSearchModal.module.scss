@@ -9,12 +9,7 @@
   height: 100%;
   z-index: 999;
   overflow-y: scroll;
-  -ms-overflow-style: none; /* 인터넷 익스플로러 */
-  scrollbar-width: none; /* 파이어폭스 */
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
 
   .header {
     width: 90%;
@@ -45,6 +40,18 @@
         background-color: var(--gray-5);
         cursor: pointer;
       }
+    }
+
+    .active--light {
+      &:hover {
+        background-color: rgba(237, 239, 255, 1);
+        cursor: pointer;
+      }
+    }
+
+    .active--dark {
+      background-color: rgba(34, 35, 38, 1);
+      cursor: pointer;
     }
   }
 

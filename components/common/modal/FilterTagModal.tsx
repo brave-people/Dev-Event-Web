@@ -29,10 +29,9 @@ function FilterTagModal() {
       handleModalState({
         currentModal: modalState.prevModal,
         prevModal: 0,
-        type: modalState.prevModal === 0 ? true : false
+        type: false
       });
     }, 200);
-    document.body.classList.remove('body__no__scroll')
     setHidden(true);
   }
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import style from 'components/common/modal/FilterSearchModal.module.scss'
 import classNames from 'classnames/bind'
 import { useRouter } from 'next/router';
@@ -11,6 +11,7 @@ import { EventResponse } from 'model/event';
 import { EventContext } from 'context/event';
 import { useScheduledEvents } from 'lib/hooks/useSWR';
 import ItemList from 'components/common/item/ItemList';
+import { isActive } from 'lib/utils/eventUtil';
 
 const cn = classNames.bind(style);
 
@@ -22,31 +23,35 @@ function FilterSearchModal ({ events }: Props) {
   const router = useRouter();
   const context = reflactUrlContext(router.asPath);
   const [hidden, setHidden] = useState<boolean>(false);
+  const [filterActive, setFilterActive] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { modalState, handleModalState } = useContext(WindowContext);
+  const { modalState, handleModalState, windowTheme } = useContext(WindowContext);
   const { scheduledEvents, isError } = useScheduledEvents(events);
   const { jobGroupList, eventType, location, coast, search, handleSearch } = useContext(EventContext);
+
   const deleteModal = () => {
     setHidden(true);
-    console.log(modalState)
     setTimeout(() => {
       handleModalState({
         currentModal: 0,
         prevModal: 0,
         type: false
       });
+      handleSearch(undefined);
+      document.body.classList.remove('body__no__scroll')
+      if (search !== undefined) {
+        router.replace(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
+      }
     }, 300);
-    handleSearch(undefined);
-    document.body.classList.remove('body__no__scroll')
-    if (search !== undefined) {
-      router.replace(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
-    }
   }
+
   useEffect(() => {
+    setFilterActive(isActive(jobGroupList, eventType, location, coast))
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
     }, 300);
+
     return () => {
       setHidden(false);
       setIsLoading(false)
@@ -66,14 +71,22 @@ function FilterSearchModal ({ events }: Props) {
           />
         </div>
         <div 
-          className={cn('header__button')}
+          className={cn('header__button', (filterActive&& windowTheme) && 'active--light', (filterActive && !windowTheme) && 'active--dark')}
           onClick={() => {
             handleModalState({
               currentModal: 2,
-              prevModal: modalState.currentModal,
-              type: true
-          })}}>
-          <ToggleIcon />
+              prevModal: 1,
+              type: false
+          })
+          }}>
+          {filterActive ? (
+            <Image
+              src={'/icon/toggle_active.svg'}
+              alt='filter active'
+              width={40}
+              height={40}
+            />
+          ) : <ToggleIcon /> }
         </div>
       </section>
       {search !== undefined 

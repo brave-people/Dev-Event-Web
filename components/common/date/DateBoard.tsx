@@ -93,7 +93,6 @@ function DateBoard({ options }: Props) {
           router.replace('/events');
           handleDate(undefined);
           setIsLastEl(true);
-          console.log("check");
         } else {
           const newYear = options[current + 1].slice(0, 4);
           const newMonth = options[current + 1].slice(6, 8);

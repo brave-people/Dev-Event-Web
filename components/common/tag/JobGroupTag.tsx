@@ -9,11 +9,12 @@ import { WindowContext } from "context/window";
 type Prop = {
   tagName: string;
   type: string;
+  parent: boolean;
 }
 
 const cx = classNames.bind(style);
 
-function JobGroupTag({ tagName, type }: Prop) {
+function JobGroupTag({ tagName, type, parent }: Prop) {
   const router = useRouter();
   const { jobGroupList, eventType, location, coast, search, date, url, updateJobGroupList, deleteJobGroupList, initJobGroupList, handleDate, handleUrl } = useContext(EventContext);
   const { windowTheme } = useContext(WindowContext);
@@ -21,19 +22,21 @@ function JobGroupTag({ tagName, type }: Prop) {
     handleJobGroupList(tagName);
   }
   const handleJobGroupList = (tag: string) => {
-    if (jobGroupList !== undefined) {
-      jobGroupList.includes(tag)
-      ? deleteJobGroupList(tag)
-      : updateJobGroupList(tag)
-    } else {
-     updateJobGroupList(tag); 
+    if (parent) {
+      if (jobGroupList !== undefined) {
+        jobGroupList.includes(tag)
+        ? deleteJobGroupList(tag)
+        : updateJobGroupList(tag)
+      } else {
+       updateJobGroupList(tag); 
+      }
     }
   }
 
   const reflactUrl = (urls: string) => {
     const windowX = window.innerWidth;
     handleUrl(urls);
-    if (windowX < 600)
+    if (windowX < 600 && parent)
       return ;
     router.replace(urls);
   }
@@ -44,7 +47,7 @@ function JobGroupTag({ tagName, type }: Prop) {
   return (
     <div
       onClick={() => {
-        const key = "tag";
+        const key = parent ? "tag" : "kwd";
         const value = tagName;
         if (date !== undefined)
           handleDate(undefined);
@@ -53,6 +56,7 @@ function JobGroupTag({ tagName, type }: Prop) {
           handleInit();
         } else {
           reflactUrl(`${parseUrl(`${url ? url : router.asPath}`, key, value, jobGroupList)}`)
+          console.log(`${parseUrl(`${url ? url : router.asPath}`, key, value, jobGroupList)}`);
           handleOnClick();
         }
       }}

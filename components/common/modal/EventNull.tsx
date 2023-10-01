@@ -50,6 +50,7 @@ function EventNull() {
                 key={tag.id}
                 tagName={tag.tag_name}
                 type="recommand"
+                parent={false}
               />
             )
           })}

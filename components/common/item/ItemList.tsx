@@ -37,6 +37,7 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
       setIsLoading(false);
       composeTotalCount();
     }, 300);
+    console.log("search", search)
     return () => {
       setIsLoading(false);
       setSearchRes(undefined);
@@ -69,7 +70,6 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
   };
 
   const setEventList = () => {
-    console.log(events)
     let res: Event[] = [];
     events && events.map((event: EventResponse, index: number) => {
         event && event.dev_event.filter((item) => {
@@ -84,7 +84,6 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
               res.push(item)
             }
         })
-        console.log("searchRes", searchRes)
     })
     setSearchRes(res)
   }

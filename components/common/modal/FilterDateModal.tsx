@@ -27,7 +27,7 @@ function FilterDateModal() {
       handleModalState({
         currentModal: 0,
         prevModal: 0,
-        type: true
+        type: false
       })
     }, 300)
     document.body.classList.remove('body__no__scroll')
