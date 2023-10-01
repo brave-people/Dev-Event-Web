@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { EventResponse } from 'model/event';
 import ItemList from 'components/common/item/ItemList';
 import { useScheduledEvents } from 'lib/hooks/useSWR';
@@ -10,8 +10,10 @@ type Props = {
 
 const ScheduledEventList = ({ fallbackData }: Props) => {
   const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
+
+
   return (
-    <>
+    <section>
       <EventFilter
         events={fallbackData}
       />
@@ -19,7 +21,7 @@ const ScheduledEventList = ({ fallbackData }: Props) => {
         events={scheduledEvents}
         isError={isError}
       />
-    </>
+    </section>
   )
 };
 export default ScheduledEventList;
