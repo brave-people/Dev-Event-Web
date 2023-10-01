@@ -36,11 +36,6 @@ a {
   color: #a8a8a8;
 }
 
-.body__no__scroll {
-  overflow: hidden;
-  &::-webkit-scrollbar { display:none; }
-}
-
 @media (max-width: 350px) {
   body {
     overflow: visible;

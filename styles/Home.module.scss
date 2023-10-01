@@ -3,13 +3,21 @@
 .main {
   margin: 0 auto;
   width: 100%;
-  overflow-y: scroll;
+  overflow: hidden;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .section {
   width: 68.75rem;
   padding-bottom: 5.439rem;
   margin: 0 auto;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @include laptop {
