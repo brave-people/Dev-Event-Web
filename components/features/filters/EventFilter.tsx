@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import classNames from "classnames/bind";
 import style from 'components/features/filters/EventFilter.module.scss';
 import Register from 'components/features/register/Register'
@@ -17,6 +17,9 @@ import { WindowContext } from 'context/window';
 import FilterSearchModal from 'components/common/modal/FilterSearchModal';
 import { EventResponse } from 'model/event';
 import FilterDateModal from 'components/common/modal/FilterDateModal';
+import { EventContext } from 'context/event';
+import { isActive } from 'lib/utils/eventUtil';
+import Image from 'next/image';
 
 const cn = classNames.bind(style);
 
@@ -27,8 +30,11 @@ type Props = {
 function EventFilter({ events }: Props) {
   const router = useRouter();
   const context = reflactUrlContext(router.asPath);
+  const [filterActive, setFilterActive] = useState<boolean>(false);
+
   const { modalState, handleModalState } = useContext(WindowContext)
-  
+  const { jobGroupList, eventType, location, coast } = useContext(EventContext);  
+
   const isModalOpen = (modal_id: number): boolean => {
     if (modalState.currentModal === modal_id ||
        modalState.prevModal === modal_id) {
@@ -36,6 +42,11 @@ function EventFilter({ events }: Props) {
     }
     return (false);
   }
+
+  useEffect(() => {
+    setFilterActive(isActive(jobGroupList, eventType, location, coast));
+  }, [jobGroupList, eventType, location, coast])
+  
   return (
   <section className={cn('container')}>
     <div className={cn('inner')}> 
@@ -76,11 +87,18 @@ function EventFilter({ events }: Props) {
                 handleModalState({
                   currentModal: 2,
                   prevModal: modalState.currentModal,
-                  type: true
+                  type: false
                 })
               }} 
               className={cn('filter__group__toggle')}>
-              <ToggleIcon />
+              {filterActive ? (
+                <Image
+                  src={'/icon/toggle_active.svg'}
+                  alt='filter active'
+                  width={40}
+                  height={40}
+                />
+              ) : <ToggleIcon /> }
             </div>
             <div className={cn('filter__group__date')}>
               <DateBoard

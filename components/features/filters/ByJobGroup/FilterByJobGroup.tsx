@@ -40,6 +40,7 @@ function FilterByJobGroup({ context }: Props) {
             key={tag.tag_id}
             tagName={tag.tag_name}
             type="basic"
+            parent={true}
           />
         )
       })}

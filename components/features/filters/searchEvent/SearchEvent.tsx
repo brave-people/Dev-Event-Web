@@ -31,9 +31,9 @@ function SearchEvent( { context }: Props) {
           event_category: 'web_event',
           event_label: '검색',
         });
-        handleSearch(input);
         if (date !== undefined)
           handleDate(undefined);
+        handleSearch(input);
         router.replace(`${parseUrl(`${router.asPath}`, 'kwd', input, jobGroupList)}`)
       }
       if (window.innerWidth < 600) {
@@ -55,26 +55,28 @@ function SearchEvent( { context }: Props) {
     handleModalState({
       currentModal: 0,
       prevModal: 0,
-      type: true
+      type: false
     })
   }
   useEffect(() => {
     if (context?.kwd === undefined) {
       handleSearch(undefined)
     } else if (context.kwd !== undefined) {
+      console.log(context.kwd);
       const decode = decodeURIComponent(context.kwd);
       handleSearch(decode)
     }
-  }, [])
+    console.log(jobGroupList)
+  }, [context])
   return (
     <div
       onClick={() => {
         if (window.innerWidth < 600) {
-          document.body.classList.add('body__no__scroll')
+          document.body.classList.add('body__no__scroll');
           handleModalState({
             currentModal: 1,
             prevModal: modalState.currentModal,
-            type: true
+            type: false
           })
         }
       }} 
