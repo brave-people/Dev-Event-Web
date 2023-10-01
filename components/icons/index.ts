@@ -18,6 +18,7 @@ import ToggleIcon from "./ToggleIcon";
 import ArrowBackIcon from "./ArrowBackIcon";
 import ShareIconMobile from "./ShareIconMobile";
 import BookmarkIconMobile from "./BookmarkIconMobile";
+import ToggleActiveIcon from "./ToggleActiveIcon";
 
 export {
   PlusIcon,
@@ -39,5 +40,6 @@ export {
   ToggleIcon,
   ArrowBackIcon,
   ShareIconMobile,
-  BookmarkIconMobile
+  BookmarkIconMobile,
+  ToggleActiveIcon
 }
