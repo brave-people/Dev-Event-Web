@@ -79,3 +79,13 @@ export const checkDate = (
   }
   return (false);
 }
+
+export const isActive = (
+  jobGroupList: string[] | undefined, 
+  eventType: string | undefined, 
+  location: string | undefined, 
+  coast: string | undefined) => {
+    if ((jobGroupList !== undefined && jobGroupList.length !== 0) || eventType !== undefined || location !== undefined || coast !== undefined)
+      return true;
+    return false
+}

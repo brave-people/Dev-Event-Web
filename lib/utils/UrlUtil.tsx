@@ -12,18 +12,25 @@ export const initUrl = (
 ) => {
 	if (handleUndefined(jobGroupList?.join(', '), eventType, location, coast, search))
 		return ('/events');
-	if (url.includes(type) === false)
+	if (url.includes(type) === false) {
+		console.log('asdf')
 		return (url);
+	}
 	else {
-		const sepUrls = url.split('?').filter((sepUrl) => {
+		const sepUrls = url.split(/[?&]/).filter((sepUrl) => {
 			return (
-				sepUrl.includes(type) === false
+				sepUrl.includes(type) === false && sepUrl.includes('/search') === false
 			)
-		})
-		const joinUrl = sepUrls.join('?');
-		if (joinUrl === '/search')
-			return ('/events')
-		return (joinUrl);
+		});
+		const len = sepUrls.length;
+
+		if (sepUrls === undefined || len === 0)
+			return ('/events');
+		else if (sepUrls !== undefined && len === 1)
+			return (`/search?${sepUrls[0]}`);
+		else {
+			return (`/search?${sepUrls[0]}&${sepUrls.slice(1, len).join('&')}`);
+		}
 	}
 }
 
@@ -45,21 +52,26 @@ export const parseUrl = (
 		if (value === true) {
 			const newUrl = deleteUrl(jobGroupList, option);
 			const currentUrl = getCurrentUrl(url);
+
 			if ((newUrl === undefined || newUrl.length === 0) 
 			&& (currentUrl === undefined || currentUrl?.length === 0))
 				return ('/events');
-			return (
-				`/search${(newUrl === undefined 
-				|| newUrl?.length === 0) ? "" : `?tag=${newUrl?.join('?tag=')}`}
-				${(currentUrl === undefined || currentUrl?.length === 0) ? "" : `?${currentUrl.join('?')}`}
-				`);
+			else if ((newUrl !== undefined && newUrl.length !== 0) 
+			&& (currentUrl === undefined || currentUrl?.length === 0))
+				return (`/search?tag=${newUrl.join('&tag=')}`);
+			else if ((newUrl === undefined || newUrl.length === 0) 
+			&& (currentUrl !== undefined && currentUrl.length !== 0))
+				return (`/search?${currentUrl.join('&')}`);
+			else if ((newUrl !== undefined && newUrl.length !== 0) 
+			&& (currentUrl !== undefined && currentUrl.length !== 0))
+				return (`/search?tag=${newUrl.join('&tag=')}&${currentUrl.join('&')}`);
 		}
 	}
-	return (`${url}?${type}=${option}`);
+	return (`${url}&${type}=${option}`);
 }
 
 const getKey = (url: string, type: string) => {
-  const newUrl: string[] = url.split('?');
+  const newUrl: string[] = url.split(/[?&]/);
   for (let i = 0; i < newUrl.length; i++) {
     if (newUrl[i].includes(`${type}`)) {
       return (newUrl[i]);
@@ -76,7 +88,7 @@ export const getValue = (option: string, jobGroupList: string[] | undefined): bo
 }
 
 export const getCurrentUrl = (url: string) : string[] | undefined => {
-	const currentUrl = url.split('?').filter((item) => {
+	const currentUrl = url.split(/[?&]/).filter((item) => {
 		return (!item.includes('tag') && !item.includes('/search'));
 	})
 	return (currentUrl);
@@ -97,7 +109,8 @@ export const reflactUrlContext = (url: string): UrlContext => {
 		coast: undefined,
 		kwd: undefined,
 	}
-	const context = url.split('?');
+	const context = url.split(/[?&]/);
+	console.log(context)
 	for (let i = 0; i < context.length; i++) {
 		if (context[i].includes('tag')) {
 			result.tagList.push(context[i].split('=')[1])
