@@ -33,11 +33,11 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
 
   useEffect(() => {
     setKeyword(`
-      ${jobGroupList?.join()}, 
-      ${eventType && eventType}, 
-      ${location && location}, 
-      ${coast && coast}, 
-      ${search && search}`)
+      ${jobGroupList?.length !== 0 ? `${jobGroupList?.join(',')}` : ''} 
+      ${eventType !== undefined ?  `${eventType},` : ''}
+      ${location !== undefined ? `${location},` : ''} 
+      ${coast !== undefined ? `${coast},` : ''} 
+      ${search !== undefined ? `${search},` : ''}`)
     if (isLoggedIn) {
       authContext.login();
     } else {
