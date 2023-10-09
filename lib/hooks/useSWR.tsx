@@ -27,7 +27,6 @@ const useMonthlyEvent = ({ param, fallbackData }: { param: Calender; fallbackDat
     revalidateOnReconnect: true,
     revalidateIfStale: false,
   });
-  log(events)
   return {
     monthlyEvent: events,
     isLoading: !error && !events,
@@ -76,5 +75,6 @@ const useUser = () => {
     isError: error,
   };
 };
+
 
 export { useScheduledEvents, useMonthlyEvent, useTags, useUser, useMyEvent };

@@ -13,7 +13,6 @@ export const initUrl = (
 	if (handleUndefined(jobGroupList?.join(', '), eventType, location, coast, search))
 		return ('/events');
 	if (url.includes(type) === false) {
-		console.log('asdf')
 		return (url);
 	}
 	else {
@@ -110,7 +109,6 @@ export const reflactUrlContext = (url: string): UrlContext => {
 		kwd: undefined,
 	}
 	const context = url.split(/[?&]/);
-	console.log(context)
 	for (let i = 0; i < context.length; i++) {
 		if (context[i].includes('tag')) {
 			result.tagList.push(context[i].split('=')[1])
