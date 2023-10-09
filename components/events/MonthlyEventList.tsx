@@ -25,7 +25,7 @@ function MonthlyEventList({ events, date } : Props) {
     setTimeout(() => {
       setIsLoading(false);
     }, 300);
-  }, [search, date]);
+  }, [date]);
 
   return (
     <>
@@ -45,9 +45,7 @@ function MonthlyEventList({ events, date } : Props) {
           /> 
         </div> 
       ) : (
-        <div>
-          <EventNull />
-        </div>
+        <EventNull />
       ))}
     </>
   )

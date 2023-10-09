@@ -29,7 +29,7 @@ const EventTab = ({}: any) => {
         className={cn('tab__header--menu', tabMenu.ongoing === true ? 'selected' : null)}
         onClick={() => {
           setTabMenu({ ongoing: true, done: false });
-          router.replace('/myevent?tab=ongoing');
+          router.push('/myevent?tab=ongoing');
           ga.event({
             action: 'web_event_진행중인행사탭클릭',
             event_category: 'web_myevent',
@@ -44,7 +44,7 @@ const EventTab = ({}: any) => {
         className={cn('tab__header--menu', tabMenu.done === true ? 'selected' : null)}
         onClick={(event) => {
           setTabMenu({ ongoing: false, done: true });
-          router.replace('/myevent?tab=done');
+          router.push('/myevent?tab=done');
           ga.event({
             action: 'web_event_종료된행사탭클릭',
             event_category: 'web_myevent',

@@ -15,13 +15,15 @@ function BasicInput({ updateInput, submitInput, label, size, icon, iconStyle, in
   const searchRef = useRef<HTMLInputElement | null>(null);
   const { windowTheme } = useContext(WindowContext)
   const { jobGroupList, eventType, location, coast, search, handleSearch } = useContext(EventContext);
-  const { modalState } = useContext(WindowContext)
+  const { modalState, handleModalState } = useContext(WindowContext)
   const router = useRouter();
+  
   useEffect(() => {
     if (window.innerWidth < 600 && modalState.currentModal === 1) {
       searchRef.current?.focus();
     }
   }, [])
+  
   return (
     <>
       <div className={cn('container')}>
@@ -43,7 +45,12 @@ function BasicInput({ updateInput, submitInput, label, size, icon, iconStyle, in
               initInput();
             if (search !== undefined )
               handleSearch(undefined);
-            router.replace(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
+            router.push(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
+            handleModalState({
+              currentModal: 0,
+              prevModal: 0,
+              type: false
+            })
           }}>
           <DeleteIcon
             color={`${windowTheme ? "#d3d4d8" : "#797a81"}`}

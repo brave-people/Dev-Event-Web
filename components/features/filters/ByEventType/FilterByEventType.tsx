@@ -26,7 +26,7 @@ function FilterByEventType({ context }: Props) {
         handleEventType(undefined);
       }
     }
-  }, []);
+  }, [context, eventType]);
   
   return (
     <div>

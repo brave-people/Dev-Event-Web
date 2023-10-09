@@ -75,7 +75,7 @@ function BasicDropdown({ title, options, type, context, gaParam }: BasicDropdown
     handleUrl(urls);
     if (windowX < 600)
       return ;
-    router.replace(urls);
+    router.push(urls);
   }
 
   useOnClickOutside({ ref: outSideRef, handler: handleClickOutside, mouseEvent: 'click' });

@@ -5,7 +5,7 @@ import style from 'components/features/filters/searchEvent/SearchEvent.module.sc
 import * as ga from 'lib/utils/gTag';
 import { EventContext } from "context/event";
 import { useRouter } from "next/router";
-import { parseUrl } from "lib/utils/urlUtil";
+import { initUrl, parseUrl } from "lib/utils/urlUtil";
 import { UrlContext } from "types/Context";
 import { WindowContext } from "context/window";
 
@@ -17,13 +17,15 @@ type Props = {
 
 function SearchEvent( { context }: Props) {
   const [input, setInput] = useState<string | undefined>(undefined)
-  const { jobGroupList, date, handleDate, handleSearch } = useContext(EventContext);
+  const { jobGroupList, date, eventType, location, coast, search, handleDate, handleSearch } = useContext(EventContext);
   const { modalState, handleModalState } = useContext(WindowContext)
   const router = useRouter();
 
   const submitInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (input?.length === 1 && (event.code === 'Backspace'))
+    if (input?.length === 1 && (event.code === 'Backspace')) {
       handleSearch(undefined)
+      router.push(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
+    }
     if (event.code == 'Enter') {
       if (input) {
         ga.event({
@@ -34,7 +36,7 @@ function SearchEvent( { context }: Props) {
         if (date !== undefined)
           handleDate(undefined);
         handleSearch(input);
-        router.replace(`${parseUrl(`${router.asPath}`, 'kwd', input, jobGroupList)}`)
+        router.push(`${parseUrl(`${router.asPath}`, 'kwd', input, jobGroupList)}`)
       }
       if (window.innerWidth < 600) {
         handleModalState({
@@ -52,22 +54,16 @@ function SearchEvent( { context }: Props) {
 
   const initInput = () => {
     setInput("");
-    handleModalState({
-      currentModal: 0,
-      prevModal: 0,
-      type: false
-    })
   }
   useEffect(() => {
     if (context?.kwd === undefined) {
       handleSearch(undefined)
     } else if (context.kwd !== undefined) {
-      console.log(context.kwd);
       const decode = decodeURIComponent(context.kwd);
       handleSearch(decode)
     }
-    console.log(jobGroupList)
-  }, [context])
+  }, [context, search])
+
   return (
     <div
       onClick={() => {

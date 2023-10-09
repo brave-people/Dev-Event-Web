@@ -10,7 +10,6 @@ function Login({ setLoginModalIsOpen }: Props) {
   return (
     <TextButton
     label="로그인"
-    size="regular"
     onClick={() => {
       setLoginModalIsOpen(true);
       ga.event({

@@ -26,7 +26,7 @@ function FilterByLocation({ context }: Props) {
         handleLocation(undefined);
       }
     }
-  }, [])
+  }, [context, location])
   return (
     <div>
       <BasicDropdown

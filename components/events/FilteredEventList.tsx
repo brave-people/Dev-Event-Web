@@ -2,31 +2,30 @@ import React, { useContext } from "react";
 import { EventContext } from "context/event";
 import { EventResponse } from "model/event";
 import ItemList from "components/common/item/ItemList";
-import { useScheduledEvents } from "lib/hooks/useSWR";
 import EventFilter from "components/features/filters/EventFilter";
 
 type Props = {
-  fallbackData: EventResponse[]
+  events: EventResponse[] | undefined;
+  isError: any;
 }
 
-function FilteredEvent({ fallbackData } : Props) {
-  const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
+function FilteredEvent({ events, isError } : Props) {
   const { jobGroupList, eventType, location, coast, search } = useContext(EventContext);
   return (
-    <>
+    <section>
       <EventFilter
-        events={fallbackData}
+        events={events}
       />
       <ItemList
-        events={scheduledEvents}
+        events={events}
         isError={isError}
-        jobGroups={`${jobGroupList?.join(', ')}`}
+        jobGroups={jobGroupList?.join(', ')}
         eventType={eventType}
         location={location}
         coast={coast}
         search={search}
       />
-    </>
+    </section>
   )
 }
 

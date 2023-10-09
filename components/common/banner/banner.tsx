@@ -19,6 +19,7 @@ function Banner() {
         src={'/default/banner_img.png'}
         alt='banner'
         layout='fill'
+        priority={true}
       />
     </div>
   );

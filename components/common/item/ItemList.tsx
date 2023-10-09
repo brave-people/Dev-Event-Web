@@ -6,7 +6,6 @@ import { checkCondition, checkEventDone, getEventEndDate } from 'lib/utils/event
 import { Event, EventResponse } from 'model/event';
 import List from 'components/common/item/List';
 import { checkSearch } from 'lib/utils/searchUtil';
-import { EventContext } from 'context/event';
 import EventNull from '../modal/EventNull';
 import { WindowContext } from 'context/window';
 
@@ -26,8 +25,7 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
   const [ totalCount, setTotalCount] = useState<number>(0);
   const [ isLoading, setIsLoading ] = useState<boolean>(false);
   const [ searchRes, setSearchRes] = useState<Event[] | undefined>();undefined
-  const { jobGroupList, date } = useContext(EventContext);
-  const { modalState } = useContext(WindowContext)
+  const { modalState } = useContext(WindowContext);
   let eventCount = 0;
 
   useEffect(() => {
@@ -37,12 +35,11 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
       setIsLoading(false);
       composeTotalCount();
     }, 300);
-    console.log("search", search)
     return () => {
       setIsLoading(false);
       setSearchRes(undefined);
     }
-  }, [search, totalCount, date, jobGroupList, eventType, location, coast]);
+  }, []);
 
   if (isError) {
     return <div className={cn('null-container')}>이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
@@ -71,7 +68,7 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
 
   const setEventList = () => {
     let res: Event[] = [];
-    events && events.map((event: EventResponse, index: number) => {
+    events && events.map((event: EventResponse) => {
         event && event.dev_event.filter((item) => {
           if (!checkEventDone({
               endDate: getEventEndDate({
@@ -121,8 +118,8 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
         <div className={cn('null-container')}>
           <ThreeDots color="#479EF1" height={60} width={60} />
         </div>
-      ) : (
-      events && totalCount ? (
+      ) : ( 
+      events && totalCount !== 0 ? (
         events.map((event: EventResponse, index) => {
           if (!search) {
             const lists =
@@ -159,9 +156,7 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
             )
           }})
       ) : (
-        <div>
-          <EventNull />
-        </div>
+        <EventNull />
       ))}
     </>
   )

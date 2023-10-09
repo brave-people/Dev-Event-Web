@@ -69,7 +69,7 @@ function DateBoard({ options }: Props) {
     if (type === "prev" && dateArg === undefined) {
       handleDate(`${currentYear}년 ${currentMonth}월`);
       setIsLastEl(false);
-      router.replace(`/calender?year=${currentYear}&month=${currentMonth}`);
+      router.push(`/calender?year=${currentYear}&month=${currentMonth}`);
       return ;
     }
     if (dateArg !== undefined) {
@@ -81,7 +81,7 @@ function DateBoard({ options }: Props) {
           handleDate(options[current - 1]);
           setCurrentYear(newYear);
           setCurrentMonth(newMonth);
-          router.replace(`/calender?year=${newYear}&month=${newMonth}`);
+          router.push(`/calender?year=${newYear}&month=${newMonth}`);
         }
         if (current - 1 === 1)
           setIsFirstEl(true);
@@ -90,7 +90,7 @@ function DateBoard({ options }: Props) {
         setIsLastEl(false);
       } else if (type === 'next') {
         if (options[current] === `${new Date().getFullYear().toString()}년 ${getMonth()}월`) {
-          router.replace('/events');
+          router.push('/events');
           handleDate(undefined);
           setIsLastEl(true);
         } else {
@@ -100,7 +100,7 @@ function DateBoard({ options }: Props) {
           setCurrentYear(newYear);
           setCurrentMonth(newMonth);
           setIsFirstEl(false);
-          router.replace(`/calender?year=${newYear}&month=${newMonth}`);
+          router.push(`/calender?year=${newYear}&month=${newMonth}`);
         }
       }
     }
@@ -111,7 +111,7 @@ function DateBoard({ options }: Props) {
     handleUrl(urls);
     if (windowX < 600)
       return ;
-    router.replace(urls)
+    router.push(urls)
   }
 
   useOnClickOutside({ ref: outSideRef, handler: handleClose, mouseEvent: 'click' });

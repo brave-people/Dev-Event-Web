@@ -26,7 +26,8 @@ function FilterByCoast({ context }: Props) {
         handleCoast(undefined);
       }
     }
-  }, [])
+  }, [context, coast])
+
   return (
     <div>
       <BasicDropdown

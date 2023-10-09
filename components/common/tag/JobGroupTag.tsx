@@ -16,7 +16,7 @@ const cx = classNames.bind(style);
 
 function JobGroupTag({ tagName, type, parent }: Prop) {
   const router = useRouter();
-  const { jobGroupList, eventType, location, coast, search, date, url, updateJobGroupList, deleteJobGroupList, initJobGroupList, handleDate, handleUrl } = useContext(EventContext);
+  const { jobGroupList, eventType, location, coast, search, date, url, updateJobGroupList, deleteJobGroupList, initJobGroupList, handleDate, handleUrl,handleSearch } = useContext(EventContext);
   const { windowTheme } = useContext(WindowContext);
   const handleOnClick = () => {
     handleJobGroupList(tagName);
@@ -38,7 +38,7 @@ function JobGroupTag({ tagName, type, parent }: Prop) {
     handleUrl(urls);
     if (windowX < 600 && parent)
       return ;
-    router.replace(urls);
+    router.push(urls);
   }
 
   const handleInit = useCallback(() => {
@@ -56,8 +56,7 @@ function JobGroupTag({ tagName, type, parent }: Prop) {
           handleInit();
         } else {
           reflactUrl(`${parseUrl(`${url ? url : router.asPath}`, key, value, jobGroupList)}`)
-          console.log(`${parseUrl(`${url ? url : router.asPath}`, key, value, jobGroupList)}`);
-          handleOnClick();
+          parent ? handleOnClick() : handleSearch(tagName);
         }
       }}
       className={cx(

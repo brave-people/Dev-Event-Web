@@ -12,11 +12,8 @@ import { getDateList } from 'lib/utils/dateUtil';
 import { reflactUrlContext } from 'lib/utils/urlUtil';
 import { useRouter } from 'next/router';
 import { ToggleIcon } from 'components/icons';
-import FilterTagModal from 'components/common/modal/FilterTagModal';
 import { WindowContext } from 'context/window';
-import FilterSearchModal from 'components/common/modal/FilterSearchModal';
 import { EventResponse } from 'model/event';
-import FilterDateModal from 'components/common/modal/FilterDateModal';
 import { EventContext } from 'context/event';
 import { isActive } from 'lib/utils/eventUtil';
 import Image from 'next/image';
@@ -34,14 +31,6 @@ function EventFilter({ events }: Props) {
 
   const { modalState, handleModalState } = useContext(WindowContext)
   const { jobGroupList, eventType, location, coast } = useContext(EventContext);  
-
-  const isModalOpen = (modal_id: number): boolean => {
-    if (modalState.currentModal === modal_id ||
-       modalState.prevModal === modal_id) {
-      return (true);
-    }
-    return (false);
-  }
 
   useEffect(() => {
     setFilterActive(isActive(jobGroupList, eventType, location, coast));
@@ -108,14 +97,6 @@ function EventFilter({ events }: Props) {
           </div>
       </div>
     </div>
-    {isModalOpen(1) &&
-      <FilterSearchModal
-        events={events}
-      />}
-    {isModalOpen(2) && 
-      <FilterTagModal />}
-    {isModalOpen(3) &&
-      <FilterDateModal />}
   </section>
   )
 }

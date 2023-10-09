@@ -40,12 +40,25 @@
       border-radius: 5px;
 
       &:hover {
+        cursor: pointer;
         background-color: var(--gray-5);
       }
     }
 
     .wrapper {
       padding-left: 24px;
+
+      .login {
+        border-radius: 5px;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+
+        &:hover {
+          cursor: pointer;
+          background-color: var(--gray-5);
+        }
+      }
     }
   }
 }

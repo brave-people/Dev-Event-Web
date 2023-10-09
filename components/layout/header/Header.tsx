@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import style from 'components/layout/header/Header.module.scss';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import LoginModal from 'components/common/modal/LoginModal';
 import { AuthContext } from 'context/auth';
@@ -13,8 +13,8 @@ import NoticeModal from 'components/common/modal/NoticeModal';
 const cn = classNames.bind(style);
 
 function Header() {
-  const authContext = React.useContext(AuthContext);
 
+  const { isLoggedIn, login, logout } = useContext(AuthContext)
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   return (
     <header className={cn('header')}>
@@ -30,12 +30,16 @@ function Header() {
             <ThemeToggle />
           </div>
           <span className={cn('wrapper')}>
-            {authContext.isLoggedIn ? (
-              <Profile />
+            {isLoggedIn ? (
+              <div onClick={() => logout()}>
+                <Profile />
+              </div>
             ) : (
-              <Login
-              setLoginModalIsOpen={setLoginModalIsOpen}
-              />
+              <div className={cn('login')} onClick={() => login()}>
+                <Login
+                  setLoginModalIsOpen={setLoginModalIsOpen}
+                />
+              </div>
             )}
           </span>
         </div>
