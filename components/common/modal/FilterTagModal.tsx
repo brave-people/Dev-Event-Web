@@ -22,9 +22,6 @@ function FilterTagModal() {
   const { url } = useContext(EventContext);
 
   const deleteModal = () => {
-    if (url !== undefined) {
-      router.replace(url);        
-    }
     setTimeout(() => {
       handleModalState({
         currentModal: modalState.prevModal,
@@ -32,6 +29,9 @@ function FilterTagModal() {
         type: false
       });
     }, 200);
+    if (url !== undefined) {
+      router.push(url);        
+    }
     setHidden(true);
   }
   return (

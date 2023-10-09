@@ -2,33 +2,30 @@ import React, { useState, useEffect, useContext } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames/bind';
 import style from 'components/common/modal/EventNull.module.scss'
-import axios from 'axios';
 import { TagResponse } from 'model/tag';
 import { getRandomTag } from 'lib/utils/tagUtil';
 import { EventContext } from 'context/event';
-import JobGroupTag from '../tag/JobGroupTag';
+import JobGroupTag from 'components/common/tag/JobGroupTag';
+import { useTags } from 'lib/hooks/useSWR';
 
 const cn = classNames.bind(style)
 
 function EventNull() {
-  const [tags, setTags] = useState<TagResponse[] | undefined>([]);
+  const [randomTags, setRandomTags] = useState<TagResponse[]>([]);
   const { jobGroupList, eventType, location, coast } = useContext(EventContext)
-  const fetchTag = async () => {
-    try {
-      const context = `${jobGroupList?.join(', ')}, ${eventType ? eventType : ""}, ${location ? location : ""}, ${coast ? coast : ""}`;
-      const res = await axios.get(`${process.env.BASE_SERVER_URL}/front/v1/events/tags`);
-      const result = getRandomTag(res.data, context);
-      setTags(result);
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  const { tags } = useTags();
+
   useEffect(() => {
-    fetchTag();
-    return () => setTags(undefined)
-  }, [])
+    if (tags !== undefined) {
+      const context = `${jobGroupList?.join(', ')}, ${eventType ? eventType : ""}, ${location ? location : ""}, ${coast ? coast : ""}`;
+      setRandomTags(getRandomTag(tags, context));
+    }
+    console.log("Hello, World");
+  }, [jobGroupList, eventType, location, coast])
+  
   return (
     <section className={cn('section__list')}>
+      {randomTags && randomTags.length !== 0 && (
       <section className={cn('container')}>
         <div className={cn('title')}>
           찾으시는 행사정보가 없어요
@@ -44,7 +41,7 @@ function EventNull() {
           추천태그로 검색해보세요
         </div>
         <div className={cn('tag__container')}>
-          {tags?.map((tag) => {
+          {randomTags.map((tag) => {
             return (
               <JobGroupTag
                 key={tag.id}
@@ -56,6 +53,7 @@ function EventNull() {
           })}
         </div>
       </section>
+      )}
     </section>
   )
 }

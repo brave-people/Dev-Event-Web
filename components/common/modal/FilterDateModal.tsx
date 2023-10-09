@@ -2,7 +2,6 @@ import { DeleteIcon } from "components/icons";
 import style from 'components/common/modal/FilterDateModal.module.scss'
 import classNames from "classnames/bind";
 import { useRouter } from "next/router";
-import { reflactUrlContext } from "lib/utils/urlUtil";
 import { useContext, useState } from "react";
 import { WindowContext } from "context/window";
 import { EventContext } from "context/event";
@@ -14,21 +13,20 @@ const cn = classNames.bind(style);
 
 function FilterDateModal() {
   const router = useRouter();
-  const context = reflactUrlContext(router.asPath);
   const [hidden, setHidden] = useState<boolean>(false);
   const { modalState, handleModalState } = useContext(WindowContext);
   const { url } = useContext(EventContext);
 
   const deleteModal = () => {
-    if (url !== undefined) {
-      router.replace(url)
-    }
     setTimeout(() => {
       handleModalState({
         currentModal: 0,
         prevModal: 0,
         type: false
       })
+      if (url !== undefined) {
+        router.push(url)
+      }
     }, 300)
     document.body.classList.remove('body__no__scroll')
     setHidden(true)
