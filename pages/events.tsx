@@ -14,7 +14,11 @@ import Banner from 'components/common/banner/banner';
 import Letter from 'components/features/letter/Letter';
 import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
-import { blockMouseScroll } from 'lib/utils/windowUtil';
+import { blockMouseScroll, isModalOpen } from 'lib/utils/windowUtil';
+import FilterSearchModal from 'components/common/modal/FilterSearchModal';
+import FilterTagModal from 'components/common/modal/FilterTagModal';
+import FilterDateModal from 'components/common/modal/FilterDateModal';
+import { useScheduledEvents } from 'lib/hooks/useSWR';
 
 const cn = classNames.bind(style);
 
@@ -26,10 +30,9 @@ type Props = {
 const Events = ({ isLoggedIn, fallbackData }: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
-  const { date } = useContext(EventContext);
   const { modalState } = useContext(WindowContext);
+  const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
   const bodyRef = useRef<HTMLDivElement>(null);
-
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -47,7 +50,7 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
       document.body.style.overflow = 'unset';
       bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
     }
-  }, [isLoggedIn, date, modalState]);
+  }, [isLoggedIn, modalState]);
 
 
   return (
@@ -74,14 +77,27 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
           content="개발자를 위한 {웨비나, 컨퍼런스, 해커톤, 네트워킹} 소식을 알려드립니다."
         />
       </Head>
-      <Banner />
-      <section 
-        className={cn('section')}>
-        <ScheduledEventList
-          fallbackData={fallbackData}
-        />
-      </section>
-      <Letter />
+      {modalState.currentModal === 0 && (
+        <>
+          <Banner />
+          <section 
+            className={cn('section')}>
+            <ScheduledEventList
+              events={scheduledEvents}
+              isError={isError}
+              />
+          </section>
+          <Letter />
+        </>
+      )}
+      {isModalOpen(modalState.currentModal, modalState.prevModal, 1) &&
+      <FilterSearchModal
+        events={scheduledEvents}
+      />}
+      {isModalOpen(modalState.currentModal, modalState.prevModal, 2) && 
+        <FilterTagModal />}
+      {isModalOpen(modalState.currentModal, modalState.prevModal, 3)  &&
+        <FilterDateModal />}
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
     </main>
   );

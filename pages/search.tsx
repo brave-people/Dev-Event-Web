@@ -14,7 +14,11 @@ import Letter from 'components/features/letter/Letter';
 import Head from "next/head";
 import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
-import { blockMouseScroll } from 'lib/utils/windowUtil';
+import { blockMouseScroll, isModalOpen } from 'lib/utils/windowUtil';
+import FilterSearchModal from 'components/common/modal/FilterSearchModal';
+import FilterTagModal from 'components/common/modal/FilterTagModal';
+import FilterDateModal from 'components/common/modal/FilterDateModal';
+import { useScheduledEvents } from 'lib/hooks/useSWR';
 
 const cn = classNames.bind(style);
 
@@ -26,18 +30,21 @@ type Props = {
 const Search = ({ isLoggedIn, fallbackData }: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
-  const [keyword, setKeyword] = useState<string>('');
+  const [keyword, setKeyword] = useState<string | undefined>(undefined);
   const { jobGroupList, eventType, location, coast, search } = useContext(EventContext)
   const { modalState } = useContext(WindowContext);
+  const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
+
   const bodyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setKeyword(`
-      ${jobGroupList?.length !== 0 ? `${jobGroupList?.join(',')}` : ''} 
+      ${(jobGroupList !== undefined && jobGroupList?.length !== 0) ? `${jobGroupList?.join(',')}` : ''} 
       ${eventType !== undefined ?  `${eventType},` : ''}
       ${location !== undefined ? `${location},` : ''} 
       ${coast !== undefined ? `${coast},` : ''} 
-      ${search !== undefined ? `${search},` : ''}`)
+      ${search !== undefined ? `${search}` : ''}`)
+      
     if (isLoggedIn) {
       authContext.login();
     } else {
@@ -53,14 +60,14 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
       document.body.style.overflow = 'unset';
       bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
     }
-  }, [isLoggedIn, modalState]);
+  }, [isLoggedIn, modalState, keyword]);
 
   return (
     <main
       ref={bodyRef}
       className={cn('main')}>
       <Head>
-        <title>{keyword} - 데브이벤트 행사 키워드 검색</title>
+        <title>{keyword !== undefined ? `${keyword} - 데브이벤트 행사 키워드 검색` : '데브이벤트 행사 키워드 검색'}</title>
         <meta name="description" content={`${keyword} 행사, 데브이벤트에서 찾아보세요!`} />
         <meta
           name="keywords"
@@ -73,14 +80,27 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
         <meta property="og:title" content={`${keyword} - 데브이벤트 행사 키워드 검색`} />
         <meta property="og:description" content={`${keyword} 개발자 행사, 데브이벤트에서 찾아보세요!`} />
       </Head>
-      <Banner />
-      <section 
-        className={cn('section')}>
-        <FilteredEventList
-          fallbackData={fallbackData}
-        />
-      </section>
-      <Letter />
+      {modalState.currentModal === 0 && (
+        <>
+          <Banner />
+          <section 
+            className={cn('section')}>
+            <FilteredEventList
+              events={scheduledEvents}
+              isError={isError}
+              />
+          </section>
+          <Letter />
+        </>
+      )}
+      {isModalOpen(modalState.currentModal, modalState.prevModal, 1) &&
+      <FilterSearchModal
+        events={scheduledEvents}
+      />}
+      {isModalOpen(modalState.currentModal, modalState.prevModal, 2) && 
+        <FilterTagModal />}
+      {isModalOpen(modalState.currentModal, modalState.prevModal, 3)  &&
+        <FilterDateModal />}
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
     </main>
   );
