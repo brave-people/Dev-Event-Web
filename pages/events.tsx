@@ -12,13 +12,13 @@ import ScheduledEventList from 'components/events/ScheduledEventList';
 import Head from 'next/head';
 import Banner from 'components/common/banner/banner';
 import Letter from 'components/features/letter/Letter';
-import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
 import { blockMouseScroll, isModalOpen } from 'lib/utils/windowUtil';
 import FilterSearchModal from 'components/common/modal/FilterSearchModal';
 import FilterTagModal from 'components/common/modal/FilterTagModal';
 import FilterDateModal from 'components/common/modal/FilterDateModal';
 import { useScheduledEvents } from 'lib/hooks/useSWR';
+import { EventContext } from 'context/event';
 
 const cn = classNames.bind(style);
 
@@ -31,6 +31,7 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const { modalState } = useContext(WindowContext);
+  const { date } = useContext(EventContext);
   const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
   const bodyRef = useRef<HTMLDivElement>(null);
 
@@ -49,8 +50,9 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
       document.body.style.position = 'relative';
       document.body.style.overflow = 'unset';
       bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
+      setLoginModalIsOpen(false);
     }
-  }, [isLoggedIn, modalState]);
+  }, [isLoggedIn, modalState, date]);
 
 
   return (
@@ -90,13 +92,14 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
           <Letter />
         </>
       )}
-      {isModalOpen(modalState.currentModal, modalState.prevModal, 1) &&
+      {isModalOpen(modalState.currentModal, 1) &&
       <FilterSearchModal
         events={scheduledEvents}
+        isError={isError}
       />}
-      {isModalOpen(modalState.currentModal, modalState.prevModal, 2) && 
+      {isModalOpen(modalState.currentModal, 2) && 
         <FilterTagModal />}
-      {isModalOpen(modalState.currentModal, modalState.prevModal, 3)  &&
+      {isModalOpen(modalState.currentModal, 3)  &&
         <FilterDateModal />}
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
     </main>

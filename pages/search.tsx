@@ -31,7 +31,7 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const [keyword, setKeyword] = useState<string | undefined>(undefined);
-  const { jobGroupList, eventType, location, coast, search } = useContext(EventContext)
+  const { jobGroupList, eventType, location, coast, search, date } = useContext(EventContext)
   const { modalState } = useContext(WindowContext);
   const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
 
@@ -59,8 +59,10 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
       document.body.style.position = 'relative';
       document.body.style.overflow = 'unset';
       bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
+      setLoginModalIsOpen(false);
+      setKeyword(undefined);
     }
-  }, [isLoggedIn, modalState, keyword]);
+  }, [isLoggedIn, modalState, keyword, search, date]);
 
   return (
     <main
@@ -80,7 +82,7 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
         <meta property="og:title" content={`${keyword} - 데브이벤트 행사 키워드 검색`} />
         <meta property="og:description" content={`${keyword} 개발자 행사, 데브이벤트에서 찾아보세요!`} />
       </Head>
-      {modalState.currentModal === 0 && (
+      {modalState.currentModal === 0 ? (
         <>
           <Banner />
           <section 
@@ -88,18 +90,19 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
             <FilteredEventList
               events={scheduledEvents}
               isError={isError}
-              />
+            />
           </section>
           <Letter />
         </>
-      )}
-      {isModalOpen(modalState.currentModal, modalState.prevModal, 1) &&
+      ) : null}
+      {isModalOpen(modalState.currentModal, 1) &&
       <FilterSearchModal
         events={scheduledEvents}
+        isError={isError}
       />}
-      {isModalOpen(modalState.currentModal, modalState.prevModal, 2) && 
+      {isModalOpen(modalState.currentModal, 2) && 
         <FilterTagModal />}
-      {isModalOpen(modalState.currentModal, modalState.prevModal, 3)  &&
+      {isModalOpen(modalState.currentModal, 3)  &&
         <FilterDateModal />}
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
     </main>

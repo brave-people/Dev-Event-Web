@@ -14,7 +14,9 @@ import { useRouter } from 'next/router';
 import Banner from 'components/common/banner/banner';
 import Letter from 'components/features/letter/Letter';
 import { WindowContext } from 'context/window';
-import { blockMouseScroll } from 'lib/utils/windowUtil';
+import { blockMouseScroll, isModalOpen } from 'lib/utils/windowUtil';
+import FilterTagModal from 'components/common/modal/FilterTagModal';
+import FilterDateModal from 'components/common/modal/FilterDateModal';
 
 const cn = classNames.bind(style);
 
@@ -73,14 +75,22 @@ const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackD
           content={`${filteredDate.year}년 ${filteredDate.month}월에 진행되는 개발자 행사, 데브이벤트에서 찾아보세요!`}
         />
       </Head>
-      <Banner />
-      <section className={cn('section')}>
-        <MonthlyEventList 
-          events={fallbackData} 
-          date={filteredDate}
-        />
-      </section>
-      <Letter />
+      {modalState.currentModal === 0 ? (
+        <>
+          <Banner />
+          <section className={cn('section')}>
+            <MonthlyEventList 
+              events={fallbackData} 
+              date={filteredDate}
+            />
+          </section>
+          <Letter />
+        </>
+      ): null}
+      {isModalOpen(modalState.currentModal, 2) && 
+        <FilterTagModal />}
+      {isModalOpen(modalState.currentModal, 3)  &&
+        <FilterDateModal />}
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
     </main>
   );

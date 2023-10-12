@@ -33,7 +33,7 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
     }
   }, [isLoggedIn]);
 
-  const { user, isLoading, isError } = useUser();
+  const { user, isError } = useUser();
 
   if (isError) {
     return <div className={cn('null-container')}>내 정보를 불러오는데 문제가 발생했습니다!</div>;
