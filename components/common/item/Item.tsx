@@ -41,6 +41,7 @@ const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClick
   const { windowX, windowTheme } = useContext(WindowContext);
   const { search } = useContext(EventContext);
   const imgPath = windowTheme ? "/default/event-thumbnail-light.svg" : "/default/event-thumbnail-dark.svg";
+
   const handleShare = () => {
     setIsOpen(true);
     navigator.clipboard.writeText(data.event_link)
@@ -106,6 +107,9 @@ const Item = ({ data, isFavorite, isEventDone, isEventNew = () => false, onClick
   useEffect(() => {
     if ((!search && childLast) || (search && parentLast)) {
       setIsLast(true);
+    }
+    return () => {
+      setIsLast(false);
     }
   }, [search])
   return (

@@ -36,7 +36,7 @@ function DateBoard({ options }: Props) {
       setIsOpen(false);
     }
   };
-
+  
   const handleRemoveContext = () => {
     handleSearch(undefined);
     handleCoast(undefined);
@@ -81,7 +81,11 @@ function DateBoard({ options }: Props) {
           handleDate(options[current - 1]);
           setCurrentYear(newYear);
           setCurrentMonth(newMonth);
-          router.push(`/calender?year=${newYear}&month=${newMonth}`);
+          if (modalState.currentModal === 3) {
+            reflactUrl(`/calender?year=${newYear}&month=${newMonth}`)
+          } else {
+            router.push(`/calender?year=${newYear}&month=${newMonth}`);
+          }
         }
         if (current - 1 === 1)
           setIsFirstEl(true);
@@ -90,9 +94,9 @@ function DateBoard({ options }: Props) {
         setIsLastEl(false);
       } else if (type === 'next') {
         if (options[current] === `${new Date().getFullYear().toString()}년 ${getMonth()}월`) {
-          router.push('/events');
           handleDate(undefined);
           setIsLastEl(true);
+          router.push('/events');
         } else {
           const newYear = options[current + 1].slice(0, 4);
           const newMonth = options[current + 1].slice(6, 8);
@@ -100,7 +104,11 @@ function DateBoard({ options }: Props) {
           setCurrentYear(newYear);
           setCurrentMonth(newMonth);
           setIsFirstEl(false);
-          router.push(`/calender?year=${newYear}&month=${newMonth}`);
+          if (modalState.currentModal === 3) {
+            reflactUrl(`/calender?year=${newYear}&month=${newMonth}`)
+          } else {
+            router.push(`/calender?year=${newYear}&month=${newMonth}`);
+          }
         }
       }
     }
@@ -111,28 +119,33 @@ function DateBoard({ options }: Props) {
     handleUrl(urls);
     if (windowX < 600)
       return ;
+    if (modalState.currentModal === 3) 
+      return ;
     router.push(urls)
   }
 
   useOnClickOutside({ ref: outSideRef, handler: handleClose, mouseEvent: 'click' });
   
   useEffect(() => {
-    if (date === undefined) {
-      if (router.asPath.includes('calender') && isLastEl === false) {
-        const initDate = `${router.asPath.slice(15, 19)}년 ${router.asPath.slice(26, 28)}월`
-        handleDate(initDate);
-      }
-    } 
-    
-    if (date !== undefined) {
-      if (router.asPath.includes('calender')) {
+    if (router.asPath.includes('calender')) {
+      if (isLastEl === true)
+        return ;
+
+      if (date !== undefined) {
         const initDate = `${date.slice(0, 4)}년 ${date.slice(6, 8)}월`
+        setCurrentYear(initDate.slice(0, 4));
+        setCurrentMonth(initDate.slice(6, 8));
         handleDate(initDate);
-        setCurrentYear(date.slice(0, 4));
-        setCurrentMonth(date.slice(6, 8));
+      } else {
+        const initDate = `${router.asPath.slice(15, 19)}년 ${router.asPath.slice(26, 28)}월`
+        setCurrentYear(initDate.slice(0, 4));
+        setCurrentMonth(initDate.slice(6, 8));
+        handleDate(initDate);
       }
+    } else {
+      handleDate(undefined);
     }
-  }, [date])
+  }, [currentMonth, currentYear])
 
   return (
     <div className={cn('container', isOpen && 'container__focus')} ref={outSideRef}>

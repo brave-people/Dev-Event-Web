@@ -23,7 +23,7 @@ type Props = {
 
 function ItemList({ events, isError, jobGroups, eventType, location, coast, search }: Props) {
   const [ totalCount, setTotalCount] = useState<number>(0);
-  const [ isLoading, setIsLoading ] = useState<boolean>(false);
+  const [ isLoading, setIsLoading ] = useState<boolean>(true);
   const [ searchRes, setSearchRes] = useState<Event[] | undefined>();undefined
   const { modalState } = useContext(WindowContext);
   let eventCount = 0;
@@ -40,11 +40,7 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
       setSearchRes(undefined);
     }
   }, []);
-
-  if (isError) {
-    return <div className={cn('null-container')}>이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
-  }
-
+  
   const composeTotalCount = () => {
     if (events === undefined || events.length === 0) {
       setTotalCount(0);
@@ -69,7 +65,7 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
   const setEventList = () => {
     let res: Event[] = [];
     events && events.map((event: EventResponse) => {
-        event && event.dev_event.filter((item) => {
+      event && event.dev_event.filter((item) => {
           if (!checkEventDone({
               endDate: getEventEndDate({
                 start_date_time: item.start_date_time,
@@ -83,6 +79,12 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
         })
     })
     setSearchRes(res)
+  }
+
+  if (isError) {
+    return (<div className={cn('null-container')}>
+      이벤트 정보를 불러오는데 문제가 발생했습니다!
+    </div>)
   }
   return (
     <>

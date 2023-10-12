@@ -5,18 +5,15 @@ import getIconByName from 'lib/utils/iconUtil';
 import { DeleteIcon } from 'components/icons';
 import { WindowContext } from 'context/window';
 import { EventContext } from 'context/event';
-import { useRouter } from 'next/router';
-import { initUrl } from 'lib/utils/urlUtil';
 import { InputProps } from 'types/Input';
 
 const cn = classNames.bind(style);
 
 function BasicInput({ updateInput, submitInput, label, size, icon, iconStyle, input, initInput }: InputProps) {
   const searchRef = useRef<HTMLInputElement | null>(null);
-  const { windowTheme } = useContext(WindowContext)
-  const { jobGroupList, eventType, location, coast, search, handleSearch } = useContext(EventContext);
-  const { modalState, handleModalState } = useContext(WindowContext)
-  const router = useRouter();
+  const { windowTheme } = useContext(WindowContext);
+  const { search } = useContext(EventContext);
+  const { modalState } = useContext(WindowContext)
   
   useEffect(() => {
     if (window.innerWidth < 600 && modalState.currentModal === 1) {
@@ -41,16 +38,7 @@ function BasicInput({ updateInput, submitInput, label, size, icon, iconStyle, in
         <div 
           className={cn('delete')} 
           onClick={() => {
-            if (input !== undefined)
-              initInput();
-            if (search !== undefined )
-              handleSearch(undefined);
-            router.push(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
-            handleModalState({
-              currentModal: 0,
-              prevModal: 0,
-              type: false
-            })
+            initInput();
           }}>
           <DeleteIcon
             color={`${windowTheme ? "#d3d4d8" : "#797a81"}`}
