@@ -2,20 +2,20 @@ import { DeleteIcon } from "components/icons";
 import style from 'components/common/modal/FilterDateModal.module.scss'
 import classNames from "classnames/bind";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { WindowContext } from "context/window";
 import { EventContext } from "context/event";
-import DateBoard from "../date/DateBoard";
+import DateBoard from "components/common/date/DateBoard";
 import { getDateList } from "lib/utils/dateUtil";
-import FillButton from "../buttons/FillButton";
+import FillButton from "components/common/buttons/FillButton";
 
 const cn = classNames.bind(style);
 
 function FilterDateModal() {
   const router = useRouter();
   const [hidden, setHidden] = useState<boolean>(false);
-  const { modalState, handleModalState } = useContext(WindowContext);
-  const { url } = useContext(EventContext);
+  const { handleModalState } = useContext(WindowContext);
+  const { date, url } = useContext(EventContext);
 
   const deleteModal = () => {
     setTimeout(() => {
@@ -31,6 +31,14 @@ function FilterDateModal() {
     document.body.classList.remove('body__no__scroll')
     setHidden(true)
   }
+
+  useEffect(() => {
+    return () => {
+      if (url !== undefined) {
+        router.push(url)
+      }
+    }
+  }, [date])
 
   return (
     <section className={cn('container', hidden && 'hidden')}>

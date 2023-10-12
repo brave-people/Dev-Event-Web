@@ -11,7 +11,7 @@ import { useTags } from 'lib/hooks/useSWR';
 const cn = classNames.bind(style)
 
 function EventNull() {
-  const [randomTags, setRandomTags] = useState<TagResponse[]>([]);
+  const [randomTags, setRandomTags] = useState<TagResponse[] | undefined>(undefined);
   const { jobGroupList, eventType, location, coast } = useContext(EventContext)
   const { tags } = useTags();
 
@@ -20,8 +20,10 @@ function EventNull() {
       const context = `${jobGroupList?.join(', ')}, ${eventType ? eventType : ""}, ${location ? location : ""}, ${coast ? coast : ""}`;
       setRandomTags(getRandomTag(tags, context));
     }
-    console.log("Hello, World");
-  }, [jobGroupList, eventType, location, coast])
+    return () => {
+      setRandomTags(undefined)
+    }
+  }, [])
   
   return (
     <section className={cn('section__list')}>

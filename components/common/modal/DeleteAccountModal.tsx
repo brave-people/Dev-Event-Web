@@ -19,14 +19,12 @@ function DeleteAccountModal({ isOpen, onClick, onCancel }: any) {
         <OutlineButton 
           label="취소하기" 
           color="grey" 
-          size='regular'
           onClick={onCancel}
           />
         <div className={cx('wrapper')}>
           <FillButton 
             onClick={onClick}
             label="탈퇴하기"
-            size='regular'
             color="error"
             rounded={false}
           />

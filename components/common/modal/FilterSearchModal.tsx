@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import style from 'components/common/modal/FilterSearchModal.module.scss'
 import classNames from 'classnames/bind'
 import { useRouter } from 'next/router';
@@ -9,7 +9,6 @@ import { WindowContext } from 'context/window';
 import Image from 'next/image';
 import { EventResponse } from 'model/event';
 import { EventContext } from 'context/event';
-import { useScheduledEvents } from 'lib/hooks/useSWR';
 import ItemList from 'components/common/item/ItemList';
 import { isActive } from 'lib/utils/eventUtil';
 
@@ -17,32 +16,30 @@ const cn = classNames.bind(style);
 
 type Props = {
   events: EventResponse[] | undefined;
+  isError: boolean;
 }
 
-function FilterSearchModal ({ events }: Props) {
+function FilterSearchModal ({ events, isError }: Props) {
   const router = useRouter();
   const context = reflactUrlContext(router.asPath);
   const [hidden, setHidden] = useState<boolean>(false);
   const [filterActive, setFilterActive] = useState<boolean>(false);
-  const { modalState, handleModalState, windowTheme } = useContext(WindowContext);
-  const { scheduledEvents, isError } = useScheduledEvents(events);
+  const { handleModalState, windowTheme } = useContext(WindowContext);
   const { jobGroupList, eventType, location, coast, search, handleSearch } = useContext(EventContext);
 
   const deleteModal = () => {
     setHidden(true);
     setTimeout(() => {
+      handleSearch(undefined);
       handleModalState({
         currentModal: 0,
-        prevModal: 0,
+        prevModal: 1,
         type: false
       });
-      document.body.classList.remove('body__no__scroll')
-      handleSearch(undefined);
       if (search !== undefined) {
         router.push(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
       }
-    }, 300);
-    
+    }, 350);
   }
 
   useEffect(() => {
@@ -51,6 +48,7 @@ function FilterSearchModal ({ events }: Props) {
       setHidden(false);
     }
   }, [])
+
   return (
       <main className={cn('container', hidden && 'hidden')}>
         <section className={cn('header')}>
@@ -62,7 +60,7 @@ function FilterSearchModal ({ events }: Props) {
           <div className={cn('header__input')}>
             <SearchEvent
               context={context}
-              />
+            />
           </div>
           <div 
             className={cn('header__button', (filterActive && windowTheme) && 'active--light', (filterActive && !windowTheme) && 'active--dark')}
@@ -80,20 +78,21 @@ function FilterSearchModal ({ events }: Props) {
                 width={40}
                 height={40}
               />
-              ) : <ToggleIcon /> }
+              ) : <ToggleIcon />
+            }
           </div>
         </section>
         {search !== undefined 
           ? (
             <ItemList
-              events={scheduledEvents}
+              events={events}
               isError={isError}
               jobGroups={`${jobGroupList?.join(', ')}`}
               eventType={eventType}
               location={location}
               coast={coast}
               search={search}
-            />
+              />
           ) : (
             <section className={cn('body')}>
               <div className={cn('body__image')}>
