@@ -4,9 +4,8 @@ export const blockMouseScroll = (event: Event) => {
   event.stopImmediatePropagation();
 }
 
-export const isModalOpen = (current: number, prev: number, modal_id: number): boolean => {
-  if (current === modal_id ||
-      prev === modal_id) {
+export const isModalOpen = (current: number, modal_id: number): boolean => {
+  if (current === modal_id) {
     return (true);
   }
   return (false);
