@@ -5,19 +5,17 @@ import EventFilter from 'components/features/filters/EventFilter';
 
 type Props = {
   events: EventResponse[] | undefined;
-  isError: any;
+  isError: boolean;
 }
 
 const ScheduledEventList = ({ events, isError }: Props) => {
   return (
     <section>
-      <EventFilter
+      <EventFilter />
+      <ItemList
         events={events}
-        />
-        <ItemList
-          events={events}
-          isError={isError}
-        />
+        isError={isError}
+      />
     </section>
   )
 };

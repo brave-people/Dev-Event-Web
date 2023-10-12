@@ -6,16 +6,14 @@ import EventFilter from "components/features/filters/EventFilter";
 
 type Props = {
   events: EventResponse[] | undefined;
-  isError: any;
+  isError: boolean;
 }
 
 function FilteredEvent({ events, isError } : Props) {
   const { jobGroupList, eventType, location, coast, search } = useContext(EventContext);
   return (
     <section>
-      <EventFilter
-        events={events}
-      />
+      <EventFilter />
       <ItemList
         events={events}
         isError={isError}
