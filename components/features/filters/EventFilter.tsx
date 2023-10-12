@@ -13,27 +13,25 @@ import { reflactUrlContext } from 'lib/utils/urlUtil';
 import { useRouter } from 'next/router';
 import { ToggleIcon } from 'components/icons';
 import { WindowContext } from 'context/window';
-import { EventResponse } from 'model/event';
 import { EventContext } from 'context/event';
 import { isActive } from 'lib/utils/eventUtil';
 import Image from 'next/image';
 
 const cn = classNames.bind(style);
 
-type Props = {
-  events?: EventResponse[] | undefined;
-}
-
-function EventFilter({ events }: Props) {
+function EventFilter() {
   const router = useRouter();
   const context = reflactUrlContext(router.asPath);
   const [filterActive, setFilterActive] = useState<boolean>(false);
 
-  const { modalState, handleModalState } = useContext(WindowContext)
+  const { handleModalState } = useContext(WindowContext)
   const { jobGroupList, eventType, location, coast } = useContext(EventContext);  
 
   useEffect(() => {
     setFilterActive(isActive(jobGroupList, eventType, location, coast));
+    return () => {
+      setFilterActive(false);
+    }
   }, [jobGroupList, eventType, location, coast])
   
   return (
@@ -75,7 +73,7 @@ function EventFilter({ events }: Props) {
                 document.body.classList.add('body__no__scroll')
                 handleModalState({
                   currentModal: 2,
-                  prevModal: modalState.currentModal,
+                  prevModal: 0,
                   type: false
                 })
               }} 

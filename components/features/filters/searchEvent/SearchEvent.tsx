@@ -41,7 +41,7 @@ function SearchEvent( { context }: Props) {
       if (window.innerWidth < 600) {
         handleModalState({
           currentModal: modalState.currentModal,
-          prevModal: modalState.currentModal,
+          prevModal: 0,
           type: false
         })
       }
@@ -53,8 +53,13 @@ function SearchEvent( { context }: Props) {
   };
 
   const initInput = () => {
-    setInput("");
+    setInput('');
+    setTimeout(() => {
+      handleSearch(undefined);
+    }, 300)
+    router.push(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, undefined));
   }
+
   useEffect(() => {
     if (context?.kwd === undefined) {
       handleSearch(undefined)
@@ -62,7 +67,7 @@ function SearchEvent( { context }: Props) {
       const decode = decodeURIComponent(context.kwd);
       handleSearch(decode)
     }
-  }, [context, search])
+  }, [context])
 
   return (
     <div
@@ -71,11 +76,14 @@ function SearchEvent( { context }: Props) {
           document.body.classList.add('body__no__scroll');
           handleModalState({
             currentModal: 1,
-            prevModal: modalState.currentModal,
+            prevModal: 0,
             type: false
           })
+          if (router.asPath.includes('calender')) {
+            router.push('/events');
+          }
         }
-      }} 
+      }}  
       className={cn('container')}>
       <BasicInput
         label="행사 검색하기"

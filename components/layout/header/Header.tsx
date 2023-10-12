@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import style from 'components/layout/header/Header.module.scss';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Link from 'next/link';
 import LoginModal from 'components/common/modal/LoginModal';
 import { AuthContext } from 'context/auth';
