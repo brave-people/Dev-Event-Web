@@ -10,10 +10,6 @@
   }
 }
 
-.skeleton {
-  //width: 270px;
-}
-
 @media (max-width: 1024px) {
   .list {
     margin-top: 24px;
@@ -36,20 +32,3 @@
     grid-template-columns: 1fr;
   }
 }
-
-/*@include tablet {
-  .skeleton {
-    //width: 270px;
-  }
-  @media (max-width: 580px) {
-    .skeleton {
-      //width: 270px;
-    }
-  }
-}
-
-@include mobile {
-  .skeleton {
-    //width: 270px;
-  }
-}*/
