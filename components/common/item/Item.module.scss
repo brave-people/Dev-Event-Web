@@ -193,13 +193,13 @@
           }
 
           &__date {
-            white-space: pre-line;
+            white-space: nowrap;
             color: var(--gray-2);
             font-weight: 400;
           }
 
           &__date__done {
-            white-space: pre-line;
+            white-space: nowrap;
             color: var(--gray-3);
             font-weight: 400;
           }
@@ -269,6 +269,10 @@
       .wrap {
         .date {
           font-size: 14px;
+        }
+
+        .date__date, &.date__date__done {
+          white-space: pre-line;
         }
       }
     }
