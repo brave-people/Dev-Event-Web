@@ -4,7 +4,7 @@
   width: 100%;
   background-color: transparent;
   padding-top: 4.688rem;
-  transition: all ease-in .3s;
+  transition: all ease-in 0.3s;
 
   .inner {
     width: 100%;
@@ -39,7 +39,7 @@
     &__group {
       width: 100%;
       display: flex;
-      padding-left: .5rem;
+      padding-left: 0.5rem;
       justify-content: space-between;
       align-items: center;
       &__tag {
@@ -52,7 +52,6 @@
     }
   }
 }
-
 
 @include laptop {
   .container {
@@ -73,7 +72,7 @@
         display: block;
         position: relative;
         &__group {
-          margin-top: .7rem;
+          margin-top: 0.7rem;
           width: 100%;
           padding-left: 0;
         }
@@ -91,7 +90,7 @@
         display: block;
         position: relative;
         &__group {
-          margin-top: .7rem;
+          margin-top: 0.7rem;
           width: 100%;
           padding-left: 0;
         }
@@ -106,7 +105,6 @@
           font-size: 2rem;
         }
       }
-      
     }
   }
   @media (max-width: 700px) {
@@ -149,7 +147,7 @@
             }
           }
           &__date {
-            margin-top: .7rem;
+            margin-top: 0.7rem;
             width: 100%;
           }
         }
@@ -198,7 +196,7 @@
           }
         }
         &__date {
-          margin-top: .7rem;
+          margin-top: 0.7rem;
           width: 100%;
         }
       }
@@ -292,7 +290,7 @@
           }
         }
         &__date {
-          margin-top: .7rem;
+          margin-top: 0.7rem;
           width: 100%;
         }
       }
