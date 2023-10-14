@@ -52,6 +52,9 @@
 
 .search__header__modal {
   margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 @media (max-width: 1200px) {

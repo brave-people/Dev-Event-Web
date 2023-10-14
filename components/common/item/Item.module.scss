@@ -193,13 +193,13 @@
           }
 
           &__date {
-            white-space: nowrap;
+            white-space: pre-line;
             color: var(--gray-2);
             font-weight: 400;
           }
 
           &__date__done {
-            white-space: nowrap;
+            white-space: pre-line;
             color: var(--gray-3);
             font-weight: 400;
           }
