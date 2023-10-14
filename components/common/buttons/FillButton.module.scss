@@ -32,45 +32,25 @@
   // rounded
   &.type--rounded {
     border-radius: 100px;
-  } 
-}
-
-@include laptop {
-  @media (max-width: 950px) {
-    .button {
-      min-width: 10rem;
-      min-height: 2.7rem;
-    }
   }
-  @media (max-width: 800px) {
-    .button {
-      min-width: 9.5rem;
-      min-height: 2.5rem;
-      &.color--gray {
-        background-color: var(--gray-1);
-        font-size: 12px;
-      }
-    }
+
+  &.large {
+    width: 240px;
+    height: 56px;
+    font-size: 20px;
+    font-weight: 600;
+    min-width: inherit;
+    min-height: inherit;
   }
 }
 
-@include tablet {
+@media (max-width: 900px) {
   .button {
-    min-width: 8rem;
-    min-height: 2.3rem;
-  }
-
-  @media (max-width: 450px) {
-    .button {
-      min-width: 7rem;
-      min-height: 2rem;
+    &.large {
+      width: 200px;
+      height: 48px;
+      font-size: 14px;
+      font-weight: 700;
     }
-  }
-}
-
-@include mobile {
-  .button {
-    min-width: 6.5rem;
-    min-height: 1.8rem;
   }
 }
