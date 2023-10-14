@@ -1,4 +1,5 @@
 @import '~styles/_mixin.scss';
+@import '~styles/_variables.scss';
 
 .modal {
   position: absolute;
@@ -45,14 +46,14 @@
   }
 
   &__inner {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 28.25rem;
 
     .login-form {
-      width: 28.25rem;
+      width: 100%;
       margin-top: 2rem;
       display: flex;
       flex-direction: column;
@@ -73,16 +74,15 @@
         }
 
         .input {
-          background: #ecf6ff;
-          border-radius: 10px;
-          border: none;
+          border-radius: 2px;
           width: 26rem;
           height: 3rem;
-          padding-left: 1.375rem;
+          padding-left: 12px;
           font-weight: 400;
           font-size: 1rem;
           line-height: 1.438rem;
           color: #535353;
+          border: 1px solid var(--gray-4);
 
           .size--small {
             width: 23.5rem;
@@ -98,24 +98,17 @@
       }
 
       &__button {
-        padding: 0;
-        margin: 0px;
-        width: 26rem;
-        height: 3.5rem;
-        border-radius: 16px;
+        width: 80%;
+        height: 48px;
         display: flex;
-        flex-direction: row;
         align-items: center;
         justify-content: center;
-        cursor: pointer;
 
         span {
-          padding-left: 0.75rem;
+          padding-left: 8px;
           font-weight: 700;
           font-size: 1rem;
-          line-height: 1.438rem;
           text-align: center;
-          color: #000000;
         }
 
         &.kakao {
@@ -164,7 +157,7 @@
         }
 
         &.login {
-          background: #479ef1;
+          background: var(--primary);
           border-radius: 8px;
           border: none;
           font-weight: 500;
@@ -194,212 +187,7 @@
     }
   }
 }
-@include tablet {
-  .modal {
-    position: absolute;
-    width: 43rem;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    padding: 1.813rem 1.688rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 
-    &__inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 28.25rem;
-
-      .login-form {
-        width: 28.25rem;
-        margin-top: 2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        &__button {
-          padding: 0;
-          margin: 0px;
-          width: 26rem;
-          height: 3.5rem;
-          border-radius: 16px;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-        }
-      }
-    }
-  }
-}
-@include mobile {
-  .modal {
-    position: absolute;
-    width: 24.143rem;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    padding: 1.5rem 2.571rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    &__close-button {
-      position: absolute;
-      right: 20px;
-      border: none;
-      background-color: transparent;
-      cursor: pointer;
-      align-self: flex-end;
-      width: 24px;
-      height: 24px;
-      padding: 0px;
-      svg {
-        width: 24px;
-        height: 24px;
-      }
-    }
-
-    &__title {
-      font-weight: 700;
-      font-size: 1.143rem;
-      line-height: 151.8%;
-      text-align: center;
-      color: #000000;
-      padding-top: 1rem;
-    }
-
-    &__inner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      width: 19.071rem;
-      // height: 24.429rem;
-      margin-top: 1rem;
-
-      .login-form {
-        width: 19.071rem;
-        margin-top: 2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        &__item {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-
-          span {
-            color: #535353;
-            font-weight: 500;
-            font-size: 0.95rem;
-            line-height: 1.438rem;
-            padding-bottom: 0.7rem;
-          }
-
-          .input {
-            background: #ecf6ff;
-            border-radius: 10px;
-            border: none;
-            width: 19.071rem;
-            height: 2.857rem;
-            padding-left: 1.375rem;
-            font-weight: 400;
-            font-size: 1rem;
-            line-height: 1.438rem;
-            color: #535353;
-
-            .size--small {
-              width: 23.5rem;
-            }
-            .size--regular {
-              width: 30rem;
-            }
-          }
-        }
-
-        &__item:not(:first-child) {
-          margin-top: 1rem;
-        }
-
-        &__button {
-          padding: 0px;
-          margin: 0px;
-          width: 19.071rem;
-          height: 2.857rem;
-          border-radius: 12.64px;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
-          cursor: pointer;
-
-          span {
-            padding-left: 0.714rem;
-            font-weight: 700;
-            font-size: 0.857rem;
-            line-height: 17.38px;
-            text-align: center;
-            color: #000000;
-          }
-
-          &.kakao {
-            background: #fae44d;
-            border-radius: 12.64px;
-            border: none;
-          }
-          &.google {
-            background: #ffffff;
-            border: 1.5px solid #d8d8d8;
-            box-sizing: border-box;
-          }
-          &.github {
-            background: #000000;
-            border-radius: 12.64px;
-            border: none;
-            span {
-              color: #ffffff;
-            }
-          }
-          &.naver {
-            background: #03c75a;
-            border-radius: 12.64px;
-            border: none;
-            span {
-              color: #ffffff;
-            }
-          }
-          &.login {
-            background: #479ef1;
-            border-radius: 8px;
-            border: none;
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 160%;
-            text-align: center;
-            width: 19.071rem;
-            span {
-              color: #ffffff;
-            }
-          }
-        }
-      }
-    }
-  }
-}
 .overlay {
   position: fixed;
   top: 0;
@@ -407,4 +195,43 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.4);
+  z-index: 99;
+}
+
+.login-form__button {
+  &.login {
+    span {
+      padding: 0;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .modal {
+    width: calc(100% - #{$tablet_padding * 2})
+  }
+}
+
+@media (max-width: 600px) {
+  .modal__inner {
+    .login-form__button {
+      width: 100%;
+    }
+
+    .login-form {
+      &__item {
+        width: 100%;
+      }
+
+      .input {
+        width: 100%;
+      }
+
+      &__button {
+        &.login {
+          width: 100%
+        }
+      }
+    }
+  }
 }
