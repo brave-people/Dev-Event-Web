@@ -1,89 +1,21 @@
 @import '~styles/_mixin.scss';
+@import '~styles/_variables.scss';
 
 .main {
   margin: 0 auto;
   width: 100%;
-  overflow: hidden;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
+  overflow-y: scroll;
 }
 
 .section {
-  width: 68.75rem;
+  width: 100%;
+  max-width: 68.75rem;
   padding-bottom: 5.439rem;
   margin: 0 auto;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 }
 
-@include laptop {
-  @media (max-width: 1075px) {
-    .main {
-      .section {
-        width: 58.75rem;
-      }
-    }
-  }
-  @media (max-width: 950px) {
-    .main {
-      .section {
-        width: 50.75rem;
-      }
-    }
-  }
-  @media (max-width: 800px) {
-    .main {
-      .section {
-        width: 46.75rem;
-      }
-    }
-  }
-  @media (max-width: 700px) {
-    .main {
-      .section {
-        width: 38.75rem;
-      }
-    }
-  }
-}
-
-@include tablet {
-  .main {
-    .section {
-      width: 34.75rem;
-    }
-  }
-  @media (max-width: 550px) {
-    .main {
-      .section {
-        width: 30.75rem;
-      }
-    }
-  }
-  @media (max-width: 500px) {
-    .main {
-      .section {
-        width: 26.75rem;
-      }
-    }
-  }
-  @media (max-width: 450px) {
-    .main {
-      .section {
-        width: 24.75rem;
-      }
-    }
-  }
-}
-
-@include mobile {
-  .main {
-    .section {
-      width: 20.75rem;
-    }
+@media (max-width: 1200px) {
+  .main .section {
+    padding: 0 $tablet_padding;
   }
 }
