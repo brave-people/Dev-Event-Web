@@ -8,7 +8,7 @@ type BookmarkIconProps = Icon & {
 };
 const cn = classNames.bind(style);
 
-const BookmarkIconMobile = ({ color, className, isFavorite, ...rest }: BookmarkIconProps) => {
+const BookmarkIconMobile = ({ className, isFavorite, ...rest }: BookmarkIconProps) => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width={12} height={16} className={cn(className)} fill="none" {...rest}>
       <g clipPath="url(#a)">
