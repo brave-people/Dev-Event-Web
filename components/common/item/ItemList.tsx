@@ -30,7 +30,6 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
   let eventCount = 0;
 
   useEffect(() => {
-    console.log(jobGroups, eventType, location, coast, search)
     setIsLoading(true);
     setEventList();
     setTimeout(() => {
@@ -149,7 +148,7 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
       ) : (
         <EventNull />
       ))}
-      {eventCount === 0 && modalState.currentModal === 0 && searchRes === undefined && (
+      {eventCount === 0 && modalState.currentModal === 0 && search === undefined && (
         <EventNull />
       )}
     </>
