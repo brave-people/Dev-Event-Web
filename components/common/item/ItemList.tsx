@@ -8,6 +8,7 @@ import List from 'components/common/item/List';
 import { checkSearch } from 'lib/utils/searchUtil';
 import EventNull from '../modal/EventNull';
 import { WindowContext } from 'context/window';
+import { useRouter } from 'next/router';
 
 const cn = classNames.bind(style);
 
@@ -22,46 +23,26 @@ type Props = {
 }
 
 function ItemList({ events, isError, jobGroups, eventType, location, coast, search }: Props) {
-  const [ totalCount, setTotalCount] = useState<number>(0);
   const [ isLoading, setIsLoading ] = useState<boolean>(true);
-  const [ searchRes, setSearchRes] = useState<Event[] | undefined>();undefined
+  const [ searchRes, setSearchRes] = useState<Event[] | undefined>(undefined);
   const { modalState } = useContext(WindowContext);
+  const router = useRouter();
   let eventCount = 0;
 
   useEffect(() => {
+    console.log(jobGroups, eventType, location, coast, search)
     setIsLoading(true);
     setEventList();
     setTimeout(() => {
       setIsLoading(false);
-      composeTotalCount();
     }, 300);
+
     return () => {
       setIsLoading(false);
       setSearchRes(undefined);
     }
-  }, []);
+  }, [modalState, jobGroups, eventType, location, coast, search]);
   
-  const composeTotalCount = () => {
-    if (events === undefined || events.length === 0) {
-      setTotalCount(0);
-    } else {
-      const result = events.reduce(function add(sum, currValue) {
-        const filteredEvents = currValue.dev_event.filter((item) =>
-            !checkEventDone({
-              endDate: getEventEndDate({
-                start_date_time: item.start_date_time,
-                end_date_time: item.end_date_time,
-                use_start_date_time_yn: item.use_start_date_time_yn,
-                use_end_date_time_yn: item.use_end_date_time_yn,
-              }),
-            }) && (checkCondition(jobGroups, eventType, location, coast, search, item) || checkSearch(search, item))
-            ) 
-        return sum + filteredEvents.length;
-      }, 0);
-      setTotalCount(result);
-    }
-  };
-
   const setEventList = () => {
     let res: Event[] = [];
     events && events.map((event: EventResponse) => {
@@ -73,7 +54,7 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
                 use_start_date_time_yn: item.use_start_date_time_yn,
                 use_end_date_time_yn: item.use_end_date_time_yn,
               }),
-            }) && (checkCondition(jobGroups, eventType, location, coast, search, item) || checkSearch(search, item))) {
+            }) && (checkCondition(jobGroups, eventType, location, coast, item) && checkSearch(search, router.asPath, item))) {
               res.push(item)
             }
         })
@@ -92,13 +73,17 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
         <>
           <div className={cn('search__header')}>
             <span className={cn('list__title')}>{`${search}`}</span>
-            <span className={cn('total__count')}>{totalCount}</span>
+            <span className={cn('total__count')}>{searchRes ? searchRes.length : '0'}</span>
           </div>
           <div className={cn('search__list')}>
-            <List
+            {searchRes.length !== 0 ? (
+              <List
                 data={searchRes}
                 parentLast={true}
               />
+            ) : (
+              <EventNull />
+            )}
           </div>
         </>
       )}
@@ -106,13 +91,17 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
       <>
         <div className={cn('search__header__modal')}>
           <div className={cn('list__title')}>`{`${search}`}` 검색결과</div>
-          <div className={cn('total__count')}>{totalCount}개</div>
+          <div className={cn('total__count')}>{searchRes ? searchRes.length : '0'}개</div>
         </div>
         <div className={cn('search__list')}>
-          <List
-            data={searchRes}
-            parentLast={false}
-          />
+          {searchRes.length !== 0 ? (
+            <List
+              data={searchRes}
+              parentLast={true}
+            />
+          ) : (
+            <EventNull />
+          )}
         </div>
       </>
       )}
@@ -121,7 +110,7 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
           <ThreeDots color="#479EF1" height={60} width={60} />
         </div>
       ) : ( 
-      events && totalCount !== 0 ? (
+      events ? (
         events.map((event: EventResponse, index) => {
           if (!search) {
             const lists =
@@ -135,10 +124,10 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
                       use_start_date_time_yn: item.use_start_date_time_yn,
                       use_end_date_time_yn: item.use_end_date_time_yn,
                     }),
-                  }) && (checkCondition(jobGroups, eventType, location, coast, search, item) || checkSearch(search, item)) 
+                  }) && (checkCondition(jobGroups, eventType, location, coast, item) && checkSearch(search, router.asPath, item)) 
               ); 
             eventCount += lists.length;
-            const isLast = eventCount === totalCount ? true : false;
+            const isLast = eventCount === lists.length ? true : false;
             return  (
             <div key={index}>
               {lists !== undefined && lists.length !== 0
@@ -160,6 +149,9 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
       ) : (
         <EventNull />
       ))}
+      {eventCount === 0 && modalState.currentModal === 0 && searchRes === undefined && (
+        <EventNull />
+      )}
     </>
   )
 }
