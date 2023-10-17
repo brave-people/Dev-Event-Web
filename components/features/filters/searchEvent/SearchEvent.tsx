@@ -22,10 +22,6 @@ function SearchEvent( { context }: Props) {
   const router = useRouter();
 
   const submitInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (input?.length === 1 && (event.code === 'Backspace')) {
-      handleSearch(undefined)
-      router.push(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
-    }
     if (event.code == 'Enter') {
       if (input) {
         ga.event({
@@ -54,9 +50,7 @@ function SearchEvent( { context }: Props) {
 
   const initInput = () => {
     setInput('');
-    setTimeout(() => {
-      handleSearch(undefined);
-    }, 300)
+    handleSearch(undefined);
     router.push(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, undefined));
   }
 

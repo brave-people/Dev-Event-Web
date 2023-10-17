@@ -25,14 +25,14 @@ function EventFilter() {
   const [filterActive, setFilterActive] = useState<boolean>(false);
 
   const { handleModalState } = useContext(WindowContext)
-  const { jobGroupList, eventType, location, coast } = useContext(EventContext);  
+  const { jobGroupList, eventType, location, coast, search } = useContext(EventContext);  
 
   useEffect(() => {
     setFilterActive(isActive(jobGroupList, eventType, location, coast));
     return () => {
       setFilterActive(false);
     }
-  }, [jobGroupList, eventType, location, coast])
+  }, [jobGroupList, eventType, location, coast, search])
   
   return (
   <section className={cn('container')}>

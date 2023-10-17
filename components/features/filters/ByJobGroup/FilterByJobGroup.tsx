@@ -18,6 +18,7 @@ function FilterByJobGroup({ context }: Props) {
   const { updateJobGroupList } = useContext(EventContext);
   const reflactTagList = () => {
     let temp: string[] = [];
+    console.log(context)
 
     if (context?.tagList === undefined)
       return ;
@@ -25,6 +26,7 @@ function FilterByJobGroup({ context }: Props) {
       temp.push(decodeURIComponent(context.tagList[i]))
       updateJobGroupList(temp);
     }
+    console.log(temp);
   }
   useEffect(() => {
     if (router.asPath !== "/events") {
