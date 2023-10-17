@@ -1,24 +1,24 @@
-import React, { useContext, useEffect, useState  } from "react";
-import BasicInput from "components/common/input/BasicInput";
-import classNames from "classnames/bind";
-import style from 'components/features/filters/searchEvent/SearchEvent.module.scss'
+import BasicInput from 'components/common/input/BasicInput';
+import style from 'components/features/filters/searchEvent/SearchEvent.module.scss';
+import { EventContext } from 'context/event';
+import { WindowContext } from 'context/window';
 import * as ga from 'lib/utils/gTag';
-import { EventContext } from "context/event";
-import { useRouter } from "next/router";
-import { initUrl, parseUrl } from "lib/utils/urlUtil";
-import { UrlContext } from "types/Context";
-import { WindowContext } from "context/window";
+import { initUrl, parseUrl } from 'lib/utils/urlUtil';
+import { UrlContext } from 'types/Context';
+import React, { useContext, useEffect, useState } from 'react';
+import classNames from 'classnames/bind';
+import { useRouter } from 'next/router';
 
 const cn = classNames.bind(style);
 
 type Props = {
   context: UrlContext | undefined;
-}
+};
 
-function SearchEvent( { context }: Props) {
-  const [input, setInput] = useState<string | undefined>(undefined)
+function SearchEvent({ context }: Props) {
+  const [input, setInput] = useState<string | undefined>(undefined);
   const { jobGroupList, date, eventType, location, coast, search, handleDate, handleSearch } = useContext(EventContext);
-  const { modalState, handleModalState } = useContext(WindowContext)
+  const { modalState, handleModalState } = useContext(WindowContext);
   const router = useRouter();
 
   const submitInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -29,17 +29,16 @@ function SearchEvent( { context }: Props) {
           event_category: 'web_event',
           event_label: '검색',
         });
-        if (date !== undefined)
-          handleDate(undefined);
+        if (date !== undefined) handleDate(undefined);
         handleSearch(input);
-        router.push(`${parseUrl(`${router.asPath}`, 'kwd', input, jobGroupList)}`)
+        router.push(`${parseUrl(`${router.asPath}`, 'kwd', input, jobGroupList)}`, undefined, { scroll: false });
       }
       if (window.innerWidth < 600) {
         handleModalState({
           currentModal: modalState.currentModal,
           prevModal: 0,
-          type: false
-        })
+          type: false,
+        });
       }
     }
   };
@@ -50,18 +49,22 @@ function SearchEvent( { context }: Props) {
 
   const initInput = () => {
     setInput('');
-    handleSearch(undefined);
-    router.push(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, undefined));
-  }
+    setTimeout(() => {
+      handleSearch(undefined);
+    }, 300);
+    router.push(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, undefined), undefined, {
+      scroll: false,
+    });
+  };
 
   useEffect(() => {
     if (context?.kwd === undefined) {
-      handleSearch(undefined)
+      handleSearch(undefined);
     } else if (context.kwd !== undefined) {
       const decode = decodeURIComponent(context.kwd);
-      handleSearch(decode)
+      handleSearch(decode);
     }
-  }, [context])
+  }, [context]);
 
   return (
     <div
@@ -71,16 +74,17 @@ function SearchEvent( { context }: Props) {
           handleModalState({
             currentModal: 1,
             prevModal: 0,
-            type: false
-          })
+            type: false,
+          });
           if (router.asPath.includes('calender')) {
             router.push('/events');
           }
         }
-      }}  
-      className={cn('container')}>
+      }}
+      className={cn('container')}
+    >
       <BasicInput
-        label="행사 검색하기"
+        label={decodeURIComponent(context?.kwd || '') || '행사 검색하기'}
         size="large"
         icon="search"
         iconStyle="searchEvent"
@@ -90,7 +94,7 @@ function SearchEvent( { context }: Props) {
         input={input}
       />
     </div>
-  )  
+  );
 }
 
 export default SearchEvent;

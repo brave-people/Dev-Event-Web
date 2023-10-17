@@ -1,53 +1,34 @@
 @import '~styles/_mixin.scss';
+@import '~styles/_variables.scss';
 
-@include laptop {
-  .list {
-    width: 100%;
-  }
-  @media (max-width: 800px) {
-    .list {
-      width: 100%;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-    }
-    .skeleton {
-      width: 270px;
-    }
+.list {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  &:last-child {
+    margin-bottom: 60px;
   }
 }
 
-@include tablet {
+@media (max-width: 1024px) {
   .list {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .skeleton {
-    width: 270px;
-  } 
-  @media (max-width: 580px) {
-   .list {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    }
-    .skeleton {
-      width: 270px;
-    } 
+    margin-top: 24px;
+    grid-template-columns: $image_width $image_width $image_width;
+    grid-row-gap: 36px;
+    align-content: space-around;
+    justify-content: space-between;
   }
 }
 
-@include mobile {
+@media (max-width: 900px) {
   .list {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    grid-template-columns: $image_width-tablet $image_width-tablet;
   }
-  .skeleton {
-    width: 270px;
-  } 
+}
+
+@media (max-width: 600px) {
+  .list {
+    margin-top: 20px;
+    grid-template-columns: 1fr;
+  }
 }

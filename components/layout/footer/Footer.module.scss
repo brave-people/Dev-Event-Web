@@ -1,14 +1,16 @@
 @import '~styles/_mixin.scss';
+@import '~styles/_variables.scss';
 
 .footer {
-  background-color: var(--background-1);
+  width: 100%;
+  max-width: 68.75rem;
   height: 200px;
-  width: 68.75rem;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
+  background-color: var(--background-1);
 
   &__column {
     display: flex;
@@ -37,92 +39,31 @@
   }
 }
 
-@include laptop {
-  @media (max-width: 1075px) {
-    .footer {
-      width: 58.75rem;
-    }
-  }
-  @media (max-width: 950px) {
-    .footer {
-      width: 50.75rem;
-    }
-  }
-  @media (max-width: 800px) {
-    .footer {
-      width: 42.75rem;
-      .break__line {
-        display: block;
-      }
-    }
-  }
-}
-
-@include tablet {
+@media (max-width: 1200px) {
   .footer {
-    width: 34.75rem;
-    .break__line {
-      display: block;
+    padding: 0 $tablet_padding;
+  }
+
+  .footer__column {
+    .footer__desc, .footer__copyright {
+      font-size: 14px;
+      font-weight: 500;
     }
   }
-  @media (max-width: 550px) {
-    .footer {
-      width: 30.75rem;
-    }
-  }
-  @media (max-width: 500px) {
-    .footer {
-      width: 26.75rem;
-    }
-  }
-  @media (max-width: 450px) {
-    .footer {
-      width: 23.75rem;
-      height: 206px;
-      position: relative;
-      margin: 2rem auto ;
-      &__column {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        height: 100%;
-      }
-      .footer__row {
-        display: flex;
-        align-items: flex-end;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-      }
-    }
+
+  .footer__row {
+    right: $tablet_padding;
   }
 }
 
-@include mobile {
+@media (max-width: 1200px) {
   .footer {
-    width: 20.75rem;
-    height: 206px;
-      position: relative;
-      margin: 2rem auto ;
-      &__column {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        height: 100%;
-      }
-      .footer__row {
-        display: flex;
-        align-items: flex-end;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-      }
+    height: inherit;
+    padding: 32px $tablet_padding 84px $tablet_padding;
   }
-  .break__line {
-    display: block;
-  }
-}
 
-.break__line {
-  display: none;
+  .footer__row {
+    top: inherit;
+    bottom: $tablet_padding;
+  }
 }

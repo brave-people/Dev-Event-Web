@@ -1,4 +1,5 @@
 @import '~styles/_mixin.scss';
+@import '~styles/_variables.scss';
 
 .container {
   background-color: var(--background-1);
@@ -7,12 +8,17 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 999;
+  z-index: 99;
+  padding: 0 $tablet_padding;
   overflow-y: scroll;
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   .header {
-    width: 90%;
     height: 60px;
     margin: 0 auto;
     display: flex;
@@ -26,7 +32,7 @@
 
     &__input {
       width: 100%;
-      margin: 0 .8rem;
+      margin: 0 0.8rem;
     }
 
     &__button {
@@ -40,18 +46,6 @@
         background-color: var(--gray-5);
         cursor: pointer;
       }
-    }
-
-    .active--light {
-      &:hover {
-        background-color: rgba(237, 239, 255, 1);
-        cursor: pointer;
-      }
-    }
-
-    .active--dark {
-      background-color: rgba(34, 35, 38, 1);
-      cursor: pointer;
     }
   }
 
@@ -93,7 +87,7 @@
 
 .hidden {
   animation-name: focusOut;
-  animation-duration: .3s;
+  animation-duration: 0.3s;
   animation-timing-function: ease;
   animation-fill-mode: forwards;
 }
@@ -116,17 +110,4 @@
       width: 100%;
     }
   }
-}
-
-.null-container {
-  height: 35vh;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  font-weight: 400;
-  font-size: 1.5rem;
-  line-height: 1.8rem;
-  color: var(--gray-1);
 }
