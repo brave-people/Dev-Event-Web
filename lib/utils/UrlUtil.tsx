@@ -10,7 +10,7 @@ export const initUrl = (
 	coast: string | undefined,
 	search: string | undefined	
 ) => {
-	if (handleUndefined(jobGroupList?.join(', '), eventType, location, coast, search))
+	if (handleUndefined(jobGroupList?.join(', '), eventType, location, coast))
 		return ('/events');
 	if (url.includes(type) === false) {
 		return (url);
