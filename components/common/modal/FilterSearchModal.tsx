@@ -25,27 +25,31 @@ function FilterSearchModal ({ events, isError }: Props) {
   const [hidden, setHidden] = useState<boolean>(false);
   const [filterActive, setFilterActive] = useState<boolean>(false);
   const { handleModalState, windowTheme } = useContext(WindowContext);
-  const { jobGroupList, eventType, location, coast, search, handleSearch } = useContext(EventContext);
+  const { jobGroupList, eventType, location, coast, search, handleSearch, handleUrl } = useContext(EventContext);
 
   const deleteModal = () => {
     setHidden(true);
+    handleSearch(undefined);
     setTimeout(() => {
-      handleSearch(undefined);
       handleModalState({
         currentModal: 0,
         prevModal: 1,
         type: false
       });
       if (search !== undefined) {
+        handleUrl(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search))
         router.push(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
       }
-    }, 350);
+    }, 400);
   }
 
   useEffect(() => {
     setFilterActive(isActive(jobGroupList, eventType, location, coast))
+    
     return () => {
       setHidden(false);
+      setFilterActive(isActive(jobGroupList, eventType, location, coast))
+      handleSearch(undefined);
     }
   }, [])
 
