@@ -27,7 +27,6 @@ function EventNull() {
   
   return (
     <section className={cn('section__list')}>
-      {randomTags && randomTags.length !== 0 && (
       <section className={cn('container')}>
         <div className={cn('title')}>
           찾으시는 행사정보가 없어요
@@ -42,7 +41,8 @@ function EventNull() {
         <div className={cn('desc')}>
           추천태그로 검색해보세요
         </div>
-        <div className={cn('tag__container')}>
+        {randomTags && randomTags.length !== 0 && (
+          <div className={cn('tag__container')}>
           {randomTags.map((tag) => {
             return (
               <JobGroupTag
@@ -51,11 +51,11 @@ function EventNull() {
                 type="recommand"
                 parent={false}
               />
-            )
-          })}
+                )
+              })}
         </div>
+        )}
       </section>
-      )}
     </section>
   )
 }
