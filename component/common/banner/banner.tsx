@@ -9,7 +9,7 @@ function Banner() {
     <div className={cn('banner')}>
       <h1 className={cn('banner__title')}>
         개발자 행사는
-        <br /> 모두 Dev Event 웹에서!!
+        <br /> 모두 Dev Event 웹에서!
       </h1>
       <h3 className={cn('banner__desc')}>진행 중인 행사부터 종료된 행사까지, 놓치지 마세요! </h3>
       <Image src="/default/banner_img.png" layout="fill" className={cn('banner__image')} />
