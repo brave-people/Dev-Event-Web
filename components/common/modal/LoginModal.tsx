@@ -63,7 +63,7 @@ function LoginModal({ isOpen, onClose }: any) {
 }
 
 const SocialLoginContainer = ({ onChangeState }: any) => {
-  const requestSocialLogin = async (type: String) => {
+  const requestSocialLogin = async (type: string) => {
     ga.event({
       action: 'web_event_sns로그인버튼클릭',
       event_category: 'web_event',
@@ -208,12 +208,7 @@ const LoginByEmailContainer = ({ onChangeState }: any) => {
         </div>
       </div>
       <div style={{ height: '55px' }}></div>
-      <button
-        className={cx('login-form__button', 'login')}
-        onClick={() => {
-          requestLoginByEmail();
-        }}
-      >
+      <button className={cx('login-form__button', 'login')} onClick={requestLoginByEmail}>
         <span>로그인</span>
       </button>
       <div style={{ height: '42px' }}></div>
@@ -302,12 +297,7 @@ const SignUpByEmailContainer = ({ onChangeState }: any) => {
         </div>
       </div>
       <div style={{ height: '25px' }}></div>
-      <button
-        className={cx('login-form__button', 'login')}
-        onClick={() => {
-          requestSignUpByEmail();
-        }}
-      >
+      <button className={cx('login-form__button', 'login')} onClick={requestSignUpByEmail}>
         <span>가입하기</span>
       </button>
       <div style={{ height: '41px' }}></div>
