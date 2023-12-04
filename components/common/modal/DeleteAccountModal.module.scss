@@ -2,22 +2,21 @@
 
 .modal {
   position: absolute;
-  width: 30.563rem;
-  height: 16.688rem;
+  width: 22.5rem; // 360px
+  height: 13.3125rem; // 213px
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
   &__title {
-    font-weight: 500;
-    font-size: 1.875rem;
+    font-weight: 700;
+    font-size: 1.5rem; // 16
     line-height: 2.688rem;
     text-align: center;
     color: #171717;
@@ -25,22 +24,22 @@
 
   &__desc {
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 0.875rem; // 14px
     line-height: 1.438rem;
     text-align: center;
-    color: #171717;
-    padding-top: 1.313rem;
+    color: #747579;
   }
 
   &__buttons {
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding-top: 2.125rem;
+    gap: 1rem;
+    padding-top: 1.225rem;
 
-    .wrapper {
-      padding-left: 1.875rem;
-    }
+    //.wrapper {
+    //  padding-left: 1.875rem;
+    //}
   }
 }
 
@@ -78,14 +77,15 @@
     }
 
     &__buttons {
+      font-size: 1.875rem;
       display: flex;
       flex-direction: row;
       align-items: center;
-      padding-top: 2.125rem;
+      //padding-top: 2.125rem;
 
-      .wrapper {
-        padding-left: 1.1rem;
-      }
+      //.wrapper {
+      //  padding-left: 1.875rem;
+      //}
     }
   }
 }
@@ -96,5 +96,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.32);
 }
