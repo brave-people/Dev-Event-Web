@@ -4,8 +4,16 @@ import classNames from 'classnames/bind';
 
 const cx = classNames.bind(style);
 
-const WithdrawOkButton = () => {
-  return <button className={cx('withdraw')}>탈퇴하기</button>;
+export interface WithdrawOkButtonProps {
+  onClick?: () => void;
+}
+
+const WithdrawOkButton = ({ onClick }: WithdrawOkButtonProps) => {
+  return (
+    <button className={cx('withdraw')} onClick={onClick}>
+      탈퇴하기
+    </button>
+  );
 };
 
 export default WithdrawOkButton;

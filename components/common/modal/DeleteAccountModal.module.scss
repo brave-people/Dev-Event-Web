@@ -36,32 +36,27 @@
     align-items: center;
     gap: 1rem;
     padding-top: 1.225rem;
-
-    //.wrapper {
-    //  padding-left: 1.875rem;
-    //}
   }
 }
 
 @include mobile {
   .modal {
     position: absolute;
-    width: 24.143rem;
-    height: 16.688rem;
+    width: 20rem;
+    height: 12.25rem;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: white;
-    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 
     &__title {
-      font-weight: 500;
-      font-size: 18px;
+      font-weight: 700;
+      font-size: 1.125rem; // 18px
       line-height: 2.688rem;
       text-align: center;
       color: #171717;
@@ -72,8 +67,7 @@
       font-size: 0.857rem;
       line-height: 1rem;
       text-align: center;
-      color: #171717;
-      padding-top: 1.313rem;
+      color: #747579;
     }
 
     &__buttons {
@@ -81,11 +75,6 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      //padding-top: 2.125rem;
-
-      //.wrapper {
-      //  padding-left: 1.875rem;
-      //}
     }
   }
 }
