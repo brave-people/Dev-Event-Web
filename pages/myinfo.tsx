@@ -13,11 +13,13 @@ import React, { useEffect } from 'react';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import { GetServerSideProps } from 'next';
-import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import WithdrawCancelButton from '../components/common/buttons/WithdrawCancelButton';
+import WithdrawOkButton from '../components/common/buttons/WithdrawOkButton';
+import Letter from '../components/features/letter/Letter';
 
-const cn = classNames.bind(style);
+const cx = classNames.bind(style);
 
 const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   const [DeleteAccountModalIsOpen, setDeleteAccountIsOpen] = useState(false);
@@ -33,12 +35,17 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
     }
   }, [isLoggedIn]);
 
-  const { user, isLoading, isError } = useUser();
+  const { user, isError } = useUser();
 
   if (isError) {
-    return <div className={cn('null-container')}>내 정보를 불러오는데 문제가 발생했습니다!</div>;
+    return (
+      <div className={cx('null-container')}>
+        내 정보를 불러오는데 문제가 발생했습니다!
+      </div>
+    );
   }
 
+  // 계정 탈퇴
   const deleteAccount = async () => {
     const result = await deleteAccountApi(`/front/v1/users/witdraw`);
     if (result.status_code === 200) {
@@ -61,42 +68,62 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
 
   return (
     <>
-      <div className={cn('info-container')}>
-        <div className={cn('info-container__inner')}>
-          <header className={cn('sub-header')}>
-            <div className={cn('sub-header__inner')}>
-              <div className={cn('sub-header__content')}>
-                <h1>내 정보</h1>
-                <Image
-                  src={user && user.profile_image_link ? user.profile_image_link : '/icon/profile.svg'}
-                  width={48}
-                  height={48}
-                  className={cn('profile')}
-                />
+      <div className={cx('info-container')}>
+        <div className={cx('info-container__inner')}>
+          <header className={cx('sub-header')}>
+            <div className={cx('sub-header__inner')}>
+              <div className={cx('sub-header__content')}>
+                <h1 className={cx('notice-title')}>내 정보</h1>
+                <div className={cx('notice-alert')}>
+                  <div className={cx('notice-alert__box')}>Notice</div>
+                  <div className={cx('notice-alert__txt')}>
+                    정보 수집은 추후 업데이트 예정이에요
+                  </div>
+                </div>
+                <div className={cx('underline')}></div>
               </div>
             </div>
           </header>
-          <div className={cn('info-form')}>
-            <div className={cn('info-form__item')}>
-              <span>이름</span>
-              <input className={cn('input', 'size--small')} disabled value={user?.username}></input>
+
+          {/* 사용자 상세 정보 */}
+          <div className={cx('info-form')}>
+            <div className={cx('info-form__profile_image_box')}>
+              <Image
+                src={
+                  user && user.profile_image_link
+                    ? user.profile_image_link
+                    : '/icon/profile.svg'
+                }
+                width={104}
+                height={104}
+                className={cx('profile')}
+              />
             </div>
-            <div className={cn('info-form__item')}>
-              <span>이메일</span>
-              <input className={cn('input', 'size--regular')} disabled value={user?.email}></input>
+            <div className={cx('info-form__profile_txt_box')}>
+              {user?.username}
             </div>
-            <div className={cn('info-form__item')}>
-              <span>가입일</span>
-              <input
-                className={cn('input', 'size--small')}
-                disabled
-                value={dayjs(user?.register_date).format('YYYY. MM. DD')}
-              ></input>
+            {/* 사용자 상세 정보 */}
+            <div className={cx('info-form__auth_box')}>
+              <div className={cx('email_box')}>
+                <div className={cx('txt')}>가입계정</div>
+                {/*  가입 유형 이미지 */}
+                <div className={cx('value')}>
+                  <Image src={'/icon/email.svg'} width={16} height={16} />
+                  {user?.email}
+                </div>
+              </div>
+            </div>
+            <div className={cx('info-form__register_date')}>
+              {dayjs(user?.register_date).format('YYYY년 MM월 DD일')}
+              <div className={cx('info-form__register-info-button')}>
+                가입일 🎉
+              </div>
             </div>
           </div>
-          <div className={cn('delete-button', 'primary')}>
-            <button
-              data-hover="탈퇴하기 🥺"
+          {/* // 사용자 상세 정보 */}
+
+          <div className={cx('info-form__withdraw_box')}>
+            <WithdrawOkButton
               onClick={() => {
                 setDeleteAccountIsOpen(true);
                 ga.event({
@@ -105,11 +132,11 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
                   event_label: '탈퇴',
                 });
               }}
-            >
-              탈퇴하기
-            </button>
+            />
           </div>
         </div>
+
+        {/* 탈퇴 재확인 알림 팝업 */}
         <DeleteAccountModal
           isOpen={DeleteAccountModalIsOpen}
           onCancel={() => {
@@ -123,6 +150,7 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
           onClick={deleteAccount}
         />
       </div>
+      <Letter />
     </>
   );
 };
