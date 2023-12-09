@@ -1,52 +1,190 @@
 @import '~styles/_mixin.scss';
 
+// todo: 하단 디자인에 합치기
+.sub-header__content {
+  .notice-title {
+    // h1의 우측으로 이동
+    float: left;
+  }
+
+  .underline {
+    width: 1000px;
+    height: 1px;
+    background: #D3D4D8;
+    gap: 8px;
+    transform: matrix(1, 0, 0, -1, 0, 0);
+    float: left;
+  }
+
+  .notice-alert {
+    // box - 형태
+    background-color: #FBFAF1;
+    border-radius: 4px;
+    // 추후 업데이트 예정 알림 박스의 감싼 요소 배경
+    width: 290px;
+    height: 40px;
+    float: left;
+    margin-left: 10px;
+    margin-bottom: 16px;
+    // 자식 요소의 가운데 정렬
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__box {
+      // box - 위치
+      float: left;
+      // margin-top: 3px;
+      margin-right: 10px;
+      padding: 5px, 6px, 5px, 6px;
+      gap: 8px;
+      // box - 형태
+      border-radius: 4px;
+      width: 53px;
+      height: 24px;
+      // box 안의 글자
+      background-color: #F7F3CD;
+      color:  #80732D;
+      font-weight: 600;
+      // box 글자 정렬
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &__txt {
+      // 위치 지정
+      float: left;
+      display: flex;
+      // 글자 형태
+      font-weight: 500;
+      color: #848273;
+    }
+  }
+}
+
+
 .info-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #fff;
   width: 100%;
-  height: 100vh;
+  height: 77vh;
   min-width: 68.75rem;
 
   &__inner {
     display: flex;
     flex-direction: column;
-    max-width: 68.75rem;
+    max-width: 600px;
+    align-items: center; // todo check me
     width: 100%;
     padding: 0px 10px 0px 10px;
+
     .sub-header {
       display: flex;
       flex-direction: column;
-      padding-top: 5.125rem;
+      padding-top: 85px;
 
       &__content {
-        margin: 12px 0px;
-        display: flex;
-        flex-direction: row;
+        margin-top: 54px;
         justify-content: space-between;
         align-items: flex-start;
 
         h1 {
-          margin: 0px;
-          font-weight: 500;
+          margin-bottom: 16px;
+          font-weight: 700;
           font-size: 1.5rem;
-          line-height: 2.188rem;
-          color: #000000;
-        }
-        .profile {
-          border-radius: 50%;
+          line-height: 1.8rem; // 28.8px
+          color: #313234;
         }
       }
     }
 
     .info-form {
-      padding: 3.875rem 0px;
-      display: grid;
-      grid-template-columns: 23.5rem 30rem;
-      column-gap: 8.25rem;
-      row-gap: 1.938rem;
-      border-bottom: 2px solid #e9e9e9;
+      padding-top: 36px;
+      padding-bottom: 48px;
+      width: 600px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid #e9e9e9; // todo check me: 하단 선
+
+      &__profile_image_box {
+        display: flex;
+        justify-content: center;
+        .profile {
+          border: 1px solid #F2F2F2 !important; // todo checkme: !important 사용 안하는 방법
+          border-radius: 100px;
+        }
+      }
+
+      &__profile_txt_box {
+        width: 600px;
+        font-weight: 600;
+        display: flex;
+        padding-top: 8px;
+        justify-content: center; /* 수평 가운데 정렬 */
+        align-items: center; /* 수직 가운데 정렬 */
+        font-size: 20px;
+        color: #313234;
+      }
+
+      &__auth_box {
+        margin-top: 16px;
+        margin-bottom: 16px;
+
+        .email_box {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          width: 600px;
+          height: 72px;
+          padding: 18px 16px 18px 16px;
+          background: #F8F8F8;
+          border-radius: 8px;
+          .txt {
+            color: #ABACB2;
+            font-size: 16px;
+          }
+          .value {
+            display: flex;
+            color: #747579;
+            font-size: 14px;
+            margin-left: auto;
+            gap: 10px;
+          }
+        }
+      }
+
+      &__register_date {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        width: 253px;
+        size: 14px;
+        color: #ABACB2;
+      }
+
+      &__register-info-button {
+        padding: 7px 8px 7px 9px;
+        gap: 8px;
+        width: 70px;
+        height: 28px;
+        border-radius: 32px;
+
+        background-color: #EFFFE5;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 100%;
+        letter-spacing: -0.02em;
+        color: #49A972;
+      }
+
+      &__withdraw_box {
+        display: flex;
+        justify-content: left;
+        margin-left: auto;
+      }
 
       &__item {
         display: flex;
@@ -167,6 +305,7 @@
         }
       }
 
+      // todo fix me
       .info-form {
         padding: 3.875rem 0px;
         display: grid;
