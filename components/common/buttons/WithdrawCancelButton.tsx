@@ -8,9 +8,7 @@ export interface WithdrawCancelButtonProps {
   onRequestClose?: () => void;
 }
 
-const WithdrawCancelButton = ({
-  onRequestClose,
-}: WithdrawCancelButtonProps) => {
+const WithdrawCancelButton = ({ onRequestClose }: WithdrawCancelButtonProps) => {
   return (
     <button className={cx('withdraw_cancel')} onClick={onRequestClose}>
       취소하기

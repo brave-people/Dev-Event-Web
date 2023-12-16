@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
 import Layout from 'components/layout';
-import type { ReactElement } from 'react';
-import classNames from 'classnames/bind';
-import style from 'styles/Myevent.module.scss';
-import Link from 'next/link';
-import { MdOutlineArrowForwardIos } from 'react-icons/md';
-import EventBody from 'components/myEvent/EventBody';
-import cookie from 'cookie';
-import EventTab from 'components/myEvent/EventTab';
-import { GetServerSideProps } from 'next';
+import MyEventBody from 'components/myEvent/MyEventBody';
+import MyEventTab from 'components/myEvent/MyEventTab';
 import { AuthContext } from 'context/auth';
+import cookie from 'cookie';
 import * as ga from 'lib/utils/gTag';
+import style from 'styles/Myevent.module.scss';
+import React, { useEffect } from 'react';
+import type { ReactElement } from 'react';
+import { MdOutlineArrowForwardIos } from 'react-icons/md';
+import classNames from 'classnames/bind';
+import { GetServerSideProps } from 'next';
+import Link from 'next/link';
 
 const cn = classNames.bind(style);
 
@@ -49,9 +49,9 @@ const MyEvent = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
             </span>
           </Link>
         </div>
-        <EventTab />
+        <MyEventTab />
       </header>
-      <EventBody />
+      <MyEventBody />
     </>
   );
 };

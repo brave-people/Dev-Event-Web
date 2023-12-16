@@ -13,7 +13,7 @@ import classNames from 'classnames/bind';
 
 const cn = classNames.bind(style);
 
-const DoneEventList = () => {
+const MyEventDoneList = () => {
   const param = { filter: '' };
   const { myEvent, isLoading, isError } = useMyEvent(param, true);
   const [oldEvent, setOldEvent] = useState(new Array<MyEvent>());
@@ -121,9 +121,9 @@ const DoneEventList = () => {
           )}
         </div>
       </section>
-      <ShareModal />
+      {/*<ShareModal />*/}
     </div>
   );
 };
 
-export default DoneEventList;
+export default MyEventDoneList;

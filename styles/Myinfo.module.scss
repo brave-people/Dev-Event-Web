@@ -8,7 +8,7 @@
   }
 
   .underline {
-    width: 1000px;
+    width: 1080px;
     height: 1px;
     background: #D3D4D8;
     gap: 8px;
@@ -24,7 +24,7 @@
     width: 290px;
     height: 40px;
     float: left;
-    margin-left: 10px;
+    margin-left: 8px;
     margin-bottom: 16px;
     // 자식 요소의 가운데 정렬
     display: flex;
@@ -35,7 +35,7 @@
       // box - 위치
       float: left;
       // margin-top: 3px;
-      margin-right: 10px;
+      margin-right: 6px;
       padding: 5px, 6px, 5px, 6px;
       gap: 8px;
       // box - 형태
@@ -70,7 +70,7 @@
   align-items: center;
   background-color: #fff;
   width: 100%;
-  height: 77vh;
+  height: 720px;
   min-width: 68.75rem;
 
   &__inner {
@@ -94,8 +94,8 @@
         h1 {
           margin-bottom: 16px;
           font-weight: 700;
-          font-size: 1.5rem;
-          line-height: 1.8rem; // 28.8px
+          font-size: 24px;
+          line-height: 5.5px; // 28.8px
           color: #313234;
         }
       }
@@ -129,7 +129,7 @@
       }
 
       &__auth_box {
-        margin-top: 16px;
+        margin-top: 24px;
         margin-bottom: 16px;
 
         .email_box {
@@ -168,10 +168,11 @@
       &__register-info-button {
         padding: 7px 8px 7px 9px;
         gap: 8px;
-        width: 70px;
+        width: 80px;
+        min-width: 75px;
         height: 28px;
         border-radius: 32px;
-
+        margin-left: 6px;
         background-color: #EFFFE5;
         font-weight: 600;
         font-size: 14px;

@@ -1,20 +1,19 @@
-import React, { useState } from 'react';
-import style from 'styles/Myevent.module.scss';
-import classNames from 'classnames/bind';
-import { useMyEvent } from 'lib/hooks/useSWR';
 import Item from 'components/common/item/Item';
 import { deleteMyEventApi } from 'lib/api/delete';
-import { MyEvent, EventDate } from 'model/event';
-import { mutate } from 'swr';
-import { ThreeDots } from 'react-loader-spinner';
-import * as ga from 'lib/utils/gTag';
-import ShareModal from 'components/common/modal/ShareModal';
+import { useMyEvent } from 'lib/hooks/useSWR';
 import { DateUtil } from 'lib/utils/dateUtil';
+import * as ga from 'lib/utils/gTag';
+import { MyEvent, EventDate } from 'model/event';
+import style from 'styles/Myevent.module.scss';
+import { mutate } from 'swr';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
+import { ThreeDots } from 'react-loader-spinner';
+import classNames from 'classnames/bind';
 
 const cn = classNames.bind(style);
 
-const ScheduledEventList = () => {
+const MyEventScheduledList = () => {
   const param = { filter: '' };
   const { myEvent, isError } = useMyEvent(param, true);
   const [futureEvent, setFutureEvent] = useState(new Array<MyEvent>());
@@ -64,6 +63,7 @@ const ScheduledEventList = () => {
     return DateUtil.isDone(endDate);
   };
 
+  // 내 북마크 행사 삭제
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: Number }) => {
     if (favoriteId && myEvent) {
       const filteredEvent = myEvent.filter((event) => event.favorite_id !== favoriteId);
@@ -120,9 +120,9 @@ const ScheduledEventList = () => {
           )}
         </div>
       </section>
-      <ShareModal isOpen={shareModalIsOpen} onClick={() => setShareModalIsOpen(false)} data={sharedEvent}></ShareModal>
+      {/*<ShareModal isOpen={shareModalIsOpen} onClick={() => setShareModalIsOpen(false)} data={sharedEvent}></ShareModal>*/}
     </div>
   );
 };
 
-export default ScheduledEventList;
+export default MyEventScheduledList;
