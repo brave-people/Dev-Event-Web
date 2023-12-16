@@ -1,7 +1,7 @@
 import React from "react"
-import { Icon } from "types/icon"
+import { Icon } from '../../types/Icon'
 import style from 'components/common/dropdown/DefaultDropdown.module.scss'
-import classNames from "classnames/bind"
+import classNames from 'classnames/bind';
 
 const cn = classNames.bind(style);
 
@@ -17,7 +17,7 @@ function PeopleIcon({ color, className, ...rest }: Icon) {
   >
     <path
       fill={color}
-      d="M6.75 1.712C4.188 3.063 5.113 6.876 8 6.876c2.137 0 3.4-2.112 2.4-4.013-.462-.875-1.25-1.387-2.25-1.462-.6-.037-.825.013-1.4.313Zm2.15.863c1.262.637 1.225 2.537-.075 3.162C8.538 5.888 8.163 6 8 6c-.162 0-.537-.112-.825-.263-1.45-.7-1.287-2.762.263-3.3.525-.174.9-.137 1.462.138Z"
+        d="M6.75 1.712C4.188 3.063 5.113 6.876 8 6.876c2.137 0 3.4-2.112 2.4-4.013-.462-.875-1.25-1.387-2.25-1.462-.6-.037-.825.013-1.4.313Zm2.15.863c1.262.637 1.225 2.537-.075 3.162C8.538 5.888 8.163 6 8 6c-.162 0-.537-.112-.825-.263-1.45-.7-1.287-2.762.263-3.3.525-.174.9-.137 1.462.138Z"
     />
     <path
       fill={color}
@@ -31,4 +31,4 @@ function PeopleIcon({ color, className, ...rest }: Icon) {
   )
 }
 
-export default PeopleIcon
+export default PeopleIcon;

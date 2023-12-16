@@ -1,13 +1,15 @@
 import classNames from 'classnames/bind';
 import React from 'react';
 import style from 'components/common/buttons/OutlineButton.module.scss'
-import { ButtonProps } from 'types/Button';
 
 const cx = classNames.bind(style);
 
-type OutlineButtonProps = ButtonProps & {
-  color: string;
-}
+type OutlineButtonProps = {
+  onClick: () => void;
+  label: string;
+  size: string;
+  color?: string;
+};
 
 function OutlineButton({ onClick, size = 'regular', label, color }: OutlineButtonProps) {
   return (

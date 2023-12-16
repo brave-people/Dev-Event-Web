@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon } from 'types/icon'
+import { Icon } from '../../types/Icon'
 
 function SaveIcon({ color, className, ...rest }: Icon) {
   return (

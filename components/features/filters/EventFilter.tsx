@@ -9,7 +9,7 @@ import FilterByCoast from 'components/features/filters/ByCoast/FilterByCoast';
 import SearchEvent from 'components/features/filters/searchEvent/SearchEvent';
 import DateBoard from 'components/common/date/DateBoard';
 import { getDateList } from 'lib/utils/dateUtil';
-import { reflactUrlContext } from 'lib/utils/urlUtil';
+import { reflactUrlContext } from '../../../lib/utils/UrlUtil';
 import { useRouter } from 'next/router';
 import { ToggleIcon } from 'components/icons';
 import { WindowContext } from 'context/window';

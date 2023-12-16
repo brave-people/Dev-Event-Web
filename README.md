@@ -27,3 +27,13 @@ $ npm install
 ```sh
 $ npm run dev
 ```
+
+## 배포 
+```sh
+# 배포
+$ vercel build && vercel deploy
+
+# prod 배포 
+$ vercel build && vercel deploy --prod
+```
+

@@ -36,8 +36,9 @@ type Props = {
   isEventNew?: () => boolean;
   isFavorite: () => boolean;
   onClickFavorite?: any;
-  childLast: boolean;
-  parentLast: boolean;
+  childLast?: boolean;
+  parentLast?: boolean;
+  isLast?: boolean;
 };
 
 const Item = ({

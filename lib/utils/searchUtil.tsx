@@ -1,5 +1,5 @@
-import { Event } from "model/event"
-import { reflactUrlContext } from "./urlUtil";
+import { Event } from 'model/event';
+import { reflactUrlContext } from './UrlUtil';
 
 export const checkSearch = (search: string | undefined, url: string, event: Event) => {
   const context = reflactUrlContext(url);
@@ -20,7 +20,7 @@ export const checkSearch = (search: string | undefined, url: string, event: Even
           if (eventTag[i].tag_name.includes(kwd))
           return (true);
         }
-      } else 
+      } else
         return (false);
     }
   } else {

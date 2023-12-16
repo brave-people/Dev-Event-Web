@@ -1,5 +1,5 @@
-import React from 'react'
-import { Icon } from 'types/icon'
+import React from 'react';
+import { Icon } from '../../types/Icon';
 
 const ShareIconMobile = ({ color, className, ...rest }: Icon) => {
   return (

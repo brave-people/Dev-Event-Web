@@ -5,7 +5,7 @@ import { ArrowBackIcon, ToggleIcon } from 'components/icons';
 import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
 import { isActive } from 'lib/utils/eventUtil';
-import { initUrl, reflactUrlContext } from 'lib/utils/urlUtil';
+import { initUrl, reflactUrlContext } from '../../../lib/utils/UrlUtil';
 import { EventResponse } from 'model/event';
 import React, { useState, useContext, useEffect } from 'react';
 import classNames from 'classnames/bind';

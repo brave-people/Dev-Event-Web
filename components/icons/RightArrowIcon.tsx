@@ -1,6 +1,6 @@
 import { WindowContext } from "context/window"
 import React, { useContext } from "react"
-import { Icon } from "types/icon"
+import { Icon } from '../../types/Icon'
 
 function RightArrowIcon({ color, className, ...rest }: Icon) {
   const { windowTheme } = useContext(WindowContext);

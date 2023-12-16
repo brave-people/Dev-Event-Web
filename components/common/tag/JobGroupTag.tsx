@@ -1,7 +1,7 @@
 import style from 'components/common/tag/JobGroupTag.module.scss';
 import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
-import { initUrl, parseUrl } from 'lib/utils/urlUtil';
+import { initUrl, parseUrl } from '../../../lib/utils/UrlUtil';
 import React, { useContext, useCallback } from 'react';
 import classNames from 'classnames/bind';
 import { useRouter } from 'next/router';
