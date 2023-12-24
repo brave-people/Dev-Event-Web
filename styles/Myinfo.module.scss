@@ -1,68 +1,17 @@
 @import '~styles/_mixin.scss';
 
-// todo: 하단 디자인에 합치기
-.sub-header__content {
-  .notice-title {
-    // h1의 우측으로 이동
-    float: left;
-  }
-
-  .underline {
-    width: 1080px;
-    height: 1px;
-    background: #D3D4D8;
-    gap: 8px;
-    transform: matrix(1, 0, 0, -1, 0, 0);
-    float: left;
-  }
-
-  .notice-alert {
-    // box - 형태
-    background-color: #FBFAF1;
-    border-radius: 4px;
-    // 추후 업데이트 예정 알림 박스의 감싼 요소 배경
-    width: 290px;
-    height: 40px;
-    float: left;
-    margin-left: 8px;
-    margin-bottom: 16px;
-    // 자식 요소의 가운데 정렬
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &__box {
-      // box - 위치
-      float: left;
-      // margin-top: 3px;
-      margin-right: 6px;
-      padding: 5px, 6px, 5px, 6px;
-      gap: 8px;
-      // box - 형태
-      border-radius: 4px;
-      width: 53px;
-      height: 24px;
-      // box 안의 글자
-      background-color: #F7F3CD;
-      color:  #80732D;
-      font-weight: 600;
-      // box 글자 정렬
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    &__txt {
-      // 위치 지정
-      float: left;
-      display: flex;
-      // 글자 형태
-      font-weight: 500;
-      color: #848273;
-    }
-  }
+.null-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.8rem;
+  color: #a8a8a8;
 }
-
 
 .info-container {
   display: flex;
@@ -76,10 +25,10 @@
   &__inner {
     display: flex;
     flex-direction: column;
-    max-width: 600px;
-    align-items: center; // todo check me
     width: 100%;
-    padding: 0px 10px 0px 10px;
+    max-width: 600px;
+    align-items: center; // 내정보 요소를 가운데 정렬
+    padding: 0 10px;
 
     .sub-header {
       display: flex;
@@ -91,14 +40,71 @@
         justify-content: space-between;
         align-items: flex-start;
 
-        h1 {
+        // 내 정보 h1 최상단
+        .notice-title {
+          float: left; // h1의 우측으로 이동
           margin-bottom: 16px;
           font-weight: 700;
           font-size: 24px;
-          line-height: 5.5px; // 28.8px
+          line-height: 5.5px;
           color: #313234;
         }
-      }
+
+        // 내 정보 하단 선
+        .underline {
+          width: 56rem;
+          height: 1px;
+          background: #D3D4D8;
+          gap: 8px;
+          transform: matrix(1, 0, 0, -1, 0, 0);
+          float: left;
+        }
+
+        .notice-alert {
+          // box - 형태
+          background-color: #FBFAF1;
+          border-radius: 4px;
+          // 추후 업데이트 예정 알림 박스의 감싼 요소 배경
+          width: 290px;
+          height: 40px;
+          float: left;
+          margin-left: 8px;
+          margin-bottom: 16px;
+          // 자식 요소의 가운데 정렬
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &__box {
+            // box - 위치
+            float: left;
+            margin-right: 6px;
+            padding: 5px 6px 5px 6px;
+            gap: 8px;
+            // box - 형태
+            border-radius: 4px;
+            width: 53px;
+            height: 24px;
+            // box 안의 글자
+            background-color: #F7F3CD;
+            color:  #80732D;
+            font-weight: 600;
+            // box 글자 정렬
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          &__txt {
+            // 위치 지정
+            float: left;
+            display: flex;
+            // 글자 형태
+            font-weight: 500;
+            color: #848273;
+          }
+        }
+      } // content
     }
 
     .info-form {
@@ -106,7 +112,7 @@
       padding-bottom: 48px;
       width: 600px;
       margin-bottom: 24px;
-      border-bottom: 2px solid #e9e9e9; // todo check me: 하단 선
+      border-bottom: 1px solid #e9e9e9;
 
       &__profile_image_box {
         display: flex;
@@ -142,6 +148,7 @@
           padding: 18px 16px 18px 16px;
           background: #F8F8F8;
           border-radius: 8px;
+
           .txt {
             color: #ABACB2;
             font-size: 16px;
@@ -161,7 +168,7 @@
         align-items: center;
         justify-content: left;
         width: 253px;
-        size: 14px;
+        font-size: 14px;
         color: #ABACB2;
       }
 
@@ -182,291 +189,299 @@
       }
 
       &__withdraw_box {
-        display: flex;
-        justify-content: left;
-        margin-left: auto;
-      }
-
-      &__item {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-        span {
-          color: #535353;
-          font-weight: 500;
-          font-size: 1rem;
-          line-height: 1.438rem;
-          padding-bottom: 0.688rem;
-        }
-
-        .input {
-          background: #ecf6ff;
-          border-radius: 10px;
-          border: none;
-          height: 2.875rem;
-          padding-left: 1.375rem;
-          font-weight: 400;
-          font-size: 1rem;
-          line-height: 1.438rem;
-          color: #535353;
-
-          .size--small {
-            width: 23.5rem;
-          }
-          .size--regular {
-            width: 30rem;
-          }
-        }
-      }
-    }
-
-    .delete-button {
-      align-self: flex-end;
-      padding-top: 1.313rem;
-      box-sizing: border-box;
-      border-radius: 30px;
-
-      button {
-        padding: 0.813rem 2.5rem 0.813rem 2.5rem;
-        height: 3rem;
-        font-weight: 500;
-        font-size: 0.875rem;
-        line-height: 1.25rem;
-        text-align: center;
-        cursor: pointer;
-        box-sizing: border-box;
-        border-radius: 30px;
-
-        color: #5ea8ed;
-        border: 1px solid #5ea8ed;
-        background-color: white;
-
-        &:hover {
-          &:before {
-            content: attr(data-hover);
-            font-weight: 500;
-            font-size: 0.875rem;
-            line-height: 1.25rem;
-            text-align: center;
-          }
-          font-size: 0px;
-        }
+        margin-right: 500px;
       }
     }
   }
 }
 
-.null-container {
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  font-weight: 400;
-  font-size: 1.5rem;
-  line-height: 1.8rem;
-  color: #a8a8a8;
-}
 
 @include tablet {
   .info-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #fff;
-    width: 100%;
-    height: 100vh;
-    min-width: 688px;
+    min-width: 29.5rem; // 전체 가로 폭
+    height: 720px;
+
     &__inner {
       display: flex;
       flex-direction: column;
-      width: 100%;
-      padding: 0px 20px 0px 20px;
+      padding: 0 10px;
 
       .sub-header {
-        display: flex;
-        flex-direction: column;
-        padding-top: 5.125rem;
+        width: 100%; // todo: check me
+        margin: auto;
+        justify-content: center; /* 수평 가운데 정렬 */
+        align-items: center; // 내정보 요소를 가운데 정렬
 
         &__content {
-          margin: 12px 0px;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: flex-start;
-          h1 {
-            margin: 0px;
-            font-weight: 500;
+          margin-top: 54px;
+
+          // 내 정보 h1 최상단
+          .notice-title {
+            float: left; // h1의 우측으로 이동
+            margin-bottom: 16px;
+            font-weight: 700;
             font-size: 18px;
-            line-height: 2.563rem;
-            color: #000000;
+            line-height: 5.5px;
+          }
+
+          // 내 정보 하단 선
+          // .underline {
+          //   width: 56rem; // 이 값을 조절해야지 상단 위치가 조절됨
+          //   height: 1px;
+          //   background: #D3D4D8;
+          //   gap: 8px;
+          //   transform: matrix(1, 0, 0, -1, 0, 0);
+          //   float: left;
+          // }
+
+          .notice-alert {
+            // box - 형태
+            background-color: #FBFAF1;
+            border-radius: 4px;
+            // 추후 업데이트 예정 알림 박스의 감싼 요소 배경
+            width: 255px;
+            height: 30px;
+            float: left;
+            padding-right: 8px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+
+            &__box {
+              // box - 위치
+              margin-right: 6px;
+              padding: 3px 4px;
+              gap: 8px;
+              // box - 형태
+              border-radius: 4px;
+              width: 44px;
+              height: 18px;
+              // box 안의 글자
+              font-size: 12px;
+              font-weight: 600;
+            }
+
+            &__txt {
+              font-size: 12px;
+            }
           }
         }
       }
 
-      // todo fix me
       .info-form {
-        padding: 3.875rem 0px;
-        display: grid;
-        grid-template-columns: 40% 45%;
-        column-gap: 5%;
-        row-gap: 1.938rem;
-        border-bottom: 2px solid #e9e9e9;
+        padding-top: 20px;
+        padding-bottom: 48px;
+        width: 472px;
 
-        &__item {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
+        margin-bottom: 24px;
 
-          span {
-            color: #535353;
-            font-weight: 500;
-            font-size: 13px;
-            line-height: 1.438rem;
-            padding-bottom: 0.688rem;
+        &__profile_image_box {
+          .profile {
+            border: 1px solid #F2F2F2 !important; // todo checkme: !important 사용 안하는 방법
+            border-radius: 100px;
           }
+        }
 
-          .input {
-            background: #ecf6ff;
-            border-radius: 10px;
-            border: none;
-            height: 2.875rem;
-            padding-left: 1.375rem;
-            font-weight: 400;
-            font-size: 13px;
-            line-height: 1.438rem;
-            width: 100%;
-            color: #535353;
+        // 이미지 아래 사람 이름
+        &__profile_txt_box {
+          // width: 600px;
+          width: 472px;
+          font-weight: 600;
+          padding-top: 6px;
+          font-size: 20px;
+          color: #313234;
+        }
 
-            .size--small {
-              width: 23.5rem;
+        &__auth_box {
+          margin-top: 18px;
+          margin-bottom: 16px;
+
+          .email_box {
+            width: 472px;
+            height: 56px;
+
+            padding: 18px 16px;
+            background: #F8F8F8;
+            border-radius: 8px;
+
+            .txt {
+              font-size: 16px;
             }
-            .size--regular {
-              width: 30rem;
+
+            .value {
+              font-size: 14px;
+              gap: 10px;
             }
           }
+        }
+
+        &__register_date {
+          width: 253px;
+          font-size: 14px;
+          color: #ABACB2;
+        }
+
+        &__register-info-button {
+          padding: 7px 8px 7px 9px;
+          gap: 8px;
+          width: 80px;
+          min-width: 75px;
+          height: 28px;
+          border-radius: 32px;
+          margin-left: 6px;
+          background-color: #EFFFE5;
+          font-weight: 600;
+          font-size: 14px;
+          letter-spacing: -0.02em;
+        }
+
+        &__withdraw_box {
+          margin-right: 380px;
         }
       }
     }
   }
 }
+
 @include mobile {
   .info-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #fff;
-    width: 100%;
-    height: 100vh;
-    min-width: 25.714rem;
+    min-width: 29.5rem; // 전체 가로 폭
+    height: 720px;
+
     &__inner {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      padding: 0px 20px 0px 20px;
+      padding: 0 10px;
 
       .sub-header {
-        display: flex;
-        flex-direction: column;
-        padding-top: 5.125rem;
+        padding-top: 85px;
+
 
         &__content {
-          margin: 12px 0px;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: flex-start;
-          h1 {
-            margin: 0px;
-            font-weight: 500;
-            font-size: 18px;
-            line-height: 2.563rem;
-            color: #000000;
+          margin-top: 54px;
+
+          // 내 정보 h1 최상단
+          .notice-title {
+            width: 80%;
+            float: left; // h1의 우측으로 이동
+            margin-bottom: 16px;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 5.5px;
+          }
+
+          // 내 정보 하단 선
+          // .underline {
+          //   width: 56rem; // 이 값을 조절해야지 상단 위치가 조절됨
+          //   height: 1px;
+          //   background: #D3D4D8;
+          //   gap: 8px;
+          //   transform: matrix(1, 0, 0, -1, 0, 0);
+          //   float: left;
+          // }
+
+          .notice-alert {
+            // box - 형태
+            background-color: #FBFAF1;
+            border-radius: 4px;
+            // 추후 업데이트 예정 알림 박스의 감싼 요소 배경
+            width: 255px;
+            height: 30px;
+            float: left;
+            padding-right: 8px;
+            padding-top: 6px;
+            padding-bottom: 6px;
+
+            &__box {
+              // box - 위치
+              margin-right: 6px;
+              padding: 3px 4px;
+              gap: 8px;
+              // box - 형태
+              border-radius: 4px;
+              width: 44px;
+              height: 18px;
+              // box 안의 글자
+              font-size: 12px;
+              font-weight: 600;
+            }
+
+            &__txt {
+              font-size: 12px;
+            }
           }
         }
       }
 
       .info-form {
-        padding: 2rem 0px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        border-bottom: 2px solid #e9e9e9;
+        padding-top: 20px;
+        padding-bottom: 48px;
+        width: 472px;
+        margin-bottom: 24px;
 
-        &__item {
-          width: 100%;
-          max-width: 470px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-
-          span {
-            color: #535353;
-            font-weight: 500;
-            font-size: 13px;
-            line-height: 1.438rem;
-            padding-bottom: 0.688rem;
+        &__profile_image_box {
+          .profile {
+            border: 1px solid #F2F2F2 !important; // todo checkme: !important 사용 안하는 방법
+            border-radius: 100px;
           }
+        }
 
-          .input {
-            background: #ecf6ff;
-            border-radius: 10px;
-            border: none;
-            height: 2.6rem;
-            padding-left: 1.375rem;
-            font-weight: 400;
-            font-size: 13px;
-            line-height: 1.438rem;
-            width: 100%;
-            color: #535353;
-            -webkit-text-fill-color: #535353;
-            opacity: 1;
-            .size--small {
-              width: 23.5rem;
+        // 이미지 아래 사람 이름
+        &__profile_txt_box {
+          width: 472px;
+          font-weight: 600;
+          padding-top: 6px;
+          font-size: 16px;
+          color: #313234;
+        }
+
+        &__auth_box {
+          margin-top: 18px;
+          margin-bottom: 16px;
+
+          .email_box {
+            width: 472px;
+            height: 56px;
+
+            padding: 18px 16px;
+            background: #F8F8F8;
+            border-radius: 8px;
+
+            .txt {
+              font-size: 16px;
             }
-            .size--regular {
-              width: 30rem;
+
+            .value {
+              font-size: 14px;
+              gap: 10px;
             }
           }
         }
-      }
-      .delete-button {
-        align-self: flex-end;
-        padding-top: 1.313rem;
-        box-sizing: border-box;
-        border-radius: 30px;
 
-        button {
-          padding: 0.5rem 2rem 0.5rem 2rem;
-          height: 2.5rem;
-          font-weight: 500;
-          font-size: 0.875rem;
-          line-height: 1.25rem;
-          text-align: center;
-          cursor: pointer;
-          box-sizing: border-box;
-          border-radius: 30px;
+        &__register_date {
+          width: 253px;
+          font-size: 14px;
+          color: #ABACB2;
+        }
 
-          color: #5ea8ed;
-          border: 1px solid #5ea8ed;
-          background-color: white;
+        &__register-info-button {
+          padding: 7px 8px 7px 9px;
+          gap: 8px;
+          width: 80px;
+          min-width: 75px;
+          height: 28px;
+          border-radius: 32px;
+          margin-left: 6px;
+          background-color: #EFFFE5;
+          font-weight: 600;
+          font-size: 14px;
+          letter-spacing: -0.02em;
+        }
 
-          &:hover {
-            &:before {
-              content: attr(data-hover);
-              font-weight: 500;
-              font-size: 0.875rem;
-              line-height: 1.25rem;
-              text-align: center;
-            }
-            font-size: 0px;
-          }
+        &__withdraw_box {
+          margin-right: 380px;
         }
       }
     }
   }
+
   .null-container {
     height: 100vh;
     width: 100%;
