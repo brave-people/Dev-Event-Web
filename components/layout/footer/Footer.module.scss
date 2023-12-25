@@ -29,41 +29,55 @@
       margin-top: 3rem;
     }
   }
+
   &__row {
     display: flex;
     flex-direction: row;
     align-items: center;
     position: absolute;
-    top: 40px;
+    bottom: 32px;
+    margin-right: -20px; // 아이콘 오른쪽 간격 위치
     right: 0;
   }
 }
 
-@media (max-width: 1200px) {
+
+@include tablet {
   .footer {
-    padding: 0 $tablet_padding;
-  }
+    padding: 32px 40px;
 
-  .footer__column {
-    .footer__desc, .footer__copyright {
-      font-size: 14px;
-      font-weight: 500;
+    &__column {
+      .footer__desc, .footer__copyright {
+        font-size: 14px;
+        font-weight: 500;
+      }
     }
-  }
 
-  .footer__row {
-    right: $tablet_padding;
+    // 바로가기 Github & Whale 아이콘
+    &__row {
+      right: 40px; // 옆 간격 * 2 해야 진짜 간격 나옴
+      bottom: 32px;
+    }
   }
 }
 
-@media (max-width: 1200px) {
+@include mobile {
   .footer {
-    height: inherit;
-    padding: 32px $tablet_padding 84px $tablet_padding;
-  }
+    padding: 32px 20px; 
+    margin-left: 20px;
+    margin-right: 20px;
 
-  .footer__row {
-    top: inherit;
-    bottom: $tablet_padding;
+    &__column {
+      .footer__desc, .footer__copyright {
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+
+    // 바로가기 Github & Whale 아이콘
+    &__row {
+      right: $tablet_padding;
+      bottom: 2px;
+    }
   }
 }
