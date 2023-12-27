@@ -4,12 +4,14 @@ import { useMyEvent } from 'lib/hooks/useSWR';
 import { DateUtil } from 'lib/utils/dateUtil';
 import * as ga from 'lib/utils/gTag';
 import { MyEvent, EventDate } from 'model/event';
-import style from 'styles/Myevent.module.scss';
+import style from 'styles/MyEvent.module.scss';
 import { mutate } from 'swr';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 import classNames from 'classnames/bind';
+import { useRouter } from 'next/router';
+import MyEventEmpty from './MyEventEmpty';
 
 const cn = classNames.bind(style);
 
@@ -17,8 +19,6 @@ const MyEventScheduledList = () => {
   const param = { filter: '' };
   const { myEvent, isError } = useMyEvent(param, true);
   const [futureEvent, setFutureEvent] = useState(new Array<MyEvent>());
-  const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
-  const [sharedEvent, setSharedEvent] = useState({});
 
   useEffect(() => {
     if (myEvent) {
@@ -37,11 +37,6 @@ const MyEventScheduledList = () => {
     }
   }, [myEvent]);
 
-  const handleShareInMobileSize = (data: Event) => {
-    setSharedEvent(data);
-    setShareModalIsOpen(true);
-  };
-
   if (isError) {
     return <div className={cn('null-container')}>내 이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
   }
@@ -59,6 +54,7 @@ const MyEventScheduledList = () => {
     return EventDate.end_date_time;
   };
 
+  // 완료 행사 클릭
   const checkEventDone = ({ endDate }: { endDate: string }) => {
     return DateUtil.isDone(endDate);
   };
@@ -67,14 +63,14 @@ const MyEventScheduledList = () => {
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: Number }) => {
     if (favoriteId && myEvent) {
       const filteredEvent = myEvent.filter((event) => event.favorite_id !== favoriteId);
-      mutate([`/front/v1/favorite/events`, param], [...filteredEvent], false);
+      await mutate([`/front/v1/favorite/events`, param], [...filteredEvent], false);
       await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
         favoriteId: favoriteId,
       });
     } else {
       alert('이벤트 정보가 없습니다!');
     }
-    mutate([`/front/v1/favorite/events`, param]);
+    await mutate([`/front/v1/favorite/events`, param]);
     ga.event({
       action: 'web_event_관심행사삭제버튼클릭',
       event_category: 'web_myevent',
@@ -107,10 +103,10 @@ const MyEventScheduledList = () => {
                       />
                     </div>
                   );
-                })}{' '}
+                })}
               </div>
             ) : (
-              <div className={cn('null-container')}>내가 찜한 개발자 행사가 없어요 📂</div>
+              <MyEventEmpty />
             )
           ) : (
             <div className={cn('null-container')}>

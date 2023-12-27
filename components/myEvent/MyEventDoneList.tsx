@@ -5,7 +5,7 @@ import { useMyEvent } from 'lib/hooks/useSWR';
 import { DateUtil } from 'lib/utils/dateUtil';
 import * as ga from 'lib/utils/gTag';
 import { MyEvent, EventDate } from 'model/event';
-import style from 'styles/Myevent.module.scss';
+import style from 'styles/MyEvent.module.scss';
 import { mutate } from 'swr';
 import React, { useEffect, useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';

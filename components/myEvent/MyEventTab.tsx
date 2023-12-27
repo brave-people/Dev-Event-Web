@@ -1,6 +1,6 @@
 import Layout from 'components/layout';
 import * as ga from 'lib/utils/gTag';
-import style from 'styles/Myevent.module.scss';
+import style from 'styles/MyEvent.module.scss';
 import { useState } from 'react';
 import React, { useEffect } from 'react';
 import type { ReactElement } from 'react';
@@ -9,7 +9,7 @@ import { useRouter } from 'next/router';
 
 const cn = classNames.bind(style);
 
-const MyEventTab = ({}: any) => {
+const MyEventTab = () => {
   const router = useRouter();
   const [tabMenu, setTabMenu] = useState({
     ongoing: false,
