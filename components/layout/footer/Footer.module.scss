@@ -3,7 +3,7 @@
 
 .footer {
   width: 100%;
-  max-width: 68.75rem;
+  max-width: 70rem;
   height: 200px;
   margin: 0 auto;
   display: flex;
@@ -36,7 +36,7 @@
     align-items: center;
     position: absolute;
     bottom: 32px;
-    margin-right: -20px; // 아이콘 오른쪽 간격 위치
+    padding-right: 14px;
     right: 0;
   }
 }
@@ -44,10 +44,14 @@
 
 @include tablet {
   .footer {
-    padding: 32px 40px;
+    padding: 32px $tablet_padding;
+    //padding: 32px 0;
+    display: block;
+    max-width: 1071px;
 
     &__column {
       .footer__desc, .footer__copyright {
+        display: inline-block;
         font-size: 14px;
         font-weight: 500;
       }
@@ -55,7 +59,7 @@
 
     // 바로가기 Github & Whale 아이콘
     &__row {
-      right: 40px; // 옆 간격 * 2 해야 진짜 간격 나옴
+      padding-right: $tablet_padding;
       bottom: 32px;
     }
   }
@@ -63,12 +67,13 @@
 
 @include mobile {
   .footer {
-    padding: 32px 20px; 
-    margin-left: 20px;
-    margin-right: 20px;
+    display: block;
+    padding: 32px 20px;
+    width: 100%;
 
     &__column {
       .footer__desc, .footer__copyright {
+        display: inline-block;
         font-size: 14px;
         font-weight: 500;
       }
@@ -76,8 +81,8 @@
 
     // 바로가기 Github & Whale 아이콘
     &__row {
-      right: $tablet_padding;
-      bottom: 2px;
+      right: 11px;
+      bottom: 0px;
     }
   }
 }
