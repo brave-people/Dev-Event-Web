@@ -15,7 +15,6 @@ import classNames from 'classnames/bind';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import WithdrawCancelButton from '../components/common/buttons/WithdrawCancelButton';
 import WithdrawOkButton from '../components/common/buttons/WithdrawOkButton';
 import Letter from '../components/features/letter/Letter';
 
@@ -38,11 +37,7 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   const { user, isError } = useUser();
 
   if (isError) {
-    return (
-      <div className={cx('null-container')}>
-        내 정보를 불러오는데 문제가 발생했습니다!
-      </div>
-    );
+    return <div className={cx('null-container')}>내 정보를 불러오는데 문제가 발생했습니다!</div>;
   }
 
   // 계정 탈퇴
@@ -76,9 +71,7 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
                 <h1 className={cx('notice-title')}>내 정보</h1>
                 <div className={cx('notice-alert')}>
                   <div className={cx('notice-alert__box')}>Notice</div>
-                  <div className={cx('notice-alert__txt')}>
-                    정보 수집은 추후 업데이트 예정이에요
-                  </div>
+                  <div className={cx('notice-alert__txt')}>정보 수집은 추후 업데이트 예정이에요</div>
                 </div>
                 <div className={cx('underline')}></div>
               </div>
@@ -89,11 +82,7 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
           <div className={cx('info-form')}>
             <div className={cx('info-form__profile_image_box')}>
               <Image
-                src={
-                  user && user.profile_image_link
-                    ? user.profile_image_link
-                    : '/icon/profile.svg'
-                }
+                src={user && user.profile_image_link ? user.profile_image_link : '/icon/profile.svg'}
                 width={104}
                 height={104}
                 className={cx('profile')}
@@ -108,16 +97,16 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
                 <div className={cx('txt')}>가입계정</div>
                 {/*  가입 유형 이미지 */}
                 <div className={cx('value')}>
-                  <Image src={'/icon/email.svg'} width={16} height={16} />
+                  <div className={cx('value__box')}>
+                    <Image src={'/icon/email.svg'} width={16} height={16} />
+                  </div>
                   {user?.email}
                 </div>
               </div>
             </div>
             <div className={cx('info-form__register_date')}>
               {dayjs(user?.register_date).format('YYYY년 MM월 DD일')}
-              <div className={cx('info-form__register-info-button')}>
-                가입일 🎉
-              </div>
+              <div className={cx('info-form__register-info-button')}>가입일 🎉</div>
             </div>
           </div>
           {/* // 사용자 상세 정보 */}

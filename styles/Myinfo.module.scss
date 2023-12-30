@@ -1,4 +1,5 @@
 @import '~styles/_mixin.scss';
+@import '~styles/_variables.scss';
 
 .null-container {
   height: 100vh;
@@ -25,7 +26,6 @@
   &__inner {
     display: flex;
     flex-direction: column;
-    width: 100%;
     max-width: 600px;
     align-items: center; // 내정보 요소를 가운데 정렬
     padding: 0 10px;
@@ -155,10 +155,25 @@
           }
           .value {
             display: flex;
+            justify-content: center;
+            align-items: center;
             color: #747579;
             font-size: 14px;
             margin-left: auto;
             gap: 10px;
+          }
+
+          .value__box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            width: 24px;
+            height: 24px;
+            padding: 1px;
+            border-radius: 4px;
+            border: 1px solid var(--light-Gray5, #E7E8EC);
+            background: #FFF;
           }
         }
       }
@@ -176,7 +191,6 @@
         padding: 7px 8px 7px 9px;
         gap: 8px;
         width: 80px;
-        min-width: 75px;
         height: 28px;
         border-radius: 32px;
         margin-left: 6px;
@@ -223,16 +237,6 @@
             font-size: 18px;
             line-height: 5.5px;
           }
-
-          // 내 정보 하단 선
-          // .underline {
-          //   width: 56rem; // 이 값을 조절해야지 상단 위치가 조절됨
-          //   height: 1px;
-          //   background: #D3D4D8;
-          //   gap: 8px;
-          //   transform: matrix(1, 0, 0, -1, 0, 0);
-          //   float: left;
-          // }
 
           .notice-alert {
             // box - 형태
@@ -323,8 +327,7 @@
         &__register-info-button {
           padding: 7px 8px 7px 9px;
           gap: 8px;
-          width: 80px;
-          min-width: 75px;
+          width: 75px;
           height: 28px;
           border-radius: 32px;
           margin-left: 6px;
@@ -344,7 +347,7 @@
 
 @include mobile {
   .info-container {
-    min-width: 29.5rem; // 전체 가로 폭
+    min-width: 9.5rem; // 전체 가로 폭
     height: 720px;
 
     &__inner {
@@ -366,16 +369,6 @@
             font-size: 16px;
             line-height: 5.5px;
           }
-
-          // 내 정보 하단 선
-          // .underline {
-          //   width: 56rem; // 이 값을 조절해야지 상단 위치가 조절됨
-          //   height: 1px;
-          //   background: #D3D4D8;
-          //   gap: 8px;
-          //   transform: matrix(1, 0, 0, -1, 0, 0);
-          //   float: left;
-          // }
 
           .notice-alert {
             // box - 형태
@@ -437,7 +430,8 @@
           margin-bottom: 16px;
 
           .email_box {
-            width: 472px;
+            // width: 472px;
+            width: 100%;
             height: 56px;
 
             padding: 18px 16px;
@@ -464,8 +458,7 @@
         &__register-info-button {
           padding: 7px 8px 7px 9px;
           gap: 8px;
-          width: 80px;
-          min-width: 75px;
+          width: 75px;
           height: 28px;
           border-radius: 32px;
           margin-left: 6px;
