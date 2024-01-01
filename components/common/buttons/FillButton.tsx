@@ -13,20 +13,13 @@ type FillButtonProps = ButtonProps & {
   rounded: boolean;
 };
 
-function FillButton({
-  onClick,
-  label,
-  color,
-  icon,
-  iconStyle,
-  rounded,
-}: FillButtonProps) {
+const FillButton = ({ onClick, label, color, icon, iconStyle, rounded }: FillButtonProps) => {
   return (
     <button className={cx('button', `color--${color}`, 'default', `${rounded && 'type--rounded'}`)} onClick={onClick}>
       {icon && getIconByName(icon, iconStyle, '#ffffff')}
       {label}
     </button>
   );
-}
+};
 
 export default FillButton;

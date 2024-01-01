@@ -88,9 +88,7 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
                 className={cx('profile')}
               />
             </div>
-            <div className={cx('info-form__profile_txt_box')}>
-              {user?.username}
-            </div>
+            <div className={cx('info-form__profile_txt_box')}>{user?.username}</div>
             {/* 사용자 상세 정보 */}
             <div className={cx('info-form__auth_box')}>
               <div className={cx('email_box')}>
@@ -110,7 +108,6 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
             </div>
           </div>
           {/* // 사용자 상세 정보 */}
-
           <div className={cx('info-form__withdraw_box')}>
             <WithdrawOkButton
               onClick={() => {
