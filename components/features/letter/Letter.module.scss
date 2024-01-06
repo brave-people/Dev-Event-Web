@@ -126,6 +126,7 @@
       display: block;
 
       .letter__container {
+        display: block;
         width: 100%;
 
         .image__container {
@@ -134,7 +135,8 @@
       }
 
       .letter__container {
-        position: relative;
+        align-items: center;
+        justify-content: space-between;
 
         .letter__title {
           font-size: 24px;
@@ -151,27 +153,21 @@
         }
 
         .image__container {
-          //margin-left: auto;
-          //flex-grow: 1;
-          //width: 64px;
-          //position: absolute;
-          //top: 0;
-          //right: 0;
-          //transform: translate(200%, -25%);
+          position: absolute;
+          top: 50px;
+          right: 18px; // 이메일 아이콘 절대 위치 설정
+          transform: translate(25%, -25%); // 조절 가능
+        }
+
+        .email_button_container {
+          margin-top: 24px; // 이전 스타일 유지
         }
       }
     }
 
     .button__container {
-      //height: 50px;
-      //position: absolute;
-      //top: 0;
-      //transform: inherit;
-      //bottom : 0px;
-      //margin-left: auto;
-      //margin-top: 24px;
-      //display: block;
-      //margin-right: $mobile_padding - 20px;
+      margin-right: $mobile_padding; // 이전 스타일 유지
+      margin-top: 24px; // 이전 스타일 유지
     }
   }
 
