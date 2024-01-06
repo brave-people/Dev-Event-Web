@@ -10,8 +10,8 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 import classNames from 'classnames/bind';
-import { useRouter } from 'next/router';
 import MyEventEmpty from './MyEventEmpty';
+import Image from 'next/image';
 
 const cn = classNames.bind(style);
 
@@ -60,7 +60,7 @@ const MyEventScheduledList = () => {
   };
 
   // 내 북마크 행사 삭제
-  const deleteMyEvent = async ({ favoriteId }: { favoriteId: Number }) => {
+  const deleteMyEvent = async ({ favoriteId }: { favoriteId: number }) => {
     if (favoriteId && myEvent) {
       const filteredEvent = myEvent.filter((event) => event.favorite_id !== favoriteId);
       await mutate([`/front/v1/favorite/events`, param], [...filteredEvent], false);
@@ -88,6 +88,23 @@ const MyEventScheduledList = () => {
                 {futureEvent.map((event: MyEvent) => {
                   return (
                     <div className={cn('wrapper')}>
+                      <div className={cn('wrapper__status')}>
+                        <div className={cn('wrapper__status__tab')}>
+                          <div className={cn('wrapper__status__count')}> {futureEvent.length}개 </div>
+                          {/*<div className={'end_event_container'}>*/}
+                          {/*  <Image*/}
+                          {/*      className={cn('check_box')}*/}
+                          {/*      src={'/icon/check_box.svg'}*/}
+                          {/*      alt="done event"*/}
+                          {/*      priority={true}*/}
+                          {/*      width={18}*/}
+                          {/*      height={18}*/}
+                          {/*  />*/}
+                          완료 행사 보기
+                            {/*<div className={'wrapper__status__count'}> 완료 행사 보기 </div>*/}
+                          {/*</div>*/}
+                        </div>
+                      </div>
                       <Item
                         key={event.dev_event.id}
                         data={event.dev_event}
@@ -115,7 +132,6 @@ const MyEventScheduledList = () => {
           )}
         </div>
       </section>
-      {/*<ShareModal isOpen={shareModalIsOpen} onClick={() => setShareModalIsOpen(false)} data={sharedEvent}></ShareModal>*/}
     </div>
   );
 };

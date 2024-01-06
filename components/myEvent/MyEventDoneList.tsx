@@ -10,6 +10,7 @@ import { mutate } from 'swr';
 import React, { useEffect, useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 import classNames from 'classnames/bind';
+import MyEventEmpty from './MyEventEmpty';
 
 const cn = classNames.bind(style);
 
@@ -112,7 +113,7 @@ const MyEventDoneList = () => {
                 })}
               </div>
             ) : (
-              <div className={cn('null-container')}>내가 찜한 개발자 행사가 없어요 📂</div>
+              <MyEventEmpty />
             )
           ) : (
             <div className={cn('null-container')}>
@@ -121,7 +122,6 @@ const MyEventDoneList = () => {
           )}
         </div>
       </section>
-      {/*<ShareModal />*/}
     </div>
   );
 };
