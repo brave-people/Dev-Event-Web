@@ -3,7 +3,7 @@
 
 .footer {
   width: 100%;
-  max-width: 70rem;
+  max-width: 1104px;
   height: 200px;
   margin: 0 auto;
   display: flex;
@@ -36,7 +36,6 @@
     align-items: center;
     position: absolute;
     bottom: 32px;
-    padding-right: 14px;
     right: 0;
   }
 }
@@ -47,7 +46,7 @@
     padding: 32px $tablet_padding;
     //padding: 32px 0;
     display: block;
-    max-width: 1071px;
+    max-width: 1271px;
 
     &__column {
       .footer__desc, .footer__copyright {
@@ -81,8 +80,8 @@
 
     // 바로가기 Github & Whale 아이콘
     &__row {
-      right: 11px;
-      bottom: 0px;
+      right: 18px;
+      bottom: 0;
     }
   }
 }
