@@ -10,59 +10,128 @@
   align-items: center;
 
   .inner {
-    width: 100%;
-    max-width: 68.75rem;
+    width: 1109px;
     margin: 0 auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
 
     .letter__container {
       display: flex;
-      align-items: flex-start;
-      justify-content: flex-start;
+      align-items: center;
+      width: 1109px;
 
       .letter__title {
-        font-size: 32px;
+        padding-right: 16px;
+        font-size: 40px;
+        font-style: normal;
+        font-weight: 400;
         color: var(--gray-1);
+        line-height: 120%; /* 48px */
+        letter-spacing: -0.8px;
 
         span {
           margin: 0 5px;
-          font-weight: bold;
+          font-weight: 700;
         }
       }
 
       .letter__desc {
         margin-top: 10px;
-        font-size: 18px;
+        font-size: 24px;
         color: var(--gray-1);
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%;
+        letter-spacing: -0.48px;
       }
 
       .image__container {
         position: relative;
         width: 146px;
         height: 109px;
+        padding-right: 16px;
       }
     }
   }
+}
+
+.email_button_container {
+  display: flex;
+  margin-left: auto;
 }
 
 .break__line {
   display: none;
 }
 
-@media (max-width: 1200px) {
+@include tablet {
   .letter {
+    padding: 0 $tablet_padding;
+    height: 140px;
+
     .inner {
-      padding: 0 $tablet_padding;
+      width: 100%;
+      max-width: 1071px;
+      margin: 0 auto;
+
+      .letter__container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        .letter__title {
+          font-size: 24px;
+          font-weight: 600;
+          color: var(--gray-1);
+          line-height: 120%; /* 48px */
+          letter-spacing: -0.8px;
+
+          span {
+            margin: 0 5px;
+            font-weight: bold;
+          }
+        }
+
+        .letter__desc {
+          padding-right: 16px;
+          margin-top: 10px;
+          font-size: 16px;
+          font-weight: 500;
+        }
+
+        .image__container {
+          width: 80px;
+          height: 80px;
+        }
+      }
     }
+  }
+
+  .button__container {
+    max-width: 115px;
+    max-height: 48px;
+    font-size: 14px;
   }
 }
 
-@media (max-width: 900px) {
+@include mobile {
   .letter {
+    height: 256px;
+    width: 100%;
+    align-items: normal;
+    position: relative;
+    padding: 40px $mobile_padding calc(28px) $mobile_padding;
+
     .inner {
-      align-items: end;
+      display: block;
+
+      .letter__container {
+        width: 100%;
+
+        .image__container {
+          height: 50px;
+        }
+      }
 
       .letter__container {
         position: relative;
@@ -82,47 +151,31 @@
         }
 
         .image__container {
-          width: 64px;
-          position: absolute;
-          top: 0;
-          right: 0;
-          transform: translate(200%, -25%);
-        }
-      }
-    }
-  }
-
-  .break__line {
-    display: block;
-  }
-}
-
-@media (max-width: 600px) {
-  .letter {
-    height: inherit;
-    position: relative;
-    padding-top: 40px;
-    padding-bottom: calc(40px + 48px);
-
-    .inner {
-      display: block;
-
-      .letter__container {
-        .image__container {
-          height: 50px;
-          position: absolute;
-          top: 0;
-          transform: inherit;
+          //margin-left: auto;
+          //flex-grow: 1;
+          //width: 64px;
+          //position: absolute;
+          //top: 0;
+          //right: 0;
+          //transform: translate(200%, -25%);
         }
       }
     }
 
     .button__container {
-      margin-top: 24px;
-      display: block;
-      position: absolute;
-      right: $tablet_padding;
-      bottom: 32px;
+      //height: 50px;
+      //position: absolute;
+      //top: 0;
+      //transform: inherit;
+      //bottom : 0px;
+      //margin-left: auto;
+      //margin-top: 24px;
+      //display: block;
+      //margin-right: $mobile_padding - 20px;
     }
+  }
+
+  .break__line {
+    display: block;
   }
 }

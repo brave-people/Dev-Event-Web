@@ -1,14 +1,10 @@
-import FillButton from 'components/common/buttons/FillButton';
 import style from 'components/features/letter/Letter.module.scss';
 import classNames from 'classnames/bind';
 import Image from 'next/image';
 import Link from 'next/link';
+import EmailSubscribeButton from '../../common/buttons/EmailSubscribeButton';
 
 const cn = classNames.bind(style);
-
-const onClick = () => {
-  return;
-};
 
 const Letter = () => {
   return (
@@ -23,30 +19,26 @@ const Letter = () => {
               소식을 받아보세요
             </div>
             <div className={cn('letter__desc')}>
-              일요일 저녁 8시 개발자 행사 소식을
-              <br className={cn('break__line')} />
+              일요일 저녁 8시 개발자 행사 소식을 <br className={cn('break__line')} />
               메일로 보내드려요
             </div>
           </div>
           <div className={cn('image__container')}>
             <Image
               src="/icon/letter_icon.svg"
+              width={146}
+              height={140}
               alt="letter__icon"
               layout="fill"
               priority={true}
             />
           </div>
+          <Link href={'https://github.com/brave-people/Dev-Event-Subscribe'}>
+            <a className={cn('email_button_container')} target="_blank">
+              <EmailSubscribeButton />
+            </a>
+          </Link>
         </div>
-        <Link href={'https://github.com/brave-people/Dev-Event-Subscribe'}>
-          <a className={cn('button__container')} target="_blank">
-            <FillButton
-              onClick={onClick}
-              label="무료 구독하기"
-              color="primary"
-              rounded={true}
-            />
-          </a>
-        </Link>
       </div>
     </section>
   );
