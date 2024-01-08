@@ -5,12 +5,12 @@ import { ArrowBackIcon, ToggleIcon } from 'components/icons';
 import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
 import { isActive } from 'lib/utils/eventUtil';
-import { initUrl, reflactUrlContext } from '../../../lib/utils/UrlUtil';
 import { EventResponse } from 'model/event';
 import React, { useState, useContext, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { initUrl, reflactUrlContext } from '../../../lib/utils/UrlUtil';
 
 const cn = classNames.bind(style);
 
@@ -37,21 +37,21 @@ function FilterSearchModal({ events, isError }: Props) {
         type: false,
       });
       if (search !== undefined) {
-        handleUrl(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search))
+        handleUrl(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
         router.push(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
       }
     }, 400);
-  }
+  };
 
   useEffect(() => {
-    setFilterActive(isActive(jobGroupList, eventType, location, coast))
-    
+    setFilterActive(isActive(jobGroupList, eventType, location, coast));
+
     return () => {
       setHidden(false);
-      setFilterActive(isActive(jobGroupList, eventType, location, coast))
+      setFilterActive(isActive(jobGroupList, eventType, location, coast));
       handleSearch(undefined);
-    }
-  }, [])
+    };
+  }, []);
 
   return (
     <main className={cn('container', hidden && 'hidden')}>

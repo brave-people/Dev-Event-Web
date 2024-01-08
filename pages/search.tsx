@@ -1,37 +1,37 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
-import Layout from 'components/layout';
-import type { ReactElement } from 'react';
-import classNames from 'classnames/bind';
-import style from 'styles/Home.module.scss';
-import { GetServerSideProps } from 'next';
-import cookie from 'cookie';
-import { AuthContext } from 'context/auth';
-import LoginModal from 'components/common/modal/LoginModal';
 import Banner from 'components/common/banner/banner';
-import FilteredEventList from 'components/events/FilteredEventList';
-import { EventResponse } from 'model/event';
-import Letter from 'components/features/letter/Letter';
-import Head from "next/head";
-import { EventContext } from 'context/event';
-import { WindowContext } from 'context/window';
-import { blockMouseScroll, isModalOpen } from 'lib/utils/windowUtil';
+import FilterDateModal from 'components/common/modal/FilterDateModal';
 import FilterSearchModal from 'components/common/modal/FilterSearchModal';
 import FilterTagModal from 'components/common/modal/FilterTagModal';
-import FilterDateModal from 'components/common/modal/FilterDateModal';
+import LoginModal from 'components/common/modal/LoginModal';
+import FilteredEventList from 'components/events/FilteredEventList';
+import Letter from 'components/features/letter/Letter';
+import Layout from 'components/layout';
+import { AuthContext } from 'context/auth';
+import { EventContext } from 'context/event';
+import { WindowContext } from 'context/window';
+import cookie from 'cookie';
 import { useScheduledEvents } from 'lib/hooks/useSWR';
+import { blockMouseScroll, isModalOpen } from 'lib/utils/windowUtil';
+import { EventResponse } from 'model/event';
+import style from 'styles/Home.module.scss';
+import React, { useEffect, useState, useContext, useRef } from 'react';
+import type { ReactElement } from 'react';
+import classNames from 'classnames/bind';
+import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 
 const cn = classNames.bind(style);
 
 type Props = {
   isLoggedIn: boolean;
   fallbackData: EventResponse[];
-}
+};
 
 const Search = ({ isLoggedIn, fallbackData }: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const [keyword, setKeyword] = useState<string | undefined>(undefined);
-  const { jobGroupList, eventType, location, coast, search, date } = useContext(EventContext)
+  const { jobGroupList, eventType, location, coast, search, date } = useContext(EventContext);
   const { modalState } = useContext(WindowContext);
   const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
 
@@ -39,12 +39,12 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
 
   useEffect(() => {
     setKeyword(`
-      ${(jobGroupList !== undefined && jobGroupList?.length !== 0) ? `${jobGroupList?.join(',')}` : ''} 
-      ${eventType !== undefined ?  `${eventType},` : ''}
+      ${jobGroupList !== undefined && jobGroupList?.length !== 0 ? `${jobGroupList?.join(',')}` : ''} 
+      ${eventType !== undefined ? `${eventType},` : ''}
       ${location !== undefined ? `${location},` : ''} 
       ${coast !== undefined ? `${coast},` : ''} 
-      ${search !== undefined ? `${search}` : ''}`)
-      
+      ${search !== undefined ? `${search}` : ''}`);
+
     if (isLoggedIn) {
       authContext.login();
     } else {
@@ -61,15 +61,15 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
       bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
       setLoginModalIsOpen(false);
       setKeyword(undefined);
-    }
+    };
   }, [isLoggedIn, modalState, keyword, search, date]);
 
   return (
-    <main
-      ref={bodyRef}
-      className={cn('main')}>
+    <main ref={bodyRef} className={cn('main')}>
       <Head>
-        <title>{keyword !== undefined ? `${keyword} - 데브이벤트 행사 키워드 검색` : '데브이벤트 행사 키워드 검색'}</title>
+        <title>
+          {keyword !== undefined ? `${keyword} - 데브이벤트 행사 키워드 검색` : '데브이벤트 행사 키워드 검색'}
+        </title>
         <meta name="description" content={`${keyword} 행사, 데브이벤트에서 찾아보세요!`} />
         <meta
           name="keywords"
@@ -85,25 +85,15 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
       {modalState.currentModal === 0 ? (
         <>
           <Banner />
-          <section 
-            className={cn('section')}>
-            <FilteredEventList
-              events={scheduledEvents}
-              isError={isError}
-            />
+          <section className={cn('section')}>
+            <FilteredEventList events={scheduledEvents} isError={isError} />
           </section>
           <Letter />
         </>
       ) : null}
-      {isModalOpen(modalState.currentModal, 1) &&
-      <FilterSearchModal
-        events={scheduledEvents}
-        isError={isError}
-      />}
-      {isModalOpen(modalState.currentModal, 2) && 
-        <FilterTagModal />}
-      {isModalOpen(modalState.currentModal, 3)  &&
-        <FilterDateModal />}
+      {isModalOpen(modalState.currentModal, 1) && <FilterSearchModal events={scheduledEvents} isError={isError} />}
+      {isModalOpen(modalState.currentModal, 2) && <FilterTagModal />}
+      {isModalOpen(modalState.currentModal, 3) && <FilterDateModal />}
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
     </main>
   );
@@ -123,7 +113,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       return {
         props: {
           isLoggedIn: true,
-          fallbackData: events
+          fallbackData: events,
         },
       };
     }
