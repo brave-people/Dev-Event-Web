@@ -63,12 +63,10 @@
     }
 
     &__button {
-      display: flex;
+      margin:auto;
       width: 239px;
       height: 56px;
       padding: 4px 10px;
-      justify-content: center;
-      align-items: center;
       gap: 10px;
       border-radius: 100px;
       border: 1px solid var(--light-Gray2, #747579);
