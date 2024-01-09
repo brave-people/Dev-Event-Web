@@ -36,8 +36,9 @@ type Props = {
   isEventNew?: () => boolean;
   isFavorite: () => boolean;
   onClickFavorite?: any;
-  childLast: boolean;
-  parentLast: boolean;
+  childLast?: boolean;
+  parentLast?: boolean;
+  isLast?: boolean;
 };
 
 const Item = ({
@@ -56,6 +57,7 @@ const Item = ({
   const { windowX, windowTheme } = useContext(WindowContext);
   const { search } = useContext(EventContext);
   const imgPath = windowTheme ? '/default/event-thumbnail-light.svg' : '/default/event-thumbnail-dark.svg';
+
   const handleShare = () => {
     setIsOpen(true);
     navigator.clipboard.writeText(data.event_link);
@@ -180,6 +182,7 @@ const Item = ({
                     <div className={cn('wrap')}>
                       <span className={cn(isDone ? 'host__done' : 'host')}>{data.organizer}</span>
                     </div>
+                    {/* 공유 & 북마크 */}
                     <div className={cn('item__buttons')}>
                       <button className={cn(`button`, `like-button`, 'laptop')} onClick={handleShare}>
                         <ShareIcon color="rgba(171, 172, 178, 1)" className="button" />
@@ -198,6 +201,7 @@ const Item = ({
                         />
                       </button>
                     </div>
+                    {/* // 공유 & 북마크 */}
                   </div>
                   <div className={cn('item__content_title__container')}>
                     <div className={cn(isDone ? 'item__content__title__done' : 'item__content__title')}>
@@ -209,22 +213,28 @@ const Item = ({
                 <div className={cn('item__content__desc')}>
                   <span className={cn('wrap')}>
                     <div className={cn('date')}>
+                      {/* 행사 시간 유형 */}
                       <span className={cn(isDone ? 'date__type__done' : 'date__type')}>
                         {data.event_time_type === 'DATE' ? '일시 ' : '접수 '}
                       </span>
+                      {/* 행사 시작 시간 */}
                       <span className={cn(isDone ? `date__date__done` : 'date__date')}>{getEventDate()}</span>
+                      {/* 행사 종료 시간 */}
                       <span className={cn(isDone ? 'date__date__done__mobile' : 'date__date__mobile')}>
                         {getEventDate()}
                       </span>
                     </div>
                   </span>
                   <div className={cn('item__content__desc__tags')}>
+                    {/* 태그 (온/오프라인) */}
                     {data.tags.map((tag: TagResponse) => {
                       const type = getTagType(tag.tag_name);
                       if (type !== 'location') return;
                       return <FilterTag key={tag.id} label={tag.tag_name} size="regular" type="location" />;
                     })}
+                    {/* 태그 (행사 유형) */}
                     <FilterTag label={getTagName(data.tags, 'eventType')} size="regular" type="eventType" />
+                    {/* 태그 (비용) */}
                     <FilterTag label={getTagName(data.tags, 'coast')} size="regular" type="coast" />
                     {data.tags.map((tag: TagResponse) => {
                       const type = getTagType(tag.tag_name);

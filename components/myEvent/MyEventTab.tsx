@@ -1,15 +1,15 @@
+import Layout from 'components/layout';
+import * as ga from 'lib/utils/gTag';
+import style from 'styles/MyEvent.module.scss';
 import { useState } from 'react';
 import React, { useEffect } from 'react';
-import Layout from 'components/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
-import style from 'styles/Myevent.module.scss';
 import { useRouter } from 'next/router';
-import * as ga from 'lib/utils/gTag';
 
 const cn = classNames.bind(style);
 
-const EventTab = ({}: any) => {
+const MyEventTab = () => {
   const router = useRouter();
   const [tabMenu, setTabMenu] = useState({
     ongoing: false,
@@ -26,7 +26,7 @@ const EventTab = ({}: any) => {
   return (
     <div className={cn('tab__header')}>
       <div
-        className={cn('tab__header--menu', tabMenu.ongoing === true ? 'selected' : null)}
+        className={cn('tab__header--menu', tabMenu.ongoing ? 'selected' : null)}
         onClick={() => {
           setTabMenu({ ongoing: true, done: false });
           router.push('/myevent?tab=ongoing');
@@ -41,7 +41,7 @@ const EventTab = ({}: any) => {
       </div>
 
       <div
-        className={cn('tab__header--menu', tabMenu.done === true ? 'selected' : null)}
+        className={cn('tab__header--menu', tabMenu.done ? 'selected' : null)}
         onClick={(event) => {
           setTabMenu({ ongoing: false, done: true });
           router.push('/myevent?tab=done');
@@ -58,7 +58,8 @@ const EventTab = ({}: any) => {
   );
 };
 
-EventTab.getLayout = function getLayout(page: ReactElement) {
+MyEventTab.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>;
 };
-export default EventTab;
+
+export default MyEventTab;

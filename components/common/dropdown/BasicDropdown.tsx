@@ -4,7 +4,7 @@ import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
 import { useOnClickOutside } from 'lib/hooks/useOnClickOutside';
 import * as ga from 'lib/utils/gTag';
-import { initUrl, parseUrl } from 'lib/utils/urlUtil';
+import { initUrl, parseUrl } from '../../../lib/utils/UrlUtil';
 import { useContext, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import { useRouter } from 'next/router';

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Icon } from 'types/icon'
-import classNames from 'classnames/bind'
+import { Icon } from '../../types/Icon'
+import classNames from 'classnames/bind';
 import style from 'components/icons/Icon.module.scss';
 
 const cn = classNames.bind(style);

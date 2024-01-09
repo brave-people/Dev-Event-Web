@@ -1,5 +1,5 @@
 import React from "react"
-import { Icon } from "types/icon"
+import { Icon } from '../../types/Icon'
 import style from './Icon.module.scss'
 import classNames from "classnames/bind"
 

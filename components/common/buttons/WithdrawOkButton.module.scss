@@ -1,0 +1,24 @@
+.withdraw {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: 95px; // 7.4375rem; // 119px
+  height: 3rem; // 48px
+  background: #FFFFFF;
+  border: 1px solid #EF737B;
+  border-radius: 6px;
+
+  /* font */
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1rem; // 16px
+  line-height: 100%;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: #E8424C;
+
+  &:hover {
+    background: #FCF2F3;
+  }
+}

@@ -1,34 +1,40 @@
-import classNames from 'classnames/bind';
-import React from 'react';
 import style from 'components/common/modal/DeleteAccountModal.module.scss';
+import React from 'react';
 import Modal from 'react-modal';
-import FillButton from 'components/common/buttons/FillButton';
-import OutlineButton from 'components/common/buttons/OutlineButton';
+import classNames from 'classnames/bind';
+import WithdrawCancelButton from '../buttons/WithdrawCancelButton';
+import WithdrawOkButton from '../buttons/WithdrawOkButton';
 
 const cx = classNames.bind(style);
 
-function DeleteAccountModal({ isOpen, onClick, onCancel }: any) {
+export interface DeleteAccountModalProps {
+  isOpen?: boolean;
+  onClick?: () => void;
+  onCancel?: () => void;
+}
+
+function DeleteAccountModal({
+  isOpen,
+  onClick,
+  onCancel,
+}: DeleteAccountModalProps) {
   return (
-    <Modal isOpen={isOpen} className={cx('modal')} overlayClassName={cx('overlay')} onRequestClose={onClick}>
+    <Modal
+      isOpen={isOpen as boolean}
+      className={cx('modal')}
+      overlayClassName={cx('overlay')}
+      onRequestClose={onCancel}
+    >
       <span className={cx('modal__title')}>정말 탈퇴하시겠습니까?</span>
       <span className={cx('modal__desc')}>
         탈퇴를 하시면 회원님의 모든 정보가 삭제됩니다.
         <br /> 삭제된 정보는 다시 복구할 수 없습니다.
       </span>
       <div className={cx('modal__buttons')}>
-        <OutlineButton 
-          label="취소하기" 
-          color="grey" 
-          onClick={onCancel}
-          />
-        <div className={cx('wrapper')}>
-          <FillButton 
-            onClick={onClick}
-            label="탈퇴하기"
-            color="error"
-            rounded={false}
-          />
-        </div>
+        {/* 탈퇴 버튼 */}
+        <WithdrawOkButton onClick={onClick} />
+        {/* 탈퇴 취소 버튼 */}
+        <WithdrawCancelButton onRequestClose={onCancel} />
       </div>
     </Modal>
   );

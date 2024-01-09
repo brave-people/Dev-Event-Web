@@ -10,62 +10,133 @@
   align-items: center;
 
   .inner {
-    width: 100%;
-    max-width: 68.75rem;
+    width: 1109px;
     margin: 0 auto;
     display: flex;
     align-items: center;
-    justify-content: space-between;
 
     .letter__container {
       display: flex;
-      align-items: flex-start;
-      justify-content: flex-start;
+      align-items: center;
+      width: 1109px;
 
       .letter__title {
-        font-size: 32px;
+        padding-right: 16px;
+        font-size: 40px;
+        font-style: normal;
+        font-weight: 400;
         color: var(--gray-1);
+        line-height: 120%; /* 48px */
+        letter-spacing: -0.8px;
 
         span {
           margin: 0 5px;
-          font-weight: bold;
+          font-weight: 700;
         }
       }
 
       .letter__desc {
         margin-top: 10px;
-        font-size: 18px;
+        font-size: 24px;
         color: var(--gray-1);
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%;
+        letter-spacing: -0.48px;
       }
 
       .image__container {
         position: relative;
         width: 146px;
         height: 109px;
+        padding-right: 16px;
       }
     }
   }
+}
+
+.email_button_container {
+  display: flex;
+  margin-left: auto;
 }
 
 .break__line {
   display: none;
 }
 
-@media (max-width: 1200px) {
+@include tablet {
   .letter {
+    padding: 0 $tablet_padding;
+    height: 140px;
+
     .inner {
-      padding: 0 $tablet_padding;
+      width: 100%;
+      max-width: 1071px;
+      margin: 0 auto;
+
+      .letter__container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        .letter__title {
+          font-size: 24px;
+          font-weight: 600;
+          color: var(--gray-1);
+          line-height: 120%; /* 48px */
+          letter-spacing: -0.8px;
+
+          span {
+            margin: 0 5px;
+            font-weight: bold;
+          }
+        }
+
+        .letter__desc {
+          padding-right: 16px;
+          margin-top: 10px;
+          font-size: 16px;
+          font-weight: 500;
+        }
+
+        .image__container {
+          width: 80px;
+          height: 80px;
+        }
+      }
     }
+  }
+
+  .button__container {
+    max-width: 115px;
+    max-height: 48px;
+    font-size: 14px;
   }
 }
 
-@media (max-width: 900px) {
+@include mobile {
   .letter {
+    height: 256px;
+    width: 100%;
+    align-items: normal;
+    position: relative;
+    padding: 40px $mobile_padding calc(28px) $mobile_padding;
+
     .inner {
-      align-items: end;
+      display: block;
 
       .letter__container {
-        position: relative;
+        display: block;
+        width: 100%;
+
+        .image__container {
+          height: 50px;
+        }
+      }
+
+      .letter__container {
+        align-items: center;
+        justify-content: space-between;
 
         .letter__title {
           font-size: 24px;
@@ -82,47 +153,25 @@
         }
 
         .image__container {
-          width: 64px;
           position: absolute;
-          top: 0;
-          right: 0;
-          transform: translate(200%, -25%);
+          top: 50px;
+          right: 18px; // 이메일 아이콘 절대 위치 설정
+          transform: translate(25%, -25%); // 조절 가능
         }
-      }
-    }
-  }
 
-  .break__line {
-    display: block;
-  }
-}
-
-@media (max-width: 600px) {
-  .letter {
-    height: inherit;
-    position: relative;
-    padding-top: 40px;
-    padding-bottom: calc(40px + 48px);
-
-    .inner {
-      display: block;
-
-      .letter__container {
-        .image__container {
-          height: 50px;
-          position: absolute;
-          top: 0;
-          transform: inherit;
+        .email_button_container {
+          margin-top: 24px; // 이전 스타일 유지
         }
       }
     }
 
     .button__container {
-      margin-top: 24px;
-      display: block;
-      position: absolute;
-      right: $tablet_padding;
-      bottom: 32px;
+      margin-right: $mobile_padding; // 이전 스타일 유지
+      margin-top: 24px; // 이전 스타일 유지
     }
+  }
+
+  .break__line {
+    display: block;
   }
 }

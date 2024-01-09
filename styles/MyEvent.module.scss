@@ -1,0 +1,147 @@
+@import '~styles/_mixin.scss';
+@import '~styles/_variables.scss';
+
+.sub-header {
+  width: 100%;
+  padding: 136px $laptop_padding 0;
+
+  &__inner {
+    max-width: 59.5rem; // '내 이벤트' 가로 폭
+    margin: 0 auto; // 가운데 정렬
+    padding-top: 0 $laptop_padding;
+    padding-bottom: 10px; // 내 이벤트 카드
+  }
+
+  h1 {
+    padding-bottom: 10px; // 글자와 선 사이 간격
+    margin-bottom: 40px; // 선과 다음 영역의 간격
+    border-bottom: 1px solid #D3D4D8;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 700;
+    color: var(--light-Gray1, #313234);
+    line-height: 120%;
+    letter-spacing: -0.8px;
+  }
+}
+
+.check_box {
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  border: 1.5px solid var(--light-Primary, #2C4CEF);
+  background: var(--light-Primary, #2C4CEF);
+}
+
+.check_box_done {
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  border: 1.5px solid var(--light-Gray4, #D3D4D8);
+  background-color: var(--light-Background1, #D3D4D8);
+  //background-color: black;
+  //background-color: red;
+
+}
+
+// 갯수, 완료 행사 조회
+.section {
+  display: block;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+
+  &__list {
+    max-width: 62rem; // 카드 가로 길이
+    margin: 0 auto; // 가운데 정렬
+  }
+
+  &__status {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%;
+    letter-spacing: -0.28px;
+
+    // 행사 갯수
+    &__count {
+      margin-right: 10px;
+      border-right: 1px solid;
+      border-color: var(--gray-4);
+      height: 20px;
+    }
+  }
+}
+
+// 내 이벤트 하위 영역
+.wrapper {
+  display: block;
+  max-width: 70rem;
+  margin: 0 auto; // 가운데 정렬
+
+
+  // 갯수, 완료 정보
+  &__status {
+    padding-left: 20px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%;
+    letter-spacing: -0.28px;
+
+    &__tab {
+      float: left;
+      display: flex;
+      align-items: center;
+      text-align: center;
+
+      &__count {
+        float: left;
+        color: red;
+        margin-right: 10px;
+      }
+
+      &__done {
+        float: left;
+        color: red !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &__txt {
+          padding-left: 8px;
+          color: blue;
+        }
+      }
+    }
+  }
+}
+
+.tab {
+  display: block;
+
+  &__body {
+    min-height: 45vh; // 행사가 존재할때의 높이
+  }
+}
+
+@include tablet {
+  .sub-header {
+    padding: 136px $tablet_padding 0;
+
+    h1 {
+      font-size: 27px;
+    }
+  }
+}
+
+@include mobile {
+  .sub-header {
+    padding: 136px $mobile_padding 0;
+
+    h1 {
+      font-size: 24px;
+    }
+  }
+}

@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import style from 'styles/Myevent.module.scss';
-import classNames from 'classnames/bind';
 import Item from 'components/common/item/Item';
-import { useMyEvent } from 'lib/hooks/useSWR';
 import { deleteMyEventApi } from 'lib/api/delete';
-import { MyEvent, EventDate } from 'model/event';
-import { mutate } from 'swr';
-import { ThreeDots } from 'react-loader-spinner';
-import * as ga from 'lib/utils/gTag';
-import ShareModal from 'components/common/modal/ShareModal';
+import { useMyEvent } from 'lib/hooks/useSWR';
 import { DateUtil } from 'lib/utils/dateUtil';
+import * as ga from 'lib/utils/gTag';
+import { MyEvent, EventDate } from 'model/event';
+import style from 'styles/MyEvent.module.scss';
+import { mutate } from 'swr';
+import React, { useEffect, useState } from 'react';
+import { ThreeDots } from 'react-loader-spinner';
+import classNames from 'classnames/bind';
+import Image from 'next/image';
+import MyEventEmpty from './MyEventEmpty';
+import { useRouter } from 'next/router';
 
 const cn = classNames.bind(style);
 
-const DoneEventList = () => {
+const MyEventDoneList = () => {
   const param = { filter: '' };
   const { myEvent, isLoading, isError } = useMyEvent(param, true);
   const [oldEvent, setOldEvent] = useState(new Array<MyEvent>());
@@ -82,6 +84,19 @@ const DoneEventList = () => {
     });
   };
 
+  const router = useRouter();
+  const [tabMenu, setTabMenu] = useState({
+    ongoing: false,
+    done: false,
+  });
+
+  useEffect(() => {
+    setTabMenu({
+      ongoing: router.query.tab === 'ongoing' || router.query.tab == null,
+      done: router.query.tab === 'done',
+    });
+  }, [router.query.tab]);
+
   return (
     <div className={cn('tab__body')}>
       <section className={cn('section')}>
@@ -93,6 +108,33 @@ const DoneEventList = () => {
                   const isLast = idx === oldEvent.length - 1;
                   return (
                     <div className={cn('wrapper')}>
+                      <div className={cn('wrapper__status')}>
+                        <div className={cn('wrapper__status__tab')}>
+                          <div className={cn('wrapper__status__tab__count')}> {oldEvent.length}개 </div>
+                          <div
+                            className={cn('wrapper__status__tab__done')}
+                            onClick={() => {
+                              setTabMenu({ ongoing: true, done: false });
+                              router.push('/myevent?tab=ongoing');
+                              ga.event({
+                                action: 'web_event_진행중인행사탭클릭',
+                                event_category: 'web_myevent',
+                                event_label: '내이벤트',
+                              });
+                            }}
+                          >
+                            <Image
+                              className={cn('check_box')}
+                              src={'/icon/check_box.svg'}
+                              alt="done event"
+                              priority={true}
+                              width={18}
+                              height={18}
+                            />
+                            <div className={cn('wrapper__status__tab__done__txt')}>완료 행사 보기</div>
+                          </div>
+                        </div>
+                      </div>
                       <Item
                         key={event.dev_event.id}
                         data={event.dev_event}
@@ -112,7 +154,7 @@ const DoneEventList = () => {
                 })}
               </div>
             ) : (
-              <div className={cn('null-container')}>내가 찜한 개발자 행사가 없어요 📂</div>
+              <MyEventEmpty />
             )
           ) : (
             <div className={cn('null-container')}>
@@ -121,9 +163,8 @@ const DoneEventList = () => {
           )}
         </div>
       </section>
-      <ShareModal />
     </div>
   );
 };
 
-export default DoneEventList;
+export default MyEventDoneList;

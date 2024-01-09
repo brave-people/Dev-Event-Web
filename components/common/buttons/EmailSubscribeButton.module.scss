@@ -1,0 +1,50 @@
+@import '~styles/_mixin.scss';
+
+.email_subscribe {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+
+  gap: 0.5rem;
+  width: 220px; // 디자인과 다르게 사이즈 조정
+  height: 56px;
+  border-radius: 100px;
+  padding: 4px 10px;
+  background-color: var(--primary);
+  border: none;
+
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 100%;
+  text-align: center;
+  letter-spacing: -0.4px;
+  color: var(--background-1);
+
+  &:hover {
+    background: #1C1C1E;
+  }
+}
+
+
+@include tablet {
+  .email_subscribe {
+    max-width: 155px;
+    height: 48px;
+    padding: 4px 40px;
+    font-size: 14px;
+  }
+}
+
+@include mobile {
+  .email_subscribe {
+    max-width: 155px;
+    height: 48px;
+    padding: 4px 40px;
+    font-size: 14px;
+    right: 20px;
+    bottom: 20px;
+  }
+}
+

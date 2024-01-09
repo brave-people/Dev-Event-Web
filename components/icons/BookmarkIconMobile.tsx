@@ -1,5 +1,5 @@
 import style from 'components/icons/Icon.module.scss';
-import { Icon } from 'types/icon';
+import { Icon } from '../../types/Icon';
 import React from 'react';
 import classNames from 'classnames/bind';
 

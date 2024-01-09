@@ -1,0 +1,127 @@
+@import '~styles/_mixin.scss';
+@import '~styles/_variables.scss';
+
+.sub-header {
+  width: 100%;
+  padding-top: 136px;
+
+  &__inner {
+    max-width: 67.5rem;
+    margin: 0 auto; // 가운데 정렬
+    padding-top: 0 $laptop_padding;
+  }
+
+  h1 {
+    padding-bottom: 10px; // 글자와 선 사이 간격
+    margin-bottom: 0;
+    border-bottom: 1px solid #D3D4D8;
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 700;
+    color: var(--light-Gray1, #313234);
+    line-height: 120%;
+    letter-spacing: -0.8px;
+  }
+}
+
+.section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.empty-event-container {
+  max-width: 1080px;
+  height: 344px;
+  margin: 114px 0;
+
+  &__inner {
+    &__title {
+      color: #313234;
+      font-size: 24px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 150%; /* 36px */
+      letter-spacing: -0.48px;
+      padding-bottom: 16px;
+    }
+
+    &__icon {
+      padding-bottom: 116px;
+    }
+
+    &__info {
+      color: #747579;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 150%; /* 24px */
+      letter-spacing: -0.32px;
+      padding-top: 32px;
+      padding-bottom: 16px;
+    }
+
+    &__button {
+      margin:auto;
+      width: 239px;
+      height: 56px;
+      padding: 4px 10px;
+      gap: 10px;
+      border-radius: 100px;
+      border: 1px solid var(--light-Gray2, #747579);
+      color: var(--light-Gray1, #313234);
+      background-color: white;
+      text-align: center;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 100%; /* 20px */
+      letter-spacing: -0.4px;
+    }
+  }
+}
+
+@include tablet {
+  .empty-event-container {
+    &__inner {
+      &__title {
+        font-size: 18px;
+        padding-bottom: 15px;
+      }
+
+      &__info {
+        padding-top: 28px;
+        padding-bottom: 8px;
+      }
+
+      &__button {
+        width: 169px;
+        height: 47px;
+        font-size: 15px;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .empty-event-container {
+    &__inner {
+      &__title {
+        font-size: 18px;
+        padding-bottom: 15px;
+      }
+
+      &__info {
+        padding-top: 28px;
+        padding-bottom: 8px;
+      }
+
+      &__button {
+        width: 169px;
+        height: 47px;
+        font-size: 15px;
+      }
+    }
+  }
+}

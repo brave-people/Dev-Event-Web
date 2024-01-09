@@ -1,6 +1,7 @@
 import { WindowContext } from "context/window"
+import { Icon } from '../../types/Icon';
 import { useContext } from "react"
-import { Icon } from "types/icon"
+
 const ArrowBackIcon = ({ color, ...rest }: Icon) => {
   const { windowTheme } = useContext(WindowContext)
   return (
@@ -18,5 +19,5 @@ const ArrowBackIcon = ({ color, ...rest }: Icon) => {
     />
   </svg>
 )
-} 
-export default ArrowBackIcon
+}
+export default ArrowBackIcon;

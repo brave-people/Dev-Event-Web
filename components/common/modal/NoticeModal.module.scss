@@ -1,4 +1,5 @@
 @import '~styles/_mixin.scss';
+@import '~styles/_variables.scss';
 
 .notice {
   position: static;
@@ -6,7 +7,6 @@
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 10;
   display: flex;
   align-items: center;
   animation: appearIn;
@@ -15,7 +15,6 @@
   z-index: 999;
 
   &__inner {
-    width: 68.75rem;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -27,8 +26,8 @@
       justify-content: flex-start;
 
       .notice__title {
-        font-size: 16px;
-        font-weight: bold;
+        font-size: 15px;
+        font-weight: 700;
         color: var(--primary);
       }
     }
@@ -50,43 +49,21 @@
 }
 
 @include laptop {
-  @media (max-width: 1075px) {
     .notice {
       &__inner {
-        width: 58.75rem;
+        width: 1104px;
       }
     }
-  }
-  @media (max-width: 950px) {
-    .notice {
-      &__inner {
-        width: 50.75rem;
-      }
-    }
-  }
-  @media (max-width: 800px) {
-    .notice {
-      &__inner {
-        width: 42.75rem;
-      }
-    }
-  }
 }
 
 @include tablet {
   .notice {
     &__inner {
-      width: 34.75rem;
-    }
-  }
-  @media (max-width: 500px) {
-    .notice {
-      &__inner {
-        width: 26.75rem;
-        .notice__content {
-          .notice__title {
-            font-size: 14px;
-          }
+      padding: 0 $tablet_padding;
+      width: 100%;
+      .notice__content {
+        .notice__title {
+          font-size: 14px;
         }
       }
     }
@@ -96,7 +73,8 @@
 @include mobile {
   .notice {
     &__inner {
-      width: 24.75rem;
+      padding: 0 $mobile_padding;
+      width: 100%;
       .notice__content {
         .notice__title {
           font-size: 13px;
@@ -104,8 +82,14 @@
       }
     }
   }
-}
 
+  // 너무 작을 경우 텍스트가 3줄에 걸쳐서 나오므로 보이지 않도록 수정
+  @media (max-width: 195px) {
+    .notice {
+        display: none;
+    }
+  }
+}
 
 .status--delete {
   display: none;

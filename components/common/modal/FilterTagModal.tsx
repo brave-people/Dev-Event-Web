@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind'
 import style from 'components/common/modal/FilterTagModal.module.scss'
 import { DeleteIcon } from 'components/icons'
-import { reflactUrlContext } from 'lib/utils/urlUtil'
+import { reflactUrlContext } from '../../../lib/utils/UrlUtil'
 import { useRouter } from 'next/router'
 import FilterByEventType from 'components/features/filters/ByEventType/FilterByEventType'
 import FilterByJobGroup from 'components/features/filters/ByJobGroup/FilterByJobGroup'

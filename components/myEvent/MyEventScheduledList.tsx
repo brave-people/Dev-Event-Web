@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
-import style from 'styles/Myevent.module.scss';
-import classNames from 'classnames/bind';
-import { useMyEvent } from 'lib/hooks/useSWR';
 import Item from 'components/common/item/Item';
 import { deleteMyEventApi } from 'lib/api/delete';
-import { MyEvent, EventDate } from 'model/event';
-import { mutate } from 'swr';
-import { ThreeDots } from 'react-loader-spinner';
-import * as ga from 'lib/utils/gTag';
-import ShareModal from 'components/common/modal/ShareModal';
+import { useMyEvent } from 'lib/hooks/useSWR';
 import { DateUtil } from 'lib/utils/dateUtil';
+import * as ga from 'lib/utils/gTag';
+import { MyEvent, EventDate } from 'model/event';
+import style from 'styles/MyEvent.module.scss';
+import { mutate } from 'swr';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
+import { ThreeDots } from 'react-loader-spinner';
+import classNames from 'classnames/bind';
+import Image from 'next/image';
+import router, { useRouter } from 'next/router';
+import MyEventEmpty from './MyEventEmpty';
 
 const cn = classNames.bind(style);
 
-const ScheduledEventList = () => {
+const MyEventScheduledList = () => {
   const param = { filter: '' };
   const { myEvent, isError } = useMyEvent(param, true);
   const [futureEvent, setFutureEvent] = useState(new Array<MyEvent>());
-  const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
-  const [sharedEvent, setSharedEvent] = useState({});
 
   useEffect(() => {
     if (myEvent) {
@@ -38,11 +38,6 @@ const ScheduledEventList = () => {
     }
   }, [myEvent]);
 
-  const handleShareInMobileSize = (data: Event) => {
-    setSharedEvent(data);
-    setShareModalIsOpen(true);
-  };
-
   if (isError) {
     return <div className={cn('null-container')}>내 이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
   }
@@ -60,27 +55,42 @@ const ScheduledEventList = () => {
     return EventDate.end_date_time;
   };
 
+  // 완료 행사 클릭
   const checkEventDone = ({ endDate }: { endDate: string }) => {
     return DateUtil.isDone(endDate);
   };
 
-  const deleteMyEvent = async ({ favoriteId }: { favoriteId: Number }) => {
+  // 내 북마크 행사 삭제
+  const deleteMyEvent = async ({ favoriteId }: { favoriteId: number }) => {
     if (favoriteId && myEvent) {
       const filteredEvent = myEvent.filter((event) => event.favorite_id !== favoriteId);
-      mutate([`/front/v1/favorite/events`, param], [...filteredEvent], false);
+      await mutate([`/front/v1/favorite/events`, param], [...filteredEvent], false);
       await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
         favoriteId: favoriteId,
       });
     } else {
       alert('이벤트 정보가 없습니다!');
     }
-    mutate([`/front/v1/favorite/events`, param]);
+    await mutate([`/front/v1/favorite/events`, param]);
     ga.event({
       action: 'web_event_관심행사삭제버튼클릭',
       event_category: 'web_myevent',
       event_label: '관심행사',
     });
   };
+
+  const router = useRouter();
+  const [tabMenu, setTabMenu] = useState({
+    ongoing: false,
+    done: false,
+  });
+
+  useEffect(() => {
+    setTabMenu({
+      ongoing: router.query.tab === 'ongoing' || router.query.tab == null,
+      done: router.query.tab === 'done',
+    });
+  }, [router.query.tab]);
 
   return (
     <div className={cn('tab__body')}>
@@ -92,6 +102,33 @@ const ScheduledEventList = () => {
                 {futureEvent.map((event: MyEvent) => {
                   return (
                     <div className={cn('wrapper')}>
+                      <div className={cn('wrapper__status')}>
+                        <div className={cn('wrapper__status__tab')}>
+                          <div className={cn('wrapper__status__tab__count')}> {futureEvent.length}개 </div>
+                          <div
+                            className={cn('wrapper__status__tab__done')}
+                            onClick={() => {
+                              setTabMenu({ ongoing: true, done: false });
+                              router.push('/myevent?tab=done');
+                              ga.event({
+                                action: 'web_event_진행중인행사탭클릭',
+                                event_category: 'web_myevent',
+                                event_label: '내이벤트',
+                              });
+                            }}
+                          >
+                            <Image
+                              className={cn('check_box_done')}
+                              src={'/icon/check_box.svg'}
+                              alt="done event"
+                              priority={true}
+                              width={18}
+                              height={18}
+                            />
+                            <div className={cn('wrapper__status__tab__done__txt')}>완료 행사 보기</div>
+                          </div>
+                        </div>
+                      </div>
                       <Item
                         key={event.dev_event.id}
                         data={event.dev_event}
@@ -104,14 +141,13 @@ const ScheduledEventList = () => {
                         onClickFavorite={() => {
                           deleteMyEvent({ favoriteId: event.favorite_id });
                         }}
-                        onClickShareInMobileSize={handleShareInMobileSize}
                       />
                     </div>
                   );
-                })}{' '}
+                })}
               </div>
             ) : (
-              <div className={cn('null-container')}>내가 찜한 개발자 행사가 없어요 📂</div>
+              <MyEventEmpty />
             )
           ) : (
             <div className={cn('null-container')}>
@@ -120,9 +156,8 @@ const ScheduledEventList = () => {
           )}
         </div>
       </section>
-      <ShareModal isOpen={shareModalIsOpen} onClick={() => setShareModalIsOpen(false)} data={sharedEvent}></ShareModal>
     </div>
   );
 };
 
-export default ScheduledEventList;
+export default MyEventScheduledList;

@@ -13,8 +13,6 @@
   border-bottom: 1px solid $light-gray-4;
 
   &__inner {
-    width: 100%;
-    max-width: 68.75rem;
     display: flex;
     min-height: 3.5rem;
     margin: 0 auto;
@@ -144,8 +142,22 @@
   }
 }
 
-@media (max-width: 1200px) {
+@include laptop {
+  .header__inner {
+    max-width: 1104px;
+  }
+}
+
+@include tablet {
   .header__inner {
     padding: 0 $tablet_padding;
+    width: 100%;
+  }
+}
+
+@include mobile {
+  .header__inner {
+    padding: 0 $mobile_padding;
+    width: 100%;
   }
 }

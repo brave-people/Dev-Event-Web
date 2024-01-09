@@ -1,16 +1,12 @@
-import React, { useEffect } from 'react';
 import Layout from 'components/layout';
+import MyEventBody from 'components/myEvent/MyEventBody';
+import { AuthContext } from 'context/auth';
+import cookie from 'cookie';
+import style from 'styles/MyEvent.module.scss';
+import React, { useEffect } from 'react';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
-import style from 'styles/Myevent.module.scss';
-import Link from 'next/link';
-import { MdOutlineArrowForwardIos } from 'react-icons/md';
-import EventBody from 'components/myEvent/EventBody';
-import cookie from 'cookie';
-import EventTab from 'components/myEvent/EventTab';
 import { GetServerSideProps } from 'next';
-import { AuthContext } from 'context/auth';
-import * as ga from 'lib/utils/gTag';
 
 const cn = classNames.bind(style);
 
@@ -31,27 +27,11 @@ const MyEvent = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
         <div className={cn('sub-header__inner')}>
           <div className={cn('sub-header__content')}>
             <h1>내 이벤트</h1>
-            <span>내가 찜한 개발자 행사 정보들을 한눈에 모아봐요</span>
           </div>
-          <Link href="/myinfo">
-            <span
-              className={cn('sub-header__link')}
-              onClick={() => {
-                ga.event({
-                  action: 'web_event_내정보보기버튼클릭',
-                  event_category: 'web_myevent',
-                  event_label: '내정보이동',
-                });
-              }}
-            >
-              <span>내 정보 보기 </span>
-              <MdOutlineArrowForwardIos size={16} />
-            </span>
-          </Link>
         </div>
-        <EventTab />
+        {/*<MyEventTab />*/} {/*  todo active me */}
       </header>
-      <EventBody />
+      <MyEventBody />
     </>
   );
 };

@@ -92,6 +92,14 @@
   }
 }
 
+@include tablet {
+
+}
+
+@include mobile {
+
+}
+
 @keyframes appearIn {
   0% {
     opacity: 0%;

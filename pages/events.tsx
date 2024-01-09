@@ -1,31 +1,31 @@
-import React, { useEffect, useContext, useState, useRef } from 'react';
-import Layout from 'components/layout';
-import type { ReactElement } from 'react';
-import classNames from 'classnames/bind';
-import style from 'styles/Home.module.scss';
-import { GetServerSideProps } from 'next';
-import cookie from 'cookie';
-import { AuthContext } from 'context/auth';
-import LoginModal from 'components/common/modal/LoginModal';
-import { EventResponse } from 'model/event';
-import ScheduledEventList from 'components/events/ScheduledEventList';
-import Head from 'next/head';
 import Banner from 'components/common/banner/banner';
-import Letter from 'components/features/letter/Letter';
-import { WindowContext } from 'context/window';
-import { blockMouseScroll, isModalOpen } from 'lib/utils/windowUtil';
+import FilterDateModal from 'components/common/modal/FilterDateModal';
 import FilterSearchModal from 'components/common/modal/FilterSearchModal';
 import FilterTagModal from 'components/common/modal/FilterTagModal';
-import FilterDateModal from 'components/common/modal/FilterDateModal';
-import { useScheduledEvents } from 'lib/hooks/useSWR';
+import LoginModal from 'components/common/modal/LoginModal';
+import ScheduledEventList from 'components/events/ScheduledEventList';
+import Letter from 'components/features/letter/Letter';
+import Layout from 'components/layout';
+import { AuthContext } from 'context/auth';
 import { EventContext } from 'context/event';
+import { WindowContext } from 'context/window';
+import cookie from 'cookie';
+import { useScheduledEvents } from 'lib/hooks/useSWR';
+import { blockMouseScroll, isModalOpen } from 'lib/utils/windowUtil';
+import { EventResponse } from 'model/event';
+import style from 'styles/Home.module.scss';
+import React, { useEffect, useContext, useState, useRef } from 'react';
+import type { ReactElement } from 'react';
+import classNames from 'classnames/bind';
+import { GetServerSideProps } from 'next';
+import Head from 'next/head';
 
 const cn = classNames.bind(style);
 
 type Props = {
   isLoggedIn: boolean;
-  fallbackData: EventResponse[]
-}
+  fallbackData: EventResponse[];
+};
 
 const Events = ({ isLoggedIn, fallbackData }: Props) => {
   const authContext = React.useContext(AuthContext);
@@ -51,14 +51,11 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
       document.body.style.overflow = 'unset';
       bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
       setLoginModalIsOpen(false);
-    }
+    };
   }, [isLoggedIn, modalState, date]);
 
-
   return (
-    <main 
-      ref={bodyRef}
-      className={cn('main')}>
+    <main ref={bodyRef} className={cn('main')}>
       <Head>
         <title>Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!</title>
         <meta
@@ -73,7 +70,10 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
           property="og:image"
           content="https://drive.google.com/uc?export=download&id=1-Jqapt5h4XtxXQbgX07kI3ipgk3V6ESE"
         />
-        <meta property="og:title" content="Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!" />
+        <meta
+          property="og:title"
+          content="Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!"
+        />
         <meta
           property="og:description"
           content="개발자를 위한 {웨비나, 컨퍼런스, 해커톤, 네트워킹} 소식을 알려드립니다."
@@ -82,25 +82,15 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
       {modalState.currentModal === 0 && (
         <>
           <Banner />
-          <section 
-            className={cn('section')}>
-            <ScheduledEventList
-              events={scheduledEvents}
-              isError={isError}
-              />
+          <section className={cn('section')}>
+            <ScheduledEventList events={scheduledEvents} isError={isError} />
           </section>
           <Letter />
         </>
       )}
-      {isModalOpen(modalState.currentModal, 1) &&
-      <FilterSearchModal
-        events={scheduledEvents}
-        isError={isError}
-      />}
-      {isModalOpen(modalState.currentModal, 2) && 
-        <FilterTagModal />}
-      {isModalOpen(modalState.currentModal, 3)  &&
-        <FilterDateModal />}
+      {isModalOpen(modalState.currentModal, 1) && <FilterSearchModal events={scheduledEvents} isError={isError} />}
+      {isModalOpen(modalState.currentModal, 2) && <FilterTagModal />}
+      {isModalOpen(modalState.currentModal, 3) && <FilterDateModal />}
       <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
     </main>
   );

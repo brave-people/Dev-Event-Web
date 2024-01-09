@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Icon } from "types/icon"
+import { Icon } from '../../types/Icon'
 
 const FilledPlusIcon = ({ color, className, ...rest }: Icon) => (
   <svg

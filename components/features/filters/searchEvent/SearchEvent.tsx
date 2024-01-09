@@ -3,11 +3,11 @@ import style from 'components/features/filters/searchEvent/SearchEvent.module.sc
 import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
 import * as ga from 'lib/utils/gTag';
-import { initUrl, parseUrl } from 'lib/utils/urlUtil';
 import { UrlContext } from 'types/Context';
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { useRouter } from 'next/router';
+import { initUrl, parseUrl } from '../../../../lib/utils/UrlUtil';
 
 const cn = classNames.bind(style);
 

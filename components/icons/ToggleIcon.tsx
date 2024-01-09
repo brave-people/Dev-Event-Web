@@ -1,6 +1,6 @@
 import { WindowContext } from "context/window";
 import { useContext } from "react";
-import { Icon } from "types/icon"
+import { Icon } from '../../types/Icon'
 
 const ToggleIcon = ({ color, ...rest }: Icon) => {
   const { windowTheme } = useContext(WindowContext)
