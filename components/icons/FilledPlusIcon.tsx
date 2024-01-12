@@ -1,5 +1,5 @@
-import * as React from "react"
-import { Icon } from '../../types/Icon'
+import * as React from 'react';
+import { Icon } from '../../types/Icon';
 
 const FilledPlusIcon = ({ color, className, ...rest }: Icon) => (
   <svg
@@ -22,5 +22,5 @@ const FilledPlusIcon = ({ color, className, ...rest }: Icon) => (
       </clipPath>
     </defs>
   </svg>
-)
+);
 export default FilledPlusIcon;

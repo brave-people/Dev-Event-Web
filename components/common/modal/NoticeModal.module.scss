@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   animation: appearIn;
-  animation-duration: .5s;
+  animation-duration: 0.5s;
   animation-timing-function: linear;
   z-index: 999;
 
@@ -39,7 +39,7 @@
       align-items: center;
       justify-content: center;
       border-radius: 50%;
-      
+
       &:hover {
         background-color: rgb(213, 215, 229);
         cursor: pointer;
@@ -49,11 +49,11 @@
 }
 
 @include laptop {
-    .notice {
-      &__inner {
-        width: 1104px;
-      }
+  .notice {
+    &__inner {
+      width: 1104px;
     }
+  }
 }
 
 @include tablet {
@@ -86,7 +86,7 @@
   // 너무 작을 경우 텍스트가 3줄에 걸쳐서 나오므로 보이지 않도록 수정
   @media (max-width: 195px) {
     .notice {
-        display: none;
+      display: none;
     }
   }
 }

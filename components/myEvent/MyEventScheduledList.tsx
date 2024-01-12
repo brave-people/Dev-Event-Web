@@ -39,7 +39,11 @@ const MyEventScheduledList = () => {
   }, [myEvent]);
 
   if (isError) {
-    return <div className={cn('null-container')}>내 이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
+    return (
+      <div className={cn('null-container')}>
+        내 이벤트 정보를 불러오는데 문제가 발생했습니다!
+      </div>
+    );
   }
 
   const getEventEndDate = (EventDate: EventDate) => {
@@ -63,8 +67,14 @@ const MyEventScheduledList = () => {
   // 내 북마크 행사 삭제
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: number }) => {
     if (favoriteId && myEvent) {
-      const filteredEvent = myEvent.filter((event) => event.favorite_id !== favoriteId);
-      await mutate([`/front/v1/favorite/events`, param], [...filteredEvent], false);
+      const filteredEvent = myEvent.filter(
+        (event) => event.favorite_id !== favoriteId
+      );
+      await mutate(
+        [`/front/v1/favorite/events`, param],
+        [...filteredEvent],
+        false
+      );
       await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
         favoriteId: favoriteId,
       });
@@ -104,7 +114,10 @@ const MyEventScheduledList = () => {
                     <div className={cn('wrapper')}>
                       <div className={cn('wrapper__status')}>
                         <div className={cn('wrapper__status__tab')}>
-                          <div className={cn('wrapper__status__tab__count')}> {futureEvent.length}개 </div>
+                          <div className={cn('wrapper__status__tab__count')}>
+                            {' '}
+                            {futureEvent.length}개{' '}
+                          </div>
                           <div
                             className={cn('wrapper__status__tab__done')}
                             onClick={() => {
@@ -125,7 +138,11 @@ const MyEventScheduledList = () => {
                               width={18}
                               height={18}
                             />
-                            <div className={cn('wrapper__status__tab__done__txt')}>완료 행사 보기</div>
+                            <div
+                              className={cn('wrapper__status__tab__done__txt')}
+                            >
+                              완료 행사 보기
+                            </div>
                           </div>
                         </div>
                       </div>

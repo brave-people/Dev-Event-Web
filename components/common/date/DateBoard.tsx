@@ -4,7 +4,14 @@ import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
 import { useOnClickOutside } from 'lib/hooks/useOnClickOutside';
 import { getMonth } from 'lib/utils/dateUtil';
-import React, { useContext, useEffect, useRef, useState, Dispatch, SetStateAction } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 import classNames from 'classnames/bind';
 import { useRouter } from 'next/router';
 import DateElement from './DateElement';
@@ -20,15 +27,25 @@ function DateBoard({ options }: Props) {
   const initYear = router.asPath.includes('calender')
     ? router.asPath.slice(15, 19)
     : new Date().getFullYear().toString();
-  const initMonth = router.asPath.includes('calender') ? router.asPath.slice(26, 28) : getMonth();
+  const initMonth = router.asPath.includes('calender')
+    ? router.asPath.slice(26, 28)
+    : getMonth();
   const [dateElement, setDateElement] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isFirstEl, setIsFirstEl] = useState<boolean>(false);
   const [isLastEl, setIsLastEl] = useState<boolean>(false);
   const [currentYear, setCurrentYear] = useState<string>(initYear);
   const [currentMonth, setCurrentMonth] = useState<string>(initMonth);
-  const { date, handleDate, handleSearch, handleLocation, handleEventType, handleCoast, initJobGroupList, handleUrl } =
-    useContext(EventContext);
+  const {
+    date,
+    handleDate,
+    handleSearch,
+    handleLocation,
+    handleEventType,
+    handleCoast,
+    initJobGroupList,
+    handleUrl,
+  } = useContext(EventContext);
   const { modalState, handleModalState } = useContext(WindowContext);
   const outSideRef = useRef(null);
 
@@ -70,7 +87,11 @@ function DateBoard({ options }: Props) {
     if (type === 'prev' && dateArg === undefined) {
       handleDate(`${currentYear}년 ${currentMonth}월`);
       setIsLastEl(false);
-      router.push(`/calender?year=${currentYear}&month=${currentMonth}`, undefined, { scroll: false });
+      router.push(
+        `/calender?year=${currentYear}&month=${currentMonth}`,
+        undefined,
+        { scroll: false }
+      );
       return;
     }
     if (dateArg !== undefined) {
@@ -85,14 +106,21 @@ function DateBoard({ options }: Props) {
           if (modalState.currentModal === 3) {
             reflactUrl(`/calender?year=${newYear}&month=${newMonth}`);
           } else {
-            router.push(`/calender?year=${newYear}&month=${newMonth}`, undefined, { scroll: false });
+            router.push(
+              `/calender?year=${newYear}&month=${newMonth}`,
+              undefined,
+              { scroll: false }
+            );
           }
         }
         if (current - 1 === 1) setIsFirstEl(true);
         else setIsFirstEl(false);
         setIsLastEl(false);
       } else if (type === 'next') {
-        if (options[current] === `${new Date().getFullYear().toString()}년 ${getMonth()}월`) {
+        if (
+          options[current] ===
+          `${new Date().getFullYear().toString()}년 ${getMonth()}월`
+        ) {
           handleDate(undefined);
           setIsLastEl(true);
           router.push('/events');
@@ -106,7 +134,11 @@ function DateBoard({ options }: Props) {
           if (modalState.currentModal === 3) {
             reflactUrl(`/calender?year=${newYear}&month=${newMonth}`);
           } else {
-            router.push(`/calender?year=${newYear}&month=${newMonth}`, undefined, { scroll: false });
+            router.push(
+              `/calender?year=${newYear}&month=${newMonth}`,
+              undefined,
+              { scroll: false }
+            );
           }
         }
       }
@@ -121,7 +153,11 @@ function DateBoard({ options }: Props) {
     router.push(urls);
   };
 
-  useOnClickOutside({ ref: outSideRef, handler: handleClose, mouseEvent: 'click' });
+  useOnClickOutside({
+    ref: outSideRef,
+    handler: handleClose,
+    mouseEvent: 'click',
+  });
 
   useEffect(() => {
     if (router.asPath.includes('calender')) {
@@ -133,7 +169,10 @@ function DateBoard({ options }: Props) {
         setCurrentMonth(initDate.slice(6, 8));
         handleDate(initDate);
       } else {
-        const initDate = `${router.asPath.slice(15, 19)}년 ${router.asPath.slice(26, 28)}월`;
+        const initDate = `${router.asPath.slice(
+          15,
+          19
+        )}년 ${router.asPath.slice(26, 28)}월`;
         setCurrentYear(initDate.slice(0, 4));
         setCurrentMonth(initDate.slice(6, 8));
         handleDate(initDate);
@@ -144,9 +183,16 @@ function DateBoard({ options }: Props) {
   }, [currentMonth, currentYear]);
 
   return (
-    <div className={cn('container', isOpen && 'container__focus')} ref={outSideRef}>
+    <div
+      className={cn('container', isOpen && 'container__focus')}
+      ref={outSideRef}
+    >
       <div
-        className={cn('key', 'key--left', `${isLastEl ? 'key--disactive' : 'key--active'}`)}
+        className={cn(
+          'key',
+          'key--left',
+          `${isLastEl ? 'key--disactive' : 'key--active'}`
+        )}
         onClick={() => {
           handleArrowBtn(date, 'prev');
           handleRemoveContext();
@@ -156,13 +202,25 @@ function DateBoard({ options }: Props) {
       </div>
       <div className={cn('dropdown')}>
         <div className={cn('dropdown__header')} onClick={handleClickDropdown}>
-          {<span>{date === undefined ? '전체' : `${currentYear}년 ${currentMonth}월`}</span>}
+          {
+            <span>
+              {date === undefined
+                ? '전체'
+                : `${currentYear}년 ${currentMonth}월`}
+            </span>
+          }
         </div>
         {isOpen && (
           <div className={cn('dropdown__list')}>
             <div className={cn('dropdown__list__year')}>
               <div
-                className={cn(`${parseInt(currentYear) === parseInt(initYear) - 1 ? 'unvalid__key' : 'year__key'}`)}
+                className={cn(
+                  `${
+                    parseInt(currentYear) === parseInt(initYear) - 1
+                      ? 'unvalid__key'
+                      : 'year__key'
+                  }`
+                )}
                 onClick={() => {
                   if (parseInt(currentYear) !== parseInt(initYear) - 1) {
                     const prev = parseInt(currentYear) - 1;
@@ -174,7 +232,13 @@ function DateBoard({ options }: Props) {
               </div>
               <div className={cn('year__text')}>{currentYear}</div>
               <div
-                className={cn(`${parseInt(currentYear) === parseInt(initYear) ? 'unvalid__key' : 'year__key'}`)}
+                className={cn(
+                  `${
+                    parseInt(currentYear) === parseInt(initYear)
+                      ? 'unvalid__key'
+                      : 'year__key'
+                  }`
+                )}
                 onClick={() => {
                   if (parseInt(currentYear) === parseInt(initYear)) return;
                   else {
@@ -199,7 +263,10 @@ function DateBoard({ options }: Props) {
         )}
       </div>
       <div
-        className={cn('key--right', `${date === undefined ? 'key--disactive' : 'key--active'}`)}
+        className={cn(
+          'key--right',
+          `${date === undefined ? 'key--disactive' : 'key--active'}`
+        )}
         onClick={() => {
           if (date !== undefined) {
             handleRemoveContext();

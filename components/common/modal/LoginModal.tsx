@@ -33,7 +33,12 @@ function LoginModal({ isOpen, onClose }: any) {
     setState(value);
   };
   return (
-    <Modal isOpen={isOpen} className={cx('modal')} overlayClassName={cx('overlay')} onRequestClose={onClose}>
+    <Modal
+      isOpen={isOpen}
+      className={cx('modal')}
+      overlayClassName={cx('overlay')}
+      onRequestClose={onClose}
+    >
       <span className={cx('modal__buttons')}>
         <button
           className={cx('button', state === pageState.social ? 'hidden' : null)}
@@ -55,9 +60,15 @@ function LoginModal({ isOpen, onClose }: any) {
           <MdClose size={24} />
         </button>
       </span>
-      {state === pageState.social && <SocialLoginContainer onChangeState={onChangeState} />}
-      {state === pageState.email && <LoginByEmailContainer onChangeState={onChangeState} />}
-      {state === pageState.signUp && <SignUpByEmailContainer onChangeState={onChangeState} />}
+      {state === pageState.social && (
+        <SocialLoginContainer onChangeState={onChangeState} />
+      )}
+      {state === pageState.email && (
+        <LoginByEmailContainer onChangeState={onChangeState} />
+      )}
+      {state === pageState.signUp && (
+        <SignUpByEmailContainer onChangeState={onChangeState} />
+      )}
     </Modal>
   );
 }
@@ -172,7 +183,9 @@ const LoginByEmailContainer = ({ onChangeState }: any) => {
     if (checkValid() === 'valid') {
       const tokens = await loginByEmail('/front/v1/users/login', user);
       if (tokens) {
-        router.push(`/?accessToken=${tokens.access_token}&refreshToken=${tokens.refresh_token}`);
+        router.push(
+          `/?accessToken=${tokens.access_token}&refreshToken=${tokens.refresh_token}`
+        );
         onChangeState('close');
       }
     }
@@ -208,7 +221,10 @@ const LoginByEmailContainer = ({ onChangeState }: any) => {
         </div>
       </div>
       <div style={{ height: '55px' }}></div>
-      <button className={cx('login-form__button', 'login')} onClick={requestLoginByEmail}>
+      <button
+        className={cx('login-form__button', 'login')}
+        onClick={requestLoginByEmail}
+      >
         <span>로그인</span>
       </button>
       <div style={{ height: '42px' }}></div>
@@ -217,7 +233,12 @@ const LoginByEmailContainer = ({ onChangeState }: any) => {
 };
 
 const SignUpByEmailContainer = ({ onChangeState }: any) => {
-  const [user, setUser] = useState({ user_id: '', email: '', password: '', name: '' });
+  const [user, setUser] = useState({
+    user_id: '',
+    email: '',
+    password: '',
+    name: '',
+  });
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -297,7 +318,10 @@ const SignUpByEmailContainer = ({ onChangeState }: any) => {
         </div>
       </div>
       <div style={{ height: '25px' }}></div>
-      <button className={cx('login-form__button', 'login')} onClick={requestSignUpByEmail}>
+      <button
+        className={cx('login-form__button', 'login')}
+        onClick={requestSignUpByEmail}
+      >
         <span>가입하기</span>
       </button>
       <div style={{ height: '41px' }}></div>

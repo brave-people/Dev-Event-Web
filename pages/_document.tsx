@@ -1,9 +1,18 @@
-import Document, { DocumentContext, DocumentInitialProps, Html, Head, Main, NextScript } from 'next/document';
+import Document, {
+  DocumentContext,
+  DocumentInitialProps,
+  Html,
+  Head,
+  Main,
+  NextScript,
+} from 'next/document';
 
 // import Script from 'next/script';
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
+  static async getInitialProps(
+    ctx: DocumentContext
+  ): Promise<DocumentInitialProps> {
     const initialProps = await Document.getInitialProps(ctx);
 
     return initialProps;
@@ -15,15 +24,24 @@ class MyDocument extends Document {
         <Head>
           <meta property="og:type" content="website" />
           <meta property="og:site_name" content="Dev Event" />
-          <meta name="google-site-verification" content={`${process.env.GOOGLE_SITE_VERIFICATION}`} />
-          <meta name="naver-site-verification" content={`${process.env.NAVER_SITE_VERIFICATION}`} />
+          <meta
+            name="google-site-verification"
+            content={`${process.env.GOOGLE_SITE_VERIFICATION}`}
+          />
+          <meta
+            name="naver-site-verification"
+            content={`${process.env.NAVER_SITE_VERIFICATION}`}
+          />
           <link
             rel="icon"
             href="https://raw.githubusercontent.com/brave-people/Dev-Event-Client/main/public/favicon.ico"
             sizes="any"
           />
           <link rel="canonical" href="https://dev-event.vercel.app" />
-          <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_TRACKING_ID}`} />
+          <script
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_TRACKING_ID}`}
+          />
           <script
             dangerouslySetInnerHTML={{
               __html: `

@@ -31,7 +31,8 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const [keyword, setKeyword] = useState<string | undefined>(undefined);
-  const { jobGroupList, eventType, location, coast, search, date } = useContext(EventContext);
+  const { jobGroupList, eventType, location, coast, search, date } =
+    useContext(EventContext);
   const { modalState } = useContext(WindowContext);
   const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
 
@@ -39,7 +40,11 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
 
   useEffect(() => {
     setKeyword(`
-      ${jobGroupList !== undefined && jobGroupList?.length !== 0 ? `${jobGroupList?.join(',')}` : ''} 
+      ${
+        jobGroupList !== undefined && jobGroupList?.length !== 0
+          ? `${jobGroupList?.join(',')}`
+          : ''
+      } 
       ${eventType !== undefined ? `${eventType},` : ''}
       ${location !== undefined ? `${location},` : ''} 
       ${coast !== undefined ? `${coast},` : ''} 
@@ -68,9 +73,14 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
     <main ref={bodyRef} className={cn('main')}>
       <Head>
         <title>
-          {keyword !== undefined ? `${keyword} - 데브이벤트 행사 키워드 검색` : '데브이벤트 행사 키워드 검색'}
+          {keyword !== undefined
+            ? `${keyword} - 데브이벤트 행사 키워드 검색`
+            : '데브이벤트 행사 키워드 검색'}
         </title>
-        <meta name="description" content={`${keyword} 행사, 데브이벤트에서 찾아보세요!`} />
+        <meta
+          name="description"
+          content={`${keyword} 행사, 데브이벤트에서 찾아보세요!`}
+        />
         <meta
           name="keywords"
           content={`${keyword}, 데브이벤트 웹, 개발자 행사, 이벤트, 행사, 웨비나, 컨퍼런스, 해커톤, 네트워킹, IT`}
@@ -79,8 +89,14 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
           property="og:image"
           content="https://drive.google.com/uc?export=download&id=1-Jqapt5h4XtxXQbgX07kI3ipgk3V6ESE"
         />
-        <meta property="og:title" content={`${keyword} - 데브이벤트 행사 키워드 검색`} />
-        <meta property="og:description" content={`${keyword} 개발자 행사, 데브이벤트에서 찾아보세요!`} />
+        <meta
+          property="og:title"
+          content={`${keyword} - 데브이벤트 행사 키워드 검색`}
+        />
+        <meta
+          property="og:description"
+          content={`${keyword} 개발자 행사, 데브이벤트에서 찾아보세요!`}
+        />
       </Head>
       {modalState.currentModal === 0 ? (
         <>
@@ -91,17 +107,24 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
           <Letter />
         </>
       ) : null}
-      {isModalOpen(modalState.currentModal, 1) && <FilterSearchModal events={scheduledEvents} isError={isError} />}
+      {isModalOpen(modalState.currentModal, 1) && (
+        <FilterSearchModal events={scheduledEvents} isError={isError} />
+      )}
       {isModalOpen(modalState.currentModal, 2) && <FilterTagModal />}
       {isModalOpen(modalState.currentModal, 3) && <FilterDateModal />}
-      <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
+      <LoginModal
+        isOpen={loginModalIsOpen}
+        onClose={() => setLoginModalIsOpen(false)}
+      ></LoginModal>
     </main>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = context.req.headers.cookie || '';
-  const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/current`);
+  const res = await fetch(
+    `${process.env.BASE_SERVER_URL}/front/v2/events/current`
+  );
   const events = await res.json();
 
   if (cookies) {

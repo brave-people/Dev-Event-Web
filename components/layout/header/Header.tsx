@@ -41,7 +41,10 @@ function Header() {
           </span>
         </div>
       </div>
-      <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
+      <LoginModal
+        isOpen={loginModalIsOpen}
+        onClose={() => setLoginModalIsOpen(false)}
+      ></LoginModal>
     </header>
   );
 }

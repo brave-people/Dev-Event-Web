@@ -19,7 +19,8 @@ const Letter = () => {
               소식을 받아보세요
             </div>
             <div className={cn('letter__desc')}>
-              일요일 저녁 8시 개발자 행사 소식을 <br className={cn('break__line')} />
+              일요일 저녁 8시 개발자 행사 소식을{' '}
+              <br className={cn('break__line')} />
               메일로 보내드려요
             </div>
           </div>

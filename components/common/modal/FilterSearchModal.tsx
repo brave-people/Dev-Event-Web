@@ -25,7 +25,15 @@ function FilterSearchModal({ events, isError }: Props) {
   const [hidden, setHidden] = useState<boolean>(false);
   const [filterActive, setFilterActive] = useState<boolean>(false);
   const { handleModalState, windowTheme } = useContext(WindowContext);
-  const { jobGroupList, eventType, location, coast, search, handleSearch, handleUrl } = useContext(EventContext);
+  const {
+    jobGroupList,
+    eventType,
+    location,
+    coast,
+    search,
+    handleSearch,
+    handleUrl,
+  } = useContext(EventContext);
 
   const deleteModal = () => {
     setHidden(true);
@@ -37,8 +45,28 @@ function FilterSearchModal({ events, isError }: Props) {
         type: false,
       });
       if (search !== undefined) {
-        handleUrl(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
-        router.push(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, search));
+        handleUrl(
+          initUrl(
+            `${router.asPath}`,
+            'kwd',
+            jobGroupList,
+            eventType,
+            location,
+            coast,
+            search
+          )
+        );
+        router.push(
+          initUrl(
+            `${router.asPath}`,
+            'kwd',
+            jobGroupList,
+            eventType,
+            location,
+            coast,
+            search
+          )
+        );
       }
     }, 400);
   };
@@ -77,7 +105,12 @@ function FilterSearchModal({ events, isError }: Props) {
           }}
         >
           {filterActive ? (
-            <Image src={'/icon/toggle_active.svg'} alt="filter active" width={40} height={40} />
+            <Image
+              src={'/icon/toggle_active.svg'}
+              alt="filter active"
+              width={40}
+              height={40}
+            />
           ) : (
             <ToggleIcon />
           )}
@@ -96,7 +129,12 @@ function FilterSearchModal({ events, isError }: Props) {
       ) : (
         <section className={cn('body')}>
           <div className={cn('body__image')}>
-            <Image src={'/icon/search.svg'} alt="search" layout="fill" priority={true} />
+            <Image
+              src={'/icon/search.svg'}
+              alt="search"
+              layout="fill"
+              priority={true}
+            />
           </div>
           <div className={cn('body__desc')}>검색어를 입력해주세요</div>
         </section>

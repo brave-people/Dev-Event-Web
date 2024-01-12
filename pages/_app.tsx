@@ -21,7 +21,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", "light");
+    document.documentElement.setAttribute('data-theme', 'light');
     const handleRouteChange = (url: URL) => {
       gtag.pageview(url);
     };

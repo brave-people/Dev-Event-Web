@@ -7,7 +7,14 @@ const cn = classNames.bind(style);
 
 function CalendarIcon({ color, className, ...rest }: Icon) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} className={cn(className)} fill="none" {...rest}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={16}
+      height={16}
+      className={cn(className)}
+      fill="none"
+      {...rest}
+    >
       <g clipPath="url(#a)">
         <path
           fill={color}

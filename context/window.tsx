@@ -1,10 +1,10 @@
-import React, { createContext, ReactNode, useState } from 'react'
+import React, { createContext, ReactNode, useState } from 'react';
 
 type ModalStateProps = {
-  currentModal: number,
-  prevModal: number,
+  currentModal: number;
+  prevModal: number;
   type: boolean;
-}
+};
 
 interface WindowContext {
   isClient: boolean;
@@ -15,7 +15,7 @@ interface WindowContext {
   handleWindowTheme: (event: boolean) => void;
   isNotice: boolean;
   handleIsNotice: (event: boolean) => void;
-  modalState: ModalStateProps
+  modalState: ModalStateProps;
   handleModalState: (event: ModalStateProps) => void;
 }
 
@@ -31,10 +31,10 @@ const defaultValue: WindowContext = {
   modalState: {
     currentModal: 0,
     prevModal: 0,
-    type: false
+    type: false,
   },
-  handleModalState: () => {}
-}
+  handleModalState: () => {},
+};
 
 const WindowContext = createContext(defaultValue);
 
@@ -43,26 +43,28 @@ const WindowProvider = ({ children }: { children: ReactNode }) => {
   const [windowX, setWindowX] = useState<number>(0);
   const [windowTheme, setWindowTheme] = useState<boolean>(true);
   const [isNotice, setIsNotice] = useState<boolean>(true);
-  const [modalState, setModalState] = useState<ModalStateProps>(defaultValue.modalState);
+  const [modalState, setModalState] = useState<ModalStateProps>(
+    defaultValue.modalState
+  );
 
   const handleIsClient = (event: boolean) => {
     setIsClient(event);
-  }
+  };
   const handleWindowX = (event: number) => {
     setWindowX(event);
-  }
+  };
 
   const handleWindowTheme = (event: boolean) => {
     setWindowTheme(!event);
-  }
+  };
 
   const handleIsNotice = (event: boolean) => {
-    setIsNotice(event)
-  }
+    setIsNotice(event);
+  };
 
   const handleModalState = (event: ModalStateProps) => {
     setModalState(event);
-  }
+  };
 
   const contextValue = {
     isClient,
@@ -74,18 +76,15 @@ const WindowProvider = ({ children }: { children: ReactNode }) => {
     handleWindowTheme,
     handleIsNotice,
     modalState,
-    handleModalState
-  }
+    handleModalState,
+  };
   return (
     <>
       <WindowContext.Provider value={contextValue}>
         {children}
       </WindowContext.Provider>
     </>
-  )
-}
+  );
+};
 
-export {
-  WindowContext,
-  WindowProvider
-}
+export { WindowContext, WindowProvider };

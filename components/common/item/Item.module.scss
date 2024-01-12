@@ -96,7 +96,6 @@
             color: var(--gray-2);
           }
         }
-
       }
 
       &_title__container {
@@ -214,7 +213,6 @@
       top: 0;
       right: 0;
 
-
       .button {
         width: 36px;
         height: 36px;
@@ -252,7 +250,6 @@
 
 @media (max-width: 1200px) {
   .item__container {
-
     .item__content_title__container {
       margin-bottom: 12px;
     }
@@ -267,7 +264,8 @@
           font-size: 14px;
         }
 
-        .date__date, &.date__date__done {
+        .date__date,
+        &.date__date__done {
           white-space: pre-line;
         }
       }
@@ -330,8 +328,6 @@
       display: flex;
       padding-top: 12px;
     }
-
-
 
     .item__buttons {
       position: relative;

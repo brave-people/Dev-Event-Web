@@ -13,7 +13,9 @@
 @media (max-width: 1199px) {
   .list {
     margin-top: 24px;
-    grid-template-columns: calc(33.3% - (40px / 3)) calc(33.3% - (40px / 3)) calc(33.3% - (40px / 3));
+    grid-template-columns: calc(33.3% - (40px / 3)) calc(33.3% - (40px / 3)) calc(
+        33.3% - (40px / 3)
+      );
     grid-row-gap: 36px;
     grid-column-gap: 20px;
     align-content: space-around;
@@ -23,7 +25,7 @@
 
 @media (max-width: 767px) {
   .list {
-    grid-template-columns: calc(50% - (40px / 2)) calc(50% - (40px / 2)) ;
+    grid-template-columns: calc(50% - (40px / 2)) calc(50% - (40px / 2));
   }
 }
 

@@ -7,9 +7,9 @@ import { WindowContext } from 'context/window';
 const cn = classNames.bind(style);
 
 function SaveModal() {
-  const { windowTheme } = useContext(WindowContext)
+  const { windowTheme } = useContext(WindowContext);
   return (
-    <div className={cn('modal', windowTheme ? "light--modal" : "dark--modal")}>
+    <div className={cn('modal', windowTheme ? 'light--modal' : 'dark--modal')}>
       <SaveIcon />
       <span className={cn('modal__text')}>저장되었습니다</span>
     </div>

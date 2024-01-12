@@ -9,7 +9,16 @@ import classNames from 'classnames/bind';
 
 const cn = classNames.bind(style);
 
-function BasicInput({ updateInput, submitInput, label, size, icon, iconStyle, input, initInput }: InputProps) {
+function BasicInput({
+  updateInput,
+  submitInput,
+  label,
+  size,
+  icon,
+  iconStyle,
+  input,
+  initInput,
+}: InputProps) {
   const searchRef = useRef<HTMLInputElement | null>(null);
   const { windowTheme } = useContext(WindowContext);
   const { search } = useContext(EventContext);
@@ -24,7 +33,8 @@ function BasicInput({ updateInput, submitInput, label, size, icon, iconStyle, in
   return (
     <>
       <div className={cn('container')}>
-        {icon !== undefined && getIconByName(icon, iconStyle, 'rgba(49, 50, 52, 1')}
+        {icon !== undefined &&
+          getIconByName(icon, iconStyle, 'rgba(49, 50, 52, 1')}
         <input
           type="text"
           placeholder={label}

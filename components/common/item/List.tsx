@@ -18,7 +18,7 @@ const cn = classNames.bind(style);
 type Props = {
   data: Event[];
   parentLast: boolean;
-}
+};
 
 const List = ({ data, parentLast }: Props) => {
   const authContext = React.useContext(AuthContext);
@@ -30,7 +30,10 @@ const List = ({ data, parentLast }: Props) => {
     const todayDate = dayjs();
     const createDate = dayjs(createdDate);
 
-    return createDate.diff(todayDate, 'day') < 1 && createDate.diff(todayDate, 'day') > -1 ? true : false;
+    return createDate.diff(todayDate, 'day') < 1 &&
+      createDate.diff(todayDate, 'day') > -1
+      ? true
+      : false;
   };
 
   const getEventEndDate = (EventDate: EventDate) => {
@@ -66,11 +69,16 @@ const List = ({ data, parentLast }: Props) => {
       const favoriteId = getFavoriteId({ id: item.id });
 
       if (favoriteId === 0) {
-        const filteredEvent = myEvent.concat({ favorite_id: favoriteId, dev_event: item });
+        const filteredEvent = myEvent.concat({
+          favorite_id: favoriteId,
+          dev_event: item,
+        });
         mutate([`/front/v1/favorite/events`, param], filteredEvent, false);
         const result = await createMyEvent({ eventId: item.id });
       } else {
-        const filteredEvent = myEvent.filter((event) => event.favorite_id !== favoriteId);
+        const filteredEvent = myEvent.filter(
+          (event) => event.favorite_id !== favoriteId
+        );
         mutate([`/front/v1/favorite/events`, param], [...filteredEvent], false);
 
         const result = await deleteMyEvent({ favoriteId: favoriteId });
@@ -81,10 +89,16 @@ const List = ({ data, parentLast }: Props) => {
 
   const createMyEvent = async ({ eventId }: { eventId: String }) => {
     if (eventId) {
-      const result = await createMyEventApi(`/front/v1/favorite/events/${eventId}`, {
-        eventId: Number(eventId),
-      });
-      if (result.status_code === 200 && result.status === 'FRONT_FAVORITE_201_01') {
+      const result = await createMyEventApi(
+        `/front/v1/favorite/events/${eventId}`,
+        {
+          eventId: Number(eventId),
+        }
+      );
+      if (
+        result.status_code === 200 &&
+        result.status === 'FRONT_FAVORITE_201_01'
+      ) {
         return 'SUCCESS';
       }
     } else {
@@ -99,10 +113,16 @@ const List = ({ data, parentLast }: Props) => {
 
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: number }) => {
     if (favoriteId) {
-      const result = await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
-        favoriteId: favoriteId,
-      });
-      if (result.status_code === 200 && result.status === 'FRONT_FAVORITE_200_01') {
+      const result = await deleteMyEventApi(
+        `/front/v1/favorite/events/${favoriteId}`,
+        {
+          favoriteId: favoriteId,
+        }
+      );
+      if (
+        result.status_code === 200 &&
+        result.status === 'FRONT_FAVORITE_200_01'
+      ) {
         return 'SUCCESS';
       }
     } else {
@@ -120,42 +140,45 @@ const List = ({ data, parentLast }: Props) => {
       {data.map((item: Event, index: number) => {
         const isLast = index === data.length - 1 ? true : false;
         return (
-            <Item
-              key={index}
-              childLast={isLast}
-              parentLast={parentLast}
-              data={item}
-              isEventNew={() => {
-                return checkEventNew({ createdDate: item.create_date_time });
-              }}
-              isEventDone={() => {
-                return checkEventDone({
-                  endDate: getEventEndDate({
-                    start_date_time: item.start_date_time,
-                    end_date_time: item.end_date_time,
-                    use_start_date_time_yn: item.use_start_date_time_yn,
-                    use_end_date_time_yn: item.use_end_date_time_yn,
-                  }),
-                });
-              }}
-              isFavorite={() => {
-                if (authContext.isLoggedIn) {
-                  return getFavoriteId({ id: item.id }) !== 0 ? true : false;
-                }
-                return false;
-              }}
-              onClickFavorite={() => {
-                if (authContext.isLoggedIn) {
-                  return onClickFavorite({ item: item });
-                } else {
-                  setLoginModalIsOpen(true);
-                }
-              }}
-            />
+          <Item
+            key={index}
+            childLast={isLast}
+            parentLast={parentLast}
+            data={item}
+            isEventNew={() => {
+              return checkEventNew({ createdDate: item.create_date_time });
+            }}
+            isEventDone={() => {
+              return checkEventDone({
+                endDate: getEventEndDate({
+                  start_date_time: item.start_date_time,
+                  end_date_time: item.end_date_time,
+                  use_start_date_time_yn: item.use_start_date_time_yn,
+                  use_end_date_time_yn: item.use_end_date_time_yn,
+                }),
+              });
+            }}
+            isFavorite={() => {
+              if (authContext.isLoggedIn) {
+                return getFavoriteId({ id: item.id }) !== 0 ? true : false;
+              }
+              return false;
+            }}
+            onClickFavorite={() => {
+              if (authContext.isLoggedIn) {
+                return onClickFavorite({ item: item });
+              } else {
+                setLoginModalIsOpen(true);
+              }
+            }}
+          />
         );
       })}
       <div className={cn('skeleton')} />
-      <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
+      <LoginModal
+        isOpen={loginModalIsOpen}
+        onClose={() => setLoginModalIsOpen(false)}
+      ></LoginModal>
     </div>
   );
 };

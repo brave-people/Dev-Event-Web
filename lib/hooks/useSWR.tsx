@@ -1,16 +1,26 @@
-import { getEventsApi, getMyEventApi, getMonthlyEventApi, getTagsApi, getUserApi } from 'lib/api/handler';
+import {
+  getEventsApi,
+  getMyEventApi,
+  getMonthlyEventApi,
+  getTagsApi,
+  getUserApi,
+} from 'lib/api/handler';
 import { Calender } from 'model/calender';
 import { EventResponse, MyEventGetProps, Event } from 'model/event';
 import useSWR from 'swr';
 
 const useScheduledEvents = (fallbackData?: EventResponse[]) => {
-  const { data: events, error } = useSWR(`/front/v2/events/current`, getEventsApi, {
-    fallbackData: fallbackData ?? fallbackData,
-    shouldRetryOnError: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: true,
-    revalidateIfStale: false,
-  });
+  const { data: events, error } = useSWR(
+    `/front/v2/events/current`,
+    getEventsApi,
+    {
+      fallbackData: fallbackData ?? fallbackData,
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+      revalidateIfStale: false,
+    }
+  );
 
   return {
     scheduledEvents: events,
@@ -19,14 +29,24 @@ const useScheduledEvents = (fallbackData?: EventResponse[]) => {
   };
 };
 
-const useMonthlyEvent = ({ param, fallbackData }: { param: Calender; fallbackData: Event[] }) => {
-  const { data: events, error } = useSWR(`/front/v2/events/${param.year}/${param.month}`, getMonthlyEventApi, {
-    fallbackData: fallbackData ?? fallbackData,
-    shouldRetryOnError: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: true,
-    revalidateIfStale: false,
-  });
+const useMonthlyEvent = ({
+  param,
+  fallbackData,
+}: {
+  param: Calender;
+  fallbackData: Event[];
+}) => {
+  const { data: events, error } = useSWR(
+    `/front/v2/events/${param.year}/${param.month}`,
+    getMonthlyEventApi,
+    {
+      fallbackData: fallbackData ?? fallbackData,
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+      revalidateIfStale: false,
+    }
+  );
   return {
     monthlyEvent: events,
     isLoading: !error && !events,
@@ -35,12 +55,16 @@ const useMonthlyEvent = ({ param, fallbackData }: { param: Calender; fallbackDat
 };
 
 const useMyEvent = (param: MyEventGetProps, isLoginIn: boolean) => {
-  const { data: myEvent, error } = useSWR(isLoginIn ? [`/front/v1/favorite/events`, param] : null, getMyEventApi, {
-    shouldRetryOnError: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: true,
-    revalidateIfStale: false,
-  });
+  const { data: myEvent, error } = useSWR(
+    isLoginIn ? [`/front/v1/favorite/events`, param] : null,
+    getMyEventApi,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+      revalidateIfStale: false,
+    }
+  );
   return {
     myEvent: myEvent,
     isLoading: !error && !myEvent,
@@ -75,6 +99,5 @@ const useUser = () => {
     isError: error,
   };
 };
-
 
 export { useScheduledEvents, useMonthlyEvent, useTags, useUser, useMyEvent };

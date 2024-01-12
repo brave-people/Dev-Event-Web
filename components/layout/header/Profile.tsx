@@ -20,7 +20,11 @@ const Profile = () => {
     setProfileMenuIsOpen(!profileMenuIsOpen);
   };
 
-  useOnClickOutside({ ref: outsideRef, handler: handleClickProfile, mouseEvent: 'click' });
+  useOnClickOutside({
+    ref: outsideRef,
+    handler: handleClickProfile,
+    mouseEvent: 'click',
+  });
 
   const logout = async () => {
     const result = await axios.post('/api/logout');

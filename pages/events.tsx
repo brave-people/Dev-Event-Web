@@ -88,17 +88,24 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
           <Letter />
         </>
       )}
-      {isModalOpen(modalState.currentModal, 1) && <FilterSearchModal events={scheduledEvents} isError={isError} />}
+      {isModalOpen(modalState.currentModal, 1) && (
+        <FilterSearchModal events={scheduledEvents} isError={isError} />
+      )}
       {isModalOpen(modalState.currentModal, 2) && <FilterTagModal />}
       {isModalOpen(modalState.currentModal, 3) && <FilterDateModal />}
-      <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
+      <LoginModal
+        isOpen={loginModalIsOpen}
+        onClose={() => setLoginModalIsOpen(false)}
+      ></LoginModal>
     </main>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = context.req.headers.cookie || '';
-  const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/current`);
+  const res = await fetch(
+    `${process.env.BASE_SERVER_URL}/front/v2/events/current`
+  );
   const events = await res.json();
 
   if (cookies) {

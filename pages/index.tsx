@@ -16,10 +16,14 @@ const Home = () => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   if (context.query.accessToken && context.query.refreshToken) {
-    const { exp: access_token_expired_at } = jwt_decode(String(context.query.accessToken)) as {
+    const { exp: access_token_expired_at } = jwt_decode(
+      String(context.query.accessToken)
+    ) as {
       exp: number;
     };
-    const { exp: refresh_token_expired_at } = jwt_decode(String(context.query.refreshToken)) as {
+    const { exp: refresh_token_expired_at } = jwt_decode(
+      String(context.query.refreshToken)
+    ) as {
       exp: number;
     };
 

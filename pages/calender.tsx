@@ -20,14 +20,23 @@ import FilterDateModal from 'components/common/modal/FilterDateModal';
 
 const cn = classNames.bind(style);
 
-const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackData: Event[] }) => {
+const Calender = ({
+  isLoggedIn,
+  fallbackData,
+}: {
+  isLoggedIn: boolean;
+  fallbackData: Event[];
+}) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const router = useRouter();
-  const filteredDate = { year: Number(router.query.year), month: Number(router.query.month) };
+  const filteredDate = {
+    year: Number(router.query.year),
+    month: Number(router.query.month),
+  };
   const { modalState } = useContext(WindowContext);
   const bodyRef = useRef<HTMLDivElement>(null);
-  
+
   useEffect(() => {
     if (isLoggedIn) {
       authContext.login();
@@ -43,16 +52,15 @@ const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackD
       document.body.style.position = 'relative';
       document.body.style.overflow = 'unset';
       bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
-    }
+    };
   }, [isLoggedIn, modalState]);
 
   return (
-    <main
-      ref={bodyRef} 
-      className={cn('main')}>
+    <main ref={bodyRef} className={cn('main')}>
       <Head>
         <title>
-          {filteredDate.year}년 {filteredDate.month}월 - 데브이벤트 행사 월별 검색
+          {filteredDate.year}년 {filteredDate.month}월 - 데브이벤트 행사 월별
+          검색
         </title>
         <meta
           name="description"
@@ -79,26 +87,26 @@ const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackD
         <>
           <Banner />
           <section className={cn('section')}>
-            <MonthlyEventList 
-              events={fallbackData} 
-              date={filteredDate}
-            />
+            <MonthlyEventList events={fallbackData} date={filteredDate} />
           </section>
           <Letter />
         </>
-      ): null}
-      {isModalOpen(modalState.currentModal, 2) && 
-        <FilterTagModal />}
-      {isModalOpen(modalState.currentModal, 3)  &&
-        <FilterDateModal />}
-      <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
+      ) : null}
+      {isModalOpen(modalState.currentModal, 2) && <FilterTagModal />}
+      {isModalOpen(modalState.currentModal, 3) && <FilterDateModal />}
+      <LoginModal
+        isOpen={loginModalIsOpen}
+        onClose={() => setLoginModalIsOpen(false)}
+      ></LoginModal>
     </main>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { year, month } = context.query;
-  const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/${year}/${month}`);
+  const res = await fetch(
+    `${process.env.BASE_SERVER_URL}/front/v2/events/${year}/${month}`
+  );
   const events = await res.json();
   const cookies = context.req.headers.cookie || '';
 

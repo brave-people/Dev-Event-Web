@@ -1,7 +1,11 @@
 import style from 'components/common/item/ItemList.module.scss';
 import List from 'components/common/item/List';
 import { WindowContext } from 'context/window';
-import { checkCondition, checkEventDone, getEventEndDate } from 'lib/utils/eventUtil';
+import {
+  checkCondition,
+  checkEventDone,
+  getEventEndDate,
+} from 'lib/utils/eventUtil';
 import { checkSearch } from 'lib/utils/searchUtil';
 import { Event, EventResponse } from 'model/event';
 import React, { useState, useEffect, useContext } from 'react';
@@ -22,7 +26,15 @@ type Props = {
   search?: string;
 };
 
-function ItemList({ events, isError, jobGroups, eventType, location, coast, search }: Props) {
+function ItemList({
+  events,
+  isError,
+  jobGroups,
+  eventType,
+  location,
+  coast,
+  search,
+}: Props) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [searchRes, setSearchRes] = useState<Event[] | undefined>(undefined);
   const { modalState } = useContext(WindowContext);
@@ -68,7 +80,11 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
   };
 
   if (isError) {
-    return <div className={cn('null-container')}>이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
+    return (
+      <div className={cn('null-container')}>
+        이벤트 정보를 불러오는데 문제가 발생했습니다!
+      </div>
+    );
   }
   return (
     <>
@@ -76,10 +92,16 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
         <>
           <div className={cn('search__header')}>
             <span className={cn('list__title')}>{`${search}`}</span>
-            <span className={cn('total__count')}>{searchRes ? searchRes.length : '0'}</span>
+            <span className={cn('total__count')}>
+              {searchRes ? searchRes.length : '0'}
+            </span>
           </div>
           <div className={cn('search__list')}>
-            {searchRes.length !== 0 ? <List data={searchRes} parentLast={true} /> : <EventNull />}
+            {searchRes.length !== 0 ? (
+              <List data={searchRes} parentLast={true} />
+            ) : (
+              <EventNull />
+            )}
           </div>
         </>
       )}
@@ -87,10 +109,16 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
         <>
           <div className={cn('search__header__modal')}>
             <div className={cn('list__title')}>`{`${search}`}` 검색결과</div>
-            <div className={cn('total__count')}>{searchRes ? searchRes.length : '0'}개</div>
+            <div className={cn('total__count')}>
+              {searchRes ? searchRes.length : '0'}개
+            </div>
           </div>
           <div className={cn('search__list')}>
-            {searchRes.length !== 0 ? <List data={searchRes} parentLast={true} /> : <EventNull />}
+            {searchRes.length !== 0 ? (
+              <List data={searchRes} parentLast={true} />
+            ) : (
+              <EventNull />
+            )}
           </div>
         </>
       )}
@@ -121,10 +149,17 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
             return (
               <div key={index}>
                 {lists !== undefined && lists.length !== 0 ? (
-                  <div className={cn(`${search ? 'search__list' : 'section__list'}`)}>
+                  <div
+                    className={cn(
+                      `${search ? 'search__list' : 'section__list'}`
+                    )}
+                  >
                     {search === undefined && (
                       <div className={cn('list__title')}>
-                        <span>{search || `${event.metadata.year}년 ${event.metadata.month}월`}</span>
+                        <span>
+                          {search ||
+                            `${event.metadata.year}년 ${event.metadata.month}월`}
+                        </span>
                       </div>
                     )}
                     <List data={lists} parentLast={search ? isLast : false} />
@@ -137,7 +172,9 @@ function ItemList({ events, isError, jobGroups, eventType, location, coast, sear
       ) : (
         <EventNull />
       )}
-      {eventCount === 0 && modalState.currentModal === 0 && search === undefined && <EventNull />}
+      {eventCount === 0 &&
+        modalState.currentModal === 0 &&
+        search === undefined && <EventNull />}
     </>
   );
 }

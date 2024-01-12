@@ -1,11 +1,11 @@
-import React from 'react'
-import Link from "next/link";
+import React from 'react';
+import Link from 'next/link';
 import * as ga from 'lib/utils/gTag';
-import FillButton from "components/common/buttons/FillButton";
-import style from 'components/features/register/Register.module.scss'
+import FillButton from 'components/common/buttons/FillButton';
+import style from 'components/features/register/Register.module.scss';
 import classNames from 'classnames/bind';
 
-const cn = classNames.bind(style)
+const cn = classNames.bind(style);
 
 function Register() {
   return (
@@ -15,7 +15,7 @@ function Register() {
           label="행사 추가 요청"
           color="gray1"
           icon="plus"
-          size='regular'
+          size="regular"
           iconStyle="register"
           onClick={() => {
             ga.event({
@@ -25,10 +25,10 @@ function Register() {
             });
           }}
           rounded={false}
-       />
-    </a>
-  </Link>
-  )
+        />
+      </a>
+    </Link>
+  );
 }
 
 export default Register;

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Icon } from '../../types/Icon'
+import React from 'react';
+import { Icon } from '../../types/Icon';
 
 function CheckIcon({ color, className, ...rest }: Icon) {
   return (
@@ -22,6 +22,6 @@ function CheckIcon({ color, className, ...rest }: Icon) {
         </clipPath>
       </defs>
     </svg>
-  )
+  );
 }
-export default CheckIcon
+export default CheckIcon;

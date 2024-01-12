@@ -10,7 +10,8 @@ type Props = {
 };
 
 function FilteredEvent({ events, isError }: Props) {
-  const { jobGroupList, eventType, location, coast, search } = useContext(EventContext);
+  const { jobGroupList, eventType, location, coast, search } =
+    useContext(EventContext);
   return (
     <section>
       <EventFilter />

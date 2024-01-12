@@ -23,11 +23,28 @@ type BasicDropdownProps = {
   };
 };
 
-function BasicDropdown({ title, options, type, context, gaParam }: BasicDropdownProps) {
+function BasicDropdown({
+  title,
+  options,
+  type,
+  context,
+  gaParam,
+}: BasicDropdownProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [currentState, setCurrentState] = useState<string | undefined>(undefined);
-  const { jobGroupList, eventType, location, coast, search, date, url, handleDate, handleUrl } =
-    useContext(EventContext);
+  const [currentState, setCurrentState] = useState<string | undefined>(
+    undefined
+  );
+  const {
+    jobGroupList,
+    eventType,
+    location,
+    coast,
+    search,
+    date,
+    url,
+    handleDate,
+    handleUrl,
+  } = useContext(EventContext);
   const { windowTheme } = useContext(WindowContext);
   const outSideRef = useRef(null);
   const router = useRouter();
@@ -73,15 +90,28 @@ function BasicDropdown({ title, options, type, context, gaParam }: BasicDropdown
     router.push(urls, undefined, { scroll: false });
   };
 
-  useOnClickOutside({ ref: outSideRef, handler: handleClickOutside, mouseEvent: 'click' });
+  useOnClickOutside({
+    ref: outSideRef,
+    handler: handleClickOutside,
+    mouseEvent: 'click',
+  });
   return (
     <>
       <div className={cn('dropdown')} ref={outSideRef}>
-        <div className={cn('dropdown__header', isOpen && 'dropdown__header__focus')} onClick={handleClickDropdown}>
+        <div
+          className={cn(
+            'dropdown__header',
+            isOpen && 'dropdown__header__focus'
+          )}
+          onClick={handleClickDropdown}
+        >
           <span className={cn('dropdown__header__placeholder')}>
             <span>{name !== '전체' ? name : title}</span>
           </span>
-          <DownArrowIcon color="rgba(49, 50, 52, 1)" className={isOpen ? 'active' : 'unactive'} />
+          <DownArrowIcon
+            color="rgba(49, 50, 52, 1)"
+            className={isOpen ? 'active' : 'unactive'}
+          />
         </div>
         {isOpen && (
           <div className={cn('dropdown__list')}>
@@ -91,7 +121,8 @@ function BasicDropdown({ title, options, type, context, gaParam }: BasicDropdown
                   key={idx}
                   className={cn(
                     'dropdown__list__element',
-                    checkContext(option) && `${windowTheme ? 'selected__light' : 'selected__dark'}`
+                    checkContext(option) &&
+                      `${windowTheme ? 'selected__light' : 'selected__dark'}`
                   )}
                   onClick={() => {
                     ga.event(gaParam);
@@ -117,7 +148,14 @@ function BasicDropdown({ title, options, type, context, gaParam }: BasicDropdown
                       setCurrentState(option);
                       context(option);
                       setIsOpen(false);
-                      reflactUrl(`${parseUrl(`${url ? url : router.asPath}`, key, value, jobGroupList)}`);
+                      reflactUrl(
+                        `${parseUrl(
+                          `${url ? url : router.asPath}`,
+                          key,
+                          value,
+                          jobGroupList
+                        )}`
+                      );
                     }
                   }}
                 >

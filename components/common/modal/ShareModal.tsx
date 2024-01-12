@@ -7,9 +7,9 @@ import { WindowContext } from 'context/window';
 const cn = classNames.bind(style);
 
 function ShareModal() {
-  const { windowTheme } = useContext(WindowContext)
+  const { windowTheme } = useContext(WindowContext);
   return (
-    <div className={cn('modal', windowTheme ? "light--modal" : "dark--modal")}>
+    <div className={cn('modal', windowTheme ? 'light--modal' : 'dark--modal')}>
       <CheckIcon />
       <span className={cn('modal__text')}>링크가 복사되었습니다</span>
     </div>

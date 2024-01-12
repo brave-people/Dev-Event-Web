@@ -208,7 +208,7 @@
 
 @media (max-width: 1200px) {
   .modal {
-    width: calc(100% - #{$tablet_padding * 2})
+    width: calc(100% - #{$tablet_padding * 2});
   }
 }
 
@@ -233,7 +233,7 @@
 
       &__button {
         &.login {
-          width: 100%
+          width: 100%;
         }
       }
     }

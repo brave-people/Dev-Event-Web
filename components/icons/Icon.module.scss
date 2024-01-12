@@ -13,12 +13,12 @@
 
 .active {
   transform: rotate(180deg);
-  transition: transform .2s linear;
+  transition: transform 0.2s linear;
 }
 
 .unactive {
   transform: rotate(360deg);
-  transition: transform .2s linear;
+  transition: transform 0.2s linear;
 }
 
 .github__icon {
@@ -27,6 +27,6 @@
 
 @media (max-width: 455px) {
   .register {
-    margin-right: .5rem;
+    margin-right: 0.5rem;
   }
 }

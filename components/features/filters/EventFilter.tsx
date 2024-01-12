@@ -25,7 +25,8 @@ function EventFilter() {
   const [filterActive, setFilterActive] = useState<boolean>(false);
 
   const { handleModalState } = useContext(WindowContext);
-  const { jobGroupList, eventType, location, coast, search } = useContext(EventContext);
+  const { jobGroupList, eventType, location, coast, search } =
+    useContext(EventContext);
 
   useEffect(() => {
     setFilterActive(isActive(jobGroupList, eventType, location, coast));
@@ -68,7 +69,12 @@ function EventFilter() {
               className={cn('filter__group__toggle')}
             >
               {filterActive ? (
-                <Image src={'/icon/toggle_active.svg'} alt="filter active" width={40} height={40} />
+                <Image
+                  src={'/icon/toggle_active.svg'}
+                  alt="filter active"
+                  width={40}
+                  height={40}
+                />
               ) : (
                 <ToggleIcon />
               )}

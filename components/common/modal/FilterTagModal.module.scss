@@ -17,7 +17,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
+
     &__title {
       color: var(--gray-1);
       font-size: 21px;
@@ -44,7 +44,7 @@
     margin: 0 auto;
 
     .dropdown {
-      margin-top: .7rem;
+      margin-top: 0.7rem;
     }
   }
   .initBtn {
@@ -69,7 +69,7 @@
 
 .hidden {
   animation-name: focusOut;
-  animation-duration: .3s;
+  animation-duration: 0.3s;
   animation-timing-function: ease;
   animation-fill-mode: forwards;
 }

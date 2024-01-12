@@ -37,7 +37,11 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
   const { user, isError } = useUser();
 
   if (isError) {
-    return <div className={cx('null-container')}>내 정보를 불러오는데 문제가 발생했습니다!</div>;
+    return (
+      <div className={cx('null-container')}>
+        내 정보를 불러오는데 문제가 발생했습니다!
+      </div>
+    );
   }
 
   // 계정 탈퇴
@@ -71,7 +75,9 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
                 <h1 className={cx('notice-title')}>내 정보</h1>
                 <div className={cx('notice-alert')}>
                   <div className={cx('notice-alert__box')}>Notice</div>
-                  <div className={cx('notice-alert__txt')}>정보 수집은 추후 업데이트 예정이에요</div>
+                  <div className={cx('notice-alert__txt')}>
+                    정보 수집은 추후 업데이트 예정이에요
+                  </div>
                 </div>
                 <div className={cx('underline')}></div>
               </div>
@@ -82,13 +88,19 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
           <div className={cx('info-form')}>
             <div className={cx('info-form__profile_image_box')}>
               <Image
-                src={user && user.profile_image_link ? user.profile_image_link : '/icon/profile.svg'}
+                src={
+                  user && user.profile_image_link
+                    ? user.profile_image_link
+                    : '/icon/profile.svg'
+                }
                 width={104}
                 height={104}
                 className={cx('profile')}
               />
             </div>
-            <div className={cx('info-form__profile_txt_box')}>{user?.username}</div>
+            <div className={cx('info-form__profile_txt_box')}>
+              {user?.username}
+            </div>
             {/* 사용자 상세 정보 */}
             <div className={cx('info-form__auth_box')}>
               <div className={cx('email_box')}>
@@ -104,7 +116,9 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
             </div>
             <div className={cx('info-form__register_date')}>
               {dayjs(user?.register_date).format('YYYY년 MM월 DD일')}
-              <div className={cx('info-form__register-info-button')}>가입일 🎉</div>
+              <div className={cx('info-form__register-info-button')}>
+                가입일 🎉
+              </div>
             </div>
           </div>
           {/* // 사용자 상세 정보 */}

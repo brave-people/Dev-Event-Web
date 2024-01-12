@@ -1,27 +1,27 @@
 .toggle {
-  input[type=checkbox] {
+  input[type='checkbox'] {
     width: 0;
     height: 0;
     display: none;
   }
 
   label {
-      width: 2.7rem;
-      height: 2.7rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      text-indent: -9999px;
-      color: var(--gray-1);
-    }
-    
-    input:checked + label:after {
-      left: calc(100% - 5px);
-      -webkit-transform: translateX(-100%);
-      -moz-transform: translateX(-100%);
-      -ms-transform: translateX(-100%);
-      -o-transform: translateX(-100%);
-      transform: translateX(-100%);
-    }
+    width: 2.7rem;
+    height: 2.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    text-indent: -9999px;
+    color: var(--gray-1);
+  }
+
+  input:checked + label:after {
+    left: calc(100% - 5px);
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
 }

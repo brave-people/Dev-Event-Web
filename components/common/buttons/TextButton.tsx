@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import React from 'react';
-import style from 'components/common/buttons/TextButton.module.scss'
+import style from 'components/common/buttons/TextButton.module.scss';
 import { ButtonProps } from 'types/Button';
 
 const cx = classNames.bind(style);

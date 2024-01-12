@@ -1,5 +1,5 @@
-import React from 'react'
-import { Icon } from '../../types/Icon'
+import React from 'react';
+import { Icon } from '../../types/Icon';
 
 function SaveIcon({ color, className, ...rest }: Icon) {
   return (
@@ -18,7 +18,7 @@ function SaveIcon({ color, className, ...rest }: Icon) {
         d="M5.5 22V3h14v19l-7-4.5-7 4.5Z"
       />
     </svg>
-  )
-} 
+  );
+}
 
-export default SaveIcon
+export default SaveIcon;

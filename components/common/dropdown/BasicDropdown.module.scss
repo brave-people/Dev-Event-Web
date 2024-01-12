@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   min-width: 8.5rem;
-  margin-right: .425rem;
+  margin-right: 0.425rem;
   position: relative;
   user-select: none;
 
@@ -53,7 +53,7 @@
       width: 100%;
       height: 2.5rem;
       color: var(--gray-1);
-      
+
       &:hover {
         cursor: pointer;
         background-color: var(--background-2);
@@ -86,18 +86,16 @@
       width: 5px;
       background-color: transparent;
     }
-  }  
+  }
   .dropdown__header__focus {
     border-color: var(--primary);
   }
 }
 
 @include tablet {
-
 }
 
 @include mobile {
-
 }
 
 @keyframes appearIn {

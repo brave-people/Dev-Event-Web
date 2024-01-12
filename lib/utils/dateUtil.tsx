@@ -11,13 +11,18 @@ const DateUtil = {
     const todayDate = DateUtil.setDateTimeToDate();
     const inputDate = DateUtil.setDateTimeToDate(date);
     return inputDate.diff(todayDate, 'day') > 0 ||
-      (inputDate.diff(todayDate, 'day') === 0 && inputDate.get('day') === todayDate.get('day'))
+      (inputDate.diff(todayDate, 'day') === 0 &&
+        inputDate.get('day') === todayDate.get('day'))
       ? false
       : true;
   },
 
   setDateTimeToDate: (date?: string) => {
-    return dayjs(date).set('hour', 0).set('minute', 0).set('second', 0).set('millisecond', 0);
+    return dayjs(date)
+      .set('hour', 0)
+      .set('minute', 0)
+      .set('second', 0)
+      .set('millisecond', 0);
   },
 
   getDay: (date: string) => {
@@ -44,7 +49,9 @@ const DateUtil = {
   },
 
   getDateTimeFormat: (date: string) => {
-    return `${DateUtil.getDateFormat(date, { hasWeek: true })} ${DateUtil.getTimeFormat(date)}`;
+    return `${DateUtil.getDateFormat(date, {
+      hasWeek: true,
+    })} ${DateUtil.getTimeFormat(date)}`;
   },
 };
 
@@ -90,42 +97,66 @@ const removeDupDate = (event: EventDate) => {
   if (event.includeTime === false && event.dayEvent === true) {
     const date = event.eventDate.split('~')[0].split('.');
     const dateMonth = date[1][0] === '0' ? `${date[1][1]}월` : `${date[1]}월`;
-    const dateDate = date[1][0] === '0' ? `${date[2][1]}일` : `${date[2].slice(0, 2)}일`;
+    const dateDate =
+      date[1][0] === '0' ? `${date[2][1]}일` : `${date[2].slice(0, 2)}일`;
     return `${dateMonth} ${dateDate}${date[2].slice(2, 6)}`;
   }
 
   if (event.includeTime === false && event.dayEvent === false) {
     const startDate = event.eventDate.split('~')[0].split('.');
     const endDate = event.eventDate.split('~')[1].split('.');
-    const prevMonth = startDate[1][0] === '0' ? `${startDate[1][1]}월` : `${startDate[1]}월`;
-    const nextMonth = endDate[1][0] === '0' ? `${endDate[1][1]}월` : `${endDate[1]}월`;
-    const prevDate = startDate[2][0] === '0' ? `${startDate[2][1]}일` : `${startDate[2].slice(0, 2)}일`;
-    const nextDate = endDate[2][0] === '0' ? `${endDate[2][1]}일` : `${endDate[2].slice(0, 2)}일`;
+    const prevMonth =
+      startDate[1][0] === '0' ? `${startDate[1][1]}월` : `${startDate[1]}월`;
+    const nextMonth =
+      endDate[1][0] === '0' ? `${endDate[1][1]}월` : `${endDate[1]}월`;
+    const prevDate =
+      startDate[2][0] === '0'
+        ? `${startDate[2][1]}일`
+        : `${startDate[2].slice(0, 2)}일`;
+    const nextDate =
+      endDate[2][0] === '0'
+        ? `${endDate[2][1]}일`
+        : `${endDate[2].slice(0, 2)}일`;
     if (startDate[1] === endDate[1]) {
-      return `${prevMonth} ${prevDate}${startDate[2].slice(2, 6)} ~ ${nextDate}${endDate[2].slice(2, 6)}`;
+      return `${prevMonth} ${prevDate}${startDate[2].slice(
+        2,
+        6
+      )} ~ ${nextDate}${endDate[2].slice(2, 6)}`;
     }
     return `${prevMonth}${prevDate}~ ${nextMonth}${nextDate}`;
   }
 
   if (event.includeTime === true && event.dayEvent === true) {
     const sepDate = event.eventDate?.split('.');
-    const month = sepDate[1][0] === '0' ? `${sepDate[1][1]}월` : `${sepDate[1]}월`;
-    const date = sepDate[2][0] === '0' ? `${sepDate[2][1]}일` : `${sepDate[2].slice(0, 2)}일`;
+    const month =
+      sepDate[1][0] === '0' ? `${sepDate[1][1]}월` : `${sepDate[1]}월`;
+    const date =
+      sepDate[2][0] === '0'
+        ? `${sepDate[2][1]}일`
+        : `${sepDate[2].slice(0, 2)}일`;
     const time = sepDate[2].slice(2, sepDate[2].length);
     return `${month} ${date}${time}`;
   }
 
   const startDate = event.eventDate.split('~')[0].split('.');
   const endDate = event.eventDate.split('~')[1].split('.');
-  const prevMonth = startDate[1][0] === '0' ? `${startDate[1][1]}월` : `${startDate[1]}월`;
-  const nextMonth = endDate[1][0] === '0' ? `${endDate[1][1]}월` : `${endDate[1]}월`;
-  const prevDate = startDate[2][0] === '0' ? `${startDate[2][1]}일` : `${startDate[2].slice(0, 2)}일`;
-  const nextDate = endDate[2][0] === '0' ? `${endDate[2][1]}일` : `${endDate[2].slice(0, 2)}일`;
+  const prevMonth =
+    startDate[1][0] === '0' ? `${startDate[1][1]}월` : `${startDate[1]}월`;
+  const nextMonth =
+    endDate[1][0] === '0' ? `${endDate[1][1]}월` : `${endDate[1]}월`;
+  const prevDate =
+    startDate[2][0] === '0'
+      ? `${startDate[2][1]}일`
+      : `${startDate[2].slice(0, 2)}일`;
+  const nextDate =
+    endDate[2][0] === '0'
+      ? `${endDate[2][1]}일`
+      : `${endDate[2].slice(0, 2)}일`;
   if (startDate[0] === endDate[0] && startDate[1] === endDate[1]) {
-    return `${prevMonth} ${prevDate}${startDate[2].slice(2, startDate[2].length)} ~ ${nextDate}${endDate[2].slice(
+    return `${prevMonth} ${prevDate}${startDate[2].slice(
       2,
-      endDate[2].length
-    )}`;
+      startDate[2].length
+    )} ~ ${nextDate}${endDate[2].slice(2, endDate[2].length)}`;
   }
   return `${prevMonth} ${prevDate}${startDate[2].slice(
     2,
@@ -133,4 +164,12 @@ const removeDupDate = (event: EventDate) => {
   )}~ ${nextMonth} ${nextDate}${endDate[2].slice(2, endDate[2].length)}`;
 };
 
-export { DateUtil, getDateList, getStartDate, getEndDate, getCurrentDate, getMonth, removeDupDate };
+export {
+  DateUtil,
+  getDateList,
+  getStartDate,
+  getEndDate,
+  getCurrentDate,
+  getMonth,
+  removeDupDate,
+};

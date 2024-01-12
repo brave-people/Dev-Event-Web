@@ -1,9 +1,9 @@
-import React from "react"
-import { Icon } from '../../types/Icon'
-import style from './Icon.module.scss'
-import classNames from "classnames/bind"
+import React from 'react';
+import { Icon } from '../../types/Icon';
+import style from './Icon.module.scss';
+import classNames from 'classnames/bind';
 
-const cn = classNames.bind(style)
+const cn = classNames.bind(style);
 
 const PlusIcon = ({ color, className, ...rest }: Icon) => (
   <svg
@@ -20,6 +20,6 @@ const PlusIcon = ({ color, className, ...rest }: Icon) => (
       clipRule="evenodd"
     />
   </svg>
-)
+);
 
-export default PlusIcon
+export default PlusIcon;

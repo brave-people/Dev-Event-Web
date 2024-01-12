@@ -38,7 +38,9 @@ function JobGroupTag({ tagName, type, parent }: Prop) {
   const handleJobGroupList = (tag: string) => {
     if (parent) {
       if (jobGroupList !== undefined) {
-        jobGroupList.includes(tag) ? deleteJobGroupList(tag) : updateJobGroupList(tag);
+        jobGroupList.includes(tag)
+          ? deleteJobGroupList(tag)
+          : updateJobGroupList(tag);
       } else {
         updateJobGroupList(tag);
       }
@@ -63,11 +65,26 @@ function JobGroupTag({ tagName, type, parent }: Prop) {
         if (date !== undefined) handleDate(undefined);
         if (value === '전체') {
           reflactUrl(
-            `${initUrl(`${url ? url : router.asPath}`, key, jobGroupList, eventType, location, coast, search)}`
+            `${initUrl(
+              `${url ? url : router.asPath}`,
+              key,
+              jobGroupList,
+              eventType,
+              location,
+              coast,
+              search
+            )}`
           );
           handleInit();
         } else {
-          reflactUrl(`${parseUrl(`${url ? url : router.asPath}`, key, value, jobGroupList)}`);
+          reflactUrl(
+            `${parseUrl(
+              `${url ? url : router.asPath}`,
+              key,
+              value,
+              jobGroupList
+            )}`
+          );
           parent ? handleOnClick() : handleSearch(tagName);
         }
       }}
@@ -76,7 +93,8 @@ function JobGroupTag({ tagName, type, parent }: Prop) {
         windowTheme ? 'tag--light' : 'tag--dark',
         `${
           ((jobGroupList && jobGroupList.includes(tagName)) ||
-            ((jobGroupList === undefined || jobGroupList.length === 0) && tagName === '전체')) &&
+            ((jobGroupList === undefined || jobGroupList.length === 0) &&
+              tagName === '전체')) &&
           (windowTheme ? 'checked--light' : 'checked--dark')
         }`
       )}

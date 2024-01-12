@@ -57,7 +57,11 @@ const MyEventDoneList = () => {
   };
 
   if (isError) {
-    return <div className={cn('null-container')}>내 이벤트 정보를 불러오는데 문제가 발생했습니다!</div>;
+    return (
+      <div className={cn('null-container')}>
+        내 이벤트 정보를 불러오는데 문제가 발생했습니다!
+      </div>
+    );
   }
 
   const handleShareInMobileSize = (data: Event) => {
@@ -67,12 +71,17 @@ const MyEventDoneList = () => {
 
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: Number }) => {
     if (favoriteId && myEvent) {
-      const filteredEvent = myEvent.filter((event) => event.favorite_id !== favoriteId);
+      const filteredEvent = myEvent.filter(
+        (event) => event.favorite_id !== favoriteId
+      );
       mutate([`/front/v1/favorite/events`, param], [...filteredEvent], false);
 
-      const result = await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
-        favoriteId: favoriteId,
-      });
+      const result = await deleteMyEventApi(
+        `/front/v1/favorite/events/${favoriteId}`,
+        {
+          favoriteId: favoriteId,
+        }
+      );
     } else {
       alert('이벤트 정보가 없습니다!');
     }
@@ -110,7 +119,10 @@ const MyEventDoneList = () => {
                     <div className={cn('wrapper')}>
                       <div className={cn('wrapper__status')}>
                         <div className={cn('wrapper__status__tab')}>
-                          <div className={cn('wrapper__status__tab__count')}> {oldEvent.length}개 </div>
+                          <div className={cn('wrapper__status__tab__count')}>
+                            {' '}
+                            {oldEvent.length}개{' '}
+                          </div>
                           <div
                             className={cn('wrapper__status__tab__done')}
                             onClick={() => {
@@ -131,7 +143,11 @@ const MyEventDoneList = () => {
                               width={18}
                               height={18}
                             />
-                            <div className={cn('wrapper__status__tab__done__txt')}>완료 행사 보기</div>
+                            <div
+                              className={cn('wrapper__status__tab__done__txt')}
+                            >
+                              완료 행사 보기
+                            </div>
                           </div>
                         </div>
                       </div>

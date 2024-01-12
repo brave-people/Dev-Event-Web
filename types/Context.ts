@@ -4,4 +4,4 @@ export type UrlContext = {
   location: string | undefined;
   coast: string | undefined;
   kwd: string | undefined;
-}
+};

@@ -17,7 +17,16 @@ type Props = {
 
 function SearchEvent({ context }: Props) {
   const [input, setInput] = useState<string | undefined>(undefined);
-  const { jobGroupList, date, eventType, location, coast, search, handleDate, handleSearch } = useContext(EventContext);
+  const {
+    jobGroupList,
+    date,
+    eventType,
+    location,
+    coast,
+    search,
+    handleDate,
+    handleSearch,
+  } = useContext(EventContext);
   const { modalState, handleModalState } = useContext(WindowContext);
   const router = useRouter();
 
@@ -31,7 +40,11 @@ function SearchEvent({ context }: Props) {
         });
         if (date !== undefined) handleDate(undefined);
         handleSearch(input);
-        router.push(`${parseUrl(`${router.asPath}`, 'kwd', input, jobGroupList)}`, undefined, { scroll: false });
+        router.push(
+          `${parseUrl(`${router.asPath}`, 'kwd', input, jobGroupList)}`,
+          undefined,
+          { scroll: false }
+        );
       }
       if (window.innerWidth < 600) {
         handleModalState({
@@ -52,9 +65,21 @@ function SearchEvent({ context }: Props) {
     setTimeout(() => {
       handleSearch(undefined);
     }, 300);
-    router.push(initUrl(`${router.asPath}`, 'kwd', jobGroupList, eventType, location, coast, undefined), undefined, {
-      scroll: false,
-    });
+    router.push(
+      initUrl(
+        `${router.asPath}`,
+        'kwd',
+        jobGroupList,
+        eventType,
+        location,
+        coast,
+        undefined
+      ),
+      undefined,
+      {
+        scroll: false,
+      }
+    );
   };
 
   useEffect(() => {
