@@ -212,7 +212,11 @@
   }
 }
 
-@media (max-width: 600px) {
+@include mobile() {
+  .modal {
+    width: calc(100% - 40px);
+  }
+
   .modal__inner {
     .login-form__button {
       width: 100%;

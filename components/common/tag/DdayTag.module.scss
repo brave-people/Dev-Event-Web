@@ -1,17 +1,25 @@
 @import '~styles/_mixin.scss';
 
 .tag {
-  margin-left: 25px;
   border: none;
   font-size: 13px;
-  margin-left: 5px;
-  color: var(--primary);
+  color: var(--gray-2);
   background-color: var(--background-2);
-  width: 3.5rem;
-  height: 1.7rem;
   border-radius: 18px;
-  font-weight: 500;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 4px 8px;
+
+  &--bold {
+    font-weight: 500;
+    color: var(--primary)
+  }
+
+  @media (max-width: 1199px) {
+    min-width: 38px;
+    font-size: 12px;
+    margin-left: 8px;
+  }
 }
+

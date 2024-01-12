@@ -12,7 +12,11 @@ type Tag = {
 
 function FilterTag({ label, size = 'regular', type }: Tag) {
   if (label === undefined) return <></>;
-  return <button className={cx('tag', `size--${size}`, `type--${type}`)}>{label}</button>;
+  return (
+    <button className={cx('tag', `size--${size}`, `type--${type}`)}>
+      {label}
+    </button>
+  );
 }
 
 export default FilterTag;

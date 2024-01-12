@@ -8,13 +8,18 @@
 }
 
 .section {
-  max-width: 1104px;
   padding-bottom: 5.439rem;
   margin: 0 auto;
 }
 
 @media (max-width: 1200px) {
-  .main .section {
+  .section {
     padding: 0 $tablet_padding;
+  }
+}
+
+@include mobile {
+  .section {
+    padding: 0 20px;
   }
 }

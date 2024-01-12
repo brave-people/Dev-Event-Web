@@ -19,7 +19,6 @@
 .list__title {
   font-weight: 700;
   font-size: 1.5rem;
-  line-height: 2.188rem;
   color: var(--gray-1);
   display: flex;
   flex-direction: row;
@@ -48,11 +47,6 @@
         font-size: 16px;
         line-height: 24px;
       }
-      .list__title {
-        font-weight: 590;
-        font-size: 20px;
-        line-height: 24px;
-      }
     }
   }
   @media (max-width: 700px) {
@@ -64,11 +58,6 @@
       .total__count {
         font-weight: 400;
         font-size: 15px;
-        line-height: 24px;
-      }
-      .list__title {
-        font-weight: 590;
-        font-size: 20px;
         line-height: 24px;
       }
     }
@@ -87,12 +76,6 @@
       line-height: 24px;
       margin-right: 2rem;
     }
-    .list__title {
-      font-weight: 590;
-      font-size: 20px;
-      line-height: 24px;
-      margin-left: 2rem;
-    }
   }
   @media (max-width: 550px) {
     .search__list {
@@ -104,14 +87,6 @@
   @media (max-width: 500px) {
     .search__header__modal {
       padding: auto 1rem;
-    }
-    .list__title {
-      font-weight: 700;
-      font-size: 1.4rem;
-      line-height: 2.188rem;
-      color: var(--gray-1);
-      display: flex;
-      flex-direction: row;
     }
   }
   @media (max-width: 450px) {
@@ -131,15 +106,6 @@
     margin-top: 1.2rem;
     width: 100%;
   }
-  .list__title {
-    font-weight: 700;
-    font-size: 1.3rem;
-    line-height: 2.188rem;
-    padding-left: 1.4rem;
-    color: var(--gray-1);
-    display: flex;
-    flex-direction: row;
-  }
   .search__header__modal {
     width: 100%;
     margin: 0 auto;
@@ -148,11 +114,6 @@
     .total__count {
       font-weight: 400;
       font-size: 16px;
-      line-height: 24px;
-    }
-    .list__title {
-      font-weight: 590;
-      font-size: 20px;
       line-height: 24px;
     }
   }

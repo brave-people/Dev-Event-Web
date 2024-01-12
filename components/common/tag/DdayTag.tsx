@@ -8,7 +8,7 @@ const cn = classNames.bind(style);
 type Props = {
   startDateTime: string;
   endDateTime: string;
-} 
+};
 
 function DdayTag({ startDateTime, endDateTime }: Props) {
   const calculateEventDday = () => {
@@ -42,7 +42,7 @@ function DdayTag({ startDateTime, endDateTime }: Props) {
       case 'scheduled':
         return <div>D-{type.diff}</div>;
       case 'ongoing':
-        return <div>Today</div>;
+        return <div className={cn('tag--bold')}>Today</div>;
       default:
         return <div></div>;
     }

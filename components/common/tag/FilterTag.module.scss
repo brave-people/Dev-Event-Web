@@ -34,7 +34,7 @@
     text-overflow: ellipsis;
   }
 
-  &.type--location {
+  /*&.type--location {
     color: var(--gray-2);
     border-radius: 0;
     background-color: transparent;
@@ -73,7 +73,7 @@
     color: var(--gray-1);
     background-color: transparent;
     border: 1px solid var(--gray-4);
-  }
+  }*/
 }
 
 @include laptop {

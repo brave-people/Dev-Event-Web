@@ -8,6 +8,7 @@
   background-color: var(--background-2);
   display: flex;
   align-items: center;
+  overflow: hidden;
 
   .inner {
     width: 1109px;
@@ -114,7 +115,7 @@
   }
 }
 
-@include mobile {
+@media (max-width: 768px) {
   .letter {
     height: 256px;
     width: 100%;
@@ -123,6 +124,7 @@
     padding: 40px $mobile_padding calc(28px) $mobile_padding;
 
     .inner {
+      width: inherit;
       display: block;
 
       .letter__container {
@@ -153,10 +155,11 @@
         }
 
         .image__container {
+          width: 5rem;
           position: absolute;
+          padding: 0;
           top: 50px;
           right: 18px; // 이메일 아이콘 절대 위치 설정
-          transform: translate(25%, -25%); // 조절 가능
         }
 
         .email_button_container {
