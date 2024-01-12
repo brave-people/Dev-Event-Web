@@ -20,12 +20,12 @@ command + alt + shift + p
 
 ### 라이브러리 설치
 ```sh
-$ npm install
+$ pnpm install
 ```
 
 ### developer 환경으로 실행
 ```sh
-$ npm run dev
+$ pnpm run dev
 ```
 
 ## 배포 
