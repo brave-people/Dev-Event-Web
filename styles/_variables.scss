@@ -1,3 +1,4 @@
+// 높이
 $header_height: 49px;
 
 // 메인 여백
@@ -5,6 +6,8 @@ $laptop_padding: 48px;
 $tablet_padding: 64px;
 $mobile_padding: 20px;
 
+// 폭
+$laptop_max_width: 1104px;
 $image_width: 344px;
 
 $image_width-tablet: calc(100vw / 2 - $tablet_padding * 2);
