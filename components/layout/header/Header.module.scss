@@ -14,6 +14,7 @@
 
   &__inner {
     display: flex;
+    max-width: $laptop_max_width;
     min-height: 3.5rem;
     margin: 0 auto;
     flex-direction: row;
@@ -139,12 +140,6 @@
   100% {
     height: 135px;
     opacity: 100%;
-  }
-}
-
-@include laptop {
-  .header__inner {
-    max-width: 1104px;
   }
 }
 

@@ -15,6 +15,7 @@
   z-index: 999;
 
   &__inner {
+    width: $laptop_max_width;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -44,14 +45,6 @@
         background-color: rgb(213, 215, 229);
         cursor: pointer;
       }
-    }
-  }
-}
-
-@include laptop {
-  .notice {
-    &__inner {
-      width: 1104px;
     }
   }
 }
