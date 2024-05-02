@@ -1,7 +1,6 @@
 import Logo from 'components/common/logo/Logo';
 import LoginModal from 'components/common/modal/LoginModal';
 import NoticeModal from 'components/common/modal/NoticeModal';
-import ThemeToggle from 'components/features/ThemeToggle/ThemeToggle';
 import Login from 'components/features/login/Login';
 import style from 'components/layout/header/Header.module.scss';
 import Profile from 'components/layout/header/Profile';
@@ -25,9 +24,6 @@ function Header() {
           </div>
         </Link>
         <div className={cn('header__buttons')}>
-          <div className={cn('toggle__container')}>
-            <ThemeToggle />
-          </div>
           <span className={cn('wrapper')}>
             {isLoggedIn ? (
               <div>
