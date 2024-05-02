@@ -40,11 +40,7 @@ function NoticeModal() {
           <Image src={'/icon/notice.png'} width={36} height={36} />
         </div>
         <div className={cn('icon')} onClick={hideModal}>
-          <DeleteIcon
-            color={
-              windowTheme ? 'rgba(49, 50, 52, 1)' : 'rgba(203, 203, 206, 1)'
-            }
-          />
+          <DeleteIcon color={'rgba(49, 50, 52, 1)'} />
         </div>
       </div>
     </div>

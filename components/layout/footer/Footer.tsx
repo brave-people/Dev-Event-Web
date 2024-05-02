@@ -20,7 +20,7 @@ const Footer = () => {
           <Link href={'https://github.com/brave-people/dev-Event'}>
             용감한 친구들 with 남송리 삼번지
           </Link>{' '}
-          rights reserved.
+          all rights reserved.
         </div>
       </div>
       <div className={cn('footer__row')}>

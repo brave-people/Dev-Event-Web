@@ -3,7 +3,7 @@
 
 .notice {
   position: static;
-  height: 36px;
+  height: 48px;
   width: 100%;
   top: 0;
   left: 0;
@@ -27,9 +27,10 @@
       justify-content: flex-start;
 
       .notice__title {
-        font-size: 15px;
-        font-weight: 700;
+        font-size: 16px;
+        font-weight: bold;
         color: var(--primary);
+        margin-right: 4px;
       }
     }
 
@@ -70,7 +71,7 @@
       width: 100%;
       .notice__content {
         .notice__title {
-          font-size: 13px;
+          font-size: 12px;
         }
       }
     }
@@ -90,10 +91,6 @@
 
 .notice--light {
   background-color: rgba(237, 239, 255, 1);
-}
-
-.notice--dark {
-  background-color: rgba(24, 27, 40, 1);
 }
 
 @keyframes appearIn {
