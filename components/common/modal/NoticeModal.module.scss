@@ -7,12 +7,12 @@
   width: 100%;
   top: 0;
   left: 0;
+  z-index: 999;
   display: flex;
   align-items: center;
   animation: appearIn;
   animation-duration: 0.5s;
   animation-timing-function: linear;
-  z-index: 999;
 
   &__inner {
     width: $laptop_max_width;
