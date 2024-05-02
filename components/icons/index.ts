@@ -19,6 +19,7 @@ import ShareIconMobile from './ShareIconMobile';
 import SunIcon from './SunIcon';
 import ToggleActiveIcon from './ToggleActiveIcon';
 import ToggleIcon from './ToggleIcon';
+import CalenderLogo from './CalenderLogo';
 
 export {
   PlusIcon,
@@ -42,4 +43,5 @@ export {
   ShareIconMobile,
   BookmarkIconMobile,
   ToggleActiveIcon,
+  CalenderLogo,
 };
