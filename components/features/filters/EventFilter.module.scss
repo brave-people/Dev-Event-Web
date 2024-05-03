@@ -23,7 +23,7 @@
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 2.5rem;
+      font-size: 40px;
       line-height: 3rem;
       color: var(--gray-1);
     }
@@ -54,13 +54,6 @@
 }
 
 @include laptop {
-  .container {
-    .block {
-      &__desc {
-        font-size: 2.3rem;
-      }
-    }
-  }
   @media (max-width: 1075px) {
     .container {
       .block {

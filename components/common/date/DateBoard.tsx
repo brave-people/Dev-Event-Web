@@ -4,14 +4,7 @@ import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
 import { useOnClickOutside } from 'lib/hooks/useOnClickOutside';
 import { getMonth } from 'lib/utils/dateUtil';
-import React, {
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  Dispatch,
-  SetStateAction,
-} from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import { useRouter } from 'next/router';
 import DateElement from './DateElement';
@@ -32,7 +25,7 @@ function DateBoard({ options }: Props) {
     : getMonth();
   const [dateElement, setDateElement] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isFirstEl, setIsFirstEl] = useState<boolean>(false);
+  const [setIsFirstEl] = useState<boolean>(false);
   const [isLastEl, setIsLastEl] = useState<boolean>(false);
   const [currentYear, setCurrentYear] = useState<string>(initYear);
   const [currentMonth, setCurrentMonth] = useState<string>(initMonth);
@@ -161,7 +154,7 @@ function DateBoard({ options }: Props) {
 
   useEffect(() => {
     if (router.asPath.includes('calender')) {
-      if (isLastEl === true) return;
+      if (isLastEl) return;
 
       if (date !== undefined) {
         const initDate = `${date.slice(0, 4)}년 ${date.slice(6, 8)}월`;
