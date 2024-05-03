@@ -13,8 +13,7 @@ const Letter = () => {
         <div className={cn('letter__container')}>
           <div>
             <div className={cn('letter__title')}>
-              매주
-              <span>데브이벤트</span>
+              매주 데브이벤트
               <br className={cn('break__line')} />
               소식을 받아보세요
             </div>
@@ -27,9 +26,7 @@ const Letter = () => {
           <div className={cn('image__container')}>
             <Image
               src="/icon/letter_icon.svg"
-              width={146}
-              height={140}
-              alt="letter__icon"
+              alt="letter icon"
               layout="fill"
               priority={true}
             />

@@ -4,7 +4,7 @@
 
 .letter {
   width: 100%;
-  height: 290px;
+  height: 140px;
   background-color: var(--background-2);
   display: flex;
   align-items: center;
@@ -21,35 +21,31 @@
       width: $laptop_max_width;
 
       .letter__title {
+        font-size: 24px;
+        font-weight: 600;
         padding-right: 16px;
-        font-size: 40px;
         font-style: normal;
-        font-weight: 400;
         color: var(--gray-1);
-        line-height: 120%; /* 48px */
+        line-height: 120%;
         letter-spacing: -0.8px;
-
-        span {
-          margin: 0 5px;
-          font-weight: 700;
-        }
       }
 
       .letter__desc {
+        padding-right: 16px;
         margin-top: 10px;
-        font-size: 24px;
-        color: var(--gray-1);
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--gray-2);
         font-style: normal;
-        font-weight: 400;
         line-height: 150%;
         letter-spacing: -0.48px;
       }
 
       .image__container {
         position: relative;
-        width: 146px;
-        height: 109px;
-        padding-right: 16px;
+        width: 80px;
+        height: 80px;
+        padding-right: 24px;
       }
     }
   }
@@ -106,15 +102,69 @@
       }
     }
   }
+}
 
-  .button__container {
-    max-width: 115px;
-    max-height: 48px;
-    font-size: 14px;
+@media (min-width: 600px) and (max-width: 768px) {
+  .letter {
+    height: 256px;
+    width: 100%;
+    align-items: normal;
+    position: relative;
+    padding: 40px $tablet_padding calc(28px) $tablet_padding;
+
+    .inner {
+      width: inherit;
+      display: block;
+
+      .letter__container {
+        display: block;
+        width: 100%;
+
+        .image__container {
+          height: 50px;
+        }
+      }
+
+      .letter__container {
+        align-items: center;
+        justify-content: space-between;
+
+        .letter__title {
+          font-size: 24px;
+          font-weight: 600;
+        }
+
+        .letter__desc {
+          font-size: 16px;
+          color: $light-gray-2;
+        }
+
+        .image__container {
+          width: 15rem;
+          position: absolute;
+          padding: 0;
+          top: 50px;
+          right: 0; // 이메일 아이콘 절대 위치 설정
+        }
+
+        .email_button_container {
+          margin-top: 24px; // 이전 스타일 유지
+        }
+      }
+    }
+
+    .button__container {
+      margin-right: $mobile_padding; // 이전 스타일 유지
+      margin-top: 24px; // 이전 스타일 유지
+    }
+  }
+
+  .break__line {
+    display: block;
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
   .letter {
     height: 256px;
     width: 100%;
@@ -142,10 +192,6 @@
         .letter__title {
           font-size: 24px;
           font-weight: 600;
-
-          span {
-            font-weight: 600;
-          }
         }
 
         .letter__desc {
