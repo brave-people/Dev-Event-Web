@@ -5,7 +5,7 @@
 .item__container {
   width: 100%;
   display: flex;
-  padding: 36px 24px 36px 0;
+  padding: 20px 24px 20px 0;
   align-items: center;
   background-color: transparent;
   border-bottom: 1px solid;
@@ -24,7 +24,7 @@
       align-items: center;
       justify-content: start;
       position: relative;
-      grid-template-columns: 1fr 3fr;
+      grid-template-columns: 1fr 4fr;
 
       &__flag {
         width: 37px;
@@ -82,7 +82,7 @@
       &__body {
         display: flex;
         flex-direction: column;
-        padding-left: 54px;
+        padding-left: 32px;
         justify-content: space-between;
 
         .wrap {
@@ -111,7 +111,7 @@
       &__title {
         display: block;
         font-weight: 600;
-        font-size: 18px;
+        font-size: 22px;
         color: var(--gray-1);
         text-align: left;
         overflow: hidden;
@@ -127,7 +127,6 @@
         color: var(--gray-2);
         text-align: left;
         overflow: hidden;
-        white-space: wrap;
         margin-right: 10px;
       }
 
@@ -166,7 +165,7 @@
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          padding-right: 6px;
+          padding-right: 8px;
           font-size: 16px;
           padding-left: 0;
           margin-left: 0;

@@ -192,16 +192,8 @@ const Item = ({
                 {isNew ? (
                   <div className={cn('item__content__flag')}>
                     <NewBulletIcon
-                      color={
-                        windowTheme
-                          ? 'rgba(203, 203, 206, 1)'
-                          : 'rgba(49, 50, 52, 1)'
-                      }
-                      backgroundColor={
-                        windowTheme
-                          ? 'rgba(44, 76, 239, 1)'
-                          : 'rgba(79, 108, 255, 1)'
-                      }
+                      color={'rgba(203, 203, 206, 1)'}
+                      backgroundColor={'rgba(44, 76, 239, 1)'}
                     />
                   </div>
                 ) : null}
@@ -271,7 +263,7 @@ const Item = ({
                       )}
                     >
                       {data.title.length >= 30 && windowX <= 750
-                        ? `${data.title.slice(0, 30)}...`
+                        ? `${data.title.slice(0, 45)}...`
                         : data.title}
                     </div>
                     {isDone ? null : (

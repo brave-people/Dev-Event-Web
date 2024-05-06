@@ -6,7 +6,9 @@
   grid-template-columns: 1fr;
 
   &:last-child {
-    margin-bottom: 60px;
+    margin-bottom: 44px;
+    border-bottom: 1px solid;
+    border-color: var(--gray-4);
   }
 }
 
