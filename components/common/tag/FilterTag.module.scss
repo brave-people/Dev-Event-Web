@@ -33,47 +33,6 @@
     white-space: nowrap;
     text-overflow: ellipsis;
   }
-
-  /*&.type--location {
-    color: var(--gray-2);
-    border-radius: 0;
-    background-color: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-
-    &:after {
-      content: "";
-      display: block;
-      border-right: 1px solid;
-      border-color: var(--gray-4);
-      height: 10px;
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      margin-right: 5px;
-    }
-    &::before {
-      content: "";
-      display: block;
-      border-left: 1px solid;
-      border-color: var(--gray-4);
-      height: 10px;
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      margin-left: 5px;
-    }
-  }
-
-  &.type--jobGroup {
-    color: var(--gray-1);
-    background-color: transparent;
-    border: 1px solid var(--gray-4);
-  }*/
 }
 
 @include laptop {
