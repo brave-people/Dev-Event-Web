@@ -38,44 +38,36 @@
 @include laptop {
   @media (max-width: 800px) {
     .tag {
-      &.size--regular {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      border: none;
+      color: var(--gray-1);
+      background-color: var(--gray-5);
+      cursor: pointer;
+      font-weight: 500;
+      text-align: center;
+      margin-right: 8px;
+
+      &.size--large {
         font-size: 14px;
         line-height: 16px;
-        padding: 3px 9px 3px 0px;
-        border-radius: 3px;
+        padding: 4px 12px;
+        border-radius: 4px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
       }
-      &.type--default {
-        color: var(--gray-2);
-        border-radius: 0;
-        background-color: transparent;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        &::after {
-          content: '';
-          display: block;
-          border-right: 1px solid;
-          border-color: var(--gray-4);
-          height: 10px;
-          position: absolute;
-          right: 0;
-          top: 50%;
-          transform: translateY(-50%);
-        }
-      }
 
-      &.type--default--last {
-        color: var(--gray-2);
-        border-radius: 0;
-        background-color: transparent;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
+      &.size--regular {
+        font-size: 14px;
+        line-height: 16px;
+        padding: 4px 12px;
+        border-radius: 4px;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
     }
   }
@@ -83,88 +75,73 @@
 
 @include tablet {
   .tag {
-    &.size--regular {
-      font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    border: none;
+    color: var(--gray-1);
+    background-color: var(--gray-5);
+    cursor: pointer;
+    font-weight: 500;
+    text-align: center;
+    margin-right: 3px; // fix
+
+    &.size--large {
+      font-size: 10px; // fix
       line-height: 16px;
-      padding: 3px 9px 3px 0px;
-      border-radius: 3px;
+      padding: 4px 12px;
+      border-radius: 4px;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
-    &.type--default {
-      color: var(--gray-2);
-      border-radius: 0;
-      background-color: transparent;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      &::after {
-        content: '';
-        display: block;
-        border-right: 1px solid;
-        border-color: var(--gray-4);
-        height: 10px;
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-    }
 
-    &.type--default--last {
-      color: var(--gray-2);
-      border-radius: 0;
-      background-color: transparent;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
+    &.size--regular {
+      font-size: 14px;
+      line-height: 16px;
+      padding: 4px 12px;
+      border-radius: 4px;
+
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 }
 
+
 @include mobile {
   .tag {
-    &.size--regular {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    border: none;
+    color: var(--gray-1);
+    background-color: var(--gray-5);
+    cursor: pointer;
+    font-weight: 500;
+    text-align: center;
+    margin-right: 8px;
+
+    &.size--large {
       font-size: 14px;
       line-height: 16px;
-      padding: 3px 9px 3px 0px;
-      border-radius: 3px;
+      padding: 4px 12px;
+      border-radius: 4px;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
-    &.type--default {
-      color: var(--gray-2);
-      border-radius: 0;
-      background-color: transparent;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      &::after {
-        content: '';
-        display: block;
-        border-right: 1px solid;
-        border-color: var(--gray-4);
-        height: 10px;
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-      }
-    }
 
-    &.type--default--last {
-      color: var(--gray-2);
-      border-radius: 0;
-      background-color: transparent;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
+    &.size--regular {
+      font-size: 14px;
+      line-height: 16px;
+      padding: 4px 12px;
+      border-radius: 4px;
+
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 }
