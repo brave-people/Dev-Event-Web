@@ -75,16 +75,6 @@ const Item = ({
 
   const getEventDate = () => {
     let eventDate;
-    if (data.start_date_time === null || data.end_date_time === null) return;
-    const includeTime =
-      data.start_date_time.slice(11, 16) === '00:00' &&
-      data.end_date_time.slice(11, 16) === '00:00'
-        ? false
-        : true;
-    const dayEvent =
-      data.start_date_time.slice(0, 10) === data.end_date_time.slice(0, 10)
-        ? true
-        : false;
 
     if (data.start_date_time && !data.end_date_time) {
       const startDateType =
@@ -113,11 +103,7 @@ const Item = ({
         ' ~ ' +
         convertDateFormat(data.end_date_time, endDateType);
     }
-    return removeDupDate({
-      eventDate,
-      includeTime,
-      dayEvent,
-    });
+    return eventDate;
   };
 
   const convertDateFormat = (date: string, type: string) => {
@@ -305,11 +291,9 @@ const Item = ({
                       </span>
                     </div>
                   </span>
+                  {/* 큰 사이즈용 태그 */}
                   <div className={cn('item__content__desc__tags')}>
-                    {/* 태그 (온/오프라인) */}
                     {data.tags.map((tag: TagResponse) => {
-                      const type = getTagType(tag.tag_name);
-                      if (type !== 'location') return;
                       return (
                         <FilterTag
                           key={tag.id}
@@ -319,43 +303,16 @@ const Item = ({
                         />
                       );
                     })}
-                    {/* 태그 (행사 유형) */}
-                    <FilterTag
-                      label={getTagName(data.tags, 'eventType')}
-                      size="regular"
-                      type="eventType"
-                    />
-                    {/* 태그 (비용) */}
-                    <FilterTag
-                      label={getTagName(data.tags, 'coast')}
-                      size="regular"
-                      type="jobGroup"
-                    />
-                    {data.tags.map((tag: TagResponse) => {
-                      const type = getTagType(tag.tag_name);
-                      if (type !== 'jobGroup') return;
-                      return (
-                        <FilterTag
-                          key={tag.id}
-                          type="jobGroup"
-                          label={tag.tag_name}
-                          size="regular"
-                        />
-                      );
-                    })}
                   </div>
+                  {/* 작은 페이지용 태그 */}
                   <div className={cn('item__content__desc__tags__mobile')}>
-                    {data.tags.map((tag: TagResponse, index: number) => {
+                    {data.tags.map((tag: TagResponse) => {
                       return (
                         <FilterTag
                           key={tag.id}
                           label={tag.tag_name}
                           size="regular"
-                          type={`${
-                            index !== data.tags.length - 1
-                              ? 'default'
-                              : 'default--last'
-                          }`}
+                          type={`default`}
                         />
                       );
                     })}
