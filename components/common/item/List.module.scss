@@ -7,8 +7,6 @@
 
   &:last-child {
     margin-bottom: 44px;
-    border-bottom: 1px solid;
-    border-color: var(--gray-4);
   }
 }
 
@@ -22,12 +20,20 @@
     grid-column-gap: 20px;
     align-content: space-around;
     justify-content: space-between;
+
+    &:last-child {
+      border: none;
+    }
   }
 }
 
 @media (max-width: 767px) {
   .list {
     grid-template-columns: calc(50% - (40px / 2)) calc(50% - (40px / 2));
+
+    &:last-child {
+      border: none;
+    }
   }
 }
 
@@ -35,5 +41,9 @@
   .list {
     margin-top: 20px;
     grid-template-columns: 1fr;
+
+    &:last-child {
+      border: none;
+    }
   }
 }
