@@ -12,9 +12,8 @@ import {
 } from 'components/icons';
 import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
-import { DateUtil, removeDupDate } from 'lib/utils/dateUtil';
+import { DateUtil } from 'lib/utils/dateUtil';
 import * as ga from 'lib/utils/gTag';
-import { getTagName, getTagType } from 'lib/utils/tagUtil';
 import { Event } from 'model/event';
 import { TagResponse } from 'model/tag';
 import React, { useContext, useEffect, useState } from 'react';
@@ -291,7 +290,7 @@ const Item = ({
                       </span>
                     </div>
                   </span>
-                  {/* 큰 사이즈용 태그 */}
+                  {/* 태그 */}
                   <div className={cn('item__content__desc__tags')}>
                     {data.tags.map((tag: TagResponse) => {
                       return (
@@ -300,19 +299,6 @@ const Item = ({
                           label={tag.tag_name}
                           size="regular"
                           type="location"
-                        />
-                      );
-                    })}
-                  </div>
-                  {/* 작은 페이지용 태그 */}
-                  <div className={cn('item__content__desc__tags__mobile')}>
-                    {data.tags.map((tag: TagResponse) => {
-                      return (
-                        <FilterTag
-                          key={tag.id}
-                          label={tag.tag_name}
-                          size="regular"
-                          type={`default`}
                         />
                       );
                     })}
