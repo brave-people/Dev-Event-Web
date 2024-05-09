@@ -182,11 +182,6 @@ const Item = ({
                     />
                   </div>
                 ) : null}
-                {isFavorite() ? (
-                  <div className={cn('item__content__flag', 'my')}>
-                    <span>MY</span>
-                  </div>
-                ) : null}
               </div>
               <div className={cn('item__content__body')}>
                 <div>
