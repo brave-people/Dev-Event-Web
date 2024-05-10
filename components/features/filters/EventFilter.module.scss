@@ -175,12 +175,13 @@
           display: none;
         }
         &__toggle {
-          position: absolute;
-          top: 0;
+          top: 3px;
           right: 0;
           width: 35px;
           height: 35px;
+
           display: flex;
+          position: absolute;
           align-items: center;
           justify-content: center;
           border-radius: 5px;
@@ -205,7 +206,7 @@
       }
       .filter {
         &__search {
-          width: 87%;
+          width: 93%;
         }
       }
     }
@@ -260,24 +261,28 @@
       display: block;
       position: relative;
       &__search {
-        width: 67%;
+        width: 95%;
       }
       &__group {
         width: 100%;
         padding-left: 0;
+
         &__tag {
           display: none;
         }
+
         &__toggle {
           position: absolute;
-          top: 0;
-          right: 0;
-          width: 35px;
-          height: 35px;
           display: flex;
           align-items: center;
           justify-content: center;
+
+          top: 3px;
+          right: 0;
+          width: 35px;
+          height: 35px;
           border-radius: 5px;
+
           &:hover {
             cursor: pointer;
             background-color: var(--gray-5);
