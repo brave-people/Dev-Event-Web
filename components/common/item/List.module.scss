@@ -22,28 +22,15 @@
     justify-content: space-between;
 
     &:last-child {
-      border: none;
+      margin-bottom: 33.4px;
     }
   }
 }
 
-@media (max-width: 767px) {
-  .list {
-    grid-template-columns: calc(50% - (40px / 2)) calc(50% - (40px / 2));
-
-    &:last-child {
-      border: none;
-    }
-  }
-}
-
-@media (max-width: 550px) {
+@media (max-width: 599px) {
   .list {
     margin-top: 20px;
-    grid-template-columns: 1fr;
-
-    &:last-child {
-      border: none;
-    }
+    grid-column-gap: 4px;
+    grid-template-columns: calc(50% - (4px / 2)) calc(50% - (4px / 2));
   }
 }
