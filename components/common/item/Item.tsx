@@ -53,11 +53,8 @@ const Item = ({
   const [isLast, setIsLast] = useState<boolean>(false);
   const [isDone, setIsDone] = useState<boolean>(isEventDone());
   const [isNew, setIsNew] = useState<boolean>(isEventNew());
-  const { windowX, windowTheme } = useContext(WindowContext);
+  const { windowX } = useContext(WindowContext);
   const { search } = useContext(EventContext);
-  const imgPath = windowTheme
-    ? '/default/event-thumbnail-light.svg'
-    : '/default/event-thumbnail-dark.svg';
 
   const handleShare = () => {
     setIsOpen(true);
@@ -152,7 +149,7 @@ const Item = ({
                       'brave-people-3.s3.ap-northeast-2.amazonaws.com'
                     )
                       ? data.cover_image_link
-                      : imgPath
+                      : '/default/event-thumbnail-light.svg'
                   }
                   priority={true}
                   layout="fill"
@@ -161,16 +158,8 @@ const Item = ({
                 {isDone ? (
                   <div className={cn('item__content__flag')}>
                     <EndBulletIcon
-                      color={
-                        windowTheme
-                          ? 'rgba(203, 203, 206, 1)'
-                          : 'rgba(49, 50, 52, 1)'
-                      }
-                      backgroundColor={
-                        windowTheme
-                          ? 'rgba(49, 50, 52, 1)'
-                          : 'rgba(203, 203, 206, 1)'
-                      }
+                      color={'rgba(203, 203, 206, 1)'}
+                      backgroundColor={'rgba(49, 50, 52, 1)'}
                     />
                   </div>
                 ) : null}
