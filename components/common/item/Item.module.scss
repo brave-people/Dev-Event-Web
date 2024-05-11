@@ -140,11 +140,12 @@
         justify-content: flex-start;
 
         &__tags {
-          width: 100%;
           display: flex;
+          flex-wrap: wrap; // 태그 여러개일시 하단으로 이동
           flex-direction: row;
           align-items: center;
           justify-content: flex-start;
+          width: 100%;
         }
       }
 
@@ -152,7 +153,6 @@
         color: var(--gray-1);
 
         .date {
-          display: flex;
           align-items: center;
           justify-content: flex-start;
           padding-right: 8px;
@@ -308,7 +308,7 @@
 
     .item__content__desc__tags {
       display: flex;
-      padding-top: 12px;
+      padding-top: 6px;
     }
 
     .item__buttons {
