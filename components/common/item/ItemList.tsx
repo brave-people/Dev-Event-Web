@@ -172,7 +172,9 @@ function ItemList({
       ) : (
         <EventNull />
       )}
-      {eventCount === 0 &&
+      {/* 행사 조회 결과가 없을떄 */}
+      {!isLoading &&
+        eventCount === 0 &&
         modalState.currentModal === 0 &&
         search === undefined && <EventNull />}
     </>
