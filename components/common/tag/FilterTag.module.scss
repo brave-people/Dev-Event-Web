@@ -35,44 +35,6 @@
   }
 }
 
-@include laptop {
-  @media (max-width: 800px) {
-    .tag {
-      display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      border: none;
-      color: var(--gray-1);
-      background-color: var(--gray-5);
-      cursor: pointer;
-      font-weight: 500;
-      text-align: center;
-      margin-right: 8px;
-
-      &.size--large {
-        font-size: 14px;
-        line-height: 16px;
-        padding: 4px 12px;
-        border-radius: 4px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
-
-      &.size--regular {
-        font-size: 14px;
-        line-height: 16px;
-        padding: 4px 12px;
-        border-radius: 4px;
-
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-      }
-    }
-  }
-}
-
 @include tablet {
   .tag {
     display: flex;
@@ -84,10 +46,10 @@
     cursor: pointer;
     font-weight: 500;
     text-align: center;
-    margin-right: 3px; // fix
+    margin: 4px 5px 0 0;
 
     &.size--large {
-      font-size: 10px; // fix
+      font-size: 14px;
       line-height: 16px;
       padding: 4px 12px;
       border-radius: 4px;
@@ -101,7 +63,6 @@
       line-height: 16px;
       padding: 4px 12px;
       border-radius: 4px;
-
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -109,24 +70,21 @@
   }
 }
 
-
 @include mobile {
   .tag {
-    display: flex;
+    display: block;
     flex-direction: row;
     align-items: flex-start;
-    border: none;
-    color: var(--gray-1);
-    background-color: var(--gray-5);
-    cursor: pointer;
+    padding: 5px 11px 6px 11px;
+    font-size: 10px;
     font-weight: 500;
-    text-align: center;
-    margin-right: 8px;
+    border-radius: 20px;
+    margin: 4px 5px 0 0;
 
     &.size--large {
       font-size: 14px;
       line-height: 16px;
-      padding: 4px 12px;
+      padding: 5px 6px;
       border-radius: 4px;
       overflow: hidden;
       white-space: nowrap;
@@ -136,7 +94,7 @@
     &.size--regular {
       font-size: 14px;
       line-height: 16px;
-      padding: 4px 12px;
+      padding: 5px 6px;
       border-radius: 4px;
 
       overflow: hidden;
