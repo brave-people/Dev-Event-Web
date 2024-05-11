@@ -187,6 +187,7 @@ const LoginByEmailContainer = ({ onChangeState }: any) => {
           `/?accessToken=${tokens.access_token}&refreshToken=${tokens.refresh_token}`
         );
         onChangeState('close');
+        onChangeState('social');
       }
     }
   };
