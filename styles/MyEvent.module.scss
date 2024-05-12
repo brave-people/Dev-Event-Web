@@ -1,12 +1,75 @@
 @import '~styles/_mixin.scss';
 @import '~styles/_variables.scss';
 
+.section {
+  width: 100%; // 다음 카드에서
+}
+
+.section__list {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+@include tablet {
+  .section__list {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: $tablet_padding;
+    padding-right: $tablet_padding;
+  }
+}
+
+@include mobile {
+  .section__list {
+    max-width: 1080px;
+    margin: 0 auto;
+
+    padding-left: $mobile_padding;
+    padding-right: $mobile_padding;
+  }
+}
+
+.list {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  &:last-child {
+    margin-bottom: 44px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .list {
+    margin-top: 24px;
+    grid-template-columns: calc(33.3% - (40px / 3)) calc(33.3% - (40px / 3)) calc(
+        33.3% - (40px / 3)
+      );
+    grid-row-gap: 36px;
+    grid-column-gap: 20px;
+    align-content: space-around;
+    justify-content: space-between;
+
+    &:last-child {
+      margin-bottom: 33.4px;
+    }
+  }
+}
+
+@media (max-width: 599px) {
+  .list {
+    margin-top: 20px;
+    grid-column-gap: 4px;
+    grid-template-columns: calc(50% - (4px / 2)) calc(50% - (4px / 2));
+  }
+}
+
+// 상단
 .sub-header {
   width: 100%;
   padding: 136px $laptop_padding 0;
 
   &__inner {
-    max-width: 59.5rem; // '내 이벤트' 가로 폭
+    max-width: 1080px; // '북마크' 가로 폭
     margin: 0 auto; // 가운데 정렬
     padding-top: 0 $laptop_padding;
     padding-bottom: 10px; // 내 이벤트 카드
@@ -16,7 +79,7 @@
     padding-bottom: 10px; // 글자와 선 사이 간격
     margin-bottom: 40px; // 선과 다음 영역의 간격
     border-bottom: 1px solid #d3d4d8;
-    font-size: 35px;
+    font-size: 24px;
     font-style: normal;
     font-weight: 700;
     color: var(--light-Gray1, #313234);
@@ -39,45 +102,39 @@
   border-radius: 4px;
   border: 1.5px solid var(--light-Gray4, #d3d4d8);
   background-color: var(--light-Background1, #d3d4d8);
-  //background-color: black;
-  //background-color: red;
 }
 
 // 갯수, 완료 행사 조회
-.section {
-  display: block;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-
-  &__list {
-    max-width: 62rem; // 카드 가로 길이
-    margin: 0 auto; // 가운데 정렬
-  }
-
-  &__status {
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 100%;
-    letter-spacing: -0.28px;
-
-    // 행사 갯수
-    &__count {
-      margin-right: 10px;
-      border-right: 1px solid;
-      border-color: var(--gray-4);
-      height: 20px;
-    }
-  }
-}
+//.section {
+//  display: block;
+//  margin: 0 auto; // 가운데 정렬
+//
+//  &__list {
+//    width: 1080px; // 카드 가로 길이
+//    margin: 0 auto; // 가운데 정렬
+//  }
+//
+//  &__status {
+//    font-size: 14px;
+//    font-style: normal;
+//    font-weight: 500;
+//    line-height: 100%;
+//    letter-spacing: -0.28px;
+//
+//    // 행사 갯수
+//    &__count {
+//      margin-right: 10px;
+//      border-right: 1px solid;
+//      border-color: var(--gray-4);
+//      height: 20px;
+//    }
+//  }
+//}
 
 // 내 이벤트 하위 영역
 .wrapper {
-  display: block;
-  max-width: 70rem;
-  margin: 0 auto; // 가운데 정렬
+  //display: block;
+  width: 1080px;
 
   // 갯수, 완료 정보
   &__status {
@@ -102,7 +159,6 @@
 
       &__done {
         float: left;
-        color: red !important;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -120,7 +176,9 @@
   display: block;
 
   &__body {
-    min-height: 45vh; // 행사가 존재할때의 높이
+    width: 1080px;
+    min-height: 35vh; // 행사가 존재할때의 높이
+    margin: 0 auto; // 행사 카드 가운데 정렬
   }
 }
 
