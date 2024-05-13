@@ -105,26 +105,82 @@ const MyEventScheduledList = () => {
   return (
     <>
       <div className={cn('section__list')}>
+        <div className={cn('wrapperV2')}>
+          <div className={cn('wrapperV2__status')}>
+            <div className={cn('wrapperV2__status__count')}>
+              {futureEvent.length}개
+            </div>
+            <div
+              className={cn('wrapperV2__status__type')}
+              onClick={() => {
+                setTabMenu({ ongoing: true, done: false });
+                router.push('/myevent?tab=done');
+                ga.event({
+                  action: 'web_event_진행중인행사탭클릭',
+                  event_category: 'web_myevent',
+                  event_label: '내이벤트',
+                });
+              }}
+            >
+              <Image
+                className={cn('check_box_done')}
+                src={'/icon/check_box.svg'}
+                alt="done event"
+                priority={true}
+                width={18}
+                height={18}
+              />
+              <div className={cn('wrapperV2__status__txt')}>종료 행사 보기</div>
+            </div>
+          </div>
+        </div>
         <div className={cn('list')}>
-          {futureEvent.map((event: MyEvent) => {
-            return (
-              <>
-                <Item
-                  key={event.dev_event.id}
-                  data={event.dev_event}
-                  isEventDone={() => {
-                    return false;
-                  }}
-                  isFavorite={() => {
-                    return true;
-                  }}
-                  onClickFavorite={() => {
-                    deleteMyEvent({ favoriteId: event.favorite_id });
-                  }}
-                />
-              </>
-            );
-          })}
+          {/* myEvent ! 제거 */}
+          {!myEvent && !isError && futureEvent ? (
+            futureEvent.map((event: MyEvent) => {
+              return (
+                <>
+                  <Item
+                    key={event.dev_event.id}
+                    data={event.dev_event}
+                    isEventDone={() => {
+                      return false;
+                    }}
+                    isFavorite={() => {
+                      return true;
+                    }}
+                    onClickFavorite={() => {
+                      deleteMyEvent({ favoriteId: event.favorite_id });
+                    }}
+                  />
+                </>
+              );
+            })
+          ) : (
+            <div className={cn('null-container')}>
+              <ThreeDots color="#479EF1" height={60} width={60} />
+            </div>
+          )}
+
+          {/*{futureEvent.map((event: MyEvent) => {*/}
+          {/*  return (*/}
+          {/*    <>*/}
+          {/*      <Item*/}
+          {/*        key={event.dev_event.id}*/}
+          {/*        data={event.dev_event}*/}
+          {/*        isEventDone={() => {*/}
+          {/*          return false;*/}
+          {/*        }}*/}
+          {/*        isFavorite={() => {*/}
+          {/*          return true;*/}
+          {/*        }}*/}
+          {/*        onClickFavorite={() => {*/}
+          {/*          deleteMyEvent({ favoriteId: event.favorite_id });*/}
+          {/*        }}*/}
+          {/*      />*/}
+          {/*    </>*/}
+          {/*  );*/}
+          {/*})}*/}
         </div>
       </div>
 
