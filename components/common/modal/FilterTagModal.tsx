@@ -1,16 +1,16 @@
-import classNames from 'classnames/bind';
 import style from 'components/common/modal/FilterTagModal.module.scss';
-import { DeleteIcon } from 'components/icons';
-import { reflactUrlContext } from '../../../lib/utils/UrlUtil';
-import { useRouter } from 'next/router';
+import FilterByCoast from 'components/features/filters/ByCoast/FilterByCoast';
 import FilterByEventType from 'components/features/filters/ByEventType/FilterByEventType';
 import FilterByJobGroup from 'components/features/filters/ByJobGroup/FilterByJobGroup';
-import { useState, useContext } from 'react';
 import FilterByLocation from 'components/features/filters/ByLocation/FilterByLocation';
-import FilterByCoast from 'components/features/filters/ByCoast/FilterByCoast';
-import FillButton from '../buttons/FillButton';
-import { WindowContext } from 'context/window';
+import { DeleteIcon } from 'components/icons';
 import { EventContext } from 'context/event';
+import { WindowContext } from 'context/window';
+import { useState, useContext } from 'react';
+import classNames from 'classnames/bind';
+import { useRouter } from 'next/router';
+import { reflactUrlContext } from '../../../lib/utils/UrlUtil';
+import FillButton from '../buttons/FillButton';
 
 const cn = classNames.bind(style);
 
@@ -61,14 +61,15 @@ function FilterTagModal() {
           <FilterByCoast context={context} />
         </div>
       </div>
-      <div className={cn('initBtn')}>
-        <FillButton
-          label="초기화하기"
-          color="white"
-          onClick={deleteModal}
-          rounded={false}
-        />
-      </div>
+      {/* todo: 선택시 필터 초기화 하도록 수정 */}
+      {/*<div className={cn('initBtn')}>*/}
+      {/*  <FillButton*/}
+      {/*    label="초기화하기"*/}
+      {/*    color="white"*/}
+      {/*    onClick={deleteModal}*/}
+      {/*    rounded={false}*/}
+      {/*  />*/}
+      {/*</div>*/}
       <div className={cn('finishBtn')}>
         <FillButton
           label="적용하기"
