@@ -100,41 +100,10 @@
   border: 1.5px solid var(--light-Gray4, #d3d4d8) !important;
 }
 
-// 갯수, 완료 행사 조회
-//.section {
-//  display: block;
-//  margin: 0 auto; // 가운데 정렬
-//
-//  &__list {
-//    width: 1080px; // 카드 가로 길이
-//    margin: 0 auto; // 가운데 정렬
-//  }
-//
-//  &__status {
-//    font-size: 14px;
-//    font-style: normal;
-//    font-weight: 500;
-//    line-height: 100%;
-//    letter-spacing: -0.28px;
-//
-//    // 행사 갯수
-//    &__count {
-//      margin-right: 10px;
-//      border-right: 1px solid;
-//      border-color: var(--gray-4);
-//      height: 20px;
-//    }
-//  }
-//}
-
-
-.wrapperV2 {
-  //display: block;
+.wrapper {
   width: 1080px;
-  //float: left;
 
   &__status {
-    //padding-left: 20px;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -159,66 +128,6 @@
       justify-content: center;
       align-items: center;
     }
-
-    //&__tab {
-    //  float: left;
-    //  display: flex;
-    //  align-items: center;
-    //  text-align: center;
-    //
-    //  &__done {
-    //    float: left;
-    //    display: flex;
-    //    justify-content: center;
-    //    align-items: center;
-    //
-    //    &__txt {
-    //      padding-left: 8px;
-    //      color: blue;
-    //    }
-    //  }
-    //}
-  }
-}
-
-
-// 내 이벤트 하위 영역
-.wrapper {
-  //display: block;
-  width: 1080px;
-
-  // 갯수, 완료 정보
-  &__status {
-    padding-left: 20px;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 100%;
-    letter-spacing: -0.28px;
-
-    &__tab {
-      float: left;
-      display: flex;
-      align-items: center;
-      text-align: center;
-
-      &__count {
-        float: left;
-        margin-right: 10px;
-      }
-
-      &__done {
-        float: left;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        &__txt {
-          padding-left: 8px;
-          color: blue;
-        }
-      }
-    }
   }
 }
 
@@ -239,16 +148,6 @@
   display : flex;
   justify-content: center;
   align-items : center;
-}
-
-.tab {
-  display: block;
-
-  &__body {
-    width: 1080px;
-    min-height: 35vh; // 행사가 존재할때의 높이
-    margin: 0 auto; // 행사 카드 가운데 정렬
-  }
 }
 
 @include tablet {

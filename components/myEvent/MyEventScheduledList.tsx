@@ -105,13 +105,13 @@ const MyEventScheduledList = () => {
   return (
     <>
       <div className={cn('section__list')}>
-        <div className={cn('wrapperV2')}>
-          <div className={cn('wrapperV2__status')}>
-            <div className={cn('wrapperV2__status__count')}>
+        <div className={cn('wrapper')}>
+          <div className={cn('wrapper__status')}>
+            <div className={cn('wrapper__status__count')}>
               {futureEvent.length}개
             </div>
             <div
-              className={cn('wrapperV2__status__type')}
+              className={cn('wrapper__status__type')}
               onClick={() => {
                 setTabMenu({ ongoing: true, done: false });
                 router.push('/myevent?tab=done');
@@ -130,7 +130,7 @@ const MyEventScheduledList = () => {
                 width={18}
                 height={18}
               />
-              <div className={cn('wrapperV2__status__txt')}>종료 행사 보기</div>
+              <div className={cn('wrapper__status__txt')}>종료 행사 보기</div>
             </div>
           </div>
         </div>
