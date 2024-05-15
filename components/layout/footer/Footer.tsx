@@ -16,7 +16,7 @@ const Footer = () => {
           개발자를 위한 행사 정보, 데브이벤트
         </div>
         <div className={cn('footer__copyright')}>
-          ⓒ 2023.{' '}
+          ⓒ 2022.{' '}
           <Link href={'https://github.com/brave-people/dev-Event'}>
             용감한 친구들 with 남송리 삼번지
           </Link>{' '}
