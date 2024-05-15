@@ -9,8 +9,9 @@
   left: 0;
   z-index: 99;
   min-height: 3.5rem;
-  background-color: var(--background-1);
   border-bottom: 1px solid $light-gray-4;
+  background-color: hsla(0, 0%, 100%, .88);
+  backdrop-filter: saturate(150%) blur(32px);
 
   &__inner {
     width: $laptop_max_width;
