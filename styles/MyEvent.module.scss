@@ -98,6 +98,7 @@
 .check_box_done {
   border-radius: 4px;
   border: 1.5px solid var(--light-Gray4, #d3d4d8) !important;
+  background: var(--light-Primary, #2c4cef);
 }
 
 .wrapper {
@@ -122,7 +123,6 @@
 
     &__txt {
       padding-left: 8px;
-      color: blue;
       float: left;
       display: flex;
       justify-content: center;

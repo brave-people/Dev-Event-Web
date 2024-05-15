@@ -10,8 +10,8 @@ import React, { useEffect, useState } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 import classNames from 'classnames/bind';
 import Image from 'next/image';
-import MyEventEmpty from './MyEventEmpty';
 import { useRouter } from 'next/router';
+import MyEventEmpty from './MyEventEmpty';
 
 const cn = classNames.bind(style);
 
@@ -69,7 +69,7 @@ const MyEventDoneList = () => {
     setShareModalIsOpen(true);
   };
 
-  const deleteMyEvent = async ({ favoriteId }: { favoriteId: Number }) => {
+  const deleteMyEvent = async ({ favoriteId }: { favoriteId: number }) => {
     if (favoriteId && myEvent) {
       const filteredEvent = myEvent.filter(
         (event) => event.favorite_id !== favoriteId
@@ -107,79 +107,79 @@ const MyEventDoneList = () => {
   }, [router.query.tab]);
 
   return (
-    <div className={cn('tab__body')}>
-      <section className={cn('section')}>
-        <div className={cn('section__list')}>
-          {myEvent && !isError && oldEvent ? (
-            oldEvent.length !== 0 ? (
-              <div className={cn('section__list__items')}>
-                {oldEvent.map((event: MyEvent, idx: number) => {
-                  const isLast = idx === oldEvent.length - 1;
-                  return (
-                    <div className={cn('wrapper')}>
-                      <div className={cn('wrapper__status')}>
-                        <div className={cn('wrapper__status__tab')}>
-                          <div className={cn('wrapper__status__tab__count')}>
-                            {' '}
-                            {oldEvent.length}개{' '}
-                          </div>
-                          <div
-                            className={cn('wrapper__status__tab__done')}
-                            onClick={() => {
-                              setTabMenu({ ongoing: true, done: false });
-                              router.push('/myevent?tab=ongoing');
-                              ga.event({
-                                action: 'web_event_진행중인행사탭클릭',
-                                event_category: 'web_myevent',
-                                event_label: '내이벤트',
-                              });
-                            }}
-                          >
-                            <Image
-                              className={cn('check_box')}
-                              src={'/icon/check_box.svg'}
-                              alt="done event"
-                              priority={true}
-                              width={18}
-                              height={18}
-                            />
-                            <div
-                              className={cn('wrapper__status__tab__done__txt')}
-                            >
-                              완료 행사 보기
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <Item
-                        key={event.dev_event.id}
-                        data={event.dev_event}
-                        isEventDone={() => {
-                          return true;
-                        }}
-                        isFavorite={() => {
-                          return true;
-                        }}
-                        onClickFavorite={() => {
-                          deleteMyEvent({ favoriteId: event.favorite_id });
-                        }}
-                        isLast={isLast}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <MyEventEmpty />
-            )
-          ) : (
-            <div className={cn('null-container')}>
-              <ThreeDots color="#479EF1" height={60} width={60} />
+    <>
+      <div className={cn('section__list')}>
+        <div className={cn('wrapper')}>
+          <div className={cn('wrapper__status')}>
+            <div className={cn('wrapper__status__count')}>
+              {oldEvent.length}개
             </div>
-          )}
+            <div
+              className={cn('wrapper__status__type')}
+              onClick={() => {
+                setTabMenu({ ongoing: true, done: false });
+                router.push('/myevent');
+                ga.event({
+                  action: 'web_event_진행중인행사탭클릭',
+                  event_category: 'web_myevent',
+                  event_label: '내이벤트',
+                });
+              }}
+            >
+              <Image
+                className={cn('check_box_done')}
+                src={'/icon/check_box.svg'}
+                alt="done event"
+                priority={true}
+                width={18}
+                height={18}
+              />
+              <div className={cn('wrapper__status__txt')}>진행중인 행사 보기</div>
+            </div>
+          </div>
         </div>
-      </section>
-    </div>
+
+        {/* 로딩중 */}
+        {!myEvent && !isError && oldEvent && (
+          <div className={cn('null-container')}>
+            <ThreeDots color="#479EF1" height={60} width={60} />
+          </div>
+        )}
+
+        {/* 행사 카드가 없을떄 */}
+        {myEvent && oldEvent && oldEvent.length === 0 && (
+          <div className={cn('emptyevent-container')}>
+            <MyEventEmpty />
+          </div>
+        )}
+
+        {/* 행사 카드 */}
+        <div className={cn('list')}>
+          {myEvent &&
+            !isError &&
+            oldEvent &&
+            oldEvent.map((event: MyEvent) => {
+              return (
+                <>
+                  <Item
+                    key={event.dev_event.id}
+                    data={event.dev_event}
+                    isEventDone={() => {
+                      return false;
+                    }}
+                    isFavorite={() => {
+                      return true;
+                    }}
+                    onClickFavorite={() => {
+                      deleteMyEvent({ favoriteId: event.favorite_id });
+                    }}
+                  />
+                </>
+              );
+            })}
+        </div>
+      </div>
+    </>
   );
 };
 
