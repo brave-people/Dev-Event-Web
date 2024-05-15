@@ -138,7 +138,7 @@ const List = ({ data, parentLast }: Props) => {
   return (
     <div className={cn('list')}>
       {data.map((item: Event, index: number) => {
-        const isLast = index === data.length - 1 ? true : false;
+        const isLast = index === data.length - 1;
         return (
           <Item
             key={index}
@@ -160,7 +160,7 @@ const List = ({ data, parentLast }: Props) => {
             }}
             isFavorite={() => {
               if (authContext.isLoggedIn) {
-                return getFavoriteId({ id: item.id }) !== 0 ? true : false;
+                return getFavoriteId({id: item.id}) !== 0;
               }
               return false;
             }}
