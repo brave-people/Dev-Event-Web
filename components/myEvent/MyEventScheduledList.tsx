@@ -134,9 +134,26 @@ const MyEventScheduledList = () => {
             </div>
           </div>
         </div>
+
+        {/* 로딩중 */}
+        {!myEvent && !isError && futureEvent && (
+          <div className={cn('null-container')}>
+            <ThreeDots color="#479EF1" height={60} width={60} />
+          </div>
+        )}
+
+        {/* 행사 카드가 없을떄 */}
+        {myEvent && futureEvent && futureEvent.length === 0 && (
+          <div className={cn('emptyevent-container')}>
+            <MyEventEmpty />
+          </div>
+        )}
+
+        {/* 행사 카드 */}
         <div className={cn('list')}>
-          {/* myEvent ! 제거 */}
-          {!myEvent && !isError && futureEvent ? (
+          {myEvent &&
+            !isError &&
+            futureEvent &&
             futureEvent.map((event: MyEvent) => {
               return (
                 <>
@@ -155,109 +172,9 @@ const MyEventScheduledList = () => {
                   />
                 </>
               );
-            })
-          ) : (
-            <div className={cn('null-container')}>
-              <ThreeDots color="#479EF1" height={60} width={60} />
-            </div>
-          )}
-
-          {/*{futureEvent.map((event: MyEvent) => {*/}
-          {/*  return (*/}
-          {/*    <>*/}
-          {/*      <Item*/}
-          {/*        key={event.dev_event.id}*/}
-          {/*        data={event.dev_event}*/}
-          {/*        isEventDone={() => {*/}
-          {/*          return false;*/}
-          {/*        }}*/}
-          {/*        isFavorite={() => {*/}
-          {/*          return true;*/}
-          {/*        }}*/}
-          {/*        onClickFavorite={() => {*/}
-          {/*          deleteMyEvent({ favoriteId: event.favorite_id });*/}
-          {/*        }}*/}
-          {/*      />*/}
-          {/*    </>*/}
-          {/*  );*/}
-          {/*})}*/}
+            })}
         </div>
       </div>
-
-      {/*<div className={cn('tab__body')}>*/}
-      {/*  <section className={cn('section')}>*/}
-      {/*    <div className={cn('section__list')}>*/}
-      {/*      {myEvent && !isError && futureEvent ? (*/}
-      {/*        futureEvent.length !== 0 ? (*/}
-      {/*          <div className={cn('section__list__items')}>*/}
-      {/*            {futureEvent.map((event: MyEvent) => {*/}
-      {/*              return (*/}
-      {/*                <div className={cn('wrapper')}>*/}
-      {/*                  /!* 상태 창 *!/*/}
-      {/*                  <div className={cn('wrapper__status')}>*/}
-      {/*                    <div className={cn('wrapper__status__tab')}>*/}
-      {/*                      <div className={cn('wrapper__status__tab__count')}>*/}
-      {/*                        {' '}*/}
-      {/*                        {futureEvent.length}개{' '}*/}
-      {/*                      </div>*/}
-      {/*                      <div*/}
-      {/*                        className={cn('wrapper__status__tab__done')}*/}
-      {/*                        onClick={() => {*/}
-      {/*                          setTabMenu({ ongoing: true, done: false });*/}
-      {/*                          router.push('/myevent?tab=done');*/}
-      {/*                          ga.event({*/}
-      {/*                            action: 'web_event_진행중인행사탭클릭',*/}
-      {/*                            event_category: 'web_myevent',*/}
-      {/*                            event_label: '내이벤트',*/}
-      {/*                          });*/}
-      {/*                        }}*/}
-      {/*                      >*/}
-      {/*                        <Image*/}
-      {/*                          className={cn('check_box_done')}*/}
-      {/*                          src={'/icon/check_box.svg'}*/}
-      {/*                          alt="done event"*/}
-      {/*                          priority={true}*/}
-      {/*                          width={18}*/}
-      {/*                          height={18}*/}
-      {/*                        />*/}
-      {/*                        <div*/}
-      {/*                          className={cn(*/}
-      {/*                            'wrapper__status__tab__done__txt'*/}
-      {/*                          )}*/}
-      {/*                        >*/}
-      {/*                          완료 행사 보기*/}
-      {/*                        </div>*/}
-      {/*                      </div>*/}
-      {/*                    </div>*/}
-      {/*                  </div>*/}
-      {/*                  <Item*/}
-      {/*                    key={event.dev_event.id}*/}
-      {/*                    data={event.dev_event}*/}
-      {/*                    isEventDone={() => {*/}
-      {/*                      return false;*/}
-      {/*                    }}*/}
-      {/*                    isFavorite={() => {*/}
-      {/*                      return true;*/}
-      {/*                    }}*/}
-      {/*                    onClickFavorite={() => {*/}
-      {/*                      deleteMyEvent({ favoriteId: event.favorite_id });*/}
-      {/*                    }}*/}
-      {/*                  />*/}
-      {/*                </div>*/}
-      {/*              );*/}
-      {/*            })}*/}
-      {/*          </div>*/}
-      {/*        ) : (*/}
-      {/*          <MyEventEmpty />*/}
-      {/*        )*/}
-      {/*      ) : (*/}
-      {/*        <div className={cn('null-container')}>*/}
-      {/*          <ThreeDots color="#479EF1" height={60} width={60} />*/}
-      {/*        </div>*/}
-      {/*      )}*/}
-      {/*    </div>*/}
-      {/*  </section>*/}
-      {/*</div>*/}
     </>
   );
 };
