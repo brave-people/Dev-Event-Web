@@ -25,7 +25,7 @@ function DateBoard({ options }: Props) {
     : getMonth();
   const [dateElement, setDateElement] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [setIsFirstEl] = useState<boolean>(false);
+  const [isFirstEl, setIsFirstEl] = useState<boolean>(false);
   const [isLastEl, setIsLastEl] = useState<boolean>(false);
   const [currentYear, setCurrentYear] = useState<string>(initYear);
   const [currentMonth, setCurrentMonth] = useState<string>(initMonth);
