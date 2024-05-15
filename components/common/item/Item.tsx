@@ -20,6 +20,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import Image from 'next/image';
 import Link from 'next/link';
+import SaveModal from "../modal/SaveModal";
 
 const cn = classNames.bind(style);
 
@@ -49,7 +50,7 @@ const Item = ({
   childLast,
   parentLast,
 }: Props) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false);
   const [isLast, setIsLast] = useState<boolean>(false);
   const [isDone, setIsDone] = useState<boolean>(isEventDone());
   const [isNew, setIsNew] = useState<boolean>(isEventNew());
@@ -57,7 +58,7 @@ const Item = ({
   const { search } = useContext(EventContext);
 
   const handleShare = () => {
-    setIsOpen(true);
+    setIsShareModalOpen(true);
     navigator.clipboard.writeText(data.event_link);
     ga.event({
       action: 'web_event_공유버튼클릭',
@@ -65,8 +66,8 @@ const Item = ({
       event_label: '공유',
     });
     setTimeout(() => {
-      setIsOpen(false);
-    }, 1000);
+      setIsShareModalOpen(false);
+    }, 1300);
   };
 
   const getEventDate = () => {
@@ -119,7 +120,7 @@ const Item = ({
   }, [search]);
   return (
     <div className={cn('item__container', `${isLast && 'item__last'}`)}>
-      {isOpen && <ShareModal />}
+      {isShareModalOpen && <ShareModal />}
       <div className={cn('item')}>
         <Link href={String(data.event_link)}>
           <a
@@ -182,7 +183,7 @@ const Item = ({
                       {/* 공유 & 북마크 */}
                       <div className={cn('item__buttons')}>
                         <button
-                          className={cn(`button`, `like-button`, 'laptop')}
+                          className={cn(`button`, `share-button`, 'laptop')}
                           onClick={handleShare}
                         >
                           <ShareIcon
@@ -191,7 +192,7 @@ const Item = ({
                           />
                         </button>
                         <button
-                          className={cn(`button`, `like-button`, 'mobile')}
+                          className={cn(`button`, `share-button`, 'mobile')}
                           onClick={handleShare}
                         >
                           <ShareIconMobile
@@ -200,7 +201,7 @@ const Item = ({
                           />
                         </button>
                         <button
-                          className={cn(`button`, 'share-button', 'laptop')}
+                          className={cn(`button`, 'like-button', 'laptop')}
                           onClick={onClickFavorite}
                         >
                           <BookmarkIcon
@@ -210,7 +211,7 @@ const Item = ({
                           />
                         </button>
                         <button
-                          className={cn(`button`, 'share-button', 'mobile')}
+                          className={cn(`button`, 'like-button', 'mobile')}
                           onClick={onClickFavorite}
                         >
                           <BookmarkIconMobile
