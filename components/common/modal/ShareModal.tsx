@@ -1,8 +1,8 @@
-import classNames from 'classnames/bind';
-import React, { useContext } from 'react';
 import style from 'components/common/modal/ShareModal.module.scss';
 import { CheckIcon } from 'components/icons';
 import { WindowContext } from 'context/window';
+import React, { useContext } from 'react';
+import classNames from 'classnames/bind';
 
 const cn = classNames.bind(style);
 
