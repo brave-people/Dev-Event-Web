@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
-import classNames from 'classnames/bind';
-import style from 'components/common/item/List.module.scss';
-import { useMyEvent } from 'lib/hooks/useSWR';
 import Item from 'components/common/item/Item';
-import dayjs from 'dayjs';
-import { Event, EventDate } from 'model/event';
-import { mutate } from 'swr';
-import { createMyEventApi } from 'lib/api/post';
-import { deleteMyEventApi } from 'lib/api/delete';
+import style from 'components/common/item/List.module.scss';
 import LoginModal from 'components/common/modal/LoginModal';
 import { AuthContext } from 'context/auth';
-import * as ga from 'lib/utils/gTag';
+import dayjs from 'dayjs';
+import { deleteMyEventApi } from 'lib/api/delete';
+import { createMyEventApi } from 'lib/api/post';
+import { useMyEvent } from 'lib/hooks/useSWR';
 import { DateUtil } from 'lib/utils/dateUtil';
+import * as ga from 'lib/utils/gTag';
+import { Event, EventDate } from 'model/event';
+import { mutate } from 'swr';
+import React, { useState } from 'react';
+import classNames from 'classnames/bind';
+import SaveModal from '../modal/SaveModal';
 
 const cn = classNames.bind(style);
 
@@ -23,6 +24,7 @@ type Props = {
 const List = ({ data, parentLast }: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
+  const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
   const param = { filter: '' };
   const { myEvent } = useMyEvent(param, authContext.isLoggedIn);
 
@@ -75,7 +77,10 @@ const List = ({ data, parentLast }: Props) => {
         });
         mutate([`/front/v1/favorite/events`, param], filteredEvent, false);
         const result = await createMyEvent({ eventId: item.id });
-      } else {
+        handleFavorite();
+      }
+      // 북마크 삭제
+      else {
         const filteredEvent = myEvent.filter(
           (event) => event.favorite_id !== favoriteId
         );
@@ -87,7 +92,15 @@ const List = ({ data, parentLast }: Props) => {
     }
   };
 
-  const createMyEvent = async ({ eventId }: { eventId: String }) => {
+  // 북마크 아이콘 노출
+  const handleFavorite = () => {
+    setShareModalIsOpen(true);
+    setTimeout(() => {
+      setShareModalIsOpen(false);
+    }, 1300);
+  };
+
+  const createMyEvent = async ({ eventId }: { eventId: string }) => {
     if (eventId) {
       const result = await createMyEventApi(
         `/front/v1/favorite/events/${eventId}`,
@@ -160,7 +173,7 @@ const List = ({ data, parentLast }: Props) => {
             }}
             isFavorite={() => {
               if (authContext.isLoggedIn) {
-                return getFavoriteId({id: item.id}) !== 0;
+                return getFavoriteId({ id: item.id }) !== 0;
               }
               return false;
             }}
@@ -174,6 +187,9 @@ const List = ({ data, parentLast }: Props) => {
           />
         );
       })}
+
+      {shareModalIsOpen && <SaveModal />}
+
       <div className={cn('skeleton')} />
       <LoginModal
         isOpen={loginModalIsOpen}
