@@ -150,7 +150,7 @@ const Item = ({
                       'brave-people-3.s3.ap-northeast-2.amazonaws.com'
                     )
                       ? data.cover_image_link
-                      : '/default/event-thumbnail-light.svg'
+                      : '/default/event-thumbnail-light.png'
                   }
                   priority={true}
                   layout="fill"

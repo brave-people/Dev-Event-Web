@@ -34,7 +34,7 @@ class MyDocument extends Document {
           />
           <link
             rel="icon"
-            href="https://raw.githubusercontent.com/brave-people/Dev-Event-Client/main/public/favicon.ico"
+            href="/default/favicon.ico"
             sizes="any"
           />
           <link rel="canonical" href="https://dev-event.vercel.app" />

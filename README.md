@@ -30,6 +30,9 @@ $ pnpm run dev
 
 ## 배포 
 ```sh
+# 로컬 빌드 테스트 
+$ pnpm run build 
+
 # 배포
 $ vercel build && vercel deploy
 

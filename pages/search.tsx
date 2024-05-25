@@ -87,7 +87,7 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
         />
         <meta
           property="og:image"
-          content="https://drive.google.com/uc?export=download&id=1-Jqapt5h4XtxXQbgX07kI3ipgk3V6ESE"
+          content="/default/og_image.png"
         />
         <meta
           property="og:title"

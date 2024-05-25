@@ -12,7 +12,7 @@ function Register() {
     <Link href={'https://forms.gle/UUjUVg1tTrKhemKu9'}>
       <a target="__blank" className={cn('register')}>
         <FillButton
-          label="행사 추가 요청"
+          label="행사 등록 요청"
           color="gray1"
           icon="plus"
           size="regular"
