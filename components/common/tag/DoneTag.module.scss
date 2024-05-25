@@ -1,0 +1,13 @@
+@import '~styles/_mixin.scss';
+
+.tag__container {
+  width: 75px;
+  height: 27px;
+  position: relative;
+
+  .tag {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}

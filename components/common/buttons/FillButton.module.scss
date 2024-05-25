@@ -1,0 +1,56 @@
+@import '~styles/_mixin.scss';
+
+.button {
+  // default
+  border-radius: 2px;
+  cursor: pointer;
+  border: none;
+  color: var(--background-1);
+  background-color: var(--gray-1);
+  font-weight: 500;
+  width: 100%;
+  height: 100%;
+  min-width: 12rem;
+  min-height: 3rem;
+
+  &.color--primary {
+    background-color: var(--primary);
+    font-size: 14px;
+  }
+
+  &.color--gray {
+    background-color: var(--gray-1);
+    font-size: 14px;
+  }
+
+  &.color--white {
+    background-color: var(--background-1);
+    font-size: 14px;
+    color: var(--primary);
+  }
+
+  // rounded
+  &.type--rounded {
+    border-radius: 100px;
+  }
+
+  &.large {
+    width: 240px;
+    height: 56px;
+    font-size: 20px;
+    font-weight: 600;
+    min-width: inherit;
+    min-height: inherit;
+  }
+}
+
+@media (max-width: 768px) {
+  .button {
+    &.large {
+      width: 200px;
+      height: 48px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+  }
+}

@@ -1,25 +1,41 @@
-import React, { useEffect, useState } from 'react';
-import Layout from 'component/common/layout';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import Layout from 'components/layout';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import style from 'styles/Home.module.scss';
 import { GetServerSideProps } from 'next';
 import cookie from 'cookie';
 import { AuthContext } from 'context/auth';
-import LoginModal from 'component/common/modal/LoginModal';
-import MonthlyEventList from 'component/events/MonthlyEventList';
+import LoginModal from 'components/common/modal/LoginModal';
+import MonthlyEventList from 'components/events/MonthlyEventList';
 import { Event } from 'model/event';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import Banner from 'component/common/banner/banner';
+import Banner from 'components/common/banner/banner';
+import Letter from 'components/features/letter/Letter';
+import { WindowContext } from 'context/window';
+import { blockMouseScroll, isModalOpen } from 'lib/utils/windowUtil';
+import FilterTagModal from 'components/common/modal/FilterTagModal';
+import FilterDateModal from 'components/common/modal/FilterDateModal';
 
 const cn = classNames.bind(style);
 
-const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackData: Event[] }) => {
+const Calender = ({
+  isLoggedIn,
+  fallbackData,
+}: {
+  isLoggedIn: boolean;
+  fallbackData: Event[];
+}) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const router = useRouter();
-  const filteredDate = { year: Number(router.query.year), month: Number(router.query.month) };
+  const filteredDate = {
+    year: Number(router.query.year),
+    month: Number(router.query.month),
+  };
+  const { modalState } = useContext(WindowContext);
+  const bodyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -27,13 +43,24 @@ const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackD
     } else {
       authContext.logout();
     }
-  }, [isLoggedIn]);
+    if (modalState.currentModal !== 0) {
+      document.body.style.position = 'fixed';
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.body.style.position = 'relative';
+      document.body.style.overflow = 'unset';
+      bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
+    };
+  }, [isLoggedIn, modalState]);
 
   return (
-    <>
+    <main ref={bodyRef} className={cn('main')}>
       <Head>
         <title>
-          {filteredDate.year}년 {filteredDate.month}월 - 데브이벤트 행사 월별 검색
+          {filteredDate.year}년 {filteredDate.month}월 - 데브이벤트 행사 월별
+          검색
         </title>
         <meta
           name="description"
@@ -45,7 +72,7 @@ const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackD
         />
         <meta
           property="og:image"
-          content="https://drive.google.com/uc?export=download&id=1-Jqapt5h4XtxXQbgX07kI3ipgk3V6ESE"
+          content="/default/og_image.png"
         />
         <meta
           property="og:title"
@@ -56,20 +83,31 @@ const Calender = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackD
           content={`${filteredDate.year}년 ${filteredDate.month}월에 진행되는 개발자 행사, 데브이벤트에서 찾아보세요!`}
         />
       </Head>
-      <Banner />
-      <section className={cn('section')}>
-        <MonthlyEventList fallbackData={fallbackData} date={filteredDate} />
-      </section>
-      <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
-    </>
+      {modalState.currentModal === 0 ? (
+        <>
+          <Banner />
+          <section className={cn('section')}>
+            <MonthlyEventList events={fallbackData} date={filteredDate} />
+          </section>
+          <Letter />
+        </>
+      ) : null}
+      {isModalOpen(modalState.currentModal, 2) && <FilterTagModal />}
+      {isModalOpen(modalState.currentModal, 3) && <FilterDateModal />}
+      <LoginModal
+        isOpen={loginModalIsOpen}
+        onClose={() => setLoginModalIsOpen(false)}
+      ></LoginModal>
+    </main>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { year, month } = context.query;
-  const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/${year}/${month}`);
+  const res = await fetch(
+    `${process.env.BASE_SERVER_URL}/front/v2/events/${year}/${month}`
+  );
   const events = await res.json();
-
   const cookies = context.req.headers.cookie || '';
 
   if (cookies) {

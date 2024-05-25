@@ -1,0 +1,13 @@
+@import '~styles/_mixin.scss';
+
+@include tablet {
+  .register {
+    display: none;
+  }
+}
+
+@include mobile {
+  .register {
+    display: none;
+  }
+}

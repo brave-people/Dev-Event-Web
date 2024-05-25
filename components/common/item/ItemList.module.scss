@@ -1,0 +1,130 @@
+@import '~styles/_mixin.scss';
+
+.search__header {
+  padding-top: 1.806rem;
+  display: flex;
+  width: 100%;
+}
+
+.section__list {
+  width: 100%;
+}
+
+.search__list {
+  width: 100%;
+}
+
+.list__title {
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--gray-1);
+  display: flex;
+  flex-direction: row;
+}
+
+.total__count {
+  font-weight: 600;
+  font-size: 1.7rem;
+  color: var(--gray-2);
+  margin-left: 1rem;
+}
+
+.divider {
+  border-top: 1px solid var(--gray-4);
+}
+
+@include laptop {
+  @media (max-width: 800px) {
+    .search__header__modal {
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      .total__count {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
+  }
+  @media (max-width: 700px) {
+    .search__header__modal {
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      .total__count {
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 24px;
+      }
+    }
+  }
+}
+
+@include tablet {
+  .search__header__modal {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    .total__count {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      margin-right: 2rem;
+    }
+  }
+  @media (max-width: 550px) {
+    .search__list {
+      margin-top: 0.8rem;
+      width: 100%;
+    }
+  }
+  @media (max-width: 500px) {
+    .search__header__modal {
+      padding: auto 1rem;
+    }
+  }
+  @media (max-width: 450px) {
+    .section__list {
+      margin-top: 1.2rem;
+      width: 100%;
+    }
+  }
+}
+
+@include mobile {
+  .section__list {
+    margin-top: 1.2rem;
+    width: 100%;
+  }
+  .search__list {
+    margin-top: 1.2rem;
+    width: 100%;
+  }
+  .search__header__modal {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    .total__count {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+}
+
+.null-container {
+  height: 35vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 1.8rem;
+  color: var(--gray-1);
+}

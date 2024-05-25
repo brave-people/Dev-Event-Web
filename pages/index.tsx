@@ -1,10 +1,10 @@
+import Layout from 'components/layout';
+import { serialize } from 'cookie';
+import jwt_decode from 'jwt-decode';
 import React from 'react';
-import Layout from 'component/common/layout';
 import type { ReactElement } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { serialize } from 'cookie';
-import jwt_decode from 'jwt-decode';
 
 const Home = () => {
   return (
@@ -16,10 +16,14 @@ const Home = () => {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   if (context.query.accessToken && context.query.refreshToken) {
-    const { exp: access_token_expired_at } = jwt_decode(String(context.query.accessToken)) as {
+    const { exp: access_token_expired_at } = jwt_decode(
+      String(context.query.accessToken)
+    ) as {
       exp: number;
     };
-    const { exp: refresh_token_expired_at } = jwt_decode(String(context.query.refreshToken)) as {
+    const { exp: refresh_token_expired_at } = jwt_decode(
+      String(context.query.refreshToken)
+    ) as {
       exp: number;
     };
 

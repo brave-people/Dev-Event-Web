@@ -1,0 +1,24 @@
+.withdraw_cancel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: 7.4375rem; // 119px
+  height: 3rem; // 48px
+  background: #313234;
+  border: none;
+  border-radius: 6px;
+
+  /* font */
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1rem; // 16px
+  line-height: 100%;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+
+  &:hover {
+    background: #1c1c1e;
+  }
+}

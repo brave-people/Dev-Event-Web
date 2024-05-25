@@ -30,15 +30,23 @@ axiosInstanceWithToken.interceptors.response.use(
     const config = error.config;
     requestArray.push(config);
     if (requestArray.length === 1) {
-      if (error.response.data.status_code === 400 && error.response.data.status === 'TOKEN_400_02') {
+      if (
+        error.response.data.status_code === 400 &&
+        error.response.data.status === 'TOKEN_400_02'
+      ) {
         const { data } = await axios.post(`/api/getRefreshToken`);
         if (data) {
-          const result = await regenerateAccessToken('/admin/v1/token/refresh', {
-            refresh_token: data.refresh_token,
-          });
+          const result = await regenerateAccessToken(
+            '/admin/v1/token/refresh',
+            {
+              refresh_token: data.refresh_token,
+            }
+          );
 
           if (result.access_token) {
-            const response = await axios.post('/api/autoLogin', { param: { result } });
+            const response = await axios.post('/api/autoLogin', {
+              param: { result },
+            });
             config.headers['Authorization'] = result.access_token;
             if (response.status === 200) {
               return axios.request(config);
