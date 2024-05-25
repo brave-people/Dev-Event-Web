@@ -6,7 +6,10 @@ type Data = {
   message: string;
 };
 
-export default function logout(req: NextApiRequest, res: NextApiResponse<Data>) {
+export default function logout(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
   res.setHeader('Set-Cookie', [
     serialize('access_token', '', {
       httpOnly: true,

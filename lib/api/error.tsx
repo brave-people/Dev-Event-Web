@@ -19,7 +19,9 @@ async function handleError(props: Prop) {
 function getErrorAlert(props: Prop) {
   if (props.status_code === 400) {
     if (props.status === 'TOKEN_400_01') {
-      alert('요청에서 토큰을 찾지 못해 인증에 실패했습니다. 다시 로그인 해주세요!');
+      alert(
+        '요청에서 토큰을 찾지 못해 인증에 실패했습니다. 다시 로그인 해주세요!'
+      );
       return 'AUTH_ERROR';
     }
     if (props.status === 'TOKEN_400_02') {
@@ -27,7 +29,9 @@ function getErrorAlert(props: Prop) {
       return 'AUTH_ERROR';
     }
     if (props.status === 'TOKEN_400_03') {
-      alert('잘못된 형식의 토큰으로 인증에 실패했습니다. 다시 로그인 해주세요!');
+      alert(
+        '잘못된 형식의 토큰으로 인증에 실패했습니다. 다시 로그인 해주세요!'
+      );
       return 'AUTH_ERROR';
     }
     if (props.status === 'TOKEN_400_04') {
@@ -57,7 +61,9 @@ function getErrorAlert(props: Prop) {
       return 'AUTH_ERROR';
     }
     if (props.status === 'AUTH_500_01') {
-      alert('리프레시 토큰이 없어 자동로그인에 실패하였습니다. 다시 로그인 해주세요!');
+      alert(
+        '리프레시 토큰이 없어 자동로그인에 실패하였습니다. 다시 로그인 해주세요!'
+      );
       return 'AUTH_ERROR';
     }
     if (props.status === 'AUTH_500_02') {

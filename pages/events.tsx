@@ -1,32 +1,61 @@
-import React, { useEffect, useState } from 'react';
-import Layout from 'component/common/layout';
+import Banner from 'components/common/banner/banner';
+import FilterDateModal from 'components/common/modal/FilterDateModal';
+import FilterSearchModal from 'components/common/modal/FilterSearchModal';
+import FilterTagModal from 'components/common/modal/FilterTagModal';
+import LoginModal from 'components/common/modal/LoginModal';
+import ScheduledEventList from 'components/events/ScheduledEventList';
+import Letter from 'components/features/letter/Letter';
+import Layout from 'components/layout';
+import { AuthContext } from 'context/auth';
+import { EventContext } from 'context/event';
+import { WindowContext } from 'context/window';
+import cookie from 'cookie';
+import { useScheduledEvents } from 'lib/hooks/useSWR';
+import { blockMouseScroll, isModalOpen } from 'lib/utils/windowUtil';
+import { EventResponse } from 'model/event';
+import style from 'styles/Home.module.scss';
+import React, { useEffect, useContext, useState, useRef } from 'react';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
-import style from 'styles/Home.module.scss';
 import { GetServerSideProps } from 'next';
-import cookie from 'cookie';
-import { AuthContext } from 'context/auth';
-import LoginModal from 'component/common/modal/LoginModal';
-import { EventResponse } from 'model/event';
-import ScheduledEventList from 'component/events/ScheduledEventList';
 import Head from 'next/head';
-import Banner from 'component/common/banner/banner';
 
 const cn = classNames.bind(style);
 
-const Events = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackData: EventResponse[] }) => {
+type Props = {
+  isLoggedIn: boolean;
+  fallbackData: EventResponse[];
+};
+
+const Events = ({ isLoggedIn, fallbackData }: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
+  const { modalState } = useContext(WindowContext);
+  const { date } = useContext(EventContext);
+  const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
+  const bodyRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (isLoggedIn) {
       authContext.login();
     } else {
       authContext.logout();
     }
-  }, [isLoggedIn]);
+    if (modalState.currentModal !== 0) {
+      document.body.style.position = 'fixed';
+      document.body.style.overflow = 'hidden';
+    }
+
+    return () => {
+      document.body.style.position = 'relative';
+      document.body.style.overflow = 'unset';
+      bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
+      setLoginModalIsOpen(false);
+    };
+  }, [isLoggedIn, modalState, date]);
 
   return (
-    <>
+    <main ref={bodyRef} className={cn('main')}>
       <Head>
         <title>Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!</title>
         <meta
@@ -39,26 +68,44 @@ const Events = ({ isLoggedIn, fallbackData }: { isLoggedIn: boolean; fallbackDat
         />
         <meta
           property="og:image"
-          content="https://drive.google.com/uc?export=download&id=1-Jqapt5h4XtxXQbgX07kI3ipgk3V6ESE"
+          content="/default/og_image.png"
         />
-        <meta property="og:title" content="Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!" />
+        <meta
+          property="og:title"
+          content="Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!"
+        />
         <meta
           property="og:description"
           content="개발자를 위한 {웨비나, 컨퍼런스, 해커톤, 네트워킹} 소식을 알려드립니다."
         />
       </Head>
-      <Banner />
-      <section className={cn('section')}>
-        <ScheduledEventList fallbackData={fallbackData} />
-      </section>
-      <LoginModal isOpen={loginModalIsOpen} onClose={() => setLoginModalIsOpen(false)}></LoginModal>
-    </>
+      {modalState.currentModal === 0 && (
+        <>
+          <Banner />
+          <section className={cn('section')}>
+            <ScheduledEventList events={scheduledEvents} isError={isError} />
+          </section>
+          <Letter />
+        </>
+      )}
+      {isModalOpen(modalState.currentModal, 1) && (
+        <FilterSearchModal events={scheduledEvents} isError={isError} />
+      )}
+      {isModalOpen(modalState.currentModal, 2) && <FilterTagModal />}
+      {isModalOpen(modalState.currentModal, 3) && <FilterDateModal />}
+      <LoginModal
+        isOpen={loginModalIsOpen}
+        onClose={() => setLoginModalIsOpen(false)}
+      ></LoginModal>
+    </main>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = context.req.headers.cookie || '';
-  const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/current`);
+  const res = await fetch(
+    `${process.env.BASE_SERVER_URL}/front/v2/events/current`
+  );
   const events = await res.json();
 
   if (cookies) {

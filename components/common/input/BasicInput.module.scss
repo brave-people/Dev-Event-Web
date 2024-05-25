@@ -1,0 +1,49 @@
+@import '~styles/_mixin.scss';
+
+.container {
+  width: 100%;
+  min-width: 210px;
+  height: 40px;
+  position: relative;
+
+  &__input {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    background-color: var(--background-1);
+    border: 1.5px solid;
+    border-color: var(--gray-4);
+    border-radius: 2.9881px;
+    box-sizing: border-box;
+    &:hover {
+      border-color: rgba(170, 184, 255, 1);
+    }
+    &:focus {
+      border-color: var(--primary);
+    }
+  }
+
+  input[type='text'] {
+    padding-left: 55px;
+    color: var(--gray-1);
+  }
+
+  input::-webkit-input-placeholder {
+    font-weight: bold;
+    color: var(--gray-3);
+    font-weight: 500;
+  }
+
+  .delete {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+@import '~styles/_mixin.scss';
+
+.taglist {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  font-family: 'Pretendard Variable';
+  margin: 2.688rem 0;
+}

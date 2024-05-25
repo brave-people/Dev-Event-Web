@@ -7,7 +7,10 @@ type Data = {
   message: string;
 };
 
-export default function autoLogin(req: NextApiRequest, res: NextApiResponse<Data>) {
+export default function autoLogin(
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) {
   res.setHeader('Set-Cookie', [
     serialize('access_token', String(req.body.param.result.access_token), {
       httpOnly: true,

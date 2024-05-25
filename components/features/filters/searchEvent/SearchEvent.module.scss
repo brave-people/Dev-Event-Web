@@ -1,0 +1,16 @@
+@import '~styles/_mixin.scss';
+
+.container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: all ease-in 0.3s;
+}
+
+@include mobile {
+  .container {
+    width: 90%;
+  }
+}

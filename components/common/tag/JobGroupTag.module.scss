@@ -1,0 +1,89 @@
+@import '~styles/_mixin.scss';
+
+.tag {
+  min-width: 40px;
+  padding-right: 16px;
+  padding-left: 16px;
+  height: 36px;
+  font-weight: 500;
+  color: var(--gray-1);
+  border: 1px solid;
+  border-color: var(--gray-4);
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.tag--light {
+  &:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background-color: rgba(237, 239, 255, 1);
+    cursor: pointer;
+  }
+}
+
+.tag--dark {
+  &:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background-color: rgba(34, 35, 38, 1);
+    cursor: pointer;
+  }
+}
+
+.checked--light {
+  border-color: rgba(44, 76, 239, 1);
+  color: rgba(44, 76, 239, 1);
+  background-color: #edefff;
+}
+
+.checked--dark {
+  border-color: rgba(79, 108, 255, 1);
+  color: rgba(79, 108, 255, 1);
+  background-color: rgba(34, 35, 38, 1);
+}
+
+@include laptop {
+  @media (max-width: 950px) {
+    .tag {
+      min-width: 40px;
+      padding-right: 14px;
+      padding-left: 14px;
+      height: 36px;
+      border-radius: 24px;
+      margin-right: 9px;
+      margin-top: 9px;
+      font-size: 14px;
+    }
+  }
+}
+
+@include tablet {
+  .tag {
+    min-width: 38px;
+    padding-right: 13px;
+    padding-left: 13px;
+    height: 34px;
+    border-radius: 22px;
+    margin-right: 8px;
+    margin-top: 8px;
+    font-size: 14px;
+  }
+}
+
+@include mobile {
+  .tag {
+    min-width: 36px;
+    padding-right: 11px;
+    padding-left: 11px;
+    height: 32px;
+    border-radius: 14px;
+    margin-right: 6px;
+    margin-top: 6px;
+    font-size: 13.5px;
+  }
+}

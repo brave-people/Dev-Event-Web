@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useState } from 'react';
+import React, { createContext, ReactNode, useState, useEffect } from 'react';
 
 interface AuthContext {
   isLoggedIn: boolean;
@@ -32,7 +32,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
   return (
     <>
-      <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+      <AuthContext.Provider value={contextValue}>
+        {children}
+      </AuthContext.Provider>
     </>
   );
 };

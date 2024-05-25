@@ -1,0 +1,103 @@
+@import '~styles/_mixin.scss';
+@import '~styles/_variables.scss';
+
+.notice {
+  position: static;
+  height: 48px;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  animation: appearIn;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+
+  &__inner {
+    width: $laptop_max_width;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .notice__content {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+
+      .notice__title {
+        font-size: 16px;
+        font-weight: bold;
+        color: var(--primary);
+        margin-right: 4px;
+      }
+    }
+
+    .icon {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+
+      &:hover {
+        background-color: rgb(213, 215, 229);
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@include tablet {
+  .notice {
+    &__inner {
+      padding: 0 $tablet_padding;
+      width: 100%;
+      .notice__content {
+        .notice__title {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+@include mobile {
+  .notice {
+    &__inner {
+      padding: 0 $mobile_padding;
+      width: 100%;
+      .notice__content {
+        .notice__title {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  // 너무 작을 경우 텍스트가 3줄에 걸쳐서 나오므로 보이지 않도록 수정
+  @media (max-width: 195px) {
+    .notice {
+      display: none;
+    }
+  }
+}
+
+.status--delete {
+  display: none;
+}
+
+.notice--light {
+  background-color: rgba(237, 239, 255, 1);
+}
+
+@keyframes appearIn {
+  0% {
+    transform: translateY(-48px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

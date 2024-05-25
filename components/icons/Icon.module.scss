@@ -1,0 +1,32 @@
+@import '~styles/_mixin.scss';
+
+.register {
+  margin-right: 1rem;
+}
+
+.searchEvent {
+  position: absolute;
+  top: 50%;
+  left: 7px;
+  transform: translate(50%, -50%);
+}
+
+.active {
+  transform: rotate(180deg);
+  transition: transform 0.2s linear;
+}
+
+.unactive {
+  transform: rotate(360deg);
+  transition: transform 0.2s linear;
+}
+
+.github__icon {
+  margin-right: 1rem;
+}
+
+@media (max-width: 455px) {
+  .register {
+    margin-right: 0.5rem;
+  }
+}

@@ -1,0 +1,36 @@
+@import '~styles/_mixin.scss';
+@import '~styles/_variables.scss';
+
+.list {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  &:last-child {
+    margin-bottom: 44px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .list {
+    margin-top: 24px;
+    grid-template-columns: calc(33.3% - (40px / 3)) calc(33.3% - (40px / 3)) calc(
+        33.3% - (40px / 3)
+      );
+    grid-row-gap: 36px;
+    grid-column-gap: 20px;
+    align-content: space-around;
+    justify-content: space-between;
+
+    &:last-child {
+      margin-bottom: 33.4px;
+    }
+  }
+}
+
+@media (max-width: 599px) {
+  .list {
+    margin-top: 20px;
+    grid-column-gap: 4px;
+    grid-template-columns: calc(50% - (4px / 2)) calc(50% - (4px / 2));
+  }
+}

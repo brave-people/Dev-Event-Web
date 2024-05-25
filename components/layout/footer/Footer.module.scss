@@ -1,0 +1,88 @@
+@import '~styles/_mixin.scss';
+@import '~styles/_variables.scss';
+
+.footer {
+  width: 100%;
+  max-width: 1104px;
+  height: 200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  background-color: var(--background-1);
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+
+    .footer__desc {
+      color: var(--gray-2);
+      font-size: 16px;
+      margin-top: 1rem;
+    }
+    .footer__copyright {
+      color: var(--gray-3);
+      font-size: 16px;
+      margin-top: 3rem;
+    }
+  }
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: absolute;
+    bottom: 32px;
+    right: 0;
+  }
+}
+
+@include tablet {
+  .footer {
+    padding: 32px $tablet_padding;
+    //padding: 32px 0;
+    display: block;
+    max-width: 1271px;
+
+    &__column {
+      .footer__desc,
+      .footer__copyright {
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+
+    // 바로가기 Github & Whale 아이콘
+    &__row {
+      padding-right: $tablet_padding;
+      bottom: 32px;
+    }
+  }
+}
+
+@include mobile {
+  .footer {
+    display: block;
+    padding: 32px 20px;
+    width: 100%;
+
+    &__column {
+      .footer__desc,
+      .footer__copyright {
+        display: inline-block;
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+
+    // 바로가기 Github & Whale 아이콘
+    &__row {
+      right: 18px;
+      bottom: 0;
+    }
+  }
+}

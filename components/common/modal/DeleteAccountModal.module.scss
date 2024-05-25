@@ -1,0 +1,90 @@
+@import '~styles/_mixin.scss';
+
+.modal {
+  position: absolute;
+  width: 22.5rem; // 360px
+  height: 13.3125rem; // 213px
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__title {
+    font-weight: 700;
+    font-size: 1.5rem; // 16
+    line-height: 2.688rem;
+    text-align: center;
+    color: #171717;
+  }
+
+  &__desc {
+    font-weight: 400;
+    font-size: 0.875rem; // 14px
+    line-height: 1.438rem;
+    text-align: center;
+    color: #747579;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 1.225rem;
+  }
+}
+
+@include mobile {
+  .modal {
+    position: absolute;
+    width: 20rem;
+    height: 12.25rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &__title {
+      font-weight: 700;
+      font-size: 1.125rem; // 18px
+      line-height: 2.688rem;
+      text-align: center;
+      color: #171717;
+    }
+
+    &__desc {
+      font-weight: 400;
+      font-size: 0.857rem;
+      line-height: 1rem;
+      text-align: center;
+      color: #747579;
+    }
+
+    &__buttons {
+      font-size: 1.875rem;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.32);
+}

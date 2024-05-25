@@ -1,0 +1,53 @@
+@import '~styles/_mixin.scss';
+
+.section__list {
+  padding-top: 2.813rem;
+  width: 100%;
+  max-width: 68.75rem;
+  transition: all ease-in 0.3s;
+
+  &__title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 2.188rem;
+    color: var(--gray-1);
+    display: flex;
+    flex-direction: row;
+  }
+
+  .container {
+    width: 100%;
+    height: 370px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .title {
+      color: var(--gray-1);
+      font-size: 24px;
+      font-weight: 400;
+      margin: 20px auto;
+    }
+
+    .desc {
+      color: var(--gray-1);
+      font-size: 16px;
+      font-weight: 500;
+      margin-top: 30px;
+      margin-bottom: 15px;
+    }
+
+    .tag__container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .section__list {
+    padding: 0;
+  }
+}
