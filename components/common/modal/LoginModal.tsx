@@ -127,15 +127,16 @@ const SocialLoginContainer = ({ onChangeState }: any) => {
             <GithubIcon />
             <span> github 로그인</span>
           </button>
-          <button
-            className={cx('login-form__button', 'apple')}
-            onClick={() => {
-              requestSocialLogin('apple');
-            }}
-          >
-            <AppleIcon />
-            <span>애플 로그인</span>
-          </button>
+          {/* 애플 로그인 비활성화 */}
+          {/*<button*/}
+          {/*  className={cx('login-form__button', 'apple')}*/}
+          {/*  onClick={() => {*/}
+          {/*    requestSocialLogin('apple');*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  <AppleIcon />*/}
+          {/*  <span>애플 로그인</span>*/}
+          {/*</button>*/}
           <button
             className={cx('login-form__button', 'email')}
             onClick={() => {
