@@ -64,11 +64,6 @@ const MyEventDoneList = () => {
     );
   }
 
-  const handleShareInMobileSize = (data: Event) => {
-    setSharedEvent(data);
-    setShareModalIsOpen(true);
-  };
-
   const deleteMyEvent = async ({ favoriteId }: { favoriteId: number }) => {
     if (favoriteId && myEvent) {
       const filteredEvent = myEvent.filter(

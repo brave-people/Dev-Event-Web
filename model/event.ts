@@ -40,6 +40,10 @@ export interface EventResponse {
   dev_event: Event[];
 }
 
+export interface EventDetail {
+  dev_event: Event;
+}
+
 export interface MyEvent {
   dev_event: Event;
   favorite_id: 0;

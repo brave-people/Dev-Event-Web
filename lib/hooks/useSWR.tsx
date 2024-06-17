@@ -4,6 +4,7 @@ import {
   getMonthlyEventApi,
   getTagsApi,
   getUserApi,
+  getEventDetailApi,
 } from 'lib/api/handler';
 import { Calender } from 'model/calender';
 import { EventResponse, MyEventGetProps, Event } from 'model/event';
@@ -24,6 +25,25 @@ const useScheduledEvents = (fallbackData?: EventResponse[]) => {
 
   return {
     scheduledEvents: events,
+    isLoading: !error && !events,
+    isError: error,
+  };
+};
+
+const useEventDetail = (eventId: string | string[] | undefined) => {
+  const { data: events, error } = useSWR(
+    `/front/v1/events/${eventId}`,
+    getEventDetailApi,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: true,
+      revalidateIfStale: false,
+    }
+  );
+
+  return {
+    eventDetail: events,
     isLoading: !error && !events,
     isError: error,
   };
@@ -100,4 +120,11 @@ const useUser = () => {
   };
 };
 
-export { useScheduledEvents, useMonthlyEvent, useTags, useUser, useMyEvent };
+export {
+  useScheduledEvents,
+  useMonthlyEvent,
+  useEventDetail,
+  useTags,
+  useUser,
+  useMyEvent,
+};
