@@ -143,6 +143,7 @@ const Item = ({
             <div className={cn('item__content')}>
               <div className={cn('item__content__img')}>
                 <Image
+                  unoptimized
                   className={cn('item__content__img__mask')}
                   alt="이벤트 이미지"
                   src={
