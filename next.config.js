@@ -5,7 +5,6 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    unoptimized: true,
     domains: [
       'brave-people-3.s3.ap-northeast-2.amazonaws.com',
       'k.kakaocdn.net',
