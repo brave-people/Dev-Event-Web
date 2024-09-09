@@ -32,6 +32,12 @@
   }
 }
 
+.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 // 상단 정보
 .top_info {
   height: 257px;
@@ -42,15 +48,17 @@
   justify-content: flex-start;
   align-items: flex-start;
   gap: 32px;
-  padding: 0 0 32px;
+  padding: 0 0 192px;
   border-bottom: solid 1px #d3d4d8;
 
   // 좌측 이미지
   &__image_wrapper {
     font-size: 20px;
-
+    //min-width: 1400px;
+    //width: 400px;
     &__cover_image {
-
+        //min-width: 400px;
+      //width: 1400px;
     }
   }
 
@@ -60,15 +68,15 @@
     // 주최 정보
     &__host_wrapper {
       display: flex;
-      justify-content: left;
+      justify-content: space-between;
       align-items: center;
+      max-width: 100%;
 
       // 주최 이미지
       &__host_image_wrapper {
         width: 32px;
         height: 32px;
         border-radius: 2px;
-
       }
 
       // 주최 이름
@@ -90,10 +98,36 @@
     }
     //= 주최 정보
 
+    // 공유 & 북마크 버튼
+    &__button_wrapper {
+      display: flex;
+      justify-content: space-between;
+
+      &__buttons {
+        top: 0;
+        right: 0;
+        //.button {
+          width: 36px;
+          height: 36px;
+          border: none;
+          background-color: transparent;
+          border-radius: 5px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          &:hover {
+            cursor: pointer;
+            background-color: var(--gray-5);
+          }
+        //}
+      }
+    }
+    //= 공유 & 북마크 버튼
+
     // 행사 제목
     &__event_title {
       margin: 10px 0 5px;
-      height: 31px;
       align-self: stretch;
       flex-grow: 0;
       font-size: 24px;
@@ -144,15 +178,28 @@
     }
     //= 일시
 
-  .top_info__tag_wrapper {
-    margin-top: 16px;
-    margin-bottom: 16px;
+    .top_info__tag_wrapper {
+      margin-top: 16px;
+      margin-bottom: 16px;
 
-    flex-grow: 0;
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    //padding: 4px 0px;
+      flex-grow: 0;
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+    }
   }
-  }
+}
+
+.test {
+  margin-top: 40px;
+  align-self: stretch;
+  flex-grow: 0;
+  font-size: 26px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: -0.32px;
+  text-align: left;
+  color: #313234;
 }

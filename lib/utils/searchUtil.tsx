@@ -14,11 +14,7 @@ export const checkSearch = (
       if (context.kwd) {
         const kwd = decodeURIComponent(context.kwd);
 
-        if (
-          event.title.includes(kwd) ||
-          event.description.includes(kwd) ||
-          event.organizer.includes(kwd)
-        )
+        if (event.title.includes(kwd) || event.organizer.includes(kwd))
           return true;
 
         const eventTag = event.tags;
@@ -28,11 +24,7 @@ export const checkSearch = (
       } else return false;
     }
   } else {
-    if (
-      event.title.includes(search) ||
-      event.description.includes(search) ||
-      event.organizer.includes(search)
-    )
+    if (event.title.includes(search) || event.organizer.includes(search))
       return true;
 
     const eventTag = event.tags;
