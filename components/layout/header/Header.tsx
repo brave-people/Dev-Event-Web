@@ -8,6 +8,7 @@ import { AuthContext } from 'context/auth';
 import React, { useContext, useState } from 'react';
 import classNames from 'classnames/bind';
 import Link from 'next/link';
+import HeaderTab from 'components/features/headerTab/HeaderTab';
 
 const cn = classNames.bind(style);
 
@@ -18,11 +19,14 @@ function Header() {
     <header className={cn('header')}>
       <NoticeModal />
       <div className={cn('header__inner')}>
-        <Link href="/" passHref>
-          <div className={cn('header__logo')}>
-            <Logo />
-          </div>
-        </Link>
+        <nav className={cn('header__inner__nav')}>
+          <Link href="/" passHref>
+            <div className={cn('header__logo')}>
+              <Logo />
+            </div>
+          </Link>
+          <HeaderTab />
+        </nav>
         <div className={cn('header__buttons')}>
           <span className={cn('wrapper')}>
             {isLoggedIn ? (
