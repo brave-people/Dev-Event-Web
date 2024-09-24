@@ -1,205 +1,312 @@
 @import '~styles/_mixin.scss';
 @import '~styles/_variables.scss';
 
-.main {
-  margin: 0 auto;
-  width: 100%;
-  overflow-y: scroll;
-  padding-top: 13px;
-}
-
-.section {
-  padding-top: 172px;
-  padding-bottom: 40px;
+.container {
   max-width: $laptop_max_width;
   margin: 0 auto;
-}
+  padding: 124px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 
-@media (max-width: 1200px) {
-  .section {
-    margin-top: 172px;
-    margin-bottom: 40px;
-    max-width: 100%;
-    padding: 0 $tablet_padding;
+  .top {
+    width: 100%;
+    border-bottom: 1px solid var(--gray-4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .top__info {
+      max-width: 872px;
+      min-height: 257px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: 32px;
+      padding-bottom: 32px;
+
+      // 좌측 이미지
+      &__image_wrapper {
+        width: 400px;
+        height: 233px;
+        position: relative;
+
+        &__cover_image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      // 우측 정보
+      &__info_wrapper {
+        // 주최 정보
+        width: calc(100% - 400px);
+        &__host_wrapper {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .wrap {
+            gap: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+          }
+
+          // 주최 이미지
+          &__host_image_wrapper {
+            width: 32px;
+            height: 32px;
+            border-radius: 2px;
+            position: relative;
+            object-fit: contain;
+          }
+
+          // 주최 이름
+          &__host_name {
+            font-size: 17px;
+            font-weight: 600;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1.2;
+            letter-spacing: -0.34px;
+            text-align: left;
+            color: #313234;
+          }
+        }
+        //= 주최 정보
+
+        // 공유 & 북마크 버튼
+        &__button_wrapper {
+          display: flex;
+          justify-content: space-between;
+
+          &__buttons {
+            top: 0;
+            right: 0;
+            //.button {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background-color: transparent;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+              cursor: pointer;
+              background-color: var(--gray-5);
+            }
+            //}
+          }
+        }
+        //= 공유 & 북마크 버튼
+
+        // 행사 제목
+        &__event_title {
+          margin: 10px 0 5px;
+          flex-grow: 0;
+          font-size: 24px;
+          line-height: 31.2px;
+          font-weight: 600;
+          letter-spacing: -2%;
+          text-align: start;
+          color: #313234;
+        }
+
+        // 행사 시간 유형 정보
+        &__date_wrapper {
+          display: flex;
+          justify-content: left;
+          align-items: center;
+          gap: 8px;
+
+          // 행사 유형
+          &__date_type {
+            width: 28px;
+            height: 24px;
+            flex-grow: 0;
+            font-size: 16px;
+            font-weight: 500;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1.5;
+            letter-spacing: -0.32px;
+            text-align: left;
+            color: #abacb2;
+          }
+
+          // 시간대
+          &__date {
+            height: 24px;
+            flex-grow: 0;
+            font-size: 16px;
+            font-weight: 500;
+            font-stretch: normal;
+            font-style: normal;
+            line-height: 1.5;
+            letter-spacing: -0.32px;
+            text-align: left;
+            color: #747579;
+          }
+        }
+        //= 일시
+
+        .top__info__tag_wrapper {
+          margin-top: 16px;
+          margin-bottom: 16px;
+
+          flex-grow: 0;
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+        }
+
+        .button_wrapper {
+          width: 344px;
+        }
+      }
+    }
+  }
+
+  .section__detail {
+    margin: 40px 0;
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    &__title {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 31.2px;
+    }
+  }
+
+  .test {
+    margin-top: 40px;
+    align-self: stretch;
+    flex-grow: 0;
+    font-size: 26px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+    text-align: left;
+    color: #313234;
   }
 }
 
 @include mobile {
-  .section {
-    margin-top: 172px;
-    margin-bottom: 40px;
-    padding: 0 20px;
-  }
-}
+  .container {
+    width: 100%;
+    padding-top: 3.5rem;
+    gap: 28px;
 
-.wrap {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-// 상단 정보
-.top_info {
-  height: 257px;
-  align-self: stretch;
-  flex-grow: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 32px;
-  padding: 0 0 192px;
-  border-bottom: solid 1px #d3d4d8;
-
-  // 좌측 이미지
-  &__image_wrapper {
-    font-size: 20px;
-    //min-width: 1400px;
-    //width: 400px;
-    &__cover_image {
-        //min-width: 400px;
-      //width: 1400px;
-    }
-  }
-
-  // 우측 정보
-  &__info_wrapper {
-
-    // 주최 정보
-    &__host_wrapper {
+    .top {
+      width: 100%;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      max-width: 100%;
+      justify-content: center;
+      border-bottom: none;
 
-      // 주최 이미지
-      &__host_image_wrapper {
-        width: 32px;
-        height: 32px;
-        border-radius: 2px;
-      }
+      .top__info {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 12px;
+        padding-bottom: 0px;
 
-      // 주최 이름
-      &__host_name {
-        width: 44px;
-        height: 20px;
-        margin-left: 8px;
+        &__image_wrapper {
+          width: 100%;
+          height: 100%;
+          aspect-ratio: 400 / 233;
+          position: relative;
 
-        flex-grow: 0;
-        font-size: 17px;
-        font-weight: 600;
-        font-stretch: normal;
-        font-style: normal;
-        line-height: 1.2;
-        letter-spacing: -0.34px;
-        text-align: left;
-        color: #313234;
-      }
-    }
-    //= 주최 정보
-
-    // 공유 & 북마크 버튼
-    &__button_wrapper {
-      display: flex;
-      justify-content: space-between;
-
-      &__buttons {
-        top: 0;
-        right: 0;
-        //.button {
-          width: 36px;
-          height: 36px;
-          border: none;
-          background-color: transparent;
-          border-radius: 5px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          &:hover {
-            cursor: pointer;
-            background-color: var(--gray-5);
+          &__cover_image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
           }
-        //}
+        }
+
+        &__info_wrapper {
+          width: 100%;
+          padding: 0 20px;
+
+          &__host_wrapper {
+            height: 19px;
+
+            .wrap {
+              gap: 5px;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+            }
+
+            &__host_image_wrapper {
+              width: 19px;
+              height: 19px;
+              border-radius: 2px;
+              position: relative;
+              object-fit: contain;
+            }
+
+            &__host_name {
+              font-size: 14px;
+              line-height: 16.8px;
+              letter-spacing: -2%;
+              font-stretch: normal;
+              font-style: normal;
+            }
+          }
+
+          &__event_title {
+            font-size: 18px;
+            line-height: 23.4px;
+            font-weight: 600;
+            letter-spacing: -2%;
+          }
+
+          .top__info__tag_wrapper {
+            margin-top: 16px;
+            margin-bottom: 16px;
+
+            flex-grow: 0;
+            display: flex;
+            flex-direction: row;
+            gap: 4px;
+          }
+
+          .button_wrapper {
+            width: 100%;
+          }
+        }
       }
     }
-    //= 공유 & 북마크 버튼
 
-    // 행사 제목
-    &__event_title {
-      margin: 10px 0 5px;
-      align-self: stretch;
-      flex-grow: 0;
-      font-size: 24px;
-      font-weight: 600;
-      font-stretch: normal;
-      font-style: normal;
-      line-height: 1.3;
-      letter-spacing: -0.48px;
-      text-align: left;
-      color: #313234;
-    }
-
-    // 행사 시간 유형 정보
-    &__date_wrapper {
+    .section__detail {
+      margin: 0;
+      padding: 0 20px;
+      max-width: 100%;
+      width: 100%;
       display: flex;
-      justify-content: left;
-      align-items: center;
-      gap: 8px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
 
-      // 행사 유형
-      &__date_type {
-        width: 28px;
-        height: 24px;
-        flex-grow: 0;
-        font-size: 16px;
-        font-weight: 500;
-        font-stretch: normal;
-        font-style: normal;
-        line-height: 1.5;
-        letter-spacing: -0.32px;
-        text-align: left;
-        color: #abacb2;
+      &__title {
+        font-size: 29px;
+        font-weight: 600;
+        line-height: 31.2px;
       }
-
-      // 시간대
-      &__date {
-        height: 24px;
-        flex-grow: 0;
-        font-size: 16px;
-        font-weight: 500;
-        font-stretch: normal;
-        font-style: normal;
-        line-height: 1.5;
-        letter-spacing: -0.32px;
-        text-align: left;
-        color: #747579;
-      }
-    }
-    //= 일시
-
-    .top_info__tag_wrapper {
-      margin-top: 16px;
-      margin-bottom: 16px;
-
-      flex-grow: 0;
-      display: flex;
-      flex-direction: row;
-      gap: 10px;
     }
   }
-}
-
-.test {
-  margin-top: 40px;
-  align-self: stretch;
-  flex-grow: 0;
-  font-size: 26px;
-  font-weight: normal;
-  font-stretch: normal;
-  font-style: normal;
-  line-height: 1.5;
-  letter-spacing: -0.32px;
-  text-align: left;
-  color: #313234;
 }
