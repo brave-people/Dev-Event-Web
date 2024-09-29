@@ -310,3 +310,110 @@
     }
   }
 }
+
+@include tablet {
+  .container {
+    width: calc(100% - 128px);
+    padding-top: calc(3.5rem + 40px);
+
+    .top {
+      width: 800px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: none;
+
+      .top__info {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 32px;
+        padding-bottom: 0px;
+
+        &__image_wrapper {
+          width: 100%;
+          height: 100%;
+          aspect-ratio: 400 / 233;
+          position: relative;
+
+          &__cover_image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+
+            .wrap {
+              gap: 5px;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+            }
+          }
+        }
+        &__info_wrapper {
+          width: 100%;
+
+          &__host_wrapper {
+            height: 19px;
+
+            .wrap {
+              gap: 5px;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+            }
+
+            &__host_image_wrapper {
+              width: 19px;
+              height: 19px;
+              border-radius: 2px;
+              position: relative;
+              object-fit: contain;
+            }
+
+            &__host_name {
+              font-size: 14px;
+              line-height: 16.8px;
+              letter-spacing: -2%;
+              font-stretch: normal;
+              font-style: normal;
+            }
+          }
+
+          &__event_title {
+            font-size: 18px;
+            line-height: 23.4px;
+            font-weight: 600;
+            letter-spacing: -2%;
+          }
+
+          .top__info__tag_wrapper {
+            margin-top: 16px;
+            margin-bottom: 16px;
+
+            flex-grow: 0;
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+          }
+
+          .button_wrapper {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 928px) {
+    .container {
+      width: calc(100% - 128px);
+      padding-top: calc(3.5rem + 40px);
+
+      .top {
+        width: 100%;
+      }
+    }
+  }
+}
