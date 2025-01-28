@@ -11,7 +11,10 @@ const HeaderTab = () => {
     <div className={cn('container')}>
       <Link href={'https://programmer-humor.github.io'}>
         <div className={cn('tab')}>
-          <span className={cn('tab-text', 'active')}>개발자 유머</span>
+          <span className={cn('tab-text', 'active')}>
+            개발자 유머
+            <span className={cn('new-badge')}>NEW</span>
+          </span>
         </div>
       </Link>
     </div>
