@@ -20,7 +20,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import Image from 'next/image';
 import Link from 'next/link';
-import SaveModal from "../modal/SaveModal";
 
 const cn = classNames.bind(style);
 

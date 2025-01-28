@@ -10,7 +10,7 @@
   z-index: 99;
   min-height: 3.5rem;
   border-bottom: 1px solid $light-gray-4;
-  background-color: hsla(0, 0%, 100%, .88);
+  background-color: hsla(0, 0%, 100%, 0.88);
   backdrop-filter: saturate(150%) blur(32px);
 
   &__inner {
@@ -21,6 +21,14 @@
     align-items: center;
     flex-direction: row;
     justify-content: space-between;
+
+    &__nav {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 24px;
+    }
   }
 
   &__logo {
@@ -30,6 +38,13 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+  }
+
+  &__tab {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }
 
   &__buttons {

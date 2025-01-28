@@ -1,0 +1,32 @@
+@import '~styles/_mixin.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .tab {
+    padding: 4px 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .tab-text {
+      font-size: 14px;
+      line-height: 14px;
+      color: var(--gray-2);
+      font-weight: 500;
+
+      &.active {
+        color: #313234;
+      }
+    }
+  }
+}
+
+@include mobile {
+  .container {
+    display: none;
+  }
+}
