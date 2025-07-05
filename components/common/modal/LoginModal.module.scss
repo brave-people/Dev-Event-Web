@@ -1,242 +1,187 @@
 @import '~styles/_mixin.scss';
 @import '~styles/_variables.scss';
+@import '~styles/_common.scss';
 
 .modal {
-  position: absolute;
+  @extend %modal-base;
   width: 45rem;
   min-height: 39rem;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
-  padding: 1.813rem 1.688rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 999;
-
+  @include flex-center-column;
+  
   &__buttons {
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
+    @include flex-between;
+    
     .button {
       border: none;
       background-color: transparent;
       cursor: pointer;
       align-self: flex-end;
-      padding: 0px;
-    }
-
-    .button.hidden {
-      visibility: hidden;
+      padding: 0;
+      
+      &.hidden {
+        visibility: hidden;
+      }
     }
   }
-
+  
   &__title {
     font-weight: 700;
     font-size: 1.3rem;
     line-height: 2.25rem;
     text-align: center;
-    color: #000000;
+    color: $black;
   }
-
+  
   &__inner {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
+    @include flex-center-column;
+    
     .login-form {
       width: 100%;
       margin-top: 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-
+      @include flex-center-column;
+      
       &__item {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
+        @include flex-center-column;
+        
         span {
-          color: #535353;
+          color: $light-gray;
           font-weight: 500;
           font-size: 0.95rem;
           line-height: 1.438rem;
           padding-bottom: 0.7rem;
         }
-
+        
         .input {
-          border-radius: 2px;
+          @extend %input-base;
           width: 26rem;
           height: 3rem;
-          padding-left: 12px;
-          font-weight: 400;
-          font-size: 1rem;
-          line-height: 1.438rem;
-          color: #535353;
-          border: 1px solid var(--gray-4);
-
-          .size--small {
+          
+          &.size--small {
             width: 23.5rem;
           }
-          .size--regular {
+          
+          &.size--regular {
             width: 30rem;
           }
         }
+        
+        &:not(:first-child) {
+          margin-top: 1rem;
+        }
       }
-
-      &__item:not(:first-child) {
-        margin-top: 1rem;
-      }
-
+      
       &__button {
         width: 80%;
         height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
+        @include flex-center;
+        border-radius: 16px;
+        border: none;
+        
         span {
           padding-left: 8px;
           font-weight: 700;
           font-size: 1rem;
           text-align: center;
         }
-
+        
         &.kakao {
           background: #fae44d;
-          border-radius: 16px;
-          border: none;
         }
+        
         &.google {
-          background: #ffffff;
-          border-radius: 16px;
-          border: 1.5px solid #d8d8d8;
-          box-sizing: border-box;
+          background: $white;
+          border: 1.5px solid $border-gray;
         }
+        
         &.github {
-          background: #000000;
-          border-radius: 16px;
-          border: none;
+          background: $black;
+          
           span {
-            color: #ffffff;
+            color: $white;
           }
         }
+        
         &.naver {
           background: #03c75a;
-          border-radius: 16px;
-          border: none;
+          
           span {
-            color: #ffffff;
+            color: $white;
           }
         }
-
+        
         &.apple {
-          background: #000000;
-          border-radius: 16px;
-          border: none;
+          background: $black;
+          
           span {
-            color: #ffffff;
+            color: $white;
           }
         }
-
+        
         &.email {
-          background: #ffffff;
-          border: 1px solid #d8d8d8;
+          background: $white;
+          border: 1px solid $border-gray;
           border-radius: 12.64px;
+          
           span {
-            color: #000000;
+            color: $black;
           }
         }
-
+        
         &.login {
           background: var(--primary);
           border-radius: 8px;
-          border: none;
           font-weight: 500;
           font-size: 16px;
           line-height: 160%;
           text-align: center;
           width: 26rem;
+          
           span {
-            color: #ffffff;
+            color: $white;
+            padding: 0;
           }
         }
-
+        
         &.signup {
           width: fit-content;
           height: fit-content;
-          padding-top: 11px;
-          padding-bottom: 30px;
-          border: none;
+          padding: 11px 0 30px 0;
           background-color: transparent;
           text-decoration-line: underline;
         }
+        
+        &:not(:first-child) {
+          margin-top: 1rem;
+        }
       }
-
-      &__button:not(:first-child) {
-        margin-top: 1rem;
+    }
+  }
+  
+  @include mobile {
+    .modal__inner {
+      .login-form {
+        &__button {
+          width: 100%;
+          
+          &.login {
+            width: 100%;
+          }
+        }
+        
+        &__item {
+          width: 100%;
+          
+          .input {
+            width: 100%;
+          }
+        }
       }
     }
   }
 }
 
 .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 99;
-}
-
-.login-form__button {
-  &.login {
-    span {
-      padding: 0;
-    }
-  }
-}
-
-@media (max-width: 1200px) {
-  .modal {
-    width: calc(100% - #{$tablet_padding * 2});
-  }
-}
-
-@include mobile() {
-  .modal {
-    width: calc(100% - 40px);
-  }
-
-  .modal__inner {
-    .login-form__button {
-      width: 100%;
-    }
-
-    .login-form {
-      &__item {
-        width: 100%;
-      }
-
-      .input {
-        width: 100%;
-      }
-
-      &__button {
-        &.login {
-          width: 100%;
-        }
-      }
-    }
-  }
+  @extend %modal-overlay;
 }

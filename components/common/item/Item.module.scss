@@ -1,15 +1,13 @@
 @import '~styles/_mixin.scss';
-@import '~styles/_color.scss';
 @import '~styles/_variables.scss';
+@import '~styles/_common.scss';
 
 .item__container {
   width: 100%;
-  display: flex;
+  @include flex-start;
   padding: 20px 24px 20px 0;
-  align-items: center;
   background-color: transparent;
-  border-bottom: 1px solid;
-  border-color: var(--gray-4);
+  border-bottom: 1px solid var(--gray-4);
 
   .item {
     width: 100%;
@@ -30,23 +28,17 @@
         width: 37px;
         height: 56px;
         position: absolute;
-        top: 0px;
-        left: 0px;
-
-        animation-name: appearIn;
-        animation-duration: 0.05s;
-        animation-timing-function: linear;
+        top: 0;
+        left: 0;
+        animation: appearIn 0.05s linear;
 
         span {
           z-index: 3;
           padding-top: 20px;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
+          @include flex-center;
           font-weight: 700;
           font-size: 0.89rem;
-          color: #ffffff;
+          color: $white;
         }
       }
 
@@ -58,7 +50,7 @@
         &__mask {
           border-radius: 4px;
           overflow: hidden;
-          transition: all ease 0.3s;
+          transition: all $transition-timing $transition-duration;
         }
 
         &__done {
@@ -74,8 +66,8 @@
       }
 
       &__body {
-        display: flex;
-        flex-direction: column;
+        @include flex-center-column;
+        display: initial;
         padding-left: 32px;
         justify-content: space-between;
 
@@ -94,12 +86,8 @@
 
       &_title__container {
         width: 100%;
-        margin-top: 4px;
-        margin-bottom: 12px;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
+        margin: 4px 0 12px 0;
+        @include flex-start;
       }
 
       &__title {
@@ -108,9 +96,7 @@
         font-size: 22px;
         color: var(--gray-1);
         text-align: left;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        @include text-ellipsis;
         margin-right: 10px;
       }
 
@@ -134,17 +120,11 @@
         font-weight: 400;
         font-size: 14px;
         color: var(--gray-2);
-        display: flex;
-        align-items: center;
-        flex-direction: row;
-        justify-content: flex-start;
+        @include flex-start;
 
         &__tags {
-          display: flex;
-          flex-wrap: wrap; // 태그 여러개일시 하단으로 이동
-          flex-direction: row;
-          align-items: center;
-          justify-content: flex-start;
+          @include flex-start;
+          flex-wrap: wrap;
           width: 100%;
         }
       }
@@ -153,8 +133,7 @@
         color: var(--gray-1);
 
         .date {
-          align-items: center;
-          justify-content: flex-start;
+          @include flex-start;
           padding-right: 8px;
           font-size: 16px;
           padding-left: 0;
@@ -196,8 +175,7 @@
     }
 
     &__buttons {
-      display: flex;
-      justify-content: flex-start;
+      @include flex-start;
       position: absolute;
       top: 0;
       right: 0;
@@ -208,9 +186,7 @@
         border: none;
         background-color: transparent;
         border-radius: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include flex-center;
 
         &:hover {
           cursor: pointer;
@@ -264,9 +240,7 @@
       }
 
       .wrap {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        @include flex-between;
 
         .date {
           font-size: 14px;
@@ -307,7 +281,7 @@
     }
 
     .item__content__desc__tags {
-      display: flex;
+      @include flex-start;
       padding-top: 6px;
     }
 
@@ -325,9 +299,8 @@
 
 @keyframes moveUp {
   0% {
-    transform: translateY(0px);
+    transform: translateY(0);
   }
-
   100% {
     transform: translateY(-5px);
   }
@@ -337,8 +310,7 @@
   0% {
     opacity: 0;
   }
-
   100% {
-    opacity: 100%;
+    opacity: 1;
   }
 }

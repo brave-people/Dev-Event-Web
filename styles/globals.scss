@@ -1,5 +1,6 @@
 @use '/styles/Theme.scss' as *;
 @import '~styles/_mixin.scss';
+@import '~styles/_variables.scss';
 
 html,
 body {
@@ -24,19 +25,45 @@ a {
   box-sizing: border-box;
 }
 
+// ========================================
+// 공통 유틸리티 클래스
+// ========================================
+.flex-center {
+  @include flex-center;
+}
+
+.flex-center-column {
+  @include flex-center-column;
+}
+
+.flex-between {
+  @include flex-between;
+}
+
+.flex-start {
+  @include flex-start;
+}
+
+.text-ellipsis {
+  @include text-ellipsis;
+}
+
+// ========================================
+// 에러 페이지 스타일
+// ========================================
 .error {
   height: 100vh;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  @include flex-center-column;
   font-weight: 400;
   font-size: 1.5rem;
   line-height: 1.8rem;
-  color: #a8a8a8;
+  color: $text-gray;
 }
 
+// ========================================
+// 반응형 스타일
+// ========================================
 @media (max-width: 350px) {
   body {
     overflow: visible;
