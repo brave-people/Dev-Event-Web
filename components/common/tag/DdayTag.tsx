@@ -44,11 +44,12 @@ function DdayTag({ startDateTime, endDateTime }: Props) {
       case 'ongoing':
         return <div className={cn('tag--bold')}>Today</div>;
       default:
-        return <div></div>;
+        return null;
     }
   };
 
-  return <div className={cn('tag')}>{getEventDdayTag()}</div>;
+  const tag = getEventDdayTag();
+  return tag ? <div className={cn('tag')}>{tag}</div> : null;
 }
 
 export default DdayTag;

@@ -66,8 +66,8 @@
       }
 
       &__body {
-        @include flex-center-column;
-        display: initial;
+        display: flex;
+        flex-direction: column;
         padding-left: 32px;
         justify-content: space-between;
 
@@ -134,6 +134,7 @@
 
         .date {
           @include flex-start;
+          display: initial;
           padding-right: 8px;
           font-size: 16px;
           padding-left: 0;
@@ -142,6 +143,7 @@
 
           &__type {
             white-space: nowrap;
+            //margin-right: 12px;
             margin-right: 8px;
             color: var(--gray-3);
           }

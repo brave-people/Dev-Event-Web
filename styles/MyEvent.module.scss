@@ -4,17 +4,17 @@
 
 .section {
   width: 100%;
-  
+
   &__list {
     max-width: 1080px;
     margin: 0 auto;
-    
+
     @include tablet {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 $tablet-padding;
     }
-    
+
     @include mobile {
       max-width: 1080px;
       margin: 0 auto;
@@ -25,19 +25,19 @@
 
 .list {
   @extend %grid-responsive;
-  
+
   &:last-child {
     margin-bottom: 44px;
-    
+
     @media (max-width: 1200px) {
       margin-bottom: 33.4px;
     }
   }
-  
+
   @media (max-width: 1200px) {
     margin-top: 24px;
   }
-  
+
   @media (max-width: 599px) {
     margin-top: 20px;
   }
@@ -47,13 +47,12 @@
 .sub-header {
   width: 100%;
   padding: 136px $laptop-padding 0;
-  
+
   &__inner {
     max-width: 1080px;
     margin: 0 auto;
-    padding: 0 $laptop-padding 10px;
   }
-  
+
   h1 {
     padding-bottom: 10px;
     border-bottom: 1px solid var(--gray-4);
@@ -64,18 +63,18 @@
     line-height: 120%;
     letter-spacing: -0.8px;
   }
-  
+
   @include tablet {
     padding: 136px $tablet-padding 0;
-    
+
     h1 {
       font-size: 27px;
     }
   }
-  
+
   @include mobile {
     padding: 136px $mobile-padding 0;
-    
+
     h1 {
       font-size: 24px;
     }
@@ -88,7 +87,7 @@
   @include flex-center;
   border: 1.5px solid var(--primary);
   background: var(--primary);
-  
+
   &_done {
     border: 1.5px solid var(--gray-4) !important;
     background: var(--primary);
@@ -98,23 +97,23 @@
 // 래퍼 스타일
 .wrapper {
   width: 1080px;
-  
+
   &__status {
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
     line-height: 100%;
     letter-spacing: -0.28px;
-    
+
     &__count {
       float: left;
       margin-right: 10px;
     }
-    
+
     &__type {
       display: flex;
     }
-    
+
     &__txt {
       padding-left: 8px;
       float: left;

@@ -7,24 +7,25 @@
   width: 45rem;
   min-height: 39rem;
   @include flex-center-column;
-  
+  justify-content: initial;
+
   &__buttons {
     width: 100%;
     @include flex-between;
-    
+
     .button {
       border: none;
       background-color: transparent;
       cursor: pointer;
       align-self: flex-end;
       padding: 0;
-      
+
       &.hidden {
         visibility: hidden;
       }
     }
   }
-  
+
   &__title {
     font-weight: 700;
     font-size: 1.3rem;
@@ -32,19 +33,22 @@
     text-align: center;
     color: $black;
   }
-  
+
   &__inner {
     width: 100%;
     @include flex-center-column;
-    
+
     .login-form {
       width: 100%;
       margin-top: 2rem;
       @include flex-center-column;
-      
+
       &__item {
-        @include flex-center-column;
-        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+
         span {
           color: $light-gray;
           font-weight: 500;
@@ -52,83 +56,83 @@
           line-height: 1.438rem;
           padding-bottom: 0.7rem;
         }
-        
+
         .input {
           @extend %input-base;
           width: 26rem;
           height: 3rem;
-          
+
           &.size--small {
-            width: 23.5rem;
+            width: 26rem;
           }
-          
+
           &.size--regular {
             width: 30rem;
           }
         }
-        
+
         &:not(:first-child) {
           margin-top: 1rem;
         }
       }
-      
+
       &__button {
         width: 80%;
         height: 48px;
         @include flex-center;
         border-radius: 16px;
         border: none;
-        
+
         span {
           padding-left: 8px;
           font-weight: 700;
           font-size: 1rem;
           text-align: center;
         }
-        
+
         &.kakao {
           background: #fae44d;
         }
-        
+
         &.google {
           background: $white;
           border: 1.5px solid $border-gray;
         }
-        
+
         &.github {
           background: $black;
-          
+
           span {
             color: $white;
           }
         }
-        
+
         &.naver {
           background: #03c75a;
-          
+
           span {
             color: $white;
           }
         }
-        
+
         &.apple {
           background: $black;
-          
+
           span {
             color: $white;
           }
         }
-        
+
         &.email {
           background: $white;
           border: 1px solid $border-gray;
           border-radius: 12.64px;
-          
+
           span {
             color: $black;
           }
         }
-        
+
         &.login {
           background: var(--primary);
           border-radius: 8px;
@@ -137,13 +141,13 @@
           line-height: 160%;
           text-align: center;
           width: 26rem;
-          
+
           span {
             color: $white;
             padding: 0;
           }
         }
-        
+
         &.signup {
           width: fit-content;
           height: fit-content;
@@ -151,28 +155,28 @@
           background-color: transparent;
           text-decoration-line: underline;
         }
-        
+
         &:not(:first-child) {
           margin-top: 1rem;
         }
       }
     }
   }
-  
+
   @include mobile {
     .modal__inner {
       .login-form {
         &__button {
           width: 100%;
-          
+
           &.login {
             width: 100%;
           }
         }
-        
+
         &__item {
           width: 100%;
-          
+
           .input {
             width: 100%;
           }
