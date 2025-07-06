@@ -4,7 +4,6 @@
 
 .modal {
   @extend %modal-base;
-  width: 45rem;
   min-height: 39rem;
   @include flex-center-column;
   justify-content: initial;
