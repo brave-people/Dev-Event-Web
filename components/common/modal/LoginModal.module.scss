@@ -3,21 +3,60 @@
 @import '~styles/_common.scss';
 
 .modal {
-  @extend %modal-base;
-  min-height: 39rem;
+  @include absolute-center;
+  width: 480px;
+  min-height: 580px;
+  z-index: 999;
+  
+  // Glassmorphism 효과
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  
+  padding: 32px;
   @include flex-center-column;
-  justify-content: initial;
+  
+  @include tablet {
+    width: calc(100% - #{$tablet-padding * 2});
+    max-width: 480px;
+  }
+  
+  @include mobile {
+    width: calc(100% - 40px);
+    padding: 24px;
+  }
 
   &__buttons {
     width: 100%;
     @include flex-between;
+    margin-bottom: 20px;
 
     .button {
+      width: 40px;
+      height: 40px;
       border: none;
-      background-color: transparent;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
       cursor: pointer;
-      align-self: flex-end;
-      padding: 0;
+      @include flex-center;
+      color: rgba(255, 255, 255, 0.8);
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+        color: rgba(255, 255, 255, 1);
+      }
 
       &.hidden {
         visibility: hidden;
@@ -26,11 +65,13 @@
   }
 
   &__title {
-    font-weight: 700;
-    font-size: 1.3rem;
-    line-height: 2.25rem;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 1.4;
     text-align: center;
-    color: $black;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 32px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
 
   &__inner {
@@ -39,145 +80,198 @@
 
     .login-form {
       width: 100%;
-      margin-top: 2rem;
       @include flex-center-column;
+      gap: 16px;
 
       &__item {
+        width: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: flex-start;
+        gap: 8px;
 
         span {
-          color: $light-gray;
+          color: rgba(255, 255, 255, 0.9);
           font-weight: 500;
-          font-size: 0.95rem;
-          line-height: 1.438rem;
-          padding-bottom: 0.7rem;
+          font-size: 14px;
         }
 
         .input {
-          @extend %input-base;
-          width: 26rem;
-          height: 3rem;
+          width: 100%;
+          height: 48px;
+          padding: 0 16px;
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(10px);
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 16px;
+          transition: all 0.3s ease;
 
-          &.size--small {
-            width: 26rem;
+          &::placeholder {
+            color: rgba(255, 255, 255, 0.5);
           }
 
-          &.size--regular {
-            width: 30rem;
+          &:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.15);
           }
-        }
-
-        &:not(:first-child) {
-          margin-top: 1rem;
         }
       }
 
       &__button {
-        width: 80%;
-        height: 48px;
+        width: 100%;
+        height: 52px;
         @include flex-center;
-        border-radius: 16px;
         border: none;
+        border-radius: 16px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+
+        // 공통 버튼 스타일
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.1),
+            rgba(255, 255, 255, 0)
+          );
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+
+        &:hover::before {
+          opacity: 1;
+        }
 
         span {
-          padding-left: 8px;
-          font-weight: 700;
-          font-size: 1rem;
-          text-align: center;
+          position: relative;
+          z-index: 1;
+          margin-left: 12px;
         }
 
+        svg {
+          position: relative;
+          z-index: 1;
+          width: 20px;
+          height: 20px;
+        }
+
+        // 카카오 버튼
         &.kakao {
-          background: #fae44d;
+          background: linear-gradient(135deg, #fee500, #ffd700);
+          color: #3c1e1e;
+          box-shadow: 0 4px 16px rgba(254, 229, 0, 0.3);
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(254, 229, 0, 0.4);
+          }
         }
 
+        // 구글 버튼
         &.google {
-          background: $white;
-          border: 1.5px solid $border-gray;
-        }
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.8));
+          color: #333;
+          border: 1px solid rgba(255, 255, 255, 0.3);
 
-        &.github {
-          background: $black;
-
-          span {
-            color: $white;
+          &:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 0.9));
           }
         }
 
+        // 네이버 버튼
         &.naver {
-          background: #03c75a;
+          background: linear-gradient(135deg, #03c75a, #00b051);
+          color: $white;
+          box-shadow: 0 4px 16px rgba(3, 199, 90, 0.3);
 
-          span {
-            color: $white;
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(3, 199, 90, 0.4);
           }
         }
 
+        // 깃허브 버튼
+        &.github {
+          background: linear-gradient(135deg, #24292e, #1a1e22);
+          color: $white;
+          box-shadow: 0 4px 16px rgba(36, 41, 46, 0.3);
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(36, 41, 46, 0.4);
+          }
+        }
+
+        // 애플 버튼
         &.apple {
-          background: $black;
+          background: linear-gradient(135deg, #000, #333);
+          color: $white;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 
-          span {
-            color: $white;
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
           }
         }
 
+        // 이메일 버튼
         &.email {
-          background: $white;
-          border: 1px solid $border-gray;
-          border-radius: 12.64px;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+          color: rgba(255, 255, 255, 0.9);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          backdrop-filter: blur(10px);
 
-          span {
-            color: $black;
+          &:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
           }
         }
 
+        // 로그인 버튼
         &.login {
-          background: var(--primary);
-          border-radius: 8px;
-          font-weight: 500;
-          font-size: 16px;
-          line-height: 160%;
-          text-align: center;
-          width: 26rem;
+          background: linear-gradient(135deg, var(--primary), #4f6cff);
+          color: $white;
+          box-shadow: 0 4px 16px rgba(44, 76, 239, 0.3);
+          margin-top: 16px;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(44, 76, 239, 0.4);
+          }
 
           span {
-            color: $white;
-            padding: 0;
+            margin: 0;
           }
         }
 
+        // 회원가입 버튼
         &.signup {
-          width: fit-content;
-          height: fit-content;
-          padding: 11px 0 30px 0;
-          background-color: transparent;
-          text-decoration-line: underline;
-        }
-
-        &:not(:first-child) {
-          margin-top: 1rem;
-        }
-      }
-    }
-  }
-
-  @include mobile {
-    .modal__inner {
-      .login-form {
-        &__button {
-          width: 100%;
-
-          &.login {
-            width: 100%;
+          background: transparent;
+          color: rgba(255, 255, 255, 0.8);
+          text-decoration: underline;
+          height: auto;
+          padding: 16px 0;
+          
+          &:hover {
+            color: rgba(255, 255, 255, 1);
+            transform: none;
           }
-        }
 
-        &__item {
-          width: 100%;
-
-          .input {
-            width: 100%;
+          span {
+            margin: 0;
           }
         }
       }
@@ -186,5 +280,17 @@
 }
 
 .overlay {
-  @extend %modal-overlay;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.6)
+  );
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99;
 }
