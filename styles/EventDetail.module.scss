@@ -333,8 +333,10 @@
   // 행사 상세 내용
   &__content {
     width: 100%;
+    max-width: 1200px;
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
     gap: 40px;
     padding: 0 64px 40px;
 
