@@ -1,19 +1,19 @@
 @import '~styles/_mixin.scss';
+@import '~styles/_variables.scss';
+@import '~styles/_common.scss';
 
 .email_subscribe {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-center;
   margin-left: auto;
-
   gap: 0.5rem;
   max-width: 155px;
   height: 48px;
-  border-radius: 100px;
+  @extend %button-rounded;
   padding: 4px 40px;
   background-color: var(--primary);
   border: none;
-
+  
+  // 폰트 스타일
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
@@ -21,21 +21,17 @@
   text-align: center;
   letter-spacing: -0.4px;
   color: var(--background-1);
-
+  
   &:hover {
-    background: #1c1c1e;
+    background: $hover-gray;
   }
-}
-
-@include tablet {
-  .email_subscribe {
+  
+  @include tablet {
     padding: 4px 40px;
     font-size: 14px;
   }
-}
-
-@include mobile {
-  .email_subscribe {
+  
+  @include mobile {
     max-width: 155px;
     height: 48px;
     padding: 4px 40px;

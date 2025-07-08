@@ -1,8 +1,14 @@
+// ========================================
+// 브레이크포인트
+// ========================================
 $mobile: 320px;
 $tablet: 600px;
 $laptop: 1200px;
 $maxlaptop: 2560px;
 
+// ========================================
+// 반응형 믹스인
+// ========================================
 @mixin mobile {
   @media (max-width: #{$tablet}) {
     @content;
@@ -19,4 +25,105 @@ $maxlaptop: 2560px;
   @media (min-width: #{$laptop}) and (max-width: #{$maxlaptop}) {
     @content;
   }
+}
+
+// ========================================
+// 레이아웃 믹스인
+// ========================================
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-center-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@mixin flex-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+// ========================================
+// 버튼 믹스인
+// ========================================
+@mixin button-base {
+  border: none;
+  cursor: pointer;
+  @include flex-center;
+  border-radius: var(--button-border-radius, 2px);
+  width: 100%;
+  height: 100%;
+  min-width: var(--button-min-width, 12rem);
+  min-height: var(--button-min-height, 3rem);
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+@mixin button-hover($color) {
+  &:hover {
+    background-color: $color;
+  }
+}
+
+// ========================================
+// 태그 믹스인
+// ========================================
+@mixin tag-base {
+  border: none;
+  border-radius: var(--tag-border-radius, 18px);
+  padding: var(--tag-padding, 4px 8px);
+  font-size: var(--tag-font-size, 14px);
+  @include flex-center;
+}
+
+// ========================================
+// 텍스트 믹스인
+// ========================================
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin text-multiline-ellipsis($lines: 2) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+}
+
+// ========================================
+// 유틸리티 믹스인
+// ========================================
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin hover-transition($property: all, $duration: 0.3s, $timing: ease) {
+  transition: $property $duration $timing;
+}
+
+@mixin modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 99;
 }
