@@ -25,20 +25,20 @@
     // 1199px: 1열 레이아웃 (이미지 상단, 정보 하단)
     @media (max-width: 1199px) {
       flex-direction: column;
-      padding: 40px 64px;
+      padding: 64px 64px;
       gap: 32px;
       min-height: auto;
     }
 
     // 600px: 더 컴팩트한 레이아웃
     @media (max-width: 600px) {
-      padding: 40px 64px;
+      padding: 64px 64px;
       gap: 32px;
     }
 
     // 320px: 모바일 최적화
     @media (max-width: 320px) {
-      padding: 28px 20px;
+      padding: 64px 20px;
       gap: 12px;
     }
   }
