@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Head from 'next/head';
 import Layout from 'components/layout';
 import ShareIcon from 'components/icons/ShareIcon';
 import BookmarkIcon from 'components/icons/BookmarkIcon';
+import { AuthContext } from 'context/auth';
 import style from 'styles/EventDetail.module.scss';
 import classNames from 'classnames/bind';
 import Letter from '../../components/features/letter/Letter';
@@ -128,6 +129,28 @@ tech@kakaocorp.com
 const EventDetail: React.FC = () => {
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const { isLoggedIn } = useContext(AuthContext);
+
+  // 디버깅: 로그인 상태 확인
+  useEffect(() => {
+    console.log('EventDetail - isLoggedIn:', isLoggedIn);
+    
+    // 추가로 API 직접 호출해서 확인
+    const checkAuthDirect = async () => {
+      try {
+        const response = await fetch('/api/checkAuth', {
+          method: 'GET',
+          credentials: 'include',
+        });
+        const data = await response.json();
+        console.log('EventDetail - API 응답:', data);
+      } catch (error) {
+        console.error('EventDetail - API 호출 오류:', error);
+      }
+    };
+    
+    checkAuthDirect();
+  }, [isLoggedIn]);
 
   const handleShare = () => {
     if (navigator.share) {
