@@ -314,6 +314,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      text-decoration: none;
 
       &:hover {
         background: #1e3bcf;
@@ -324,9 +325,7 @@
         transform: translateY(0);
       }
 
-      &.applied {
-        background: #28a745;
-      }
+
     }
   }
 

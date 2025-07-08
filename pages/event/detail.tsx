@@ -127,12 +127,7 @@ tech@kakaocorp.com
 
 const EventDetail: React.FC = () => {
   const router = useRouter();
-  const [isApplied, setIsApplied] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
-
-  const handleApply = () => {
-    setIsApplied(!isApplied);
-  };
 
   const handleShare = () => {
     if (navigator.share) {
@@ -218,12 +213,14 @@ const EventDetail: React.FC = () => {
               </div>
 
               <div className={cx('event-detail__actions')}>
-                <button
-                  className={cx('apply-btn', { applied: isApplied })}
-                  onClick={handleApply}
+                <a
+                  href="https://festa.io/events/1234"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cx('apply-btn')}
                 >
-                  {isApplied ? '신청완료' : '참여하기'}
-                </button>
+                  참여하기
+                </a>
               </div>
             </div>
           </div>
