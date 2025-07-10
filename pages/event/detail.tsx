@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Layout from 'components/layout';
 import ShareIcon from 'components/icons/ShareIcon';
 import BookmarkIcon from 'components/icons/BookmarkIcon';
+import SaveModal from 'components/common/modal/SaveModal';
 import { AuthContext } from 'context/auth';
 import style from 'styles/EventDetail.module.scss';
 import classNames from 'classnames/bind';
@@ -129,12 +130,14 @@ tech@kakaocorp.com
 const EventDetail: React.FC = () => {
   const router = useRouter();
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [saveMessage, setSaveMessage] = useState('');
   const { isLoggedIn } = useContext(AuthContext);
 
-  // 디버깅: 로그인 상태 확인
+  // 디버깅: 로그인 상태 확인 - todo remove me
   useEffect(() => {
     console.log('EventDetail - isLoggedIn:', isLoggedIn);
-    
+
     // 추가로 API 직접 호출해서 확인
     const checkAuthDirect = async () => {
       try {
@@ -148,7 +151,7 @@ const EventDetail: React.FC = () => {
         console.error('EventDetail - API 호출 오류:', error);
       }
     };
-    
+
     checkAuthDirect();
   }, [isLoggedIn]);
 
@@ -167,7 +170,15 @@ const EventDetail: React.FC = () => {
 
   const handleBookmark = () => {
     setIsBookmarked(!isBookmarked);
-    alert(isBookmarked ? '북마크에서 제거되었습니다!' : '북마크에 추가되었습니다!');
+    setSaveMessage(
+      isBookmarked ? '북마크에서 제거되었습니다.' : '북마크에 추가되었습니다.'
+    );
+    setShowSaveModal(true);
+
+    // 2초 후 모달 자동 숨김
+    setTimeout(() => {
+      setShowSaveModal(false);
+    }, 2000);
   };
 
   return (
@@ -203,8 +214,8 @@ const EventDetail: React.FC = () => {
                   <ShareIcon color="var(--gray-2)" />
                 </button>
                 <button className={cx('icon-btn')} onClick={handleBookmark}>
-                  <BookmarkIcon 
-                    color={isBookmarked ? "#007AFF" : "var(--gray-2)"} 
+                  <BookmarkIcon
+                    color={isBookmarked ? '#007AFF' : 'var(--gray-2)'}
                     isFavorite={isBookmarked}
                   />
                 </button>
@@ -259,6 +270,7 @@ const EventDetail: React.FC = () => {
           </div>
         </div>
         <Letter />
+        <SaveModal isVisible={showSaveModal} message={saveMessage} />
       </Layout>
     </>
   );
