@@ -231,11 +231,20 @@ const EventDetail: React.FC = () => {
           {/* 행사 상세 내용 */}
           <div className={cx('event-detail__content')}>
             <h2 className={cx('content-title')}>행사 상세</h2>
-            <div className={cx('content-description')}>
-              {eventData.description.split('\n').map((line, index) => (
-                <p key={index}>{line}</p>
-              ))}
-            </div>
+            {eventData.description || eventData.description.trim() !== '' ? (
+              <div className={cx('content-description')}>
+                {eventData.description.split('\n').map((line, index) => (
+                  <p key={index}>{line}</p>
+                ))}
+              </div>
+            ) : (
+              <div className={cx('content-placeholder')}>
+                <div className={cx('placeholder-message')}>
+                  <p>행사 상세 내용은 준비중입니다.</p>
+                  <p>'참여하기' 버튼을 눌러서 상세 내용을 확인해주세요.</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <Letter />
