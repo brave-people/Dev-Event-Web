@@ -3,7 +3,6 @@
 
 .event-detail {
   width: 100%;
-  min-height: 100vh;
   padding-top: 64px; // Header 높이만큼 추가
   background-color: var(--background-1);
 
@@ -184,8 +183,6 @@
     }
 
     &::after {
-      content: '네이버';
-      font-family: Pretendard;
       font-weight: 600;
       font-size: 15px;
       line-height: 1.2;
