@@ -188,9 +188,8 @@ const EventDetail: React.FC = () => {
               </div>
 
               <div className={cx('event-detail__organizer')}>
-                <div className={cx('organizer-badge')}>
-                  <span>{eventData.organizer}</span>
-                </div>
+                <div className={cx('organizer-badge')}></div>
+                <span className={cx('organizer-text')}>{eventData.organizer}</span>
               </div>
 
               <h1 className={cx('event-detail__title')}>{eventData.title}</h1>
@@ -231,7 +230,7 @@ const EventDetail: React.FC = () => {
           {/* 행사 상세 내용 */}
           <div className={cx('event-detail__content')}>
             <h2 className={cx('content-title')}>행사 상세</h2>
-            {eventData.description || eventData.description.trim() !== '' ? (
+            {eventData.description && eventData.description.trim() !== '' ? (
               <div className={cx('content-description')}>
                 {eventData.description.split('\n').map((line, index) => (
                   <p key={index}>{line}</p>
