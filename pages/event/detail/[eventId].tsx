@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Head from 'next/head';
+import { GetServerSideProps } from 'next';
 import Layout from 'components/layout';
 import ShareIcon from 'components/icons/ShareIcon';
 import BookmarkIcon from 'components/icons/BookmarkIcon';
@@ -14,19 +15,19 @@ import { deleteMyEventApi } from 'lib/api/delete';
 import { useMyEvent } from 'lib/hooks/useSWR';
 import * as ga from 'lib/utils/gTag';
 import { mutate } from 'swr';
-import axiosInstance from 'lib/api/axiosInstance';
 import style from 'styles/EventDetail.module.scss';
 import classNames from 'classnames/bind';
 import Letter from '../../../components/features/letter/Letter';
 
 const cx = classNames.bind(style);
 
-const EventDetail: React.FC = () => {
+interface EventDetailProps {
+  eventData: Event;
+}
+
+const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
   const router = useRouter();
-  const { eventId } = router.query;
   const { isLoggedIn } = useContext(AuthContext);
-  const [eventData, setEventData] = useState<Event | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
@@ -50,45 +51,6 @@ const EventDetail: React.FC = () => {
       setShowSaveModal(false);
     }, 2000);
   };
-
-  // 이벤트 데이터 가져오기
-  useEffect(() => {
-    const fetchEventData = async () => {
-      if (!eventId || Array.isArray(eventId)) {
-        alert('잘못된 접근입니다.');
-        router.push('/events');
-        return;
-      }
-
-      try {
-        setIsLoading(true);
-        const response = await axiosInstance.get(
-          `${process.env.BASE_SERVER_URL}/front/v1/events/${eventId}`
-        );
-
-        if (response.data) {
-          setEventData(response.data);
-        } else {
-          throw new Error('이벤트 데이터가 없습니다.');
-        }
-      } catch (error: any) {
-        console.error('이벤트 데이터 로딩 오류:', error);
-
-        if (error.response?.status === 404 || !error.response) {
-          alert('잘못된 접근입니다.');
-          router.push('/events');
-        } else {
-          alert('이벤트 정보를 불러오는데 문제가 발생했습니다.');
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (router.isReady) {
-      fetchEventData();
-    }
-  }, [eventId, router]);
 
   const handleShare = () => {
     if (!eventData) return;
@@ -188,40 +150,6 @@ const EventDetail: React.FC = () => {
     return `${startMonth}월 ${startDay}일(${startWeekday}) ${startTime}~${endTime}`;
   };
 
-  // 로딩 중이거나 데이터가 없는 경우
-  if (isLoading) {
-    return (
-      <Layout>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '50vh',
-          }}
-        >
-        </div>
-      </Layout>
-    );
-  }
-
-  if (!eventData) {
-    return (
-      <Layout>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '50vh',
-          }}
-        >
-          <p>이벤트 정보를 찾을 수 없습니다.</p>
-        </div>
-      </Layout>
-    );
-  }
-
   return (
     <>
       <Head>
@@ -229,6 +157,27 @@ const EventDetail: React.FC = () => {
         <meta
           name="description"
           content={`${eventData.organizer}에서 주최하는 ${eventData.title}`}
+        />
+        <meta property="og:title" content={`${eventData.title} | DEV EVENT`} />
+        <meta
+          property="og:description"
+          content={`${eventData.organizer}에서 주최하는 ${eventData.title}`}
+        />
+        <meta
+          property="og:image"
+          content={eventData.cover_image_link || '/default/event_img.png'}
+        />
+        <meta property="og:url" content={`${process.env.NEXT_PUBLIC_BASE_URL}/event/detail/${eventData.id}`} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${eventData.title} | DEV EVENT`} />
+        <meta
+          name="twitter:description"
+          content={`${eventData.organizer}에서 주최하는 ${eventData.title}`}
+        />
+        <meta
+          name="twitter:image"
+          content={eventData.cover_image_link || '/default/event_img.png'}
         />
       </Head>
 
@@ -333,6 +282,52 @@ const EventDetail: React.FC = () => {
       </Layout>
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { eventId } = context.params!;
+
+  // eventId 유효성 검사
+  if (!eventId || Array.isArray(eventId)) {
+    return {
+      notFound: true,
+    };
+  }
+
+  try {
+    // 서버에서 API 호출
+    const response = await fetch(
+      `${process.env.BASE_SERVER_URL}/front/v1/events/${eventId}`
+    );
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        return {
+          notFound: true,
+        };
+      }
+      throw new Error(`API 호출 실패: ${response.status}`);
+    }
+
+    const eventData = await response.json();
+
+    if (!eventData) {
+      return {
+        notFound: true,
+      };
+    }
+
+    return {
+      props: {
+        eventData,
+      },
+    };
+  } catch (error) {
+    console.error('서버사이드 데이터 페칭 오류:', error);
+    return {
+      notFound: true,
+    };
+  }
 };
 
 export default EventDetail;
