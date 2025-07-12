@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Head from 'next/head';
@@ -6,7 +6,14 @@ import Layout from 'components/layout';
 import ShareIcon from 'components/icons/ShareIcon';
 import BookmarkIcon from 'components/icons/BookmarkIcon';
 import SaveModal from 'components/common/modal/SaveModal';
+import LoginModal from 'components/common/modal/LoginModal';
 import { Event } from 'model/event';
+import { AuthContext } from 'context/auth';
+import { createMyEventApi } from 'lib/api/post';
+import { deleteMyEventApi } from 'lib/api/delete';
+import { useMyEvent } from 'lib/hooks/useSWR';
+import * as ga from 'lib/utils/gTag';
+import { mutate } from 'swr';
 import axiosInstance from 'lib/api/axiosInstance';
 import style from 'styles/EventDetail.module.scss';
 import classNames from 'classnames/bind';
@@ -17,11 +24,77 @@ const cx = classNames.bind(style);
 const EventDetail: React.FC = () => {
   const router = useRouter();
   const { eventId } = router.query;
+  const { isLoggedIn } = useContext(AuthContext);
   const [eventData, setEventData] = useState<Event | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
+
+  const param = { filter: '' };
+  const { myEvent } = useMyEvent(param, isLoggedIn);
+
+  // 북마크 상태 확인
+  const getFavoriteId = (id: string) => {
+    if (myEvent) {
+      const result = myEvent.find((item) => {
+        return item.dev_event.id === id;
+      });
+      return result ? result.favorite_id : 0;
+    }
+    return 0;
+  };
+
+  const isBookmarked = eventData ? getFavoriteId(eventData.id) !== 0 : false;
+
+  // 북마크 API 함수들
+  const createMyEvent = async ({ eventId }: { eventId: string }) => {
+    if (eventId) {
+      const result = await createMyEventApi(
+        `/front/v1/favorite/events/${eventId}`,
+        {
+          eventId: Number(eventId),
+        }
+      );
+      if (
+        result.status_code === 200 &&
+        result.status === 'FRONT_FAVORITE_201_01'
+      ) {
+        return 'SUCCESS';
+      }
+    } else {
+      alert('이벤트 정보가 없습니다!');
+    }
+    ga.event({
+      action: 'web_event_관심행사추가버튼클릭',
+      event_category: 'web_event',
+      event_label: '관심행사',
+    });
+  };
+
+  const deleteMyEvent = async ({ favoriteId }: { favoriteId: number }) => {
+    if (favoriteId) {
+      const result = await deleteMyEventApi(
+        `/front/v1/favorite/events/${favoriteId}`,
+        {
+          favoriteId: favoriteId,
+        }
+      );
+      if (
+        result.status_code === 200 &&
+        result.status === 'FRONT_FAVORITE_200_01'
+      ) {
+        return 'SUCCESS';
+      }
+    } else {
+      alert('이벤트 정보가 없습니다!');
+    }
+    ga.event({
+      action: 'web_event_관심행사삭제버튼클릭',
+      event_category: 'web_event',
+      event_label: '관심행사',
+    });
+  };
 
   // 이벤트 데이터 가져오기
   useEffect(() => {
@@ -77,17 +150,48 @@ const EventDetail: React.FC = () => {
     }
   };
 
-  const handleBookmark = () => {
-    setIsBookmarked(!isBookmarked);
-    setSaveMessage(
-      isBookmarked ? '북마크에서 제거되었습니다.' : '북마크에 추가되었습니다.'
-    );
-    setShowSaveModal(true);
+  const handleBookmark = async () => {
+    if (!eventData) return;
 
-    // 2초 후 모달 자동 숨김
-    setTimeout(() => {
-      setShowSaveModal(false);
-    }, 2000);
+    // 로그인하지 않은 경우 로그인 모달 표시
+    if (!isLoggedIn) {
+      setLoginModalIsOpen(true);
+      return;
+    }
+
+    if (myEvent) {
+      const favoriteId = getFavoriteId(eventData.id);
+
+      if (favoriteId === 0) {
+        // 북마크 추가
+        const filteredEvent = myEvent.concat({
+          favorite_id: favoriteId,
+          dev_event: eventData,
+        });
+        mutate([`/front/v1/favorite/events`, param], filteredEvent, false);
+        const result = await createMyEvent({ eventId: eventData.id });
+
+        setSaveMessage('북마크에 추가되었습니다.');
+        setShowSaveModal(true);
+      } else {
+        // 북마크 삭제
+        const filteredEvent = myEvent.filter(
+          (event) => event.favorite_id !== favoriteId
+        );
+        mutate([`/front/v1/favorite/events`, param], [...filteredEvent], false);
+        const result = await deleteMyEvent({ favoriteId: favoriteId });
+
+        setSaveMessage('북마크에서 제거되었습니다.');
+        setShowSaveModal(true);
+      }
+
+      mutate([`/front/v1/favorite/events`, param]);
+
+      // 2초 후 모달 자동 숨김
+      setTimeout(() => {
+        setShowSaveModal(false);
+      }, 2000);
+    }
   };
 
   // 날짜 포맷팅 함수
@@ -124,7 +228,6 @@ const EventDetail: React.FC = () => {
             height: '50vh',
           }}
         >
-          <p>이벤트 정보를 불러오는 중...</p>
         </div>
       </Layout>
     );
@@ -189,7 +292,9 @@ const EventDetail: React.FC = () => {
 
               <div className={cx('event-detail__organizer')}>
                 <div className={cx('organizer-badge')}></div>
-                <span className={cx('organizer-text')}>{eventData.organizer}</span>
+                <span className={cx('organizer-text')}>
+                  {eventData.organizer}
+                </span>
               </div>
 
               <h1 className={cx('event-detail__title')}>{eventData.title}</h1>
@@ -248,6 +353,10 @@ const EventDetail: React.FC = () => {
         </div>
         <Letter />
         <SaveModal isVisible={showSaveModal} message={saveMessage} />
+        <LoginModal
+          isOpen={loginModalIsOpen}
+          onClose={() => setLoginModalIsOpen(false)}
+        />
       </Layout>
     </>
   );
