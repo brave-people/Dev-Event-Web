@@ -36,64 +36,19 @@ const EventDetail: React.FC = () => {
 
   // 북마크 상태 확인
   const getFavoriteId = (id: string) => {
-    if (myEvent) {
-      const result = myEvent.find((item) => {
-        return item.dev_event.id === id;
-      });
-      return result ? result.favorite_id : 0;
-    }
-    return 0;
+    const favoriteEvent = myEvent?.find((item) => item.dev_event.id === id);
+    return favoriteEvent?.favorite_id || 0;
   };
 
   const isBookmarked = eventData ? getFavoriteId(eventData.id) !== 0 : false;
 
-  // 북마크 API 함수들
-  const createMyEvent = async ({ eventId }: { eventId: string }) => {
-    if (eventId) {
-      const result = await createMyEventApi(
-        `/front/v1/favorite/events/${eventId}`,
-        {
-          eventId: Number(eventId),
-        }
-      );
-      if (
-        result.status_code === 200 &&
-        result.status === 'FRONT_FAVORITE_201_01'
-      ) {
-        return 'SUCCESS';
-      }
-    } else {
-      alert('이벤트 정보가 없습니다!');
-    }
-    ga.event({
-      action: 'web_event_관심행사추가버튼클릭',
-      event_category: 'web_event',
-      event_label: '관심행사',
-    });
-  };
-
-  const deleteMyEvent = async ({ favoriteId }: { favoriteId: number }) => {
-    if (favoriteId) {
-      const result = await deleteMyEventApi(
-        `/front/v1/favorite/events/${favoriteId}`,
-        {
-          favoriteId: favoriteId,
-        }
-      );
-      if (
-        result.status_code === 200 &&
-        result.status === 'FRONT_FAVORITE_200_01'
-      ) {
-        return 'SUCCESS';
-      }
-    } else {
-      alert('이벤트 정보가 없습니다!');
-    }
-    ga.event({
-      action: 'web_event_관심행사삭제버튼클릭',
-      event_category: 'web_event',
-      event_label: '관심행사',
-    });
+  // 북마크 모달 표시 헬퍼 함수
+  const showBookmarkMessage = (message: string) => {
+    setSaveMessage(message);
+    setShowSaveModal(true);
+    setTimeout(() => {
+      setShowSaveModal(false);
+    }, 2000);
   };
 
   // 이벤트 데이터 가져오기
@@ -159,38 +114,55 @@ const EventDetail: React.FC = () => {
       return;
     }
 
-    if (myEvent) {
+    if (!myEvent) return;
+
+    try {
       const favoriteId = getFavoriteId(eventData.id);
 
       if (favoriteId === 0) {
         // 북마크 추가
         const filteredEvent = myEvent.concat({
-          favorite_id: favoriteId,
+          favorite_id: 0,
           dev_event: eventData,
         });
         mutate([`/front/v1/favorite/events`, param], filteredEvent, false);
-        const result = await createMyEvent({ eventId: eventData.id });
-
-        setSaveMessage('북마크에 추가되었습니다.');
-        setShowSaveModal(true);
+        
+        await createMyEventApi(`/front/v1/favorite/events/${eventData.id}`, {
+          eventId: Number(eventData.id),
+        });
+        
+        ga.event({
+          action: 'web_event_관심행사추가버튼클릭',
+          event_category: 'web_event',
+          event_label: '관심행사',
+        });
+        
+        showBookmarkMessage('북마크에 추가되었습니다.');
       } else {
         // 북마크 삭제
         const filteredEvent = myEvent.filter(
           (event) => event.favorite_id !== favoriteId
         );
         mutate([`/front/v1/favorite/events`, param], [...filteredEvent], false);
-        const result = await deleteMyEvent({ favoriteId: favoriteId });
-
-        setSaveMessage('북마크에서 제거되었습니다.');
-        setShowSaveModal(true);
+        
+        await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
+          favoriteId: favoriteId,
+        });
+        
+        ga.event({
+          action: 'web_event_관심행사삭제버튼클릭',
+          event_category: 'web_event',
+          event_label: '관심행사',
+        });
+        
+        showBookmarkMessage('북마크에서 제거되었습니다.');
       }
 
+      // SWR 캐시 갱신
       mutate([`/front/v1/favorite/events`, param]);
-
-      // 2초 후 모달 자동 숨김
-      setTimeout(() => {
-        setShowSaveModal(false);
-      }, 2000);
+    } catch (error) {
+      console.error('북마크 처리 오류:', error);
+      showBookmarkMessage('처리 중 오류가 발생했습니다.');
     }
   };
 
