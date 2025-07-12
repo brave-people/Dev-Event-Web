@@ -126,17 +126,17 @@ const EventDetail: React.FC = () => {
           dev_event: eventData,
         });
         mutate([`/front/v1/favorite/events`, param], filteredEvent, false);
-        
+
         await createMyEventApi(`/front/v1/favorite/events/${eventData.id}`, {
           eventId: Number(eventData.id),
         });
-        
+
         ga.event({
           action: 'web_event_관심행사추가버튼클릭',
           event_category: 'web_event',
           event_label: '관심행사',
         });
-        
+
         showBookmarkMessage('북마크에 추가되었습니다.');
       } else {
         // 북마크 삭제
@@ -144,17 +144,17 @@ const EventDetail: React.FC = () => {
           (event) => event.favorite_id !== favoriteId
         );
         mutate([`/front/v1/favorite/events`, param], [...filteredEvent], false);
-        
+
         await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
           favoriteId: favoriteId,
         });
-        
+
         ga.event({
           action: 'web_event_관심행사삭제버튼클릭',
           event_category: 'web_event',
           event_label: '관심행사',
         });
-        
+
         showBookmarkMessage('북마크에서 제거되었습니다.');
       }
 
@@ -263,7 +263,8 @@ const EventDetail: React.FC = () => {
               </div>
 
               <div className={cx('event-detail__organizer')}>
-                <div className={cx('organizer-badge')}></div>
+                {/* 주최 뱃지 비활성화 */}
+                {/*<div className={cx('organizer-badge')}></div>*/}
                 <span className={cx('organizer-text')}>
                   {eventData.organizer}
                 </span>
