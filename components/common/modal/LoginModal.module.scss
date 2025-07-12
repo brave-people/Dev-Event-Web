@@ -7,30 +7,26 @@
   width: 480px;
   min-height: 580px;
   z-index: 999;
-  
+
   // Glassmorphism 효과
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.1),
-    rgba(255, 255, 255, 0.05)
-  );
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 24px;
-  box-shadow: 
+  box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.12),
     0 2px 8px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  
+
   padding: 32px;
   @include flex-center-column;
-  
+
   @include tablet {
     width: calc(100% - #{$tablet-padding * 2});
     max-width: 480px;
   }
-  
+
   @include mobile {
     width: calc(100% - 40px);
     padding: 24px;
@@ -141,11 +137,7 @@
           left: 0;
           right: 0;
           bottom: 0;
-          background: linear-gradient(
-            135deg,
-            rgba(255, 255, 255, 0.1),
-            rgba(255, 255, 255, 0)
-          );
+          background: rgba(255, 255, 255, 0.08);
           opacity: 0;
           transition: opacity 0.3s ease;
         }
@@ -169,11 +161,12 @@
 
         // 카카오 버튼
         &.kakao {
-          background: linear-gradient(135deg, #fee500, #ffd700);
+          background: #fee500;
           color: #3c1e1e;
           box-shadow: 0 4px 16px rgba(254, 229, 0, 0.3);
 
           &:hover {
+            background: #ffd700;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(254, 229, 0, 0.4);
           }
@@ -181,23 +174,24 @@
 
         // 구글 버튼
         &.google {
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.8));
+          background: rgba(255, 255, 255, 0.9);
           color: #333;
           border: 1px solid rgba(255, 255, 255, 0.3);
 
           &:hover {
+            background: rgba(255, 255, 255, 0.95);
             transform: translateY(-2px);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(245, 245, 245, 0.9));
           }
         }
 
         // 네이버 버튼
         &.naver {
-          background: linear-gradient(135deg, #03c75a, #00b051);
+          background: #03c75a;
           color: $white;
           box-shadow: 0 4px 16px rgba(3, 199, 90, 0.3);
 
           &:hover {
+            background: #00b051;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(3, 199, 90, 0.4);
           }
@@ -205,11 +199,12 @@
 
         // 깃허브 버튼
         &.github {
-          background: linear-gradient(135deg, #24292e, #1a1e22);
+          background: #24292e;
           color: $white;
           box-shadow: 0 4px 16px rgba(36, 41, 46, 0.3);
 
           &:hover {
+            background: #1a1e22;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(36, 41, 46, 0.4);
           }
@@ -217,11 +212,12 @@
 
         // 애플 버튼
         &.apple {
-          background: linear-gradient(135deg, #000, #333);
+          background: #000;
           color: $white;
           box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 
           &:hover {
+            background: #333;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
           }
@@ -229,25 +225,26 @@
 
         // 이메일 버튼
         &.email {
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+          background: rgba(255, 255, 255, 0.12);
           color: rgba(255, 255, 255, 0.9);
           border: 1px solid rgba(255, 255, 255, 0.3);
           backdrop-filter: blur(10px);
 
           &:hover {
+            background: rgba(255, 255, 255, 0.18);
             transform: translateY(-2px);
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
           }
         }
 
         // 로그인 버튼
         &.login {
-          background: linear-gradient(135deg, var(--primary), #4f6cff);
+          background: var(--primary);
           color: $white;
           box-shadow: 0 4px 16px rgba(44, 76, 239, 0.3);
           margin-top: 16px;
 
           &:hover {
+            background: #4f6cff;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(44, 76, 239, 0.4);
           }
@@ -264,7 +261,7 @@
           text-decoration: underline;
           height: auto;
           padding: 16px 0;
-          
+
           &:hover {
             color: rgba(255, 255, 255, 1);
             transform: none;
@@ -285,11 +282,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.4),
-    rgba(0, 0, 0, 0.6)
-  );
+  background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   z-index: 99;
