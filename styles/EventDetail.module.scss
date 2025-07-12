@@ -45,27 +45,27 @@
   // 이미지 섹션
   &__image-section {
     position: relative;
+    aspect-ratio: 400 / 223; // 16:9에 가까운 비율 유지
 
     // 1200px 이상: 고정 너비 이미지
     @media (min-width: 1200px) {
       width: 400px;
-      height: 223px;
+      flex-shrink: 0;
     }
 
-    // 1199px: 전체 너비, 448px 높이
+    // 1199px 이하: 전체 너비, 비율 유지
     @media (max-width: 1199px) {
       width: 100%;
-      height: 448px;
     }
 
-    // 600px: 265px 높이
+    // 600px 이하: 최대 높이 제한으로 너무 작아지는 것 방지
     @media (max-width: 600px) {
-      height: 265px;
+      max-height: 300px;
     }
 
-    // 320px: 180px 높이
+    // 320px: 모바일에서 최소 높이 보장
     @media (max-width: 320px) {
-      height: 180px;
+      max-height: 200px;
     }
   }
 
