@@ -3,15 +3,12 @@
 @import '~styles/_common.scss';
 
 .modal {
-  // iOS Safari 호환 센터링
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate3d(-50%, -50%, 0);
-  -webkit-transform: translate3d(-50%, -50%, 0);
-  
+  // 앱/모바일 호환 센터링 - transform 대신 margin auto 사용
+  position: relative;
   width: 480px;
   min-height: 580px;
+  max-width: calc(100vw - 40px);
+  margin: 0 auto;
   z-index: 999;
 
   // iOS Safari 호환 글래스 효과
@@ -26,22 +23,25 @@
     0 2px 8px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
   
-  // iOS Safari 하드웨어 가속
+  // iOS Safari 최적화
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  will-change: transform;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 
   padding: 32px;
   @include flex-center-column;
 
   @include tablet {
-    width: calc(100% - #{$tablet-padding * 2});
+    width: calc(100vw - 40px);
     max-width: 480px;
   }
 
   @include mobile {
-    width: calc(100% - 40px);
+    width: calc(100vw - 40px);
+    max-width: 360px;
     padding: 24px;
+    margin: 0;
   }
 
   &__buttons {
@@ -328,6 +328,14 @@
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   z-index: 99;
+  
+  // Flexbox 센터링 - 앱/모바일에서 안정적
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  
   // iOS Safari 최적화
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
