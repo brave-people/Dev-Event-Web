@@ -73,12 +73,6 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
             <div className={cx('sub-header__inner')}>
               <div className={cx('sub-header__content')}>
                 <h1 className={cx('notice-title')}>내 정보</h1>
-                <div className={cx('notice-alert')}>
-                  <div className={cx('notice-alert__box')}>Notice</div>
-                  <div className={cx('notice-alert__txt')}>
-                    정보 수집은 추후 업데이트 예정이에요
-                  </div>
-                </div>
                 <div className={cx('underline')}></div>
               </div>
             </div>

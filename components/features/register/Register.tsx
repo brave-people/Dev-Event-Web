@@ -13,7 +13,7 @@ function Register() {
       <a target="__blank" className={cn('register')}>
         <FillButton
           label="행사 등록 요청"
-          color="gray1"
+          color="primary"
           icon="plus"
           size="regular"
           iconStyle="register"
@@ -24,7 +24,7 @@ function Register() {
               event_label: '행사등록',
             });
           }}
-          rounded={false}
+          rounded={true}
         />
       </a>
     </Link>

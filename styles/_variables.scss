@@ -1,14 +1,48 @@
-// 높이
-$header_height: 49px;
+// ========================================
+// 레이아웃 변수
+// ========================================
+$header-height: 49px;
 
 // 메인 여백
-$laptop_padding: 48px;
-$tablet_padding: 64px;
-$mobile_padding: 20px;
+$laptop-padding: 48px;
+$tablet-padding: 64px;
+$mobile-padding: 20px;
 
 // 폭
-$laptop_max_width: 1104px;
-$image_width: 344px;
+$laptop-max-width: 1104px;
+$image-width: 344px;
+$image-width-tablet: calc(100vw / 2 - #{$tablet-padding * 2});
+$image-width-mobile: calc(100vw - #{$tablet-padding * 2});
 
-$image_width-tablet: calc(100vw / 2 - $tablet_padding * 2);
-$image_width-mobile: calc(100vw - $tablet_padding * 2);
+// ========================================
+// 색상 변수 (하드코딩된 색상들을 변수로 추가)
+// ========================================
+$black: #000000;
+$white: #ffffff;
+$dark-gray: #313234;
+$hover-gray: #1c1c1e;
+$light-gray: #535353;
+$border-gray: #d8d8d8;
+$text-gray: #a8a8a8;
+
+// ========================================
+// 버튼 공통 변수
+// ========================================
+$button-border-radius: 2px;
+$button-border-radius-rounded: 100px;
+$button-min-width: 12rem;
+$button-min-height: 3rem;
+
+// ========================================
+// 태그 공통 변수
+// ========================================
+$tag-border-radius: 18px;
+$tag-padding: 4px 8px;
+$tag-font-size: 14px;
+$tag-font-size-mobile: 12px;
+
+// ========================================
+// 애니메이션 변수
+// ========================================
+$transition-duration: 0.3s;
+$transition-timing: ease;

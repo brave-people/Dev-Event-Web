@@ -24,7 +24,9 @@ type Props = {
 const List = ({ data, parentLast }: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
-  const [shareModalIsOpen, setShareModalIsOpen] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false);
+  const [saveMessage, setSaveMessage] = useState('');
+
   const param = { filter: '' };
   const { myEvent } = useMyEvent(param, authContext.isLoggedIn);
 
@@ -32,10 +34,10 @@ const List = ({ data, parentLast }: Props) => {
     const todayDate = dayjs();
     const createDate = dayjs(createdDate);
 
-    return createDate.diff(todayDate, 'day') < 1 &&
+    return (
+      createDate.diff(todayDate, 'day') < 1 &&
       createDate.diff(todayDate, 'day') > -1
-      ? true
-      : false;
+    );
   };
 
   const getEventEndDate = (EventDate: EventDate) => {
@@ -77,7 +79,7 @@ const List = ({ data, parentLast }: Props) => {
         });
         mutate([`/front/v1/favorite/events`, param], filteredEvent, false);
         const result = await createMyEvent({ eventId: item.id });
-        handleFavorite();
+        handleFavorite(false); // 북마크 추가
       }
       // 북마크 삭제
       else {
@@ -87,17 +89,23 @@ const List = ({ data, parentLast }: Props) => {
         mutate([`/front/v1/favorite/events`, param], [...filteredEvent], false);
 
         const result = await deleteMyEvent({ favoriteId: favoriteId });
+        handleFavorite(true); // 북마크 제거
       }
       mutate([`/front/v1/favorite/events`, param]);
     }
   };
 
-  // 북마크 아이콘 노출
-  const handleFavorite = () => {
-    setShareModalIsOpen(true);
+  // 북마크 모달 표시
+  const handleFavorite = (isRemoving: boolean) => {
+    setSaveMessage(
+      isRemoving ? '북마크에서 제거되었습니다.' : '북마크에 추가되었습니다.'
+    );
+    setShowSaveModal(true);
+
+    // 2초 후 모달 자동 숨김
     setTimeout(() => {
-      setShareModalIsOpen(false);
-    }, 1300);
+      setShowSaveModal(false);
+    }, 2000);
   };
 
   const createMyEvent = async ({ eventId }: { eventId: string }) => {
@@ -188,7 +196,7 @@ const List = ({ data, parentLast }: Props) => {
         );
       })}
 
-      {shareModalIsOpen && <SaveModal />}
+      <SaveModal isVisible={showSaveModal} message={saveMessage} />
 
       <div className={cn('skeleton')} />
       <LoginModal
