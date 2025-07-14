@@ -122,7 +122,7 @@ const Item = ({
     <div className={cn('item__container', `${isLast && 'item__last'}`)}>
       {isShareModalOpen && <ShareModal />}
       <div className={cn('item')}>
-        <Link href={String(data.event_link)}>
+        <Link href={`/event/detail/${String(data.id)}`}>
           <a
             onClick={(event: any) => {
               if (
@@ -138,7 +138,6 @@ const Item = ({
                 event_label: '이벤트클릭',
               });
             }}
-            target="_blank"
           >
             <div className={cn('item__content')}>
               <div className={cn('item__content__img')}>

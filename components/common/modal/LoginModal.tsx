@@ -1,7 +1,6 @@
 import style from 'components/common/modal/LoginModal.module.scss';
 import { loginByEmail, signUpByEmail } from 'lib/api/post';
 import * as ga from 'lib/utils/gTag';
-import AppleIcon from 'public/icon/apple.svg';
 import ArrowBackIcon from 'public/icon/arrow_back_regular.svg';
 import EmailIcon from 'public/icon/email.svg';
 import GithubIcon from 'public/icon/github.svg';

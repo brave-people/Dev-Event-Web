@@ -1,5 +1,6 @@
 @import '~styles/_mixin.scss';
 @import '~styles/_variables.scss';
+@import '~styles/_common.scss';
 
 .main {
   margin: 0 auto;
@@ -9,18 +10,5 @@
 }
 
 .section {
-  max-width: $laptop_max_width;
-  margin: 0 auto;
-}
-
-@media (max-width: 1200px) {
-  .section {
-    padding: 0 $tablet_padding;
-  }
-}
-
-@include mobile {
-  .section {
-    padding: 0 20px;
-  }
+  @extend %section-container;
 }

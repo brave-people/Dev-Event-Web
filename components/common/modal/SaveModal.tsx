@@ -6,14 +6,22 @@ import style from 'components/common/modal/ShareModal.module.scss';
 
 const cn = classNames.bind(style);
 
-function SaveModal() {
-    const { windowTheme } = useContext(WindowContext);
-    return (
-        <div className={cn('modal', windowTheme ? 'light--modal' : 'dark--modal')}>
-            <SaveIcon />
-            <span className={cn('modal__text')}>저장되었습니다</span>
-        </div>
-    );
+interface SaveModalProps {
+  isVisible: boolean;
+  message: string;
+}
+
+function SaveModal({ isVisible, message }: SaveModalProps) {
+  const { windowTheme } = useContext(WindowContext);
+
+  if (!isVisible) return null;
+
+  return (
+    <div className={cn('modal', windowTheme ? 'light--modal' : 'dark--modal')}>
+      <SaveIcon />
+      <span className={cn('modal__text')}>{message}</span>
+    </div>
+  );
 }
 
 export default SaveModal;

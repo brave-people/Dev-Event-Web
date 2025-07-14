@@ -1,0 +1,148 @@
+// ========================================
+// 공통 버튼 스타일
+// ========================================
+%button-base {
+  @include button-base;
+}
+
+%button-primary {
+  @extend %button-base;
+  background-color: var(--primary);
+  color: var(--background-1);
+  
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+%button-secondary {
+  @extend %button-base;
+  background-color: var(--gray-1);
+  color: var(--background-1);
+  
+  &:hover {
+    background-color: $hover-gray;
+  }
+}
+
+%button-outline {
+  @extend %button-base;
+  background-color: transparent;
+  border: 1px solid var(--gray-4);
+  color: var(--gray-1);
+  
+  &:hover {
+    background-color: var(--gray-5);
+  }
+}
+
+%button-text {
+  @extend %button-base;
+  background-color: transparent;
+  color: var(--gray-1);
+  min-width: 4rem;
+  
+  &:hover {
+    background-color: var(--gray-5);
+  }
+}
+
+%button-rounded {
+  border-radius: $button-border-radius-rounded;
+}
+
+// ========================================
+// 공통 태그 스타일
+// ========================================
+%tag-base {
+  @include tag-base;
+  background-color: var(--background-2);
+  color: var(--gray-2);
+  
+  @include mobile {
+    font-size: $tag-font-size-mobile;
+    min-width: 38px;
+    margin-left: 8px;
+  }
+}
+
+%tag-primary {
+  @extend %tag-base;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+// ========================================
+// 공통 모달 스타일
+// ========================================
+%modal-base {
+  @include absolute-center;
+  background-color: $white;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 1.813rem 1.688rem;
+  z-index: 999;
+  
+  @include tablet {
+    width: calc(100% - #{$tablet-padding * 2});
+  }
+  
+  @include mobile {
+    width: calc(100% - 40px);
+  }
+}
+
+%modal-overlay {
+  @include modal-overlay;
+}
+
+// ========================================
+// 공통 입력 필드 스타일
+// ========================================
+%input-base {
+  border-radius: 2px;
+  padding: 0 12px;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.438rem;
+  color: $light-gray;
+  border: 1px solid var(--gray-4);
+  
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+}
+
+// ========================================
+// 공통 레이아웃 스타일
+// ========================================
+%section-container {
+  max-width: $laptop-max-width;
+  margin: 0 auto;
+  
+  @include tablet {
+    padding: 0 $tablet-padding;
+  }
+  
+  @include mobile {
+    padding: 0 $mobile-padding;
+  }
+}
+
+%grid-responsive {
+  display: grid;
+  grid-template-columns: 1fr;
+  
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, calc(33.3% - (40px / 3)));
+    grid-column-gap: 20px;
+    grid-row-gap: 36px;
+  }
+  
+  @media (max-width: 599px) {
+    grid-template-columns: repeat(2, calc(50% - 2px));
+    grid-column-gap: 4px;
+    grid-row-gap: 20px;
+  }
+} 
