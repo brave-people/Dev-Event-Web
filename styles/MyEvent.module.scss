@@ -9,14 +9,20 @@
     max-width: 1080px;
     margin: 0 auto;
 
-    @include tablet {
-      max-width: 1200px;
+    @media (max-width: 1200px) {
+      max-width: calc(100% - #{$tablet-padding * 2});
       margin: 0 auto;
       padding: 0 $tablet-padding;
     }
 
+    @include tablet {
+      max-width: calc(100% - #{$mobile-padding * 2});
+      margin: 0 auto;
+      padding: 0 $mobile-padding;
+    }
+
     @include mobile {
-      max-width: 1080px;
+      max-width: calc(100% - #{$mobile-padding * 2});
       margin: 0 auto;
       padding: 0 $mobile-padding;
     }
@@ -64,8 +70,14 @@
     letter-spacing: -0.8px;
   }
 
+  @media (max-width: 1200px) {
+    &__inner {
+      max-width: calc(100%);
+    }
+  }
+
   @include tablet {
-    padding: 136px $tablet-padding 0;
+    padding: 136px $mobile-padding*2 0;
 
     h1 {
       font-size: 27px;
@@ -96,7 +108,24 @@
 
 // 래퍼 스타일
 .wrapper {
-  width: 1080px;
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+
+  @media (max-width: 1200px) {
+    max-width: calc(100% - #{$tablet-padding * 2});
+    margin: 0 auto;
+  }
+
+  @include tablet {
+    max-width: calc(100%);
+    margin: 0 auto;
+  }
+
+  @include mobile {
+    max-width: calc(100%);
+    margin: 0 auto;
+  }
 
   &__status {
     font-size: 14px;
