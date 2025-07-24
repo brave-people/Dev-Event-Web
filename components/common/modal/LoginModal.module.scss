@@ -3,33 +3,45 @@
 @import '~styles/_common.scss';
 
 .modal {
-  @include absolute-center;
+  // 앱/모바일 호환 센터링 - transform 대신 margin auto 사용
+  position: relative;
   width: 480px;
   min-height: 580px;
+  max-width: calc(100vw - 40px);
+  margin: 0 auto;
   z-index: 999;
 
-  // Glassmorphism 효과
-  background: rgba(255, 255, 255, 0.08);
+  // iOS Safari 호환 글래스 효과
+  background: rgba(143, 143, 143, 0.25);
+  background-color: rgba(143, 143, 143, 0.25); // iOS fallback
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 24px;
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.12),
     0 2px 8px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  
+  // iOS Safari 최적화
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 
   padding: 32px;
   @include flex-center-column;
 
   @include tablet {
-    width: calc(100% - #{$tablet-padding * 2});
+    width: calc(100vw - 40px);
     max-width: 480px;
   }
 
   @include mobile {
-    width: calc(100% - 40px);
+    width: calc(100vw - 40px);
+    max-width: 360px;
     padding: 24px;
+    margin: 0;
   }
 
   &__buttons {
@@ -41,16 +53,23 @@
       width: 40px;
       height: 40px;
       border: none;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(143, 143, 143, 0.2);
+      background-color: rgba(255, 255, 255, 0.2); // iOS fallback
       backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-radius: 12px;
       cursor: pointer;
       @include flex-center;
       color: rgba(255, 255, 255, 0.8);
       transition: all 0.3s ease;
+      // iOS Safari 최적화
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+      will-change: background, color;
 
       &:hover {
-        background: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.3); // iOS fallback
         color: rgba(255, 255, 255, 1);
       }
 
@@ -96,22 +115,32 @@
           width: 100%;
           height: 48px;
           padding: 0 16px;
-          border: 1px solid rgba(255, 255, 255, 0.2);
+          border: 0.4px solid rgba(255, 255, 255, 0.3);
           border-radius: 12px;
-          background: rgba(255, 255, 255, 0.1);
+          background: rgba(255, 255, 255, 0.2);
+          background-color: rgba(255, 255, 255, 0.2); // iOS fallback
           backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
           color: rgba(255, 255, 255, 0.9);
           font-size: 16px;
           transition: all 0.3s ease;
+          // iOS Safari 최적화
+          -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+          -webkit-appearance: none;
+          appearance: none;
+          will-change: background, border-color;
 
           &::placeholder {
             color: rgba(255, 255, 255, 0.5);
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.5);
           }
 
           &:focus {
             outline: none;
-            border-color: rgba(255, 255, 255, 0.4);
-            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.25);
+            background-color: rgba(255, 255, 255, 0.25); // iOS fallback
           }
         }
       }
@@ -128,6 +157,12 @@
         transition: all 0.3s ease;
         position: relative;
         overflow: hidden;
+        // iOS Safari 최적화
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        will-change: transform, background;
 
         // 공통 버튼 스타일
         &::before {
@@ -225,14 +260,18 @@
 
         // 이메일 버튼
         &.email {
-          background: rgba(255, 255, 255, 0.12);
+          background: rgba(255, 255, 255, 0.2);
+          background-color: rgba(255, 255, 255, 0.2); // iOS fallback
           color: rgba(255, 255, 255, 0.9);
-          border: 1px solid rgba(255, 255, 255, 0.3);
+          border: 0.4px solid rgba(255, 255, 255, 0.4);
           backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
 
           &:hover {
-            background: rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.28);
+            background-color: rgba(255, 255, 255, 0.28); // iOS fallback
             transform: translateY(-2px);
+            -webkit-transform: translateY(-2px);
           }
         }
 
@@ -282,8 +321,23 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100vh;
+  background: rgba(143, 143, 143, 0.6);
+  background-color: rgba(0, 0, 0, 0.6); // iOS fallback
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   z-index: 99;
+  
+  // Flexbox 센터링 - 앱/모바일에서 안정적
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  
+  // iOS Safari 최적화
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: backdrop-filter;
 }
