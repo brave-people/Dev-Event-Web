@@ -1,7 +1,6 @@
 import classNames from 'classnames/bind';
 import React, { useContext } from 'react';
 import style from 'components/common/banner/banner.module.scss';
-import Image from 'next/image';
 import { WindowContext } from 'context/window';
 
 const cn = classNames.bind(style);
@@ -17,11 +16,14 @@ function Banner() {
       <h3 className={cn('banner__desc')}>
         진행 중인 행사부터 종료된 행사까지, 놓치지 마세요!{' '}
       </h3>
-      <Image
-        src={'/default/banner_img.png'}
-        alt="banner"
-        layout="fill"
-        priority={true}
+      <video
+        className={cn('banner__video')}
+        src="/default/dev_event_banner_wave.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        aria-label="banner"
       />
     </div>
   );
