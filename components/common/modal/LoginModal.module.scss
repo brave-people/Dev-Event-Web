@@ -22,7 +22,7 @@
     0 8px 32px rgba(0, 0, 0, 0.12),
     0 2px 8px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  
+
   // iOS Safari 최적화
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -263,7 +263,6 @@
           background: rgba(255, 255, 255, 0.2);
           background-color: rgba(255, 255, 255, 0.2); // iOS fallback
           color: rgba(255, 255, 255, 0.9);
-          border: 0.4px solid rgba(255, 255, 255, 0.4);
           backdrop-filter: blur(10px);
           -webkit-backdrop-filter: blur(10px);
 
@@ -328,14 +327,14 @@
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   z-index: 99;
-  
+
   // Flexbox 센터링 - 앱/모바일에서 안정적
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
   box-sizing: border-box;
-  
+
   // iOS Safari 최적화
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
