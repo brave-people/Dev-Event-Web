@@ -1,8 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
+import { marked } from 'marked';
 import Layout from 'components/layout';
 import ShareIcon from 'components/icons/ShareIcon';
 import BookmarkIcon from 'components/icons/BookmarkIcon';
@@ -34,6 +35,15 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
 
   const param = { filter: '' };
   const { myEvent } = useMyEvent(param, isLoggedIn);
+
+  // 마크다운을 HTML로 변환
+  const descriptionHtml = useMemo(() => {
+    if (!eventData.description) return '';
+    return marked(eventData.description, {
+      breaks: true, // 줄바꿈을 <br>로 변환
+      gfm: true, // GitHub Flavored Markdown 지원
+    });
+  }, [eventData.description]);
 
   // 북마크 상태 확인
   const getFavoriteId = (id: string) => {
@@ -256,13 +266,11 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
 
           {/* 행사 상세 내용 */}
           <div className={cx('event-detail__content')}>
-            <h2 className={cx('content-title')}>행사 상세</h2>
             {eventData.description && eventData.description.trim() !== '' ? (
-              <div className={cx('content-description')}>
-                {eventData.description.split('\n').map((line, index) => (
-                  <p key={index}>{line}</p>
-                ))}
-              </div>
+              <div 
+                className={cx('content-description')}
+                dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+              />
             ) : (
               <div className={cx('content-placeholder')}>
                 <div className={cx('placeholder-message')}>
@@ -310,6 +318,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 
     const eventData = await response.json();
+
+    console.log(eventData);
 
     if (!eventData) {
       return {
