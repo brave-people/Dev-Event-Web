@@ -23,6 +23,9 @@ dependencies:
   jwt-decode:
     specifier: ^3.1.2
     version: 3.1.2
+  marked:
+    specifier: ^4.3.0
+    version: 4.3.0
   next:
     specifier: 12.1.2
     version: 12.1.2(@babel/core@7.28.5)(react-dom@17.0.2)(react@17.0.2)(sass@1.97.1)
@@ -64,6 +67,9 @@ devDependencies:
   '@types/js-cookie':
     specifier: ^3.0.4
     version: 3.0.6
+  '@types/marked':
+    specifier: ^4.3.0
+    version: 4.3.2
   '@types/node':
     specifier: 17.0.23
     version: 17.0.23
@@ -1925,6 +1931,10 @@ packages:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
     dev: true
 
+  /@types/marked@4.3.2:
+    resolution: {integrity: sha512-a79Yc3TOk6dGdituy8hmTTJXjOkZ7zsFYV10L337ttq/rec8lRMDBpV7fL3uLx6TgbFCa5DU/h8FmIBQPSbU0w==}
+    dev: true
+
   /@types/node@17.0.23:
     resolution: {integrity: sha512-UxDxWn7dl97rKVeVS61vErvw086aCYhDLyvRQZ5Rk65rZKepaFdm53GeqXaKBuOhED4e9uWq34IC3TdSdJJ2Gw==}
     dev: true
@@ -3226,6 +3236,12 @@ packages:
     dependencies:
       semver: 6.3.1
     dev: true
+
+  /marked@4.3.0:
+    resolution: {integrity: sha512-PRsaiG84bK+AMvxziE/lCFss8juXjNaWzVbN5tXAm4XjeaS9NAHhop+PjQxz2A9h8Q4M/xGmzP8vqNwy6JeK0A==}
+    engines: {node: '>= 12'}
+    hasBin: true
+    dev: false
 
   /mdn-data@2.0.14:
     resolution: {integrity: sha512-dn6wd0uw5GsdswPFfsgMp5NSB0/aDe6fK94YJV/AJDYXL6HVLWBsxeq7js7Ad+mU2K9LAlwpk6kN2D5mwCPVow==}
