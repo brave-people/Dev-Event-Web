@@ -267,7 +267,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
           {/* 행사 상세 내용 */}
           <div className={cx('event-detail__content')}>
             {eventData.description && eventData.description.trim() !== '' ? (
-              <div 
+              <div
                 className={cx('content-description')}
                 dangerouslySetInnerHTML={{ __html: descriptionHtml }}
               />
@@ -318,8 +318,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 
     const eventData = await response.json();
-
-    console.log(eventData);
 
     if (!eventData) {
       return {
