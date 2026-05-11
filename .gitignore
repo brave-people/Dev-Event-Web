@@ -38,6 +38,13 @@ yarn-error.log*
 # Local Netlify folder
 .netlify
 
+# Claude Code (local-only)
+.claude/scheduled_tasks.lock
+.claude/worktrees/
+
+# oh-my-claudecode (local runtime state)
+.omc/
+
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode
 
