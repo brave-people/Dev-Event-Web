@@ -7,6 +7,8 @@ import { marked } from 'marked';
 import Layout from 'components/layout';
 import ShareIcon from 'components/icons/ShareIcon';
 import BookmarkIcon from 'components/icons/BookmarkIcon';
+import DdayTag from 'components/common/tag/DdayTag';
+import FilterTag from 'components/common/tag/FilterTag';
 import SaveModal from 'components/common/modal/SaveModal';
 import LoginModal from 'components/common/modal/LoginModal';
 import { Event } from 'model/event';
@@ -26,12 +28,18 @@ interface EventDetailProps {
   eventData: Event;
 }
 
+const isEventDone = (endDate: string): boolean => {
+  return new Date(endDate).getTime() < Date.now();
+};
+
 const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
   const router = useRouter();
   const { isLoggedIn } = useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
+
+  const eventDone = isEventDone(eventData.end_date_time);
 
   const param = { filter: '' };
   const { myEvent } = useMyEvent(param, isLoggedIn);
@@ -177,7 +185,10 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
           property="og:image"
           content={eventData.cover_image_link || '/default/event_img.png'}
         />
-        <meta property="og:url" content={`${process.env.NEXT_PUBLIC_BASE_URL}/event/detail/${eventData.id}`} />
+        <meta
+          property="og:url"
+          content={`${process.env.NEXT_PUBLIC_BASE_URL}/event/detail/${eventData.id}`}
+        />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${eventData.title} | DEV EVENT`} />
@@ -204,6 +215,17 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
                   objectFit="cover"
                   unoptimized
                 />
+                {eventDone && (
+                  <div className={cx('event-detail__image__done')} />
+                )}
+                {!eventDone && (
+                  <div className={cx('event-detail__image__badge')}>
+                    <DdayTag
+                      startDateTime={eventData.start_date_time}
+                      endDateTime={eventData.end_date_time}
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
@@ -211,11 +233,15 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
               {/* 공유/북마크 아이콘 */}
               <div className={cx('event-detail__header-actions')}>
                 <button className={cx('icon-btn')} onClick={handleShare}>
-                  <ShareIcon color="var(--gray-2)" />
+                  <ShareIcon color="var(--vapor-gray-500)" />
                 </button>
                 <button className={cx('icon-btn')} onClick={handleBookmark}>
                   <BookmarkIcon
-                    color={isBookmarked ? '#007AFF' : 'var(--gray-2)'}
+                    color={
+                      isBookmarked
+                        ? 'var(--ktb-tech-blue)'
+                        : 'var(--vapor-gray-500)'
+                    }
                     isFavorite={isBookmarked}
                   />
                 </button>
@@ -245,9 +271,12 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
 
               <div className={cx('event-detail__tags')}>
                 {eventData.tags?.map((tag, index) => (
-                  <span key={index} className={cx('event-tag')}>
-                    {tag.tag_name}
-                  </span>
+                  <FilterTag
+                    key={index}
+                    label={tag.tag_name}
+                    size="regular"
+                    type="location"
+                  />
                 ))}
               </div>
 
