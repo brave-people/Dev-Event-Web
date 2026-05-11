@@ -70,15 +70,21 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
     }, 2000);
   };
 
-  const handleShare = () => {
+  const handleShare = async () => {
     if (!eventData) return;
 
     if (navigator.share) {
-      navigator.share({
-        title: eventData.title,
-        text: `${eventData.organizer}에서 주최하는 ${eventData.title}`,
-        url: window.location.href,
-      });
+      try {
+        await navigator.share({
+          title: eventData.title,
+          text: `${eventData.organizer}에서 주최하는 ${eventData.title}`,
+          url: window.location.href,
+        });
+      } catch (err) {
+        if ((err as Error).name !== 'AbortError') {
+          console.error(err);
+        }
+      }
     } else {
       navigator.clipboard.writeText(window.location.href);
       alert('링크가 복사되었습니다!');
