@@ -5,8 +5,6 @@ import FilterTag from 'components/common/tag/FilterTag';
 import {
   BookmarkIcon,
   BookmarkIconMobile,
-  EndBulletIcon,
-  NewBulletIcon,
   ShareIcon,
   ShareIconMobile,
 } from 'components/icons';
@@ -28,6 +26,11 @@ const DateType = {
   dateTime: 'dateTime',
   date: 'date',
   time: 'time',
+};
+
+const shortenYear = (s: string | undefined): string => {
+  if (!s) return '';
+  return s.replace(/\b(?:19|20)(\d{2})/g, '$1');
 };
 
 type Props = {
@@ -156,22 +159,14 @@ const Item = ({
                   layout="fill"
                 />
                 {isDone && <div className={cn('item__content__img__done')} />}
-                {isDone ? (
-                  <div className={cn('item__content__flag')}>
-                    <EndBulletIcon
-                      color={'rgba(203, 203, 206, 1)'}
-                      backgroundColor={'rgba(49, 50, 52, 1)'}
+                {!isDone && (
+                  <div className={cn('item__content__img__badge')}>
+                    <DdayTag
+                      startDateTime={data.start_date_time}
+                      endDateTime={data.end_date_time}
                     />
                   </div>
-                ) : null}
-                {isNew ? (
-                  <div className={cn('item__content__flag')}>
-                    <NewBulletIcon
-                      color={'rgba(203, 203, 206, 1)'}
-                      backgroundColor={'rgba(44, 76, 239, 1)'}
-                    />
-                  </div>
-                ) : null}
+                )}
               </div>
               <div className={cn('item__content__body')}>
                 <div>
@@ -236,12 +231,6 @@ const Item = ({
                         ? `${data.title.slice(0, 45)}...`
                         : data.title}
                     </div>
-                    {isDone ? null : (
-                      <DdayTag
-                        startDateTime={data.start_date_time}
-                        endDateTime={data.end_date_time}
-                      />
-                    )}
                   </div>
                 </div>
                 <div className={cn('item__content__desc')}>
@@ -253,7 +242,7 @@ const Item = ({
                           isDone ? 'date__type__done' : 'date__type'
                         )}
                       >
-                        {data.event_time_type === 'DATE' ? '일시 ' : '접수 '}
+                        {data.event_time_type === 'DATE' ? '일시' : '접수'}
                       </span>
                       {/* 행사 시작 시간 */}
                       <span
@@ -261,7 +250,7 @@ const Item = ({
                           isDone ? `date__date__done` : 'date__date'
                         )}
                       >
-                        {getEventDate()}
+                        {shortenYear(getEventDate())}
                       </span>
                       {/* 행사 종료 시간 */}
                       <span
@@ -271,7 +260,7 @@ const Item = ({
                             : 'date__date__mobile'
                         )}
                       >
-                        {getEventDate()}
+                        {shortenYear(getEventDate())}
                       </span>
                     </div>
                   </span>

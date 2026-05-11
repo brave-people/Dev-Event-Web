@@ -9,6 +9,32 @@ html[data-theme='light'] {
   --gray-3: #{$light-gray-3};
   --gray-4: #{$light-gray-4};
   --gray-5: #{$light-gray-5};
+
+  // KTB brand
+  --ktb-tech-blue: #{$ktb-tech-blue};
+  --ktb-tech-navy: #{$ktb-tech-navy};
+  --ktb-tech-navy-hover: #{$ktb-tech-navy-hover};
+  --ktb-tech-sky: #{$ktb-tech-sky};
+
+  // Vapor gray ramp (light theme: 000 = white → 950 = near-black)
+  --vapor-gray-000: #{$vapor-gray-000};
+  --vapor-gray-050: #{$vapor-gray-050};
+  --vapor-gray-100: #{$vapor-gray-100};
+  --vapor-gray-200: #{$vapor-gray-200};
+  --vapor-gray-300: #{$vapor-gray-300};
+  --vapor-gray-400: #{$vapor-gray-400};
+  --vapor-gray-500: #{$vapor-gray-500};
+  --vapor-gray-600: #{$vapor-gray-600};
+  --vapor-gray-700: #{$vapor-gray-700};
+  --vapor-gray-800: #{$vapor-gray-800};
+  --vapor-gray-900: #{$vapor-gray-900};
+  --vapor-gray-950: #{$vapor-gray-950};
+
+  // Semantic
+  --vapor-text-danger: #{$vapor-text-danger};
+  --vapor-text-success: #{$vapor-text-success};
+  --vapor-text-warning: #{$vapor-text-warning};
+  --vapor-text-primary: #{$vapor-text-primary};
 }
 
 html[data-theme='dark'] {
@@ -20,4 +46,30 @@ html[data-theme='dark'] {
   --gray-3: #{$dark-gray-3};
   --gray-4: #{$dark-gray-4};
   --gray-5: #{$dark-gray-5};
+
+  // KTB brand (same hex in dark — saturated blue still reads on dark)
+  --ktb-tech-blue: #{$ktb-tech-blue};
+  --ktb-tech-navy: #{$ktb-tech-navy};
+  --ktb-tech-navy-hover: #{$ktb-tech-navy-hover};
+  --ktb-tech-sky: #{$ktb-tech-sky};
+
+  // Vapor gray ramp (dark theme: 000 = near-black bg → 950 = white text)
+  --vapor-gray-000: #{$vapor-gray-950};
+  --vapor-gray-050: #{$vapor-gray-900};
+  --vapor-gray-100: #{$vapor-gray-800};
+  --vapor-gray-200: #{$vapor-gray-800};
+  --vapor-gray-300: #{$vapor-gray-700};
+  --vapor-gray-400: #{$vapor-gray-500};
+  --vapor-gray-500: #{$vapor-gray-400};
+  --vapor-gray-600: #{$vapor-gray-300};
+  --vapor-gray-700: #{$vapor-gray-200};
+  --vapor-gray-800: #{$vapor-gray-100};
+  --vapor-gray-900: #{$vapor-gray-050};
+  --vapor-gray-950: #{$vapor-gray-000};
+
+  // Semantic
+  --vapor-text-danger: #{$vapor-text-danger};
+  --vapor-text-success: #{$vapor-text-success};
+  --vapor-text-warning: #{$vapor-text-warning};
+  --vapor-text-primary: #{$vapor-text-primary};
 }
