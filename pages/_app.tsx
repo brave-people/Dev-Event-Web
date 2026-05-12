@@ -10,6 +10,7 @@ import { EventProvider } from 'context/event';
 import { WindowProvider } from 'context/window';
 import { ToastProvider } from 'context/toast';
 import Modal from 'react-modal';
+import { Analytics } from '@vercel/analytics/react';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -50,6 +51,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           </EventProvider>
         </WindowProvider>
       </AuthProvider>
+      <Analytics />
     </>
   );
 }
