@@ -35,7 +35,7 @@ function NoticeModal() {
           <CalenderLogo />
         </div>
         <div className={cn('icon')} onClick={hideModal}>
-          <DeleteIcon color={'rgba(49, 50, 52, 1)'} />
+          <DeleteIcon color={'rgb(43, 45, 54)'} />
         </div>
       </div>
     </div>

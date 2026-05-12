@@ -1,5 +1,4 @@
 import style from 'components/common/item/Item.module.scss';
-import ShareModal from 'components/common/modal/ShareModal';
 import DdayTag from 'components/common/tag/DdayTag';
 import FilterTag from 'components/common/tag/FilterTag';
 import {
@@ -10,6 +9,7 @@ import {
 } from 'components/icons';
 import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
+import { useToast } from 'context/toast';
 import { DateUtil } from 'lib/utils/dateUtil';
 import * as ga from 'lib/utils/gTag';
 import { Event } from 'model/event';
@@ -18,7 +18,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import Image from 'next/image';
 import Link from 'next/link';
-import SaveModal from "../modal/SaveModal";
 
 const cn = classNames.bind(style);
 
@@ -53,24 +52,28 @@ const Item = ({
   childLast,
   parentLast,
 }: Props) => {
-  const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false);
   const [isLast, setIsLast] = useState<boolean>(false);
   const [isDone, setIsDone] = useState<boolean>(isEventDone());
   const [isNew, setIsNew] = useState<boolean>(isEventNew());
   const { windowX } = useContext(WindowContext);
   const { search } = useContext(EventContext);
+  const { pushToast } = useToast();
 
-  const handleShare = () => {
-    setIsShareModalOpen(true);
-    navigator.clipboard.writeText(data.event_link);
+  const handleShare = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      await navigator.clipboard.writeText(data.event_link);
+      pushToast('링크가 복사되었어요');
+    } catch (err) {
+      console.error(err);
+      pushToast('링크 복사에 실패했어요');
+    }
     ga.event({
       action: 'web_event_공유버튼클릭',
       event_category: 'web_event',
       event_label: '공유',
     });
-    setTimeout(() => {
-      setIsShareModalOpen(false);
-    }, 1300);
   };
 
   const getEventDate = () => {
@@ -123,7 +126,6 @@ const Item = ({
   }, [search]);
   return (
     <div className={cn('item__container', `${isLast && 'item__last'}`)}>
-      {isShareModalOpen && <ShareModal />}
       <div className={cn('item')}>
         <Link href={`/event/detail/${String(data.id)}`}>
           <a

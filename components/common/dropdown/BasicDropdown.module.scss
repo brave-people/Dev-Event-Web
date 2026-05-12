@@ -16,16 +16,16 @@
     height: 40px;
     padding: 0 1.125rem 0 1.125rem;
     font-size: 1rem;
-    color: var(--gray-1);
+    color: var(--vapor-gray-900);
     font-weight: 400;
     cursor: pointer;
-    background-color: var(--background-1);
-    border: 1.5px solid;
-    border-color: var(--gray-4);
+    background-color: var(--vapor-gray-000);
+    border: 1px solid;
+    border-color: var(--vapor-gray-300);
     box-sizing: border-box;
-    border-radius: 2.9881px;
+    border-radius: 8px;
     &:hover {
-      border-color: rgba(170, 184, 255, 1);
+      border-color: var(--vapor-gray-400);
     }
   }
 
@@ -38,10 +38,11 @@
     animation-duration: 0.2s;
     animation-timing-function: linear;
     max-height: 12rem;
-    background-color: var(--background-1);
-    border-radius: 2.9881px;
-    border: 1.5px solid;
-    border-color: var(--gray-4);
+    background-color: var(--vapor-gray-000);
+    border-radius: 8px;
+    border: 1px solid;
+    border-color: var(--vapor-gray-300);
+    box-shadow: 0 8px 24px rgba(0, 0, 64, 0.08);
     z-index: 50;
     overflow-y: scroll;
 
@@ -52,24 +53,24 @@
       align-items: center;
       width: 100%;
       height: 2.5rem;
-      color: var(--gray-1);
+      color: var(--vapor-gray-900);
 
       &:hover {
         cursor: pointer;
-        background-color: var(--background-2);
+        background-color: var(--vapor-gray-050);
       }
     }
 
     .selected__light {
       font-weight: 700;
-      color: var(--primary);
-      background-color: rgba(237, 239, 255, 1);
+      color: var(--ktb-tech-blue);
+      background-color: rgba(0, 67, 255, 0.08);
     }
 
     .selected__dark {
       font-weight: 700;
-      color: var(--primary);
-      background-color: rgba(34, 35, 38, 1);
+      color: var(--ktb-tech-blue);
+      background-color: var(--vapor-gray-950);
     }
 
     &::-webkit-scrollbar {
@@ -79,7 +80,7 @@
     &::-webkit-scrollbar-thumb {
       width: 5px;
       border-radius: 4px;
-      background-color: #c4c4c4;
+      background-color: var(--vapor-gray-400);
     }
 
     &::-webkit-scrollbar-track {
@@ -88,7 +89,7 @@
     }
   }
   .dropdown__header__focus {
-    border-color: var(--primary);
+    border-color: var(--ktb-tech-blue);
   }
 }
 

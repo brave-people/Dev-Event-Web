@@ -25,20 +25,20 @@
     // 1199px: 1열 레이아웃 (이미지 상단, 정보 하단)
     @media (max-width: 1199px) {
       flex-direction: column;
-      padding: 32px 32px;
+      padding: 56px 32px 32px;
       gap: 32px;
       min-height: auto;
     }
 
     // 600px: 더 컴팩트한 레이아웃
     @media (max-width: 600px) {
-      padding: 24px 16px !important;
+      padding: 40px 16px 24px !important;
       gap: 24px;
     }
 
     // 320px: 모바일 최적화
     @media (max-width: 320px) {
-      padding: 24px 16px !important;
+      padding: 32px 16px 24px !important;
       gap: 16px;
     }
   }
@@ -111,7 +111,7 @@
   // 헤더 액션 버튼 (공유/북마크)
   &__header-actions {
     display: flex;
-    gap: 4px;
+    gap: 6px;
 
     @media (min-width: 1200px) {
       position: absolute;
@@ -126,10 +126,12 @@
       z-index: 3;
 
       .icon-btn {
-        width: 32px;
-        height: 32px;
-        background-color: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(4px);
+        width: 36px;
+        height: 36px;
+        background-color: rgba(255, 255, 255, 0.9);
+        backdrop-filter: saturate(150%) blur(8px);
+        -webkit-backdrop-filter: saturate(150%) blur(8px);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 
         &:hover {
           background-color: rgba(255, 255, 255, 1);
@@ -138,21 +140,31 @@
     }
 
     .icon-btn {
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border: none;
       background: transparent;
       cursor: pointer;
-      border-radius: 8px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background-color 0.2s ease;
+      transition: background-color 0.18s ease, transform 0.12s ease;
       padding: 4px;
       color: var(--vapor-gray-500);
+      -webkit-tap-highlight-color: transparent;
 
       &:hover {
         background-color: var(--vapor-gray-100);
+      }
+
+      &:active {
+        transform: scale(0.92);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--ktb-tech-blue);
+        outline-offset: 2px;
       }
 
       svg {

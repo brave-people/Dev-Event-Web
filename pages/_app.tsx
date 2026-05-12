@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { EventProvider } from 'context/event';
 import { WindowProvider } from 'context/window';
+import { ToastProvider } from 'context/toast';
 import Modal from 'react-modal';
 
 type NextPageWithLayout = NextPage & {
@@ -43,7 +44,9 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       <AuthProvider>
         <WindowProvider>
           <EventProvider>
-            {getLayout(<Component {...pageProps} />)}
+            <ToastProvider>
+              {getLayout(<Component {...pageProps} />)}
+            </ToastProvider>
           </EventProvider>
         </WindowProvider>
       </AuthProvider>

@@ -17,19 +17,19 @@
     font-weight: 500;
     margin: 5px;
     border: 1px solid;
-    color: var(--gray-1);
-    border-color: var(--gray-4);
+    color: var(--vapor-gray-900);
+    border-color: var(--vapor-gray-300);
 
     &:hover {
       cursor: pointer;
-      background-color: var(--background-2);
+      background-color: var(--vapor-gray-050);
     }
   }
 
   &__invalid {
     user-select: none;
-    color: var(--gray-5);
-    border-color: var(--gray-5);
+    color: var(--vapor-gray-400);
+    border-color: var(--vapor-gray-200);
     background-color: transparent;
     &:hover {
       cursor: auto;
@@ -37,15 +37,15 @@
     }
   }
   .light--selected {
-    border-color: var(--primary);
-    background-color: rgba(237, 239, 255, 1);
-    color: var(--primary);
+    border-color: var(--ktb-tech-blue);
+    background-color: rgba(0, 67, 255, 0.08);
+    color: var(--ktb-tech-blue);
   }
 
   .dark--selected {
-    border-color: var(--primary);
-    background-color: rgba(34, 35, 38, 1);
-    color: var(--primary);
+    border-color: var(--ktb-tech-blue);
+    background-color: var(--vapor-gray-950);
+    color: var(--ktb-tech-blue);
   }
 }
 
@@ -63,18 +63,18 @@
       font-weight: 500;
       margin: 5px;
       border: 1px solid;
-      color: var(--gray-1);
-      border-color: var(--gray-4);
+      color: var(--vapor-gray-900);
+      border-color: var(--vapor-gray-300);
 
       &:hover {
         cursor: pointer;
-        background-color: var(--background-2);
+        background-color: var(--vapor-gray-050);
       }
     }
     &__invalid {
       user-select: none;
-      color: var(--gray-5);
-      border-color: var(--gray-5);
+      color: var(--vapor-gray-400);
+      border-color: var(--vapor-gray-200);
       background-color: transparent;
       &:hover {
         cursor: auto;
@@ -82,15 +82,15 @@
       }
     }
     .light--selected {
-      border-color: var(--primary);
-      background-color: rgba(237, 239, 255, 1);
-      color: var(--primary);
+      border-color: var(--ktb-tech-blue);
+      background-color: rgba(0, 67, 255, 0.08);
+      color: var(--ktb-tech-blue);
     }
 
     .dark--selected {
-      border-color: var(--primary);
-      background-color: rgba(34, 35, 38, 1);
-      color: var(--primary);
+      border-color: var(--ktb-tech-blue);
+      background-color: var(--vapor-gray-950);
+      color: var(--ktb-tech-blue);
     }
   }
 }

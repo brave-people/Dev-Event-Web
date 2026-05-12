@@ -4,24 +4,24 @@
 
 .button {
   @extend %button-base;
-  color: var(--background-1);
-  background-color: var(--gray-1);
-  
+  color: var(--vapor-gray-000);
+  background-color: var(--vapor-gray-900);
+
   // 색상 변형
   &.color {
     &--primary {
-      background-color: var(--primary);
+      background-color: var(--ktb-tech-blue);
       font-size: 14px;
     }
-    
+
     &--gray {
-      background-color: var(--gray-1);
+      background-color: var(--vapor-gray-900);
       font-size: 14px;
     }
-    
+
     &--white {
-      background-color: var(--background-1);
-      color: var(--primary);
+      background-color: var(--vapor-gray-000);
+      color: var(--ktb-tech-blue);
       font-size: 14px;
     }
   }

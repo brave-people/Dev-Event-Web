@@ -28,8 +28,9 @@
 
       .notice__title {
         font-size: 16px;
-        font-weight: bold;
-        color: var(--primary);
+        font-weight: 700;
+        letter-spacing: -0.012rem;
+        color: var(--ktb-tech-blue);
         margin-right: 4px;
       }
     }
@@ -43,7 +44,7 @@
       border-radius: 50%;
 
       &:hover {
-        background-color: rgb(213, 215, 229);
+        background-color: var(--vapor-gray-100);
         cursor: pointer;
       }
     }
@@ -90,7 +91,7 @@
 }
 
 .notice--light {
-  background-color: rgba(237, 239, 255, 1);
+  background-color: rgba(0, 67, 255, 0.08);
 }
 
 @keyframes appearIn {

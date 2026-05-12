@@ -6,9 +6,9 @@
   padding-left: 16px;
   height: 36px;
   font-weight: 500;
-  color: var(--gray-1);
+  color: var(--vapor-gray-800);
   border: 1px solid;
-  border-color: var(--gray-4);
+  border-color: var(--vapor-gray-300);
   border-radius: 25px;
   display: flex;
   justify-content: center;
@@ -19,32 +19,32 @@
 
 .tag--light {
   &:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-    background-color: rgba(237, 239, 255, 1);
+    border-color: var(--ktb-tech-blue);
+    color: var(--ktb-tech-blue);
+    background-color: rgba(0, 67, 255, 0.08);
     cursor: pointer;
   }
 }
 
 .tag--dark {
   &:hover {
-    border-color: var(--primary);
-    color: var(--primary);
-    background-color: rgba(34, 35, 38, 1);
+    border-color: var(--ktb-tech-blue);
+    color: var(--ktb-tech-blue);
+    background-color: var(--vapor-gray-950);
     cursor: pointer;
   }
 }
 
 .checked--light {
-  border-color: rgba(44, 76, 239, 1);
-  color: rgba(44, 76, 239, 1);
-  background-color: #edefff;
+  border-color: var(--ktb-tech-blue);
+  color: var(--ktb-tech-blue);
+  background-color: rgba(0, 67, 255, 0.08);
 }
 
 .checked--dark {
-  border-color: rgba(79, 108, 255, 1);
-  color: rgba(79, 108, 255, 1);
-  background-color: rgba(34, 35, 38, 1);
+  border-color: var(--ktb-tech-blue);
+  color: var(--ktb-tech-blue);
+  background-color: var(--vapor-gray-950);
 }
 
 @include laptop {

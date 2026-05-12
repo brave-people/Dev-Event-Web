@@ -9,8 +9,8 @@ import ShareIcon from 'components/icons/ShareIcon';
 import BookmarkIcon from 'components/icons/BookmarkIcon';
 import DdayTag from 'components/common/tag/DdayTag';
 import FilterTag from 'components/common/tag/FilterTag';
-import SaveModal from 'components/common/modal/SaveModal';
 import LoginModal from 'components/common/modal/LoginModal';
+import { useToast } from 'context/toast';
 import { Event } from 'model/event';
 import { AuthContext } from 'context/auth';
 import { createMyEventApi } from 'lib/api/post';
@@ -36,8 +36,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
   const router = useRouter();
   const { isLoggedIn } = useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
-  const [showSaveModal, setShowSaveModal] = useState(false);
-  const [saveMessage, setSaveMessage] = useState('');
+  const { pushToast } = useToast();
 
   const eventDone = isEventDone(eventData.end_date_time);
 
@@ -61,33 +60,15 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
 
   const isBookmarked = eventData ? getFavoriteId(eventData.id) !== 0 : false;
 
-  // 북마크 모달 표시 헬퍼 함수
-  const showBookmarkMessage = (message: string) => {
-    setSaveMessage(message);
-    setShowSaveModal(true);
-    setTimeout(() => {
-      setShowSaveModal(false);
-    }, 2000);
-  };
-
   const handleShare = async () => {
     if (!eventData) return;
 
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: eventData.title,
-          text: `${eventData.organizer}에서 주최하는 ${eventData.title}`,
-          url: window.location.href,
-        });
-      } catch (err) {
-        if ((err as Error).name !== 'AbortError') {
-          console.error(err);
-        }
-      }
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert('링크가 복사되었습니다!');
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      pushToast('링크가 복사되었어요');
+    } catch (err) {
+      console.error(err);
+      pushToast('링크 복사에 실패했어요');
     }
   };
 
@@ -123,7 +104,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
           event_label: '관심행사',
         });
 
-        showBookmarkMessage('북마크에 추가되었습니다.');
+        pushToast('북마크에 추가되었어요');
       } else {
         // 북마크 삭제
         const filteredEvent = myEvent.filter(
@@ -141,14 +122,14 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
           event_label: '관심행사',
         });
 
-        showBookmarkMessage('북마크에서 제거되었습니다.');
+        pushToast('북마크에서 제거되었어요');
       }
 
       // SWR 캐시 갱신
       mutate([`/front/v1/favorite/events`, param]);
     } catch (error) {
       console.error('북마크 처리 오류:', error);
-      showBookmarkMessage('처리 중 오류가 발생했습니다.');
+      pushToast('처리 중 오류가 발생했어요');
     }
   };
 
@@ -317,7 +298,6 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
           </div>
         </div>
         <Letter />
-        <SaveModal isVisible={showSaveModal} message={saveMessage} />
         <LoginModal
           isOpen={loginModalIsOpen}
           onClose={() => setLoginModalIsOpen(false)}
