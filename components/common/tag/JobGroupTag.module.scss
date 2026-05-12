@@ -2,27 +2,38 @@
 
 .tag {
   min-width: 40px;
-  padding-right: 16px;
-  padding-left: 16px;
+  padding: 0 16px;
   height: 36px;
   font-weight: 500;
   color: var(--vapor-gray-800);
-  border: 1px solid;
-  border-color: var(--vapor-gray-300);
-  border-radius: 25px;
-  display: flex;
+  background-color: #fff;
+  border: 1px solid var(--vapor-gray-300);
+  border-radius: 999px;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
-  margin-right: 10px;
-  margin-top: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease, border-color 0.15s ease,
+              color 0.15s ease, transform 0.12s ease,
+              box-shadow 0.15s ease;
+
+  &:focus-visible {
+    outline: 2px solid var(--ktb-tech-blue);
+    outline-offset: 2px;
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
 }
 
 .tag--light {
   &:hover {
     border-color: var(--ktb-tech-blue);
     color: var(--ktb-tech-blue);
-    background-color: rgba(0, 67, 255, 0.08);
-    cursor: pointer;
+    background-color: rgba(0, 67, 255, 0.06);
+    box-shadow: 0 1px 2px rgba(0, 67, 255, 0.12);
   }
 }
 
@@ -31,32 +42,28 @@
     border-color: var(--ktb-tech-blue);
     color: var(--ktb-tech-blue);
     background-color: var(--vapor-gray-950);
-    cursor: pointer;
   }
 }
 
 .checked--light {
   border-color: var(--ktb-tech-blue);
   color: var(--ktb-tech-blue);
-  background-color: rgba(0, 67, 255, 0.08);
+  background-color: rgba(0, 67, 255, 0.10);
+  font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0, 67, 255, 0.14);
 }
 
 .checked--dark {
   border-color: var(--ktb-tech-blue);
   color: var(--ktb-tech-blue);
   background-color: var(--vapor-gray-950);
+  font-weight: 600;
 }
 
 @include laptop {
   @media (max-width: 950px) {
     .tag {
-      min-width: 40px;
-      padding-right: 14px;
-      padding-left: 14px;
-      height: 36px;
-      border-radius: 24px;
-      margin-right: 9px;
-      margin-top: 9px;
+      padding: 0 14px;
       font-size: 14px;
     }
   }
@@ -65,12 +72,8 @@
 @include tablet {
   .tag {
     min-width: 38px;
-    padding-right: 13px;
-    padding-left: 13px;
+    padding: 0 13px;
     height: 34px;
-    border-radius: 22px;
-    margin-right: 8px;
-    margin-top: 8px;
     font-size: 14px;
   }
 }
@@ -78,12 +81,8 @@
 @include mobile {
   .tag {
     min-width: 36px;
-    padding-right: 11px;
-    padding-left: 11px;
+    padding: 0 12px;
     height: 32px;
-    border-radius: 14px;
-    margin-right: 6px;
-    margin-top: 6px;
     font-size: 13.5px;
   }
 }

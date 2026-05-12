@@ -1,4 +1,5 @@
 import DateBoard from 'components/common/date/DateBoard';
+import ViewToggle, { ViewMode } from 'components/events/calendar/ViewToggle';
 import FilterByCoast from 'components/features/filters/ByCoast/FilterByCoast';
 import FilterByEventType from 'components/features/filters/ByEventType/FilterByEventType';
 import FilterByJobGroup from 'components/features/filters/ByJobGroup/FilterByJobGroup';
@@ -42,10 +43,11 @@ function EventFilter() {
           <span className={cn('block__desc')}>전체 행사</span>
           <Register />
         </div>
-        <div className={cn('block')}>
+        <div className={cn('block')} style={{ marginBottom: '12px' }}>
           <div className={cn('block__taglist')}>
             <FilterByJobGroup context={context} />
           </div>
+          <ViewToggle current={(router.query.view === 'calendar' ? 'calendar' : 'list') as ViewMode} />
         </div>
         <div className={cn('filter')}>
           <div className={cn('filter__search')}>

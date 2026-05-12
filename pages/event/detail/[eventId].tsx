@@ -170,7 +170,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
         />
         <meta
           property="og:image"
-          content={eventData.cover_image_link || '/default/event_img.png'}
+          content={eventData.cover_image_link || '/default/event-thumbnail-light.png'}
         />
         <meta
           property="og:url"
@@ -185,7 +185,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
         />
         <meta
           name="twitter:image"
-          content={eventData.cover_image_link || '/default/event_img.png'}
+          content={eventData.cover_image_link || '/default/event-thumbnail-light.png'}
         />
       </Head>
 
@@ -196,7 +196,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
             <div className={cx('event-detail__image-section')}>
               <div className={cx('event-detail__image')}>
                 <Image
-                  src={eventData.cover_image_link || '/default/event_img.png'}
+                  src={eventData.cover_image_link || '/default/event-thumbnail-light.png'}
                   alt={eventData.title}
                   layout="fill"
                   objectFit="cover"

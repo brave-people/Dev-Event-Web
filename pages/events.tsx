@@ -4,15 +4,17 @@ import FilterSearchModal from 'components/common/modal/FilterSearchModal';
 import FilterTagModal from 'components/common/modal/FilterTagModal';
 import LoginModal from 'components/common/modal/LoginModal';
 import ScheduledEventList from 'components/events/ScheduledEventList';
+import CalendarView from 'components/events/calendar/CalendarView';
 import Letter from 'components/features/letter/Letter';
 import Layout from 'components/layout';
 import { AuthContext } from 'context/auth';
 import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
 import cookie from 'cookie';
-import { useScheduledEvents } from 'lib/hooks/useSWR';
+import dayjs from 'dayjs';
+import { useScheduledEvents, useMonthlyEvent } from 'lib/hooks/useSWR';
 import { blockMouseScroll, isModalOpen } from 'lib/utils/windowUtil';
-import { EventResponse } from 'model/event';
+import { Event, EventResponse } from 'model/event';
 import style from 'styles/Home.module.scss';
 import React, { useEffect, useContext, useState, useRef } from 'react';
 import type { ReactElement } from 'react';
@@ -22,21 +24,41 @@ import Head from 'next/head';
 
 const cn = classNames.bind(style);
 
-type Props = {
+type ListProps = {
+  view: 'list';
   isLoggedIn: boolean;
   fallbackData: EventResponse[];
 };
 
-const Events = ({ isLoggedIn, fallbackData }: Props) => {
+type CalendarProps = {
+  view: 'calendar';
+  year: number;
+  month: number;
+  isLoggedIn: boolean;
+  fallbackData: Event[];
+};
+
+type Props = ListProps | CalendarProps;
+
+const Events = (props: Props) => {
   const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const { modalState } = useContext(WindowContext);
   const { date } = useContext(EventContext);
-  const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
   const bodyRef = useRef<HTMLDivElement>(null);
 
+  const listSWR = useScheduledEvents(
+    props.view === 'list' ? props.fallbackData : undefined
+  );
+  const calendarSWR = useMonthlyEvent({
+    param: props.view === 'calendar'
+      ? { year: props.year, month: props.month }
+      : { year: 1970, month: 1 },
+    fallbackData: props.view === 'calendar' ? props.fallbackData : [],
+  });
+
   useEffect(() => {
-    if (isLoggedIn) {
+    if (props.isLoggedIn) {
       authContext.login();
     } else {
       authContext.logout();
@@ -52,7 +74,7 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
       bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
       setLoginModalIsOpen(false);
     };
-  }, [isLoggedIn, modalState, date]);
+  }, [props.isLoggedIn, modalState, date]);
 
   return (
     <main ref={bodyRef} className={cn('main')}>
@@ -66,66 +88,74 @@ const Events = ({ isLoggedIn, fallbackData }: Props) => {
           name="keywords"
           content="데브이벤트 웹, Dev Event, 데브이벤트, 개발자 행사, 용감한 친구들, 개발자, 이벤트, 행사, 웨비나, 컨퍼런스, 해커톤, 네트워킹, IT"
         />
-        <meta
-          property="og:image"
-          content="/default/og_image.png"
-        />
-        <meta
-          property="og:title"
-          content="Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!"
-        />
-        <meta
-          property="og:description"
-          content="개발자를 위한 {웨비나, 컨퍼런스, 해커톤, 네트워킹} 소식을 알려드립니다."
-        />
+        <meta property="og:image" content="/default/og_image.png" />
+        <meta property="og:title" content="Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!" />
+        <meta property="og:description" content="개발자를 위한 {웨비나, 컨퍼런스, 해커톤, 네트워킹} 소식을 알려드립니다." />
       </Head>
       {modalState.currentModal === 0 && (
         <>
           <Banner />
           <section className={cn('section')}>
-            <ScheduledEventList events={scheduledEvents} isError={isError} />
+            {props.view === 'list' ? (
+              <ScheduledEventList events={listSWR.scheduledEvents} isError={listSWR.isError} />
+            ) : (
+              <CalendarView
+                year={props.year}
+                month={props.month}
+                events={calendarSWR.monthlyEvent ?? []}
+              />
+            )}
           </section>
           <Letter />
         </>
       )}
-      {isModalOpen(modalState.currentModal, 1) && (
-        <FilterSearchModal events={scheduledEvents} isError={isError} />
+      {isModalOpen(modalState.currentModal, 1) && props.view === 'list' && (
+        <FilterSearchModal events={listSWR.scheduledEvents} isError={listSWR.isError} />
       )}
       {isModalOpen(modalState.currentModal, 2) && <FilterTagModal />}
       {isModalOpen(modalState.currentModal, 3) && <FilterDateModal />}
       <LoginModal
         isOpen={loginModalIsOpen}
         onClose={() => setLoginModalIsOpen(false)}
-      ></LoginModal>
+      />
     </main>
   );
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const cookies = context.req.headers.cookie || '';
-  const res = await fetch(
-    `${process.env.BASE_SERVER_URL}/front/v2/events/current`
-  );
-  const events = await res.json();
+  const view = context.query.view === 'calendar' ? 'calendar' : 'list';
 
-  if (cookies) {
-    const parsedCookies = cookie.parse(cookies);
-    const access_token = parsedCookies.access_token;
-    const refrest_token = parsedCookies.refresh_token;
+  const parsedCookies = cookies ? cookie.parse(cookies) : {};
+  const isLoggedIn = Boolean(parsedCookies.access_token && parsedCookies.refresh_token);
 
-    if (access_token && refrest_token) {
-      return {
-        props: {
-          isLoggedIn: true,
-          fallbackData: events,
-        },
-      };
-    }
+  if (view === 'calendar') {
+    const now = dayjs();
+    const yearParam = Number(context.query.year);
+    const monthParam = Number(context.query.month);
+    const year = Number.isFinite(yearParam) && yearParam > 0 ? yearParam : now.year();
+    const month = Number.isFinite(monthParam) && monthParam >= 1 && monthParam <= 12
+      ? monthParam
+      : now.month() + 1;
+    const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/${year}/${month}`);
+    const events = await res.json();
+    return {
+      props: {
+        view: 'calendar' as const,
+        year,
+        month,
+        isLoggedIn,
+        fallbackData: events,
+      },
+    };
   }
 
+  const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/current`);
+  const events = await res.json();
   return {
     props: {
-      isLoggedIn: false,
+      view: 'list' as const,
+      isLoggedIn,
       fallbackData: events,
     },
   };
