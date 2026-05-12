@@ -39,8 +39,7 @@ yarn-error.log*
 .netlify
 
 # Claude Code (local-only)
-.claude/scheduled_tasks.lock
-.claude/worktrees/
+.claude/
 
 # oh-my-claudecode (local runtime state)
 .omc/
