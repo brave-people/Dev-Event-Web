@@ -44,7 +44,6 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
     );
   }
 
-  // 계정 탈퇴
   const deleteAccount = async () => {
     const result = await deleteAccountApi(`/front/v1/users/witdraw`);
     if (result.status_code === 200) {
@@ -67,56 +66,86 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
 
   return (
     <>
-      <div className={cx('info-container')}>
-        <div className={cx('info-container__inner')}>
+      <main className={cx('container')}>
+        <div className={cx('inner')}>
           <header className={cx('sub-header')}>
-            <div className={cx('sub-header__inner')}>
-              <div className={cx('sub-header__content')}>
-                <h1 className={cx('notice-title')}>내 정보</h1>
-                <div className={cx('underline')}></div>
-              </div>
-            </div>
+            <h1>내 정보</h1>
           </header>
 
-          {/* 사용자 상세 정보 */}
-          <div className={cx('info-form')}>
-            <div className={cx('info-form__profile_image_box')}>
-              <Image
-                src={
-                  user && user.profile_image_link
-                    ? user.profile_image_link
-                    : '/icon/profile.svg'
-                }
-                width={104}
-                height={104}
-                className={cx('profile')}
-              />
+          <section className={cx('profile-card')}>
+            <div
+              className={cx('profile-card__avatar', {
+                'profile-card__avatar--placeholder':
+                  !user?.profile_image_link,
+              })}
+            >
+              {user?.profile_image_link ? (
+                <Image
+                  src={user.profile_image_link}
+                  width={96}
+                  height={96}
+                  alt="프로필 이미지"
+                />
+              ) : (
+                <svg
+                  viewBox="0 0 48 48"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden
+                >
+                  <path
+                    d="M24 24C26.7625 24 29 21.7625 29 19C29 16.2375 26.7625 14 24 14C21.2375 14 19 16.2375 19 19C19 21.7625 21.2375 24 24 24Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M24 26.5C20.6625 26.5 14 28.175 14 31.5V32.75C14 33.4375 14.5625 34 15.25 34H32.75C33.4375 34 34 33.4375 34 32.75V31.5C34 28.175 27.3375 26.5 24 26.5Z"
+                    fill="currentColor"
+                  />
+                </svg>
+              )}
             </div>
-            <div className={cx('info-form__profile_txt_box')}>
-              {user?.username}
-            </div>
-            {/* 사용자 상세 정보 */}
-            <div className={cx('info-form__auth_box')}>
-              <div className={cx('email_box')}>
-                <div className={cx('txt')}>가입계정</div>
-                {/*  가입 유형 이미지 */}
-                <div className={cx('value')}>
-                  <div className={cx('value__box')}>
-                    <Image src={'/icon/email.svg'} width={16} height={16} />
-                  </div>
-                  {user?.email}
+            <div className={cx('profile-card__meta')}>
+              <div className={cx('profile-card__name')}>{user?.username}</div>
+              {user?.register_date && (
+                <div className={cx('profile-card__since')}>
+                  <span className={cx('profile-card__since-date')}>
+                    {dayjs(user?.register_date).format('YYYY년 MM월 DD일')}
+                  </span>
+                  <span className={cx('profile-card__since-chip')}>
+                    가입일 🎉
+                  </span>
                 </div>
-              </div>
+              )}
             </div>
-            <div className={cx('info-form__register_date')}>
-              {dayjs(user?.register_date).format('YYYY년 MM월 DD일')}
-              <div className={cx('info-form__register-info-button')}>
-                가입일 🎉
-              </div>
+          </section>
+
+          <section className={cx('info-card')}>
+            <h2 className={cx('info-card__title')}>계정 정보</h2>
+            <ul className={cx('info-list')}>
+              <li className={cx('info-row')}>
+                <span className={cx('info-row__label')}>가입계정</span>
+                <span className={cx('info-row__value')}>
+                  <span className={cx('info-row__icon')}>
+                    <Image
+                      src={'/icon/email.svg'}
+                      width={16}
+                      height={16}
+                      alt="email"
+                    />
+                  </span>
+                  <span className={cx('info-row__text')}>{user?.email}</span>
+                </span>
+              </li>
+            </ul>
+          </section>
+
+          <section className={cx('danger-card')}>
+            <div className={cx('danger-card__text')}>
+              <h3 className={cx('danger-card__title')}>회원 탈퇴</h3>
+              <p className={cx('danger-card__desc')}>
+                탈퇴 시 내 정보와 북마크가 모두 삭제되며 복구할 수 없어요.
+              </p>
             </div>
-          </div>
-          {/* // 사용자 상세 정보 */}
-          <div className={cx('info-form__withdraw_box')}>
             <WithdrawOkButton
               onClick={() => {
                 setDeleteAccountIsOpen(true);
@@ -127,10 +156,9 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
                 });
               }}
             />
-          </div>
+          </section>
         </div>
 
-        {/* 탈퇴 재확인 알림 팝업 */}
         <DeleteAccountModal
           isOpen={DeleteAccountModalIsOpen}
           onCancel={() => {
@@ -143,7 +171,7 @@ const MyInfo = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
           }}
           onClick={deleteAccount}
         />
-      </div>
+      </main>
       <Letter />
     </>
   );

@@ -1,24 +1,25 @@
 .withdraw {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  width: 95px; // 7.4375rem; // 119px
-  height: 3rem; // 48px
-  background: #ffffff;
-  border: 1px solid #ef737b;
-  border-radius: 6px;
+  height: 44px;
+  padding: 0 20px;
+  background: var(--vapor-gray-000);
+  border: 1px solid var(--vapor-text-danger);
+  border-radius: 12px;
 
-  /* font */
   font-style: normal;
-  font-weight: 600;
-  font-size: 1rem; // 16px
+  font-weight: 700;
+  font-size: 0.9375rem;
   line-height: 100%;
   text-align: center;
-  letter-spacing: -0.02em;
-  color: #e8424c;
+  letter-spacing: -0.012rem;
+  color: var(--vapor-text-danger);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
 
   &:hover {
-    background: #fcf2f3;
+    background: var(--vapor-gray-050);
   }
 }
