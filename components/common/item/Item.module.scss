@@ -106,7 +106,9 @@
         color: var(--vapor-gray-900);
         text-align: left;
         flex: 1;
+        min-width: 0;
         word-break: keep-all;
+        overflow-wrap: anywhere;
       }
 
       &__title__done {
@@ -121,7 +123,9 @@
         color: var(--vapor-gray-600);
         text-align: left;
         flex: 1;
+        min-width: 0;
         word-break: keep-all;
+        overflow-wrap: anywhere;
       }
 
       &__desc {

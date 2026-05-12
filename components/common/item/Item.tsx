@@ -8,7 +8,6 @@ import {
   ShareIconMobile,
 } from 'components/icons';
 import { EventContext } from 'context/event';
-import { WindowContext } from 'context/window';
 import { useToast } from 'context/toast';
 import { DateUtil } from 'lib/utils/dateUtil';
 import * as ga from 'lib/utils/gTag';
@@ -55,7 +54,6 @@ const Item = ({
   const [isLast, setIsLast] = useState<boolean>(false);
   const [isDone, setIsDone] = useState<boolean>(isEventDone());
   const [isNew, setIsNew] = useState<boolean>(isEventNew());
-  const { windowX } = useContext(WindowContext);
   const { search } = useContext(EventContext);
   const { pushToast } = useToast();
 
@@ -229,9 +227,7 @@ const Item = ({
                           : 'item__content__title'
                       )}
                     >
-                      {data.title.length >= 30 && windowX <= 750
-                        ? `${data.title.slice(0, 45)}...`
-                        : data.title}
+                      {data.title}
                     </div>
                   </div>
                 </div>
