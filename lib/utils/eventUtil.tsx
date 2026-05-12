@@ -61,13 +61,11 @@ export const checkCondition = (
   const eventTag = event.tags;
   if (handleUndefined(jobGroups, eventType, location, coast)) return true;
   for (let i = 0; i < eventTag.length; i++) {
-    if (jobGroups !== undefined && jobGroups.includes(eventTag[i].tag_name))
-      return true;
-    if (eventType !== undefined && eventType === eventTag[i].tag_name)
-      return true;
-    if (location !== undefined && location === eventTag[i].tag_name)
-      return true;
-    if (coast !== undefined && coast === eventTag[i].tag_name) return true;
+    const tagName = eventTag[i].tag_name?.trim();
+    if (jobGroups !== undefined && jobGroups.includes(tagName)) return true;
+    if (eventType !== undefined && eventType === tagName) return true;
+    if (location !== undefined && location === tagName) return true;
+    if (coast !== undefined && coast === tagName) return true;
   }
   return false;
 };

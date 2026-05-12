@@ -15,11 +15,12 @@
     .tab-text {
       font-size: 14px;
       line-height: 14px;
-      color: var(--gray-2);
+      color: var(--vapor-gray-600);
       font-weight: 500;
 
       &.active {
-        color: #313234;
+        color: var(--vapor-gray-900);
+        font-weight: 700;
       }
     }
   }
@@ -41,7 +42,7 @@
   font-weight: 700;
   letter-spacing: -0.3px;
   color: #fff;
-  background-color: #3182f6;
+  background-color: var(--ktb-tech-blue);
   border-radius: 4px;
   vertical-align: 1px;
   

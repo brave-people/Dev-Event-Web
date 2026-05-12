@@ -38,6 +38,12 @@ yarn-error.log*
 # Local Netlify folder
 .netlify
 
+# Claude Code (local-only)
+.claude/
+
+# oh-my-claudecode (local runtime state)
+.omc/
+
 # Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode
 
@@ -183,3 +189,4 @@ fabric.properties
 .idea/**/azureSettings.xml
 
 # End of https://www.toptal.com/developers/gitignore/api/intellij
+.superpowers/

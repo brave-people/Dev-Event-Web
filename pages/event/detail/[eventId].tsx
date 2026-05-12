@@ -7,8 +7,10 @@ import { marked } from 'marked';
 import Layout from 'components/layout';
 import ShareIcon from 'components/icons/ShareIcon';
 import BookmarkIcon from 'components/icons/BookmarkIcon';
-import SaveModal from 'components/common/modal/SaveModal';
+import DdayTag from 'components/common/tag/DdayTag';
+import FilterTag from 'components/common/tag/FilterTag';
 import LoginModal from 'components/common/modal/LoginModal';
+import { useToast } from 'context/toast';
 import { Event } from 'model/event';
 import { AuthContext } from 'context/auth';
 import { createMyEventApi } from 'lib/api/post';
@@ -26,12 +28,17 @@ interface EventDetailProps {
   eventData: Event;
 }
 
+const isEventDone = (endDate: string): boolean => {
+  return new Date(endDate).getTime() < Date.now();
+};
+
 const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
   const router = useRouter();
   const { isLoggedIn } = useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
-  const [showSaveModal, setShowSaveModal] = useState(false);
-  const [saveMessage, setSaveMessage] = useState('');
+  const { pushToast } = useToast();
+
+  const eventDone = isEventDone(eventData.end_date_time);
 
   const param = { filter: '' };
   const { myEvent } = useMyEvent(param, isLoggedIn);
@@ -53,27 +60,15 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
 
   const isBookmarked = eventData ? getFavoriteId(eventData.id) !== 0 : false;
 
-  // 북마크 모달 표시 헬퍼 함수
-  const showBookmarkMessage = (message: string) => {
-    setSaveMessage(message);
-    setShowSaveModal(true);
-    setTimeout(() => {
-      setShowSaveModal(false);
-    }, 2000);
-  };
-
-  const handleShare = () => {
+  const handleShare = async () => {
     if (!eventData) return;
 
-    if (navigator.share) {
-      navigator.share({
-        title: eventData.title,
-        text: `${eventData.organizer}에서 주최하는 ${eventData.title}`,
-        url: window.location.href,
-      });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert('링크가 복사되었습니다!');
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      pushToast('링크가 복사되었어요');
+    } catch (err) {
+      console.error(err);
+      pushToast('링크 복사에 실패했어요');
     }
   };
 
@@ -109,7 +104,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
           event_label: '관심행사',
         });
 
-        showBookmarkMessage('북마크에 추가되었습니다.');
+        pushToast('북마크에 추가되었어요');
       } else {
         // 북마크 삭제
         const filteredEvent = myEvent.filter(
@@ -127,14 +122,14 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
           event_label: '관심행사',
         });
 
-        showBookmarkMessage('북마크에서 제거되었습니다.');
+        pushToast('북마크에서 제거되었어요');
       }
 
       // SWR 캐시 갱신
       mutate([`/front/v1/favorite/events`, param]);
     } catch (error) {
       console.error('북마크 처리 오류:', error);
-      showBookmarkMessage('처리 중 오류가 발생했습니다.');
+      pushToast('처리 중 오류가 발생했어요');
     }
   };
 
@@ -175,9 +170,12 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
         />
         <meta
           property="og:image"
-          content={eventData.cover_image_link || '/default/event_img.png'}
+          content={eventData.cover_image_link || '/default/event-thumbnail-light.png'}
         />
-        <meta property="og:url" content={`${process.env.NEXT_PUBLIC_BASE_URL}/event/detail/${eventData.id}`} />
+        <meta
+          property="og:url"
+          content={`${process.env.NEXT_PUBLIC_BASE_URL}/event/detail/${eventData.id}`}
+        />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={`${eventData.title} | DEV EVENT`} />
@@ -187,7 +185,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
         />
         <meta
           name="twitter:image"
-          content={eventData.cover_image_link || '/default/event_img.png'}
+          content={eventData.cover_image_link || '/default/event-thumbnail-light.png'}
         />
       </Head>
 
@@ -198,12 +196,23 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
             <div className={cx('event-detail__image-section')}>
               <div className={cx('event-detail__image')}>
                 <Image
-                  src={eventData.cover_image_link || '/default/event_img.png'}
+                  src={eventData.cover_image_link || '/default/event-thumbnail-light.png'}
                   alt={eventData.title}
                   layout="fill"
                   objectFit="cover"
                   unoptimized
                 />
+                {eventDone && (
+                  <div className={cx('event-detail__image__done')} />
+                )}
+                {!eventDone && (
+                  <div className={cx('event-detail__image__badge')}>
+                    <DdayTag
+                      startDateTime={eventData.start_date_time}
+                      endDateTime={eventData.end_date_time}
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
@@ -211,11 +220,15 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
               {/* 공유/북마크 아이콘 */}
               <div className={cx('event-detail__header-actions')}>
                 <button className={cx('icon-btn')} onClick={handleShare}>
-                  <ShareIcon color="var(--gray-2)" />
+                  <ShareIcon color="var(--vapor-gray-500)" />
                 </button>
                 <button className={cx('icon-btn')} onClick={handleBookmark}>
                   <BookmarkIcon
-                    color={isBookmarked ? '#007AFF' : 'var(--gray-2)'}
+                    color={
+                      isBookmarked
+                        ? 'var(--ktb-tech-blue)'
+                        : 'var(--vapor-gray-500)'
+                    }
                     isFavorite={isBookmarked}
                   />
                 </button>
@@ -245,9 +258,12 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
 
               <div className={cx('event-detail__tags')}>
                 {eventData.tags?.map((tag, index) => (
-                  <span key={index} className={cx('event-tag')}>
-                    {tag.tag_name}
-                  </span>
+                  <FilterTag
+                    key={index}
+                    label={tag.tag_name}
+                    size="regular"
+                    type="location"
+                  />
                 ))}
               </div>
 
@@ -282,7 +298,6 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
           </div>
         </div>
         <Letter />
-        <SaveModal isVisible={showSaveModal} message={saveMessage} />
         <LoginModal
           isOpen={loginModalIsOpen}
           onClose={() => setLoginModalIsOpen(false)}

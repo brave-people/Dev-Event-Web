@@ -10,27 +10,26 @@
     width: 100%;
     height: 100%;
     outline: none;
-    background-color: var(--background-1);
-    border: 1.5px solid;
-    border-color: var(--gray-4);
-    border-radius: 2.9881px;
+    background-color: var(--vapor-gray-000);
+    border: 1px solid;
+    border-color: var(--vapor-gray-300);
+    border-radius: 8px;
     box-sizing: border-box;
     &:hover {
-      border-color: rgba(170, 184, 255, 1);
+      border-color: var(--vapor-gray-400);
     }
     &:focus {
-      border-color: var(--primary);
+      border-color: var(--ktb-tech-blue);
     }
   }
 
   input[type='text'] {
     padding-left: 55px;
-    color: var(--gray-1);
+    color: var(--vapor-gray-900);
   }
 
   input::-webkit-input-placeholder {
-    font-weight: bold;
-    color: var(--gray-3);
+    color: var(--vapor-gray-500);
     font-weight: 500;
   }
 

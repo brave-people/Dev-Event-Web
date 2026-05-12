@@ -2,6 +2,7 @@ import Item from 'components/common/item/Item';
 import style from 'components/common/item/List.module.scss';
 import LoginModal from 'components/common/modal/LoginModal';
 import { AuthContext } from 'context/auth';
+import { useToast } from 'context/toast';
 import dayjs from 'dayjs';
 import { deleteMyEventApi } from 'lib/api/delete';
 import { createMyEventApi } from 'lib/api/post';
@@ -12,7 +13,6 @@ import { Event, EventDate } from 'model/event';
 import { mutate } from 'swr';
 import React, { useState } from 'react';
 import classNames from 'classnames/bind';
-import SaveModal from '../modal/SaveModal';
 
 const cn = classNames.bind(style);
 
@@ -23,9 +23,8 @@ type Props = {
 
 const List = ({ data, parentLast }: Props) => {
   const authContext = React.useContext(AuthContext);
+  const { pushToast } = useToast();
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
-  const [showSaveModal, setShowSaveModal] = useState(false);
-  const [saveMessage, setSaveMessage] = useState('');
 
   const param = { filter: '' };
   const { myEvent } = useMyEvent(param, authContext.isLoggedIn);
@@ -95,17 +94,10 @@ const List = ({ data, parentLast }: Props) => {
     }
   };
 
-  // 북마크 모달 표시
   const handleFavorite = (isRemoving: boolean) => {
-    setSaveMessage(
-      isRemoving ? '북마크에서 제거되었습니다.' : '북마크에 추가되었습니다.'
+    pushToast(
+      isRemoving ? '북마크에서 제거되었어요' : '북마크에 추가되었어요'
     );
-    setShowSaveModal(true);
-
-    // 2초 후 모달 자동 숨김
-    setTimeout(() => {
-      setShowSaveModal(false);
-    }, 2000);
   };
 
   const createMyEvent = async ({ eventId }: { eventId: string }) => {
@@ -195,8 +187,6 @@ const List = ({ data, parentLast }: Props) => {
           />
         );
       })}
-
-      <SaveModal isVisible={showSaveModal} message={saveMessage} />
 
       <div className={cn('skeleton')} />
       <LoginModal

@@ -11,491 +11,293 @@
   font-weight: 400;
   font-size: 1.5rem;
   line-height: 1.8rem;
-  color: #a8a8a8;
-}
+  color: var(--vapor-gray-500);
+  word-break: keep-all;
 
-.info-container {
-  display: flex;
-  flex-direction: column;
-  //align-items: center; // 내정보 요소를 가운데 정렬
-  background-color: #fff;
-  //max-width: 100%;
-  width: 100%;
-  height: 720px;
-
-  &__inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center; // 내정보 요소를 가운데 정렬
-    padding: 0 10px;
-    // max-width: 100%;
-    width: 100%;
-
-    .sub-header {
-      width: 1104px;
-      padding-top: 85px;
-      justify-content: left;
-      align-items: center; // 내정보 요소를 가운데 정렬
-
-      &__content {
-        margin-top: 54px;
-        justify-content: space-between;
-        align-items: flex-start;
-        float: left;
-
-        // 내 정보 h1 최상단
-        .notice-title {
-          float: left; // h1의 우측으로 이동
-          margin-bottom: 16px;
-          font-weight: 700;
-          font-size: 24px;
-          line-height: 5.5px;
-          color: #313234;
-        }
-
-        // 내 정보 하단 선
-        .underline {
-          width: 1104px;
-          height: 1px;
-          background: #d3d4d8;
-          gap: 8px;
-          transform: matrix(1, 0, 0, -1, 0, 0);
-          float: left;
-        }
-
-        .notice-alert {
-          // box - 형태
-          background-color: #fbfaf1;
-          border-radius: 4px;
-          // 추후 업데이트 예정 알림 박스의 감싼 요소 배경
-          width: 290px;
-          height: 40px;
-          float: left;
-          margin-left: 8px;
-          margin-bottom: 16px;
-          // 자식 요소의 가운데 정렬
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          &__box {
-            // box - 위치
-            float: left;
-            margin-right: 6px;
-            padding: 5px 6px 5px 6px;
-            gap: 8px;
-            // box - 형태
-            border-radius: 4px;
-            width: 53px;
-            height: 24px;
-            // box 안의 글자
-            background-color: #f7f3cd;
-            color: #80732d;
-            font-weight: 600;
-            // box 글자 정렬
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-
-          &__txt {
-            // 위치 지정
-            float: left;
-            display: flex;
-            // 글자 형태
-            font-weight: 500;
-            color: #848273;
-          }
-        }
-      } // content
-    }
-
-    .info-form {
-      align-items: center;
-      padding-top: 36px;
-      padding-bottom: 48px;
-      width: 600px;
-      margin-bottom: 24px;
-      border-bottom: 1px solid #e9e9e9;
-
-      &__profile_image_box {
-        display: flex;
-        justify-content: center;
-        .profile {
-          border: 1px solid #f2f2f2 !important; // todo checkme: !important 사용 안하는 방법
-          border-radius: 100px;
-        }
-      }
-
-      &__profile_txt_box {
-        width: 600px;
-        font-weight: 600;
-        display: flex;
-        padding-top: 8px;
-        justify-content: center; /* 수평 가운데 정렬 */
-        align-items: center; /* 수직 가운데 정렬 */
-        font-size: 20px;
-        color: #313234;
-      }
-
-      &__auth_box {
-        margin-top: 24px;
-        margin-bottom: 16px;
-
-        .email_box {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          width: 600px;
-          height: 72px;
-          padding: 18px 16px 18px 16px;
-          background: #f8f8f8;
-          border-radius: 8px;
-
-          .txt {
-            color: #abacb2;
-            font-size: 16px;
-          }
-          .value {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #747579;
-            font-size: 14px;
-            margin-left: auto;
-            gap: 10px;
-          }
-
-          .value__box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            width: 24px;
-            height: 24px;
-            padding: 1px;
-            border-radius: 4px;
-            border: 1px solid var(--light-Gray5, #e7e8ec);
-            background: #fff;
-          }
-        }
-      }
-
-      &__register_date {
-        display: flex;
-        align-items: center;
-        justify-content: left;
-        width: 253px;
-        font-size: 14px;
-        color: #abacb2;
-      }
-
-      &__register-info-button {
-        padding: 7px 8px 7px 9px;
-        gap: 8px;
-        width: 80px;
-        height: 28px;
-        border-radius: 32px;
-        margin-left: 6px;
-        background-color: #efffe5;
-        font-weight: 600;
-        font-size: 14px;
-        line-height: 100%;
-        letter-spacing: -0.02em;
-        color: #49a972;
-      }
-
-      &__withdraw_box {
-        width: 600px;
-        float: left;
-      }
-    }
-  }
-}
-
-@include tablet {
-  .info-container {
-    min-width: 29.5rem; // 전체 가로 폭
-    //padding: 0 $tablet_padding;
-
-    &__inner {
-      display: flex;
-      flex-direction: column;
-      padding: 0 10px;
-
-      .sub-header {
-        width: 100%;
-        padding: 85px $tablet_padding 0;
-
-        &__content {
-          width: 100%;
-          margin-top: 54px;
-
-          // 내 정보 h1 최상단
-          .notice-title {
-            float: left; // h1의 우측으로 이동
-            margin-bottom: 16px;
-            font-weight: 700;
-            font-size: 18px;
-            line-height: 5.5px;
-          }
-
-          // 내 정보 하단 선
-          .underline {
-            width: 100%;
-            height: 1px;
-            background: #d3d4d8;
-            gap: 8px;
-            transform: matrix(1, 0, 0, -1, 0, 0);
-            float: left;
-          }
-
-          .notice-alert {
-            // box - 형태
-            background-color: #fbfaf1;
-            border-radius: 4px;
-            // 추후 업데이트 예정 알림 박스의 감싼 요소 배경
-            width: 255px;
-            height: 30px;
-            float: left;
-            padding-right: 8px;
-            padding-top: 6px;
-            padding-bottom: 6px;
-
-            &__box {
-              // box - 위치
-              margin-right: 6px;
-              padding: 3px 4px;
-              gap: 8px;
-              // box - 형태
-              border-radius: 4px;
-              width: 44px;
-              height: 18px;
-              // box 안의 글자
-              font-size: 12px;
-              font-weight: 600;
-            }
-
-            &__txt {
-              font-size: 12px;
-            }
-          }
-        }
-      }
-
-      .info-form {
-        padding-top: 20px;
-        padding-bottom: 48px;
-        width: 472px;
-
-        margin-bottom: 24px;
-
-        &__profile_image_box {
-          .profile {
-            border: 1px solid #f2f2f2 !important; // todo checkme: !important 사용 안하는 방법
-            border-radius: 100px;
-          }
-        }
-
-        // 이미지 아래 사람 이름
-        &__profile_txt_box {
-          width: 472px;
-          font-weight: 600;
-          padding-top: 6px;
-          font-size: 20px;
-          color: #313234;
-        }
-
-        &__auth_box {
-          margin-top: 18px;
-          margin-bottom: 16px;
-
-          .email_box {
-            width: 472px;
-            height: 56px;
-
-            padding: 18px 16px;
-            background: #f8f8f8;
-            border-radius: 8px;
-
-            .txt {
-              font-size: 16px;
-            }
-
-            .value {
-              font-size: 14px;
-              gap: 10px;
-            }
-          }
-        }
-
-        &__register_date {
-          width: 253px;
-          font-size: 14px;
-          color: #abacb2;
-        }
-
-        &__register-info-button {
-          padding: 7px 8px 7px 9px;
-          gap: 8px;
-          width: 80px;
-          height: 28px;
-          border-radius: 32px;
-          margin-left: 6px;
-          background-color: #efffe5;
-          font-weight: 600;
-          font-size: 14px;
-          letter-spacing: -0.02em;
-        }
-
-        &__withdraw_box {
-          width: 472px;
-          float: left;
-        }
-      }
-    }
-  }
-}
-
-@include mobile {
-  .info-container {
-    &__inner {
-      padding: 0 $mobile_padding;
-
-      .sub-header {
-        width: 100%;
-        padding-top: 85px;
-
-        &__content {
-          width: 100%;
-
-          // 내 정보 h1 최상단
-          .notice-title {
-            width: 80%;
-            margin-bottom: 18px;
-            font-size: 18px;
-            font-weight: 700;
-            line-height: 5.5px;
-          }
-
-          // 내 정보 하단 선
-          .underline {
-            width: 100%;
-            height: 1px;
-            background: #d3d4d8;
-            gap: 8px;
-            transform: matrix(1, 0, 0, -1, 0, 0);
-            float: left;
-          }
-
-          .notice-alert {
-            border-radius: 4px;
-            // 추후 업데이트 예정 알림 박스의 감싼 요소 배경
-            width: 255px;
-            height: 30px;
-            float: left;
-            margin-left: 0;
-            padding-right: 8px;
-            padding-top: 6px;
-            padding-bottom: 6px;
-
-            &__box {
-              // box - 위치
-              margin-right: 6px;
-              padding: 3px 4px;
-              gap: 8px;
-              // box - 형태
-              border-radius: 4px;
-              width: 44px;
-              height: 18px;
-              // box 안의 글자
-              font-size: 12px;
-              font-weight: 600;
-            }
-
-            &__txt {
-              font-size: 12px;
-            }
-          }
-        }
-      }
-
-      .info-form {
-        padding-top: 20px;
-        padding-bottom: 48px;
-        //width: 360px;
-        width: 100%;
-        margin-bottom: 24px;
-
-        // 이미지 아래 사람 이름
-        &__profile_txt_box {
-          width: 100%;
-          text-align: center;
-          font-weight: 600;
-          padding-top: 6px;
-          font-size: 16px;
-          color: #313234;
-        }
-
-        &__auth_box {
-          margin-top: 18px;
-          margin-bottom: 16px;
-
-          .email_box {
-            width: 100%;
-            height: 56px;
-
-            padding: 18px 16px;
-            background: #f8f8f8;
-            border-radius: 8px;
-
-            .txt {
-              font-size: 16px;
-            }
-
-            .value {
-              font-size: 14px;
-              gap: 10px;
-            }
-          }
-        }
-
-        &__register_date {
-          width: 253px;
-          font-size: 14px;
-        }
-
-        &__register-info-button {
-          padding: 7px 8px 7px 9px;
-          gap: 8px;
-          width: 80px;
-          height: 28px;
-          border-radius: 32px;
-          margin-left: 6px;
-          font-weight: 600;
-          font-size: 14px;
-          letter-spacing: -0.02em;
-        }
-
-        &__withdraw_box {
-          width: 100%;
-          float: left;
-        }
-      }
-    }
-  }
-
-  .null-container {
-    height: 100vh;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    font-weight: 400;
+  @include mobile {
     font-size: 1rem;
     line-height: 1.2rem;
-    color: #a8a8a8;
+  }
+}
+
+.container {
+  width: 100%;
+  background-color: var(--vapor-gray-000);
+  padding-bottom: 80px;
+}
+
+.inner {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 $laptop-padding;
+  word-break: keep-all;
+
+  @media (max-width: 1200px) {
+    max-width: 100%;
+    padding: 0 $tablet-padding;
+  }
+
+  @include tablet {
+    padding: 0 $mobile-padding * 2;
+  }
+
+  @include mobile {
+    padding: 0 $mobile-padding;
+  }
+}
+
+// 페이지 헤더
+.sub-header {
+  padding: 136px 0 24px;
+
+  h1 {
+    margin: 0;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--vapor-gray-200);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 120%;
+    letter-spacing: -0.012rem;
+    color: var(--vapor-gray-900);
+  }
+
+  @include tablet {
+    padding-top: 136px;
+
+    h1 {
+      font-size: 22px;
+    }
+  }
+
+  @include mobile {
+    padding-top: 120px;
+
+    h1 {
+      font-size: 20px;
+    }
+  }
+}
+
+// 프로필 카드
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 32px;
+  padding: 32px;
+  background-color: var(--vapor-gray-050);
+  border-radius: 24px;
+
+  &__avatar {
+    flex-shrink: 0;
+    width: 96px;
+    height: 96px;
+    border-radius: 24px;
+    overflow: hidden;
+    background-color: var(--vapor-gray-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &--placeholder {
+      background-color: var(--vapor-gray-100);
+      color: var(--vapor-gray-400);
+
+      svg {
+        width: 56%;
+        height: 56%;
+      }
+    }
+  }
+
+  &__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  &__name {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.012rem;
+    color: var(--vapor-gray-900);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__since {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  &__since-date {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--vapor-gray-600);
+  }
+
+  &__since-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    background-color: var(--vapor-gray-000);
+    border: 1px solid var(--vapor-gray-200);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ktb-tech-blue);
+  }
+
+  @include mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 24px;
+
+    &__avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+    }
+
+    &__name {
+      font-size: 20px;
+    }
+  }
+}
+
+// 계정 정보 카드
+.info-card {
+  margin-top: 16px;
+  padding: 28px 32px;
+  background-color: var(--vapor-gray-050);
+  border-radius: 24px;
+
+  &__title {
+    margin: 0 0 16px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: -0.012rem;
+    color: var(--vapor-gray-900);
+  }
+
+  @include mobile {
+    padding: 20px;
+  }
+}
+
+.info-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  background-color: var(--vapor-gray-000);
+  border-radius: 12px;
+  min-height: 56px;
+
+  &__label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--vapor-gray-600);
+    flex-shrink: 0;
+  }
+
+  &__value {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--vapor-gray-900);
+  }
+
+  &__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 2px;
+    border-radius: 6px;
+    background-color: var(--vapor-gray-000);
+    border: 1px solid var(--vapor-gray-200);
+    flex-shrink: 0;
+  }
+
+  &__text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+// 위험 영역 (탈퇴)
+.danger-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 24px 32px;
+  background-color: var(--vapor-gray-000);
+  border: 1px solid var(--vapor-gray-200);
+  border-radius: 24px;
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.5;
+    letter-spacing: -0.012rem;
+    color: var(--vapor-gray-900);
+  }
+
+  &__desc {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--vapor-gray-600);
+    line-height: 1.4;
+  }
+
+  @include mobile {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 20px;
+
+    button {
+      width: 100%;
+    }
   }
 }

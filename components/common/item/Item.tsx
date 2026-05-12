@@ -1,17 +1,14 @@
 import style from 'components/common/item/Item.module.scss';
-import ShareModal from 'components/common/modal/ShareModal';
 import DdayTag from 'components/common/tag/DdayTag';
 import FilterTag from 'components/common/tag/FilterTag';
 import {
   BookmarkIcon,
   BookmarkIconMobile,
-  EndBulletIcon,
-  NewBulletIcon,
   ShareIcon,
   ShareIconMobile,
 } from 'components/icons';
 import { EventContext } from 'context/event';
-import { WindowContext } from 'context/window';
+import { useToast } from 'context/toast';
 import { DateUtil } from 'lib/utils/dateUtil';
 import * as ga from 'lib/utils/gTag';
 import { Event } from 'model/event';
@@ -20,7 +17,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import Image from 'next/image';
 import Link from 'next/link';
-import SaveModal from "../modal/SaveModal";
 
 const cn = classNames.bind(style);
 
@@ -28,6 +24,11 @@ const DateType = {
   dateTime: 'dateTime',
   date: 'date',
   time: 'time',
+};
+
+const shortenYear = (s: string | undefined): string => {
+  if (!s) return '';
+  return s.replace(/\b(?:19|20)(\d{2})/g, '$1');
 };
 
 type Props = {
@@ -50,24 +51,27 @@ const Item = ({
   childLast,
   parentLast,
 }: Props) => {
-  const [isShareModalOpen, setIsShareModalOpen] = useState<boolean>(false);
   const [isLast, setIsLast] = useState<boolean>(false);
   const [isDone, setIsDone] = useState<boolean>(isEventDone());
   const [isNew, setIsNew] = useState<boolean>(isEventNew());
-  const { windowX } = useContext(WindowContext);
   const { search } = useContext(EventContext);
+  const { pushToast } = useToast();
 
-  const handleShare = () => {
-    setIsShareModalOpen(true);
-    navigator.clipboard.writeText(data.event_link);
+  const handleShare = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    try {
+      await navigator.clipboard.writeText(data.event_link);
+      pushToast('링크가 복사되었어요');
+    } catch (err) {
+      console.error(err);
+      pushToast('링크 복사에 실패했어요');
+    }
     ga.event({
       action: 'web_event_공유버튼클릭',
       event_category: 'web_event',
       event_label: '공유',
     });
-    setTimeout(() => {
-      setIsShareModalOpen(false);
-    }, 1300);
   };
 
   const getEventDate = () => {
@@ -120,7 +124,6 @@ const Item = ({
   }, [search]);
   return (
     <div className={cn('item__container', `${isLast && 'item__last'}`)}>
-      {isShareModalOpen && <ShareModal />}
       <div className={cn('item')}>
         <Link href={`/event/detail/${String(data.id)}`}>
           <a
@@ -156,22 +159,14 @@ const Item = ({
                   layout="fill"
                 />
                 {isDone && <div className={cn('item__content__img__done')} />}
-                {isDone ? (
-                  <div className={cn('item__content__flag')}>
-                    <EndBulletIcon
-                      color={'rgba(203, 203, 206, 1)'}
-                      backgroundColor={'rgba(49, 50, 52, 1)'}
+                {!isDone && (
+                  <div className={cn('item__content__img__badge')}>
+                    <DdayTag
+                      startDateTime={data.start_date_time}
+                      endDateTime={data.end_date_time}
                     />
                   </div>
-                ) : null}
-                {isNew ? (
-                  <div className={cn('item__content__flag')}>
-                    <NewBulletIcon
-                      color={'rgba(203, 203, 206, 1)'}
-                      backgroundColor={'rgba(44, 76, 239, 1)'}
-                    />
-                  </div>
-                ) : null}
+                )}
               </div>
               <div className={cn('item__content__body')}>
                 <div>
@@ -232,16 +227,8 @@ const Item = ({
                           : 'item__content__title'
                       )}
                     >
-                      {data.title.length >= 30 && windowX <= 750
-                        ? `${data.title.slice(0, 45)}...`
-                        : data.title}
+                      {data.title}
                     </div>
-                    {isDone ? null : (
-                      <DdayTag
-                        startDateTime={data.start_date_time}
-                        endDateTime={data.end_date_time}
-                      />
-                    )}
                   </div>
                 </div>
                 <div className={cn('item__content__desc')}>
@@ -253,7 +240,7 @@ const Item = ({
                           isDone ? 'date__type__done' : 'date__type'
                         )}
                       >
-                        {data.event_time_type === 'DATE' ? '일시 ' : '접수 '}
+                        {data.event_time_type === 'DATE' ? '일시' : '접수'}
                       </span>
                       {/* 행사 시작 시간 */}
                       <span
@@ -261,7 +248,7 @@ const Item = ({
                           isDone ? `date__date__done` : 'date__date'
                         )}
                       >
-                        {getEventDate()}
+                        {shortenYear(getEventDate())}
                       </span>
                       {/* 행사 종료 시간 */}
                       <span
@@ -271,7 +258,7 @@ const Item = ({
                             : 'date__date__mobile'
                         )}
                       >
-                        {getEventDate()}
+                        {shortenYear(getEventDate())}
                       </span>
                     </div>
                   </span>

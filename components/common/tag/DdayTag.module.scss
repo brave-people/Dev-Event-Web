@@ -1,24 +1,46 @@
 @import '~styles/_mixin.scss';
 
+@keyframes pulse-blue {
+  0%   { box-shadow: 0 0 0 0 rgba(0, 67, 255, 0.55); }
+  70%  { box-shadow: 0 0 0 8px rgba(0, 67, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 67, 255, 0); }
+}
+@keyframes pulse-danger {
+  0%   { box-shadow: 0 0 0 0 rgba(217, 28, 41, 0.55); }
+  70%  { box-shadow: 0 0 0 8px rgba(217, 28, 41, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(217, 28, 41, 0); }
+}
+
 .tag {
-  border: none;
-  font-size: 14px;
-  color: var(--gray-2);
-  background-color: var(--background-2);
-  border-radius: 18px;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
-  padding: 4px 8px;
+  border: none;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: #ffffff;
+  border-radius: 9999px;
+  padding: 4px 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
 
-  &--bold {
-    font-weight: 500;
-    color: var(--primary);
+  &--ongoing {
+    background-color: var(--ktb-tech-blue);
+    animation: pulse-blue 2s infinite;
   }
 
-  @media (max-width: 1199px) {
-    min-width: 38px;
-    font-size: 12px;
-    margin-left: 8px;
+  &--approach {
+    background-color: var(--vapor-text-danger);
+    animation: pulse-danger 2s infinite;
+  }
+
+  &--scheduled {
+    background-color: var(--ktb-tech-navy);
+  }
+
+  @media (max-width: 1200px) {
+    font-size: 10px;
+    padding: 3px 8px;
   }
 }

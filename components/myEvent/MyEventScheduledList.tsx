@@ -10,8 +10,6 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { ThreeDots } from 'react-loader-spinner';
 import classNames from 'classnames/bind';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
 import MyEventEmpty from './MyEventEmpty';
 
 const cn = classNames.bind(style);
@@ -89,52 +87,9 @@ const MyEventScheduledList = () => {
     });
   };
 
-  const router = useRouter();
-  const [tabMenu, setTabMenu] = useState({
-    ongoing: false,
-    done: false,
-  });
-
-  useEffect(() => {
-    setTabMenu({
-      ongoing: router.query.tab === 'ongoing' || router.query.tab == null,
-      done: router.query.tab === 'done',
-    });
-  }, [router.query.tab]);
-
   return (
     <>
       <div className={cn('section__list')}>
-        <div className={cn('wrapper')}>
-          <div className={cn('wrapper__status')}>
-            <div className={cn('wrapper__status__count')}>
-              {futureEvent.length}개
-            </div>
-            <div
-              className={cn('wrapper__status__type')}
-              onClick={() => {
-                setTabMenu({ ongoing: true, done: false });
-                router.push('/myevent?tab=done');
-                ga.event({
-                  action: 'web_event_진행중인행사탭클릭',
-                  event_category: 'web_myevent',
-                  event_label: '내이벤트',
-                });
-              }}
-            >
-              <Image
-                className={cn('check_box_done')}
-                src={'/icon/check_box.svg'}
-                alt="done event"
-                priority={true}
-                width={18}
-                height={18}
-              />
-              <div className={cn('wrapper__status__txt')}>종료 행사 보기</div>
-            </div>
-          </div>
-        </div>
-
         {/* 로딩중 */}
         {!myEvent && !isError && futureEvent && (
           <div className={cn('null-container')}>

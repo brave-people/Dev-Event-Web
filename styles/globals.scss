@@ -2,6 +2,10 @@
 @import '~styles/_mixin.scss';
 @import '~styles/_variables.scss';
 
+html {
+  scrollbar-gutter: stable;
+}
+
 html,
 body {
   padding: 0;
@@ -10,7 +14,6 @@ body {
     Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
     sans-serif;
   font-size: 14px;
-  width: 100vw;
   min-width: 350px;
   overflow-x: hidden;
   background-color: var(--background-1);

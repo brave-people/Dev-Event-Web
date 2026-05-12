@@ -10,8 +10,10 @@ type Props = {
   endDateTime: string;
 };
 
+type DdayType = 'approach' | 'scheduled' | 'ongoing' | 'null';
+
 function DdayTag({ startDateTime, endDateTime }: Props) {
-  const calculateEventDday = () => {
+  const calculateEventDday = (): { type: DdayType; diff: number } => {
     const todayDate = DateUtil.setDateTimeToDate();
     const startDate = DateUtil.setDateTimeToDate(startDateTime);
     const endDate = DateUtil.setDateTimeToDate(endDateTime);
@@ -33,23 +35,17 @@ function DdayTag({ startDateTime, endDateTime }: Props) {
     }
   };
 
-  const getEventDdayTag = () => {
-    const type = calculateEventDday();
+  const { type, diff } = calculateEventDday();
 
-    switch (type.type) {
-      case 'approach':
-        return <div>D-{type.diff}</div>;
-      case 'scheduled':
-        return <div>D-{type.diff}</div>;
-      case 'ongoing':
-        return <div className={cn('tag--bold')}>Today</div>;
-      default:
-        return null;
-    }
-  };
+  if (type === 'null') return null;
 
-  const tag = getEventDdayTag();
-  return tag ? <div className={cn('tag')}>{tag}</div> : null;
+  const label = type === 'ongoing' ? 'Today' : `D-${diff}`;
+
+  return (
+    <div className={cn('tag', `tag--${type}`)}>
+      {label}
+    </div>
+  );
 }
 
 export default DdayTag;

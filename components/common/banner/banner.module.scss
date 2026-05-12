@@ -3,7 +3,7 @@
 
 .banner {
   position: relative;
-  height: 30rem;
+  height: 28rem;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -16,10 +16,10 @@
   overflow: hidden;
 
   &__title {
-    font-size: 3.8rem;
-    font-weight: 700;
-    line-height: 5.1rem;
-    letter-spacing: 0em;
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.012rem;
     text-align: center;
     color: #ffffff;
     padding: 0px;
@@ -28,17 +28,17 @@
   }
 
   &__desc {
-    font-weight: 400;
-    font-size: 1.23rem;
-    line-height: 1.813rem;
+    font-weight: 500;
+    font-size: 1.125rem;
+    line-height: 1.5;
     text-align: center;
-    color: #ffffff;
-    padding-top: 1.938rem;
+    color: rgba(255, 255, 255, 0.85);
+    padding-top: 1.5rem;
     padding-bottom: 0px;
     margin: 0px;
     z-index: 1;
     &--bold {
-      font-weight: bold;
+      font-weight: 700;
     }
   }
 
@@ -57,16 +57,19 @@
   @media (max-width: 1075px) {
     .banner {
       width: 100%;
-      height: 28rem;
+      height: 24rem;
+      &__title {
+        font-size: 2.75rem;
+      }
     }
   }
   @media (max-width: 800px) {
     .banner {
       width: 100%;
-      height: 26rem;
+      height: 22rem;
       &__title {
-        font-size: 3.4rem;
-        line-height: 4.5rem;
+        font-size: 2.5rem;
+        line-height: 1.2;
       }
       &__desc {
         font-size: 1rem;
@@ -78,10 +81,10 @@
 @include tablet {
   .banner {
     width: 100%;
-    height: 24rem;
+    height: 22rem;
     &__title {
-      font-size: 3rem;
-      line-height: 4rem;
+      font-size: 2.125rem;
+      line-height: 1.2;
     }
     &__desc {
       font-size: 1rem;
@@ -90,10 +93,10 @@
   @media (max-width: 500px) {
     .banner {
       width: 100%;
-      height: 22rem;
+      height: 20rem;
       &__title {
-        font-size: 2.3rem;
-        line-height: 3rem;
+        font-size: 1.875rem;
+        line-height: 1.2;
       }
       &__desc {
         font-size: 1rem;
@@ -103,8 +106,8 @@
   @media (max-width: 400px) {
     .banner {
       &__title {
-        font-size: 2.1rem;
-        line-height: 3rem;
+        font-size: 1.75rem;
+        line-height: 1.2;
       }
       &__desc {
         font-size: 0.9rem;
@@ -118,8 +121,8 @@
     width: 100%;
     height: 18rem;
     &__title {
-      font-size: 2rem;
-      line-height: 2.5rem;
+      font-size: 1.75rem;
+      line-height: 1.2;
     }
     &__desc {
       font-size: 0.9rem;

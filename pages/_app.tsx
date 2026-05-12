@@ -8,6 +8,8 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { EventProvider } from 'context/event';
 import { WindowProvider } from 'context/window';
+import { ToastProvider } from 'context/toast';
+import Modal from 'react-modal';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -21,6 +23,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const router = useRouter();
 
   useEffect(() => {
+    Modal.setAppElement('#__next');
     document.documentElement.setAttribute('data-theme', 'light');
     const handleRouteChange = (url: URL) => {
       gtag.pageview(url);
@@ -41,7 +44,9 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
       <AuthProvider>
         <WindowProvider>
           <EventProvider>
-            {getLayout(<Component {...pageProps} />)}
+            <ToastProvider>
+              {getLayout(<Component {...pageProps} />)}
+            </ToastProvider>
           </EventProvider>
         </WindowProvider>
       </AuthProvider>

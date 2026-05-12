@@ -26,7 +26,8 @@
       font-weight: 700;
       font-size: 40px;
       line-height: 3rem;
-      color: var(--gray-1);
+      letter-spacing: -0.012rem;
+      color: var(--vapor-gray-900);
     }
   }
   .filter {
@@ -137,7 +138,7 @@
             border-radius: 5px;
             &:hover {
               cursor: pointer;
-              background-color: var(--gray-5);
+              background-color: var(--vapor-gray-100);
             }
           }
           &__date {
@@ -187,7 +188,7 @@
           border-radius: 5px;
           &:hover {
             cursor: pointer;
-            background-color: var(--gray-5);
+            background-color: var(--vapor-gray-100);
           }
         }
         &__date {
@@ -285,7 +286,7 @@
 
           &:hover {
             cursor: pointer;
-            background-color: var(--gray-5);
+            background-color: var(--vapor-gray-100);
           }
         }
         &__date {

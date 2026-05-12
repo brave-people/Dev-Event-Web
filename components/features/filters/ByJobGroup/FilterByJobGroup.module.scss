@@ -5,6 +5,17 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
   font-family: 'Pretendard Variable';
-  margin: 2.688rem 0;
+  margin: 2.25rem 0 1.5rem;
+
+  @include tablet {
+    gap: 6px;
+    margin: 1.5rem 0 1rem;
+  }
+  @include mobile {
+    gap: 6px;
+    margin: 1.25rem 0 0.75rem;
+  }
 }

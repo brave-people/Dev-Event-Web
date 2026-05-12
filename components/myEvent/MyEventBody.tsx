@@ -1,5 +1,6 @@
 import MyEventDoneList from 'components/myEvent/MyEventDoneList';
 import MyEventScheduledList from 'components/myEvent/MyEventScheduledList';
+import MyEventTabs from 'components/myEvent/MyEventTabs';
 import React from 'react';
 import { useRouter } from 'next/router';
 import Letter from '../features/letter/Letter';
@@ -12,6 +13,7 @@ const MyEventBody = () => {
 
   return (
     <>
+      <MyEventTabs />
       {ongoing && <MyEventScheduledList />}
       {done && <MyEventDoneList />}
       <Letter />
