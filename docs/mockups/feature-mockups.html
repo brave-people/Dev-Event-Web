@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dev Event Web · 8 Feature Mockups</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAFAFB;
+  --surface:#FFFFFF;
+  --surface-alt:#F4F4F7;
+  --ink:#0E0E14;
+  --ink-2:#2A2A33;
+  --muted:#6C6C76;
+  --muted-2:#9C9CA6;
+  --border:#E1E1E8;
+  --border-strong:#C8C8D0;
+  --accent:#0043FF;
+  --accent-soft:#EAF0FF;
+  --accent-deep:#001E80;
+  --success:#0FA968;
+  --warn:#FF6A00;
+  --danger:#E32C2C;
+  --r-sm:8px; --r:12px; --r-lg:24px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  line-height:1.5;
+  font-feature-settings:"ss01","ss02","ss03";
+}
+.serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;}
+.mono{font-family:'JetBrains Mono',monospace;}
+
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+kbd{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  padding:2px 6px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-bottom-width:2px;
+  border-radius:6px;
+  color:var(--ink-2);
+  min-width:20px;
+  display:inline-flex;
+  justify-content:center;
+}
+
+/* ============ TOP BAR ============ */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(250,250,251,0.85);
+  backdrop-filter:blur(20px) saturate(140%);
+  -webkit-backdrop-filter:blur(20px) saturate(140%);
+  border-bottom:1px solid var(--border);
+}
+.topbar__inner{
+  max-width:1280px;margin:0 auto;
+  padding:16px 48px;
+  display:flex;align-items:center;gap:32px;
+  font-size:13px;
+}
+.topbar__logo{
+  font-weight:800;
+  letter-spacing:-0.02em;
+  font-size:15px;
+}
+.topbar__logo b{color:var(--accent);}
+.topbar__nav{display:flex;gap:24px;flex:1;}
+.topbar__nav a{
+  color:var(--muted);
+  text-decoration:none;
+  font-weight:500;
+  transition:color .2s;
+  font-size:13px;
+}
+.topbar__nav a:hover{color:var(--accent);}
+.topbar__date{
+  color:var(--muted);
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  letter-spacing:0.08em;
+}
+
+/* ============ HERO ============ */
+.hero{
+  max-width:1280px;
+  margin:0 auto;
+  padding:96px 48px 128px;
+  position:relative;
+}
+.hero__eyebrow{
+  display:inline-flex;align-items:center;gap:14px;
+  font-size:12px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--accent);font-weight:700;margin-bottom:40px;
+}
+.hero__eyebrow::before{content:"";width:40px;height:1px;background:var(--accent);}
+
+.hero h1{
+  font-size:clamp(56px,9vw,140px);
+  line-height:0.94;
+  letter-spacing:-0.045em;
+  font-weight:800;
+  margin-bottom:40px;
+}
+.hero h1 em{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;
+  font-weight:400;
+  color:var(--accent);
+}
+.hero__lede{
+  max-width:680px;
+  font-size:21px;
+  color:var(--ink-2);
+  line-height:1.55;
+  margin-bottom:80px;
+  font-weight:400;
+}
+.hero__lede mark{
+  background:linear-gradient(180deg,transparent 60%,var(--accent-soft) 60%);
+  padding:0 4px;color:var(--ink);
+  font-weight:600;
+}
+
+.hero__meta{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:48px;
+  border-top:1px solid var(--ink);
+  padding-top:32px;
+}
+.hero__meta dt{
+  font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:10px;font-weight:600;
+}
+.hero__meta dd{
+  font-size:17px;font-weight:600;color:var(--ink);
+  letter-spacing:-0.01em;
+}
+.hero__meta dd b{color:var(--accent);font-family:'JetBrains Mono',monospace;font-weight:500;font-size:14px;}
+
+/* ============ TOC ============ */
+.toc{
+  max-width:1280px;margin:0 auto;
+  padding:0 48px 64px;
+}
+.toc__inner{
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  padding:32px 40px;
+  background:var(--surface);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:var(--border);
+  overflow:hidden;
+}
+.toc__item{
+  background:var(--surface);
+  padding:24px;
+  display:block;
+  text-decoration:none;
+  color:inherit;
+  transition:background .2s;
+}
+.toc__item:hover{background:var(--accent-soft);}
+.toc__item:hover .toc__num{color:var(--accent);}
+.toc__num{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;
+  font-size:32px;
+  color:var(--muted-2);
+  transition:color .2s;
+  line-height:1;
+  margin-bottom:12px;
+}
+.toc__title{
+  font-size:14px;font-weight:700;
+  letter-spacing:-0.01em;
+  margin-bottom:4px;
+}
+.toc__hint{font-size:11px;color:var(--muted);letter-spacing:0.04em;}
+
+/* ============ FEATURE COMMON ============ */
+.feature{
+  max-width:1280px;
+  margin:0 auto;
+  padding:120px 48px;
+  border-top:1px solid var(--ink);
+  position:relative;
+}
+.feature__layout{
+  display:grid;
+  gap:80px;
+  align-items:start;
+}
+.feature__layout.split{grid-template-columns:5fr 7fr;}
+.feature__layout.split-rev{grid-template-columns:7fr 5fr;}
+.feature__layout.split-rev .feature__head{order:2;}
+.feature__layout.stack{grid-template-columns:1fr;}
+.feature__layout.stack .feature__head{max-width:760px;margin-bottom:24px;}
+
+.feature__num{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;
+  font-size:120px;
+  line-height:1;
+  color:var(--accent);
+  margin-bottom:24px;
+  letter-spacing:-0.02em;
+}
+.feature__label{
+  font-size:11px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--muted);font-weight:700;margin-bottom:20px;
+  display:flex;align-items:center;gap:10px;
+}
+.feature__label::before{content:"";width:24px;height:1px;background:var(--muted);}
+.feature__title{
+  font-size:clamp(36px,4vw,56px);
+  line-height:1.05;
+  letter-spacing:-0.035em;
+  font-weight:700;
+  margin-bottom:28px;
+}
+.feature__title em{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;
+  font-weight:400;
+  color:var(--accent);
+}
+.feature__lede{
+  font-size:17px;
+  color:var(--ink-2);
+  line-height:1.65;
+  margin-bottom:32px;
+  max-width:540px;
+}
+.feature__bullets{list-style:none;margin-bottom:36px;counter-reset:li;}
+.feature__bullets li{
+  padding:14px 0;
+  border-top:1px solid var(--border);
+  display:grid;
+  grid-template-columns:32px 1fr;
+  gap:16px;
+  align-items:start;
+  font-size:14.5px;
+  color:var(--ink-2);
+  line-height:1.55;
+}
+.feature__bullets li::before{
+  content:counter(li,decimal-leading-zero);
+  counter-increment:li;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:var(--accent);margin-top:3px;font-weight:500;
+}
+.feature__bullets li:last-child{border-bottom:1px solid var(--border);}
+
+.feature__chips{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 12px;border-radius:999px;
+  background:transparent;border:1px solid var(--border-strong);
+  font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;color:var(--ink-2);letter-spacing:0.02em;
+}
+.chip--ink{background:var(--ink);color:#fff;border-color:var(--ink);}
+.chip--accent{background:var(--accent-soft);color:var(--accent-deep);border-color:transparent;}
+
+/* ============ MOCKUP CANVAS ============ */
+.mockup{
+  background:linear-gradient(180deg,var(--surface-alt) 0%,#ECECF1 100%);
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  padding:48px;
+  position:relative;
+  overflow:hidden;
+  min-height:480px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.mockup::before{
+  content:"";
+  position:absolute;inset:0;
+  background-image:radial-gradient(circle at 1px 1px,rgba(14,14,20,0.06) 1px,transparent 0);
+  background-size:24px 24px;
+  pointer-events:none;
+  mask-image:radial-gradient(ellipse at center,#000 30%,transparent 75%);
+}
+.mockup__cap{
+  position:absolute;
+  top:20px;left:24px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--muted);letter-spacing:0.1em;
+  text-transform:uppercase;
+  display:flex;align-items:center;gap:8px;
+  z-index:2;
+}
+.mockup__cap::before{
+  content:"";width:6px;height:6px;background:var(--accent);border-radius:50%;
+  box-shadow:0 0 0 3px var(--accent-soft);
+}
+.mockup__content{position:relative;z-index:1;width:100%;}
+
+/* ============================================================
+   MOCKUP 1 — BOOKMARK
+   ============================================================ */
+.mk1{display:flex;flex-direction:column;gap:24px;align-items:center;}
+.mk1__tabs{
+  display:inline-flex;gap:0;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:999px;padding:4px;
+  box-shadow:0 1px 2px rgba(14,14,20,0.04);
+}
+.mk1__tab{
+  padding:8px 18px;border-radius:999px;
+  font-size:13px;font-weight:600;color:var(--muted);
+  display:inline-flex;align-items:center;gap:8px;
+  transition:all .2s;
+}
+.mk1__tab.is-active{background:var(--ink);color:#fff;}
+.mk1__tab span{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:500;
+  padding:2px 6px;background:rgba(255,255,255,0.18);border-radius:999px;
+}
+.mk1__tab:not(.is-active) span{background:var(--surface-alt);color:var(--muted);}
+
+.mk1__grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;
+  width:100%;max-width:680px;
+}
+.evcard{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  overflow:hidden;
+  position:relative;
+  transition:transform .2s,box-shadow .2s;
+}
+.evcard__thumb{height:100px;position:relative;}
+.evcard__thumb.g1{background:linear-gradient(135deg,#0043FF 0%,#7B9DFF 100%);}
+.evcard__thumb.g2{background:linear-gradient(135deg,#FF6A00 0%,#FFB155 100%);}
+.evcard__thumb.g3{background:linear-gradient(135deg,#0FA968 0%,#7DDBA8 100%);}
+.evcard__thumb.g4{background:linear-gradient(135deg,#9C27B0 0%,#D580E3 100%);}
+.evcard__thumb::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 20%,rgba(255,255,255,0.3),transparent 60%);
+}
+.evcard__bookmark{
+  position:absolute;top:8px;right:8px;
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);
+  transition:all .2s;
+  z-index:3;
+}
+.evcard__bookmark.is-on{background:var(--accent);color:#fff;}
+.evcard__bookmark svg{width:14px;height:14px;}
+.evcard__body{padding:14px;}
+.evcard__tag{
+  display:inline-block;
+  font-size:10px;font-weight:600;
+  color:var(--accent);
+  background:var(--accent-soft);
+  padding:3px 8px;border-radius:6px;
+  margin-bottom:8px;letter-spacing:0.02em;
+}
+.evcard__title{
+  font-size:14px;font-weight:700;
+  letter-spacing:-0.01em;
+  line-height:1.3;margin-bottom:6px;
+  color:var(--ink);
+}
+.evcard__meta{font-size:11px;color:var(--muted);}
+
+.mk1__toast{
+  display:inline-flex;align-items:center;gap:12px;
+  padding:12px 18px;
+  background:var(--ink);color:#fff;
+  border-radius:999px;
+  font-size:13px;font-weight:500;
+  box-shadow:0 8px 24px rgba(14,14,20,0.18);
+}
+.mk1__toast svg{color:var(--success);}
+.mk1__toast b{color:var(--accent-soft);font-weight:600;cursor:pointer;}
+
+/* ============================================================
+   MOCKUP 2 — CALENDAR EXPORT
+   ============================================================ */
+.mk2{width:100%;max-width:540px;margin:0 auto;}
+.mk2__card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  padding:28px;
+  position:relative;
+}
+.mk2__tag{
+  display:inline-block;
+  font-size:10px;font-weight:600;letter-spacing:0.04em;
+  color:var(--accent);background:var(--accent-soft);
+  padding:4px 10px;border-radius:6px;
+  margin-bottom:14px;
+}
+.mk2__title{
+  font-size:22px;font-weight:800;letter-spacing:-0.02em;
+  margin-bottom:8px;line-height:1.25;
+}
+.mk2__meta{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.mk2__actions{display:flex;gap:8px;position:relative;}
+.btn{
+  padding:10px 16px;border-radius:var(--r);
+  font-size:13px;font-weight:600;
+  display:inline-flex;align-items:center;gap:6px;
+  transition:all .15s;letter-spacing:-0.005em;
+}
+.btn--primary{background:var(--accent);color:#fff;}
+.btn--ghost{background:var(--surface);color:var(--ink);border:1px solid var(--border-strong);}
+.btn--ghost:hover{border-color:var(--ink);}
+.btn svg{width:13px;height:13px;}
+
+.mk2__dropdown{
+  position:absolute;
+  top:calc(100% + 8px);right:0;
+  width:280px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  box-shadow:0 12px 36px rgba(14,14,20,0.14),0 2px 6px rgba(14,14,20,0.04);
+  overflow:hidden;
+  z-index:5;
+  animation:dropdown-in .25s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes dropdown-in{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+.mk2__dropdown-head{
+  font-size:10px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;
+  padding:14px 16px 8px;
+}
+.mk2__dropdown-item{
+  width:100%;
+  display:flex;align-items:center;gap:12px;
+  padding:10px 16px;
+  font-size:13.5px;font-weight:500;
+  transition:background .15s;
+  text-align:left;
+}
+.mk2__dropdown-item:hover{background:var(--surface-alt);}
+.mk2__icon{
+  width:28px;height:28px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;color:#fff;
+  letter-spacing:-0.02em;
+  font-family:-apple-system,system-ui;
+}
+.mk2__icon--apple{background:#0E0E14;}
+.mk2__icon--google{background:#4285F4;}
+.mk2__icon--naver{background:#03C75A;}
+.mk2__icon--outlook{background:#0078D4;}
+.mk2__ext{
+  margin-left:auto;font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--muted);
+}
+.mk2__divider{height:1px;background:var(--border);margin:6px 0;}
+
+/* ============================================================
+   MOCKUP 3 — NOTIFICATION
+   ============================================================ */
+.mk3{width:100%;max-width:540px;display:flex;flex-direction:column;gap:20px;}
+.mk3__pop{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:16px;
+  display:flex;gap:14px;
+  box-shadow:0 14px 40px rgba(14,14,20,0.16),0 2px 8px rgba(14,14,20,0.06);
+  position:relative;
+}
+.mk3__pop::after{
+  content:"macOS notification";
+  position:absolute;top:-22px;right:0;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;color:var(--muted);letter-spacing:0.08em;
+}
+.mk3__icon{
+  width:40px;height:40px;flex-shrink:0;
+  border-radius:10px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-deep));
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;
+}
+.mk3__body{flex:1;min-width:0;}
+.mk3__app{
+  font-size:10px;font-weight:600;color:var(--muted);
+  letter-spacing:0.02em;margin-bottom:4px;
+  display:flex;justify-content:space-between;
+}
+.mk3__app time{font-family:'JetBrains Mono',monospace;}
+.mk3__head{
+  font-size:14px;font-weight:700;letter-spacing:-0.01em;
+  line-height:1.3;margin-bottom:4px;
+}
+.mk3__text{font-size:12.5px;color:var(--muted);line-height:1.45;margin-bottom:10px;}
+.mk3__actions{display:flex;gap:6px;}
+.mk3__btn{
+  padding:6px 12px;border-radius:6px;
+  font-size:11.5px;font-weight:600;
+  background:var(--surface-alt);color:var(--ink-2);
+}
+.mk3__btn--primary{background:var(--ink);color:#fff;}
+
+.mk3__settings{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);
+  overflow:hidden;
+}
+.mk3__set-head{
+  padding:12px 16px;
+  font-size:10px;font-weight:700;color:var(--muted);
+  letter-spacing:0.12em;text-transform:uppercase;
+  border-bottom:1px solid var(--border);
+}
+.mk3__set-row{
+  padding:16px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  border-bottom:1px solid var(--border);
+}
+.mk3__set-row:last-child{border-bottom:none;}
+.mk3__set-label{font-size:13px;font-weight:600;margin-bottom:2px;}
+.mk3__set-hint{font-size:11px;color:var(--muted);}
+.mk3__radio{
+  display:inline-flex;background:var(--surface-alt);
+  border-radius:8px;padding:3px;gap:2px;
+  border:1px solid var(--border);
+}
+.mk3__radio button{
+  padding:5px 10px;border-radius:6px;
+  font-size:11px;font-weight:600;color:var(--muted);
+}
+.mk3__radio button.is-active{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,0.06);}
+.mk3__status{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:600;color:var(--success);
+}
+.mk3__dot{width:6px;height:6px;border-radius:50%;background:var(--success);box-shadow:0 0 0 3px rgba(15,169,104,0.15);}
+
+/* ============================================================
+   MOCKUP 4 — DARK MODE
+   ============================================================ */
+.mk4{
+  display:flex;align-items:center;gap:32px;justify-content:center;width:100%;
+}
+.phone{
+  width:200px;flex-shrink:0;
+  background:#0E0E14;
+  border-radius:32px;
+  padding:8px;
+  box-shadow:0 24px 60px rgba(14,14,20,0.18),0 4px 12px rgba(14,14,20,0.08);
+  position:relative;
+}
+.phone__notch{
+  width:60px;height:18px;
+  background:#000;
+  border-radius:0 0 14px 14px;
+  margin:0 auto 4px;
+}
+.phone__screen{
+  background:var(--surface);
+  border-radius:24px;
+  padding:16px;
+  min-height:340px;
+  overflow:hidden;
+}
+.phone__nav{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+  font-size:13px;font-weight:800;letter-spacing:-0.02em;
+}
+.phone__nav span{
+  font-size:10px;color:var(--muted);font-weight:500;
+}
+.mini-card{
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px;margin-bottom:8px;
+}
+.mini-card__tag{
+  font-size:8.5px;font-weight:700;
+  color:var(--accent);background:var(--accent-soft);
+  display:inline-block;padding:2px 6px;border-radius:4px;
+  margin-bottom:6px;letter-spacing:0.04em;
+}
+.mini-card h5{font-size:11.5px;font-weight:700;letter-spacing:-0.01em;margin-bottom:3px;}
+.mini-card p{font-size:9.5px;color:var(--muted);}
+.mini-card__cta{
+  font-size:10px;font-weight:600;color:var(--accent);
+  margin-top:8px;display:flex;align-items:center;gap:4px;
+}
+
+.phone--dark .phone__screen{background:#14141C;}
+.phone--dark .phone__nav{color:#F2F2F7;}
+.phone--dark .mini-card{border-color:#26262E;background:#1A1A24;}
+.phone--dark .mini-card h5{color:#F2F2F7;}
+.phone--dark .mini-card p{color:#8C8C96;}
+.phone--dark .mini-card__tag{background:rgba(92,124,255,0.15);color:#7C9AFF;}
+.phone--dark .mini-card__cta{color:#7C9AFF;}
+
+.mk4__toggle{
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+}
+.toggle{
+  width:64px;height:32px;
+  background:linear-gradient(90deg,#FFC857 0%,var(--ink) 100%);
+  border-radius:999px;
+  position:relative;
+  padding:3px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:12px;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,0.2);
+}
+.toggle__sun,.toggle__moon{
+  width:26px;height:26px;
+  display:flex;align-items:center;justify-content:center;
+  z-index:1;color:rgba(255,255,255,0.7);
+}
+.toggle__knob{
+  position:absolute;top:3px;left:50%;
+  transform:translateX(-50%);
+  width:26px;height:26px;
+  background:var(--surface);
+  border-radius:50%;
+  box-shadow:0 2px 6px rgba(0,0,0,0.2);
+  z-index:2;
+}
+.mk4__code{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--muted);
+  background:var(--surface);
+  padding:6px 10px;border-radius:6px;
+  border:1px solid var(--border);
+  white-space:nowrap;
+}
+
+/* ============================================================
+   MOCKUP 5 — FILTER URL / PRESETS
+   ============================================================ */
+.mk5{width:100%;display:flex;flex-direction:column;gap:16px;max-width:680px;margin:0 auto;}
+.mk5__bar{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:14px;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+}
+.fchip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 10px 6px 12px;
+  background:var(--ink);color:#fff;
+  border-radius:999px;
+  font-size:12px;font-weight:600;letter-spacing:-0.01em;
+}
+.fchip svg{cursor:pointer;opacity:0.6;}
+.mk5__bar-spacer{flex:1;}
+
+.mk5__copied{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-left:3px solid var(--accent);
+  border-radius:var(--r);
+  padding:14px 18px;
+  display:flex;align-items:center;gap:12px;
+  font-size:13px;
+}
+.mk5__copied svg{color:var(--accent);flex-shrink:0;}
+.mk5__copied code{
+  margin-left:auto;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;
+  background:var(--surface-alt);
+  padding:4px 8px;border-radius:6px;
+  color:var(--ink-2);
+  border:1px solid var(--border);
+}
+
+.mk5__panel{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  overflow:hidden;
+}
+.mk5__panel-head{
+  padding:12px 16px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid var(--border);
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);font-weight:700;
+}
+.mk5__panel-head span:last-child{
+  font-family:'JetBrains Mono',monospace;color:var(--ink);
+}
+.mk5__preset{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
+  transition:background .15s;
+  cursor:pointer;
+}
+.mk5__preset:hover{background:var(--surface-alt);}
+.mk5__preset:last-child{border-bottom:none;}
+.mk5__star{
+  width:28px;height:28px;border-radius:8px;
+  background:var(--accent-soft);color:var(--accent);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+}
+.mk5__pname{font-size:13.5px;font-weight:700;margin-bottom:2px;letter-spacing:-0.01em;}
+.mk5__phint{font-size:11px;color:var(--muted);}
+.mk5__apply{
+  margin-left:auto;
+  padding:6px 12px;
+  background:var(--surface-alt);
+  border-radius:8px;
+  font-size:11.5px;font-weight:600;color:var(--ink-2);
+}
+.mk5__preset:hover .mk5__apply{background:var(--accent);color:#fff;}
+
+/* ============================================================
+   MOCKUP 6 — COUNTDOWN
+   ============================================================ */
+.mk6{
+  width:100%;max-width:360px;margin:0 auto;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  padding:28px;
+  position:relative;
+  overflow:hidden;
+}
+.mk6::before{
+  content:"";position:absolute;
+  top:-40px;right:-40px;
+  width:160px;height:160px;
+  background:radial-gradient(circle,var(--accent-soft) 0%,transparent 70%);
+  pointer-events:none;
+}
+.mk6__head{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:24px;position:relative;
+}
+.mk6__label{
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);font-weight:700;
+}
+.mk6__pill{
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;font-weight:500;
+  background:var(--ink);color:#fff;
+  padding:3px 9px;border-radius:999px;
+}
+.mk6__dday{
+  font-size:88px;
+  font-weight:800;
+  letter-spacing:-0.05em;
+  color:var(--accent);
+  line-height:0.95;
+  margin-bottom:16px;
+  font-family:'Pretendard Variable';
+}
+.mk6__dday small{
+  font-size:36px;font-weight:700;
+  font-family:'Instrument Serif',serif;
+  font-style:italic;
+  vertical-align:0.4em;
+  margin-right:2px;
+}
+.mk6__progress{
+  height:6px;
+  background:var(--surface-alt);
+  border-radius:999px;overflow:hidden;
+  margin-bottom:24px;position:relative;
+}
+.mk6__progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--accent) 0%,#7B9DFF 100%);
+  border-radius:999px;
+  position:relative;
+}
+.mk6__progress-fill::after{
+  content:"";position:absolute;right:-3px;top:-3px;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-soft);
+}
+.mk6__title{
+  font-size:20px;font-weight:800;
+  letter-spacing:-0.02em;line-height:1.25;
+  margin-bottom:6px;
+}
+.mk6__meta{font-size:12.5px;color:var(--muted);margin-bottom:24px;line-height:1.5;}
+.mk6__next{
+  border-top:1px solid var(--border);
+  padding-top:16px;
+}
+.mk6__next-label{
+  font-size:10px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--muted);font-weight:700;margin-bottom:12px;
+}
+.mk6__next-list{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.mk6__next-list li{
+  display:flex;align-items:center;gap:10px;
+  font-size:12.5px;font-weight:500;
+}
+.mk6__next-list .mono{
+  font-size:10.5px;color:var(--accent);
+  background:var(--accent-soft);padding:2px 6px;border-radius:4px;font-weight:600;
+}
+.mk6__next-list em{margin-left:auto;font-style:normal;color:var(--muted);font-size:11px;}
+
+/* ============================================================
+   MOCKUP 7 — COMPARISON
+   ============================================================ */
+.mk7{width:100%;max-width:880px;margin:0 auto;}
+.mk7__head{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:16px;
+}
+.mk7__head h3{font-size:16px;font-weight:700;letter-spacing:-0.01em;}
+.mk7__head h3 span{color:var(--muted);font-weight:500;margin-left:6px;}
+.mk7__table{
+  width:100%;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  border-collapse:separate;
+  border-spacing:0;
+  overflow:hidden;
+}
+.mk7__table thead th{
+  padding:20px 18px;
+  text-align:left;
+  vertical-align:top;
+  border-bottom:1px solid var(--border);
+  background:var(--surface-alt);
+}
+.mk7__table thead th:first-child{width:100px;background:var(--surface);}
+.mk7__table tbody th{
+  padding:14px 18px;
+  text-align:left;
+  font-size:11px;font-weight:700;
+  letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--muted);
+  border-bottom:1px solid var(--border);
+  background:var(--surface);
+  width:120px;
+}
+.mk7__table tbody td{
+  padding:14px 18px;
+  font-size:13.5px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+  color:var(--ink-2);
+}
+.mk7__table tbody tr:last-child th,
+.mk7__table tbody tr:last-child td{border-bottom:none;}
+.mk7__table td strong,.mk7__table td b{color:var(--ink);font-weight:700;}
+
+.mk7__thumb{
+  width:64px;height:64px;
+  border-radius:10px;
+  margin-bottom:12px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-deep));
+}
+.mk7__thumb.g2{background:linear-gradient(135deg,#FF6A00,#E32C2C);}
+.mk7__col-title{font-size:15px;font-weight:800;letter-spacing:-0.015em;line-height:1.25;margin-bottom:6px;}
+.mk7__col-tag{
+  display:inline-block;
+  font-size:10px;font-weight:700;letter-spacing:0.04em;
+  color:var(--accent);background:var(--accent-soft);
+  padding:2px 8px;border-radius:4px;
+}
+.pill{
+  display:inline-block;
+  padding:3px 9px;border-radius:999px;
+  font-size:11.5px;font-weight:700;
+}
+.pill--good{background:rgba(15,169,104,0.12);color:var(--success);}
+.pill--warn{background:rgba(255,106,0,0.12);color:var(--warn);}
+.mk7__highlight{
+  background:var(--accent-soft);
+  margin:-6px -10px;padding:6px 10px;border-radius:6px;
+  display:inline-block;
+}
+.mk7__warn-note{
+  display:inline-block;
+  font-size:10.5px;color:var(--warn);font-weight:600;
+  margin-left:6px;
+  background:rgba(255,106,0,0.1);
+  padding:2px 6px;border-radius:4px;
+}
+
+/* ============================================================
+   MOCKUP 8 — COMMAND PALETTE
+   ============================================================ */
+.mk8{
+  width:100%;max-width:540px;
+  margin:0 auto;
+  position:relative;
+}
+.mk8__bg{
+  position:absolute;inset:-40px;
+  background:rgba(14,14,20,0.06);
+  backdrop-filter:blur(4px);
+  border-radius:32px;
+  z-index:0;
+}
+.palette{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 24px 60px rgba(14,14,20,0.18),0 4px 12px rgba(14,14,20,0.06);
+  position:relative;
+  z-index:1;
+}
+.palette__search{
+  padding:16px 18px;
+  display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid var(--border);
+}
+.palette__search svg{color:var(--muted);flex-shrink:0;}
+.palette__search input{
+  flex:1;border:none;outline:none;
+  background:transparent;
+  font:inherit;font-size:15px;font-weight:500;
+  letter-spacing:-0.01em;
+  color:var(--ink);
+  font-family:'Pretendard Variable';
+}
+.palette__search input::placeholder{color:var(--muted-2);}
+.palette__body{padding:8px 0;max-height:380px;overflow:auto;}
+.palette__section{padding:6px 0;}
+.palette__sectitle{
+  padding:6px 18px;
+  font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--muted);
+}
+.palette__row{
+  width:100%;display:flex;align-items:center;gap:12px;
+  padding:10px 18px;
+  font-size:14px;font-weight:500;
+  text-align:left;
+  transition:background .1s;
+}
+.palette__row span{flex:1;letter-spacing:-0.005em;}
+.palette__row:hover{background:var(--surface-alt);}
+.palette__row.is-active{
+  background:var(--accent-soft);
+  color:var(--accent-deep);
+  position:relative;
+}
+.palette__row.is-active::before{
+  content:"";position:absolute;left:0;top:6px;bottom:6px;width:3px;
+  background:var(--accent);border-radius:0 3px 3px 0;
+}
+.palette__row .keys{display:inline-flex;gap:3px;}
+.palette__foot{
+  padding:10px 18px;
+  background:var(--surface-alt);
+  border-top:1px solid var(--border);
+  display:flex;gap:18px;align-items:center;
+  font-size:11px;color:var(--muted);
+}
+.palette__foot kbd{font-size:9.5px;padding:1px 5px;}
+.palette__hint{margin-left:auto;}
+
+/* ============ FOOTER ============ */
+.footer{
+  max-width:1280px;margin:0 auto;
+  padding:96px 48px 64px;
+  border-top:1px solid var(--ink);
+}
+.footer__grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:48px;
+  margin-bottom:64px;
+}
+.footer__bigline{
+  font-size:clamp(28px,3vw,40px);
+  font-weight:600;
+  letter-spacing:-0.03em;
+  line-height:1.2;
+  max-width:540px;
+}
+.footer__bigline em{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;
+  font-weight:400;
+  color:var(--accent);
+}
+.footer__col h6{
+  font-size:11px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:14px;font-weight:700;
+}
+.footer__col ul{list-style:none;}
+.footer__col li{
+  padding:8px 0;font-size:13.5px;font-weight:500;
+  border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  letter-spacing:-0.005em;
+}
+.footer__col li:first-child{border-top:none;}
+.footer__col li .mono{font-size:11px;color:var(--muted);}
+.footer__bottom{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-size:11.5px;color:var(--muted);
+  font-family:'JetBrains Mono',monospace;
+  letter-spacing:0.04em;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:920px){
+  .topbar__nav{display:none;}
+  .hero,.feature,.footer,.toc{padding-left:24px;padding-right:24px;}
+  .hero{padding-top:56px;padding-bottom:72px;}
+  .feature{padding-top:80px;padding-bottom:80px;}
+  .hero__meta{grid-template-columns:repeat(2,1fr);gap:24px;}
+  .toc__inner{grid-template-columns:repeat(2,1fr);}
+  .feature__layout.split,.feature__layout.split-rev{grid-template-columns:1fr;gap:48px;}
+  .feature__layout.split-rev .feature__head{order:0;}
+  .feature__num{font-size:72px;}
+  .mockup{padding:24px;min-height:auto;}
+  .mk1__grid{grid-template-columns:repeat(2,1fr);}
+  .mk4{flex-direction:column;}
+  .phone{width:170px;}
+  .mk7__table thead th{padding:12px;}
+  .mk7__table tbody th,.mk7__table tbody td{padding:10px 12px;font-size:12px;}
+  .footer__grid{grid-template-columns:1fr;gap:32px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="topbar__inner">
+    <div class="topbar__logo">dev<b>·</b>event<b>/</b><span style="color:var(--muted);font-weight:500;">mockups</span></div>
+    <nav class="topbar__nav">
+      <a href="#f01">01 북마크</a>
+      <a href="#f02">02 캘린더</a>
+      <a href="#f03">03 알림</a>
+      <a href="#f04">04 다크모드</a>
+      <a href="#f05">05 프리셋</a>
+      <a href="#f06">06 카운트다운</a>
+      <a href="#f07">07 비교</a>
+      <a href="#f08">08 단축키</a>
+    </nav>
+    <div class="topbar__date">2026.05.15 · v0.1</div>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero__eyebrow">DEV EVENT WEB · FEATURE PROPOSAL</div>
+  <h1>프론트엔드만으로<br>충분히 <em>멋진</em><br>여덟 가지.</h1>
+  <p class="hero__lede">
+    백엔드 변경 없이 <mark>localStorage · 브라우저 API · 클라이언트 가공</mark>만으로
+    완성할 수 있는 기능 제안서. 각 항목은 1~3일 안에 마감 가능한 단위로 쪼개졌고,
+    KTB 디자인 시스템(Pretendard · Tech Blue · 12/24px radius)을 그대로 따릅니다.
+  </p>
+  <dl class="hero__meta">
+    <div><dt>스택</dt><dd>Next.js 12 <b>· React 17</b></dd></div>
+    <div><dt>저장소</dt><dd>localStorage <b>· URL</b></dd></div>
+    <div><dt>API 변경</dt><dd>없음 <b>· zero</b></dd></div>
+    <div><dt>예상 공수</dt><dd>1~3일 × 8 <b>· 약 2주</b></dd></div>
+  </dl>
+</section>
+
+<!-- ============ TOC ============ -->
+<section class="toc">
+  <div class="toc__inner">
+    <a class="toc__item" href="#f01"><div class="toc__num">01</div><div class="toc__title">관심 행사 북마크</div><div class="toc__hint">localStorage · 1.5d</div></a>
+    <a class="toc__item" href="#f02"><div class="toc__num">02</div><div class="toc__title">캘린더 내보내기</div><div class="toc__hint">.ics · 1d</div></a>
+    <a class="toc__item" href="#f03"><div class="toc__num">03</div><div class="toc__title">시작 전 알림</div><div class="toc__hint">Notification · 2d</div></a>
+    <a class="toc__item" href="#f04"><div class="toc__num">04</div><div class="toc__title">다크모드</div><div class="toc__hint">CSS Variables · 2d</div></a>
+    <a class="toc__item" href="#f05"><div class="toc__num">05</div><div class="toc__title">필터 URL · 프리셋</div><div class="toc__hint">URLSearchParams · 1.5d</div></a>
+    <a class="toc__item" href="#f06"><div class="toc__num">06</div><div class="toc__title">다가오는 행사 위젯</div><div class="toc__hint">Date arithmetic · 0.5d</div></a>
+    <a class="toc__item" href="#f07"><div class="toc__num">07</div><div class="toc__title">행사 비교 모드</div><div class="toc__hint">Client state · 1.5d</div></a>
+    <a class="toc__item" href="#f08"><div class="toc__num">08</div><div class="toc__title">키보드 단축키 + ⌘K</div><div class="toc__hint">KeyboardEvent · 2d</div></a>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURE 01 — BOOKMARK
+     ============================================================ -->
+<section class="feature" id="f01">
+  <div class="feature__layout split">
+    <div class="feature__head">
+      <div class="feature__num">01</div>
+      <div class="feature__label">Bookmark · localStorage</div>
+      <h2 class="feature__title">관심 행사를 <em>별표</em>로 묶어두기</h2>
+      <p class="feature__lede">
+        로그인 없이도 동작하는 클라이언트 사이드 북마크. 카드 우상단의 별 아이콘으로
+        토글하고, <code class="mono" style="font-size:13px;background:var(--surface-alt);padding:2px 6px;border-radius:4px;">/events/bookmarks</code>
+        라우트에서 모아 봅니다.
+      </p>
+      <ol class="feature__bullets">
+        <li><code class="mono" style="font-size:12px;">EventContext</code>에 <code class="mono" style="font-size:12px;">bookmarkedIds: Set&lt;number&gt;</code> 추가, localStorage에 mirror.</li>
+        <li>카드/상세/캘린더 셀에서 동일한 토글 인터랙션 — 별 채움 + 살짝 튀어오르는 spring 모션.</li>
+        <li>토스트로 즉시 피드백, "실행 취소"로 5초간 되돌릴 수 있음.</li>
+        <li>나중에 백엔드 동기화가 필요해지면 동일한 인터페이스 뒤에 API만 끼우면 됨.</li>
+      </ol>
+      <div class="feature__chips">
+        <span class="chip chip--ink">1.5 days</span>
+        <span class="chip">localStorage</span>
+        <span class="chip">no API change</span>
+        <span class="chip chip--accent">High impact</span>
+      </div>
+    </div>
+
+    <div class="mockup">
+      <span class="mockup__cap">/events/bookmarks</span>
+      <div class="mockup__content">
+        <div class="mk1">
+          <div class="mk1__tabs">
+            <button class="mk1__tab">전체 <span>124</span></button>
+            <button class="mk1__tab is-active">북마크 <span>12</span></button>
+            <button class="mk1__tab">지난 행사 <span>89</span></button>
+          </div>
+
+          <div class="mk1__grid">
+            <article class="evcard">
+              <div class="evcard__thumb g1"></div>
+              <button class="evcard__bookmark is-on" aria-label="북마크됨">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.2 3.7 1.6-7-5.4-4.7 7.1-.6L12 2l2.9 6.7 7.1.6-5.4 4.7 1.6 7z"/></svg>
+              </button>
+              <div class="evcard__body">
+                <div class="evcard__tag">컨퍼런스</div>
+                <div class="evcard__title">FEConf Korea 2026</div>
+                <div class="evcard__meta">5월 18일 · 코엑스</div>
+              </div>
+            </article>
+
+            <article class="evcard">
+              <div class="evcard__thumb g2"></div>
+              <button class="evcard__bookmark is-on" aria-label="북마크됨">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.2 3.7 1.6-7-5.4-4.7 7.1-.6L12 2l2.9 6.7 7.1.6-5.4 4.7 1.6 7z"/></svg>
+              </button>
+              <div class="evcard__body">
+                <div class="evcard__tag">웨비나</div>
+                <div class="evcard__title">Next.js 16 Deep Dive</div>
+                <div class="evcard__meta">5월 20일 · 온라인</div>
+              </div>
+            </article>
+
+            <article class="evcard">
+              <div class="evcard__thumb g3"></div>
+              <button class="evcard__bookmark is-on" aria-label="북마크됨">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.3l-6.2 3.7 1.6-7-5.4-4.7 7.1-.6L12 2l2.9 6.7 7.1.6-5.4 4.7 1.6 7z"/></svg>
+              </button>
+              <div class="evcard__body">
+                <div class="evcard__tag">해커톤</div>
+                <div class="evcard__title">서울 디지털 해커톤</div>
+                <div class="evcard__meta">5월 25일 · 동대문</div>
+              </div>
+            </article>
+          </div>
+
+          <div class="mk1__toast">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            <span>북마크에 저장했어요</span>
+            <b>실행 취소</b>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURE 02 — CALENDAR EXPORT
+     ============================================================ -->
+<section class="feature" id="f02">
+  <div class="feature__layout split-rev">
+    <div class="feature__head">
+      <div class="feature__num">02</div>
+      <div class="feature__label">Calendar Export · .ics</div>
+      <h2 class="feature__title">내 캘린더에<br><em>한 번에</em> 꽂아두기</h2>
+      <p class="feature__lede">
+        행사 상세에서 클릭 한 번으로 Apple · Google · Naver · Outlook 어디든 추가.
+        <code class="mono" style="font-size:13px;background:var(--surface-alt);padding:2px 6px;border-radius:4px;">.ics</code> 파일은
+        클라이언트에서 30줄 정도의 RFC 5545 포맷터로 직접 생성합니다.
+      </p>
+      <ol class="feature__bullets">
+        <li>모델의 <code class="mono" style="font-size:12px;">use_start_date_time_yn === 'N'</code> 이면 자동으로 <b>all-day</b> 이벤트로 처리.</li>
+        <li>Google Calendar는 <code class="mono" style="font-size:12px;">calendar.google.com/render?action=TEMPLATE</code> 쿼리 조립만으로 새 탭.</li>
+        <li>다중일 행사(<code class="mono" style="font-size:12px;">end_date_time</code> 까지)와 알람(<code class="mono" style="font-size:12px;">VALARM</code>) 포함.</li>
+        <li>외부 라이브러리 없이 25KB → 0KB. 번들 영향 zero.</li>
+      </ol>
+      <div class="feature__chips">
+        <span class="chip chip--ink">1 day</span>
+        <span class="chip">RFC 5545</span>
+        <span class="chip">no deps</span>
+        <span class="chip chip--accent">High intent</span>
+      </div>
+    </div>
+
+    <div class="mockup">
+      <span class="mockup__cap">events/[id]</span>
+      <div class="mockup__content">
+        <div class="mk2">
+          <div class="mk2__card">
+            <span class="mk2__tag">컨퍼런스 · 클라우드</span>
+            <h3 class="mk2__title">AWS Summit Seoul 2026</h3>
+            <div class="mk2__meta">5월 18일 (월) · 09:00 ~ 18:00 · 코엑스 그랜드볼룸</div>
+            <div class="mk2__actions">
+              <button class="btn btn--primary">
+                신청 사이트로
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
+              </button>
+              <button class="btn btn--ghost">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>
+                내 캘린더에 추가
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:2px;"><polyline points="6 9 12 15 18 9"/></svg>
+              </button>
+
+              <div class="mk2__dropdown">
+                <div class="mk2__dropdown-head">캘린더 선택</div>
+                <button class="mk2__dropdown-item">
+                  <span class="mk2__icon mk2__icon--apple"></span>
+                  Apple 캘린더
+                  <span class="mk2__ext">.ics</span>
+                </button>
+                <button class="mk2__dropdown-item">
+                  <span class="mk2__icon mk2__icon--google">G</span>
+                  Google 캘린더
+                  <svg class="mk2__ext" style="width:11px;height:11px;color:var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </button>
+                <button class="mk2__dropdown-item">
+                  <span class="mk2__icon mk2__icon--naver">N</span>
+                  네이버 캘린더
+                  <svg class="mk2__ext" style="width:11px;height:11px;color:var(--muted);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </button>
+                <div class="mk2__divider"></div>
+                <button class="mk2__dropdown-item">
+                  <span class="mk2__icon mk2__icon--outlook">O</span>
+                  Outlook
+                  <span class="mk2__ext">.ics</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURE 03 — NOTIFICATION
+     ============================================================ -->
+<section class="feature" id="f03">
+  <div class="feature__layout split">
+    <div class="feature__head">
+      <div class="feature__num">03</div>
+      <div class="feature__label">Notification · Service Worker</div>
+      <h2 class="feature__title">놓치지 않게,<br><em>30분 전</em>에 톡.</h2>
+      <p class="feature__lede">
+        북마크한 행사 시작 N분 전에 브라우저 알림. 푸시 서버 없이
+        <code class="mono" style="font-size:13px;background:var(--surface-alt);padding:2px 6px;border-radius:4px;">setTimeout</code> +
+        Service Worker의 <code class="mono" style="font-size:13px;background:var(--surface-alt);padding:2px 6px;border-radius:4px;">showNotification</code> 으로 충분합니다.
+      </p>
+      <ol class="feature__bullets">
+        <li>최초 북마크 시 권한 요청 → 거절해도 앱은 정상 동작 (graceful degradation).</li>
+        <li>알림 시점은 글로벌 설정 1개 · 5분/30분/1시간/1일 전.</li>
+        <li>SW가 깨어 있을 때 fire, 안 깨어 있어도 다음 방문에 만회 알림.</li>
+        <li>같이 작업하면 PWA 매니페스트도 자연스럽게 추가 — "홈 화면에 설치"까지 한 번에.</li>
+      </ol>
+      <div class="feature__chips">
+        <span class="chip chip--ink">2 days</span>
+        <span class="chip">Notification API</span>
+        <span class="chip">Service Worker</span>
+        <span class="chip chip--accent">Sticky</span>
+      </div>
+    </div>
+
+    <div class="mockup">
+      <span class="mockup__cap">notification + settings</span>
+      <div class="mockup__content">
+        <div class="mk3">
+          <div class="mk3__pop">
+            <div class="mk3__icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 003.4 0"/></svg>
+            </div>
+            <div class="mk3__body">
+              <div class="mk3__app"><span>Dev Event Web · dev-event.vercel.app</span><time>지금</time></div>
+              <div class="mk3__head">30분 후 시작 — FEConf Korea 2026</div>
+              <p class="mk3__text">14:00 · 코엑스 그랜드볼룸 · 6,400 / 8,000명 참여 중</p>
+              <div class="mk3__actions">
+                <button class="mk3__btn mk3__btn--primary">자세히 보기</button>
+                <button class="mk3__btn">닫기</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="mk3__settings">
+            <div class="mk3__set-head">알림 설정</div>
+            <div class="mk3__set-row">
+              <div>
+                <div class="mk3__set-label">알림 시점</div>
+                <div class="mk3__set-hint">북마크한 모든 행사에 적용돼요</div>
+              </div>
+              <div class="mk3__radio">
+                <button>5분</button>
+                <button class="is-active">30분</button>
+                <button>1시간</button>
+                <button>1일</button>
+              </div>
+            </div>
+            <div class="mk3__set-row">
+              <div>
+                <div class="mk3__set-label">브라우저 권한</div>
+                <div class="mk3__set-hint">알림을 받으려면 권한이 필요해요</div>
+              </div>
+              <div class="mk3__status">
+                <span class="mk3__dot"></span>
+                허용됨
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURE 04 — DARK MODE
+     ============================================================ -->
+<section class="feature" id="f04">
+  <div class="feature__layout stack">
+    <div class="feature__head">
+      <div class="feature__num">04</div>
+      <div class="feature__label">Dark Mode · CSS Variables</div>
+      <h2 class="feature__title">밤에도 <em>덜 눈부신</em> 행사 탐색.</h2>
+      <p class="feature__lede" style="max-width:720px;">
+        프로젝트의 <code class="mono" style="font-size:13px;background:var(--surface-alt);padding:2px 6px;border-radius:4px;">WindowContext.windowTheme</code>은
+        이미 정의돼 있지만 실제 토글 UI와 SCSS 분기가 비어 있어요. 한 번에 라이트/다크 토큰을 정리하고
+        <code class="mono" style="font-size:13px;background:var(--surface-alt);padding:2px 6px;border-radius:4px;">prefers-color-scheme</code> 까지 잇기.
+      </p>
+      <ol class="feature__bullets" style="max-width:720px;">
+        <li><code class="mono" style="font-size:12px;">styles/_variables.scss</code>에 시멘틱 토큰 2벌(<code class="mono" style="font-size:12px;">--ink</code>, <code class="mono" style="font-size:12px;">--surface</code> …) 정의.</li>
+        <li>KTB Tech Blue를 라이트/다크 모두에서 충분한 대비로 — 다크에선 살짝 밝힌 <code class="mono" style="font-size:12px;">#5C7CFF</code> 톤.</li>
+        <li>시스템 설정 자동 추종 + 수동 토글 + localStorage에 사용자 선택 저장.</li>
+        <li>썸네일 이미지는 그대로 두되 카드/보더에 다크 보정만.</li>
+      </ol>
+      <div class="feature__chips">
+        <span class="chip chip--ink">2 days</span>
+        <span class="chip">CSS Variables</span>
+        <span class="chip">prefers-color-scheme</span>
+        <span class="chip chip--accent">Hygiene</span>
+      </div>
+    </div>
+
+    <div class="mockup" style="padding-top:64px;padding-bottom:64px;">
+      <span class="mockup__cap">light / dark · side by side</span>
+      <div class="mockup__content">
+        <div class="mk4">
+
+          <div class="phone phone--light">
+            <div class="phone__notch"></div>
+            <div class="phone__screen">
+              <div class="phone__nav">Dev Event <span>5/15</span></div>
+              <div class="mini-card">
+                <div class="mini-card__tag">컨퍼런스</div>
+                <h5>FEConf Korea 2026</h5>
+                <p>5월 18일 · 코엑스 그랜드볼룸</p>
+              </div>
+              <div class="mini-card">
+                <div class="mini-card__tag">웨비나</div>
+                <h5>Next.js 16 Deep Dive</h5>
+                <p>5월 20일 · 온라인</p>
+                <div class="mini-card__cta">자세히 →</div>
+              </div>
+              <div class="mini-card">
+                <div class="mini-card__tag">해커톤</div>
+                <h5>서울 디지털 해커톤</h5>
+                <p>5월 25일 · 동대문</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mk4__toggle">
+            <div class="toggle">
+              <div class="toggle__sun">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+              </div>
+              <div class="toggle__moon">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+              </div>
+              <div class="toggle__knob"></div>
+            </div>
+            <div class="mk4__code">prefers-color-scheme</div>
+          </div>
+
+          <div class="phone phone--dark">
+            <div class="phone__notch"></div>
+            <div class="phone__screen">
+              <div class="phone__nav">Dev Event <span>5/15</span></div>
+              <div class="mini-card">
+                <div class="mini-card__tag">컨퍼런스</div>
+                <h5>FEConf Korea 2026</h5>
+                <p>5월 18일 · 코엑스 그랜드볼룸</p>
+              </div>
+              <div class="mini-card">
+                <div class="mini-card__tag">웨비나</div>
+                <h5>Next.js 16 Deep Dive</h5>
+                <p>5월 20일 · 온라인</p>
+                <div class="mini-card__cta">자세히 →</div>
+              </div>
+              <div class="mini-card">
+                <div class="mini-card__tag">해커톤</div>
+                <h5>서울 디지털 해커톤</h5>
+                <p>5월 25일 · 동대문</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURE 05 — FILTER URL / PRESET
+     ============================================================ -->
+<section class="feature" id="f05">
+  <div class="feature__layout split-rev">
+    <div class="feature__head">
+      <div class="feature__num">05</div>
+      <div class="feature__label">Filter URL · Presets</div>
+      <h2 class="feature__title">필터 조합을<br><em>링크</em>로 공유.</h2>
+      <p class="feature__lede">
+        지금 EventContext 상태는 URL에 반영되지 않아요. 필터를
+        <code class="mono" style="font-size:13px;background:var(--surface-alt);padding:2px 6px;border-radius:4px;">URLSearchParams</code> 로 직렬화하면
+        "프론트엔드 + 서울 + 무료" 같은 조합을 한 줄 링크로 동료에게.
+      </p>
+      <ol class="feature__bullets">
+        <li>현재 EventContext의 모든 필드(<code class="mono" style="font-size:12px;">jobGroupList, eventType, location, coast, search, date</code>)를 쿼리스트링에.</li>
+        <li>"링크 복사" 버튼 한 번이면 끝 — clipboard API.</li>
+        <li>자주 쓰는 조합은 별표로 localStorage에 저장 — 사이드바 드롭다운에서 한 번에 적용.</li>
+        <li>캘린더 뷰가 이미 <code class="mono" style="font-size:12px;">?view=calendar</code> 패턴을 쓰고 있어 자연스럽게 확장 가능.</li>
+      </ol>
+      <div class="feature__chips">
+        <span class="chip chip--ink">1.5 days</span>
+        <span class="chip">URLSearchParams</span>
+        <span class="chip">localStorage</span>
+        <span class="chip chip--accent">Shareable</span>
+      </div>
+    </div>
+
+    <div class="mockup">
+      <span class="mockup__cap">/events?jobs=fe&loc=seoul&cost=free</span>
+      <div class="mockup__content">
+        <div class="mk5">
+          <div class="mk5__bar">
+            <span class="fchip">프론트엔드
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </span>
+            <span class="fchip">서울
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </span>
+            <span class="fchip">무료
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </span>
+            <span class="fchip">컨퍼런스
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </span>
+            <div class="mk5__bar-spacer"></div>
+            <button class="btn btn--ghost" style="padding:7px 12px;font-size:12px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9 17 14 19 21 12 17 5 21 7 14 2 9 9 9"/></svg>
+              프리셋 저장
+            </button>
+            <button class="btn btn--primary" style="padding:7px 12px;font-size:12px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+              링크 복사
+            </button>
+          </div>
+
+          <div class="mk5__copied">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            <span>이 필터 조합이 URL로 복사됐어요</span>
+            <code>?jobs=fe&loc=seoul&cost=free</code>
+          </div>
+
+          <div class="mk5__panel">
+            <div class="mk5__panel-head">
+              <span>내 프리셋</span>
+              <span>5</span>
+            </div>
+            <div class="mk5__preset">
+              <div class="mk5__star">★</div>
+              <div>
+                <div class="mk5__pname">취준생용 무료 컨퍼런스</div>
+                <div class="mk5__phint">프론트엔드 · 서울 · 무료 · 컨퍼런스</div>
+              </div>
+              <button class="mk5__apply">적용</button>
+            </div>
+            <div class="mk5__preset">
+              <div class="mk5__star">★</div>
+              <div>
+                <div class="mk5__pname">부산 주말 행사</div>
+                <div class="mk5__phint">부산 · 주말 · 전체 직군</div>
+              </div>
+              <button class="mk5__apply">적용</button>
+            </div>
+            <div class="mk5__preset">
+              <div class="mk5__star">★</div>
+              <div>
+                <div class="mk5__pname">백엔드 + 데브옵스</div>
+                <div class="mk5__phint">백엔드 · 데브옵스 · 온라인 포함</div>
+              </div>
+              <button class="mk5__apply">적용</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURE 06 — COUNTDOWN
+     ============================================================ -->
+<section class="feature" id="f06">
+  <div class="feature__layout split">
+    <div class="feature__head">
+      <div class="feature__num">06</div>
+      <div class="feature__label">Countdown · Date Math</div>
+      <h2 class="feature__title">가장 가까운 행사,<br><em>늘 시야에</em>.</h2>
+      <p class="feature__lede">
+        북마크된 행사 중 가장 가까운 것을 사이드/홈 위젯에 고정.
+        D-Day 카운트와 진행도(북마크 시점 → 행사 시작) 바, 그리고 이번 주 일정 미리보기.
+      </p>
+      <ol class="feature__bullets">
+        <li>이미 받아둔 데이터에서 클라이언트 가공만 — 신규 페치 없음.</li>
+        <li>당일엔 "D-Day" → 시작 시간 30분 단위 카운트다운으로 자동 전환.</li>
+        <li>모바일에선 접힘, 데스크탑에선 좌측 sticky 패널로.</li>
+        <li>"이번 주 다른 행사" 영역으로 1분 안에 다음 일정도 훑게.</li>
+      </ol>
+      <div class="feature__chips">
+        <span class="chip chip--ink">0.5 day</span>
+        <span class="chip">no API</span>
+        <span class="chip chip--accent">Anchor moment</span>
+      </div>
+    </div>
+
+    <div class="mockup">
+      <span class="mockup__cap">sidebar widget</span>
+      <div class="mockup__content">
+        <div class="mk6">
+          <div class="mk6__head">
+            <div class="mk6__label">다가오는 관심 행사</div>
+            <div class="mk6__pill">3 / 12</div>
+          </div>
+
+          <div class="mk6__dday"><small>D−</small>3</div>
+
+          <div class="mk6__progress">
+            <div class="mk6__progress-fill" style="width:72%"></div>
+          </div>
+
+          <div class="mk6__title">FEConf Korea 2026</div>
+          <div class="mk6__meta">5월 18일 (월) · 10:00 ~ 18:00<br>코엑스 그랜드볼룸</div>
+
+          <div class="mk6__next">
+            <div class="mk6__next-label">이번 주 다른 행사</div>
+            <ul class="mk6__next-list">
+              <li><span class="mono">D−5</span> Next.js 16 한국 밋업 <em>온라인</em></li>
+              <li><span class="mono">D−7</span> 카카오테크 부트캠프 OT <em>판교</em></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURE 07 — COMPARISON
+     ============================================================ -->
+<section class="feature" id="f07">
+  <div class="feature__layout stack">
+    <div class="feature__head">
+      <div class="feature__num">07</div>
+      <div class="feature__label">Compare · Client State</div>
+      <h2 class="feature__title">"둘 중 어디 갈까"를 <em>5초 만에</em>.</h2>
+      <p class="feature__lede" style="max-width:720px;">
+        카드에서 체크박스로 2~3개 선택 → 하단에 비교 트레이 → 클릭하면 모달.
+        날짜 · 장소 · 비용 · 주제 · 정원 · 마감을 나란히. 차이 나는 셀은 KTB Blue 하이라이트.
+      </p>
+      <ol class="feature__bullets" style="max-width:720px;">
+        <li>선택은 sessionStorage에 잠시 보관 → 새로고침해도 유지.</li>
+        <li>차이 감지 로직은 단순 row-wise diff — 같으면 묶고, 다르면 강조.</li>
+        <li>마감 임박(<code class="mono" style="font-size:12px;">D−1, D−2</code>)이나 무료 같은 의사결정 단서는 별도 배지.</li>
+        <li>모바일에선 카드 스와이프 비교로 자연스럽게.</li>
+      </ol>
+      <div class="feature__chips">
+        <span class="chip chip--ink">1.5 days</span>
+        <span class="chip">sessionStorage</span>
+        <span class="chip chip--accent">Decision aid</span>
+      </div>
+    </div>
+
+    <div class="mockup">
+      <span class="mockup__cap">compare modal · 2 events</span>
+      <div class="mockup__content">
+        <div class="mk7">
+          <div class="mk7__head">
+            <h3>2개 행사 비교<span>차이 나는 항목은 강조 표시</span></h3>
+            <button class="btn btn--ghost" style="padding:7px 12px;font-size:12px;">+ 행사 추가</button>
+          </div>
+          <table class="mk7__table">
+            <thead>
+              <tr>
+                <th></th>
+                <th>
+                  <div class="mk7__thumb"></div>
+                  <div class="mk7__col-title">AWS Summit Seoul 2026</div>
+                  <span class="mk7__col-tag">컨퍼런스</span>
+                </th>
+                <th>
+                  <div class="mk7__thumb g2"></div>
+                  <div class="mk7__col-title">Google I/O Extended</div>
+                  <span class="mk7__col-tag">밋업</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>날짜</th>
+                <td><strong>5월 18일 (월)</strong> · D−3</td>
+                <td>5월 20일 (수) · D−5</td>
+              </tr>
+              <tr>
+                <th>장소</th>
+                <td>코엑스 그랜드볼룸</td>
+                <td>구글 코리아 (강남)</td>
+              </tr>
+              <tr>
+                <th>비용</th>
+                <td><span class="pill pill--good">무료</span></td>
+                <td><b>₩30,000</b></td>
+              </tr>
+              <tr>
+                <th>주제</th>
+                <td>클라우드 · AI · 보안</td>
+                <td>Android · Web · AI</td>
+              </tr>
+              <tr>
+                <th>정원</th>
+                <td>8,000명</td>
+                <td><b>150명</b> <span class="mk7__warn-note">조기 마감 가능</span></td>
+              </tr>
+              <tr>
+                <th>신청 마감</th>
+                <td>5월 17일 23:59</td>
+                <td><span class="mk7__highlight"><b>5월 14일 18:00 · D−1</b></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURE 08 — COMMAND PALETTE
+     ============================================================ -->
+<section class="feature" id="f08">
+  <div class="feature__layout stack">
+    <div class="feature__head">
+      <div class="feature__num">08</div>
+      <div class="feature__label">Keyboard · ⌘K Palette</div>
+      <h2 class="feature__title">개발자 사이트답게,<br>모든 게 <em>키보드로</em>.</h2>
+      <p class="feature__lede" style="max-width:720px;">
+        어디서든 <kbd>⌘</kbd><kbd>K</kbd> 로 명령 팔레트. 검색 · 뷰 전환 · 필터 초기화 · 다음 행사 점프까지
+        손이 마우스로 옮겨갈 일을 줄이기. 개발자 행사 사이트가 이걸 안 하는 건 좀 직무유기죠.
+      </p>
+      <ol class="feature__bullets" style="max-width:720px;">
+        <li>단일 글로벌 KeyboardEvent listener — 입력창 포커스 시엔 자동 무시.</li>
+        <li>화살표로 이동, Enter로 실행, ESC로 닫기 — Linear/Raycast 패턴 그대로.</li>
+        <li>최근 명령은 상단에 — sessionStorage 기반 MRU 캐시.</li>
+        <li>접근성: 모달 진입 시 focus trap, 닫을 때 트리거 요소로 복귀.</li>
+      </ol>
+      <div class="feature__chips">
+        <span class="chip chip--ink">2 days</span>
+        <span class="chip">KeyboardEvent</span>
+        <span class="chip">a11y · focus trap</span>
+        <span class="chip chip--accent">Power user</span>
+      </div>
+    </div>
+
+    <div class="mockup" style="padding:64px 48px;">
+      <span class="mockup__cap">⌘K · anywhere</span>
+      <div class="mockup__content">
+        <div class="mk8">
+          <div class="mk8__bg"></div>
+          <div class="palette">
+            <div class="palette__search">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input value="필터" placeholder="검색하거나 명령 입력…" readonly>
+              <kbd>ESC</kbd>
+            </div>
+            <div class="palette__body">
+              <div class="palette__section">
+                <div class="palette__sectitle">필터</div>
+                <button class="palette__row is-active">
+                  <span>검색창 포커스</span>
+                  <div class="keys"><kbd>/</kbd></div>
+                </button>
+                <button class="palette__row">
+                  <span>필터 초기화</span>
+                  <div class="keys"><kbd>⌘</kbd><kbd>⇧</kbd><kbd>K</kbd></div>
+                </button>
+              </div>
+              <div class="palette__section">
+                <div class="palette__sectitle">뷰</div>
+                <button class="palette__row">
+                  <span>캘린더 뷰로 전환</span>
+                  <div class="keys"><kbd>C</kbd></div>
+                </button>
+                <button class="palette__row">
+                  <span>리스트 뷰로 전환</span>
+                  <div class="keys"><kbd>L</kbd></div>
+                </button>
+                <button class="palette__row">
+                  <span>이번 달로 이동</span>
+                  <div class="keys"><kbd>T</kbd></div>
+                </button>
+              </div>
+              <div class="palette__section">
+                <div class="palette__sectitle">탐색</div>
+                <button class="palette__row">
+                  <span>북마크 목록 열기</span>
+                  <div class="keys"><kbd>⌘</kbd><kbd>B</kbd></div>
+                </button>
+                <button class="palette__row">
+                  <span>다음 행사로</span>
+                  <div class="keys"><kbd>J</kbd></div>
+                </button>
+                <button class="palette__row">
+                  <span>이전 행사로</span>
+                  <div class="keys"><kbd>K</kbd></div>
+                </button>
+              </div>
+            </div>
+            <div class="palette__foot">
+              <span><kbd>↑</kbd><kbd>↓</kbd> 이동</span>
+              <span><kbd>↵</kbd> 선택</span>
+              <span class="palette__hint">어디서든 <kbd>⌘</kbd><kbd>K</kbd> 로 열기</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__grid">
+    <div class="footer__bigline">
+      <em>다음 단계</em>는<br>
+      이 중 어느 두 개를 한 묶음으로 골라 brainstorming → spec → plan 으로 이어가는 것.
+    </div>
+    <div class="footer__col">
+      <h6>추천 출발점</h6>
+      <ul>
+        <li>01 북마크<span class="mono">1.5d</span></li>
+        <li>02 캘린더 내보내기<span class="mono">1d</span></li>
+        <li>06 카운트다운 위젯<span class="mono">0.5d</span></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h6>한 묶음 제안</h6>
+      <ul>
+        <li>01 + 02 + 06<span class="mono">~3d</span></li>
+        <li>05 + 08<span class="mono">~3.5d</span></li>
+        <li>03 + PWA<span class="mono">~3d</span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>DEV·EVENT / FEATURE MOCKUPS · v0.1</span>
+    <span>2026.05.15 · Pretendard + Instrument Serif + JetBrains Mono</span>
+  </div>
+</footer>
+
+</body>
+</html>
