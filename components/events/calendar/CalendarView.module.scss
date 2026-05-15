@@ -1,6 +1,6 @@
 .viewToggle {
   display: inline-flex;
-  background: #F0F0F5;
+  background: var(--vapor-gray-100);
   padding: 4px;
   border-radius: 10px;
 }
@@ -12,15 +12,15 @@
   border-radius: 7px;
   font-size: 13px;
   font-weight: 600;
-  color: #6C6E7E;
+  color: var(--vapor-gray-600);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 6px;
 
   &.on {
-    background: #fff;
-    color: #2B2D36;
+    background: var(--vapor-gray-000);
+    color: var(--vapor-gray-900);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
   }
 }
