@@ -10,6 +10,13 @@ html[data-theme='light'] {
   --gray-4: #{$light-gray-4};
   --gray-5: #{$light-gray-5};
 
+  // Translucent surfaces (sticky header / glass overlays).
+  // Pre-composed rgba so SCSS does not have to interpolate runtime variables.
+  --header-bg: hsla(0, 0%, 100%, 0.88);
+  --glass-overlay: rgba(255, 255, 255, 0.9);
+  --glass-overlay-strong: rgba(255, 255, 255, 1);
+  --notice-bg: rgba(0, 67, 255, 0.08);
+
   // KTB brand
   --ktb-tech-blue: #{$ktb-tech-blue};
   --ktb-tech-navy: #{$ktb-tech-navy};
@@ -46,6 +53,12 @@ html[data-theme='dark'] {
   --gray-3: #{$dark-gray-3};
   --gray-4: #{$dark-gray-4};
   --gray-5: #{$dark-gray-5};
+
+  // Translucent surfaces — dark equivalents of the light tokens.
+  --header-bg: hsla(225, 7%, 8%, 0.86);
+  --glass-overlay: rgba(20, 20, 28, 0.72);
+  --glass-overlay-strong: rgba(28, 28, 36, 0.9);
+  --notice-bg: rgba(0, 67, 255, 0.14);
 
   // KTB brand (same hex in dark — saturated blue still reads on dark)
   --ktb-tech-blue: #{$ktb-tech-blue};

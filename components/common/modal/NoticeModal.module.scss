@@ -91,7 +91,7 @@
 }
 
 .notice--light {
-  background-color: rgba(0, 67, 255, 0.08);
+  background-color: var(--notice-bg);
 }
 
 @keyframes appearIn {

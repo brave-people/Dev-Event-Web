@@ -10,7 +10,7 @@
   z-index: 99;
   min-height: 3.5rem;
   border-bottom: 1px solid var(--vapor-gray-300);
-  background-color: hsla(0, 0%, 100%, .88);
+  background-color: var(--header-bg);
   backdrop-filter: saturate(150%) blur(32px);
 
   &__inner {
