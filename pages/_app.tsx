@@ -25,7 +25,6 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   useEffect(() => {
     Modal.setAppElement('#__next');
-    document.documentElement.setAttribute('data-theme', 'light');
     const handleRouteChange = (url: URL) => {
       gtag.pageview(url);
     };
