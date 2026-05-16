@@ -13,9 +13,11 @@
   justify-content: center;
   transition: background-color 0.18s ease, transform 0.12s ease;
   -webkit-tap-highlight-color: transparent;
+  color: var(--vapor-gray-600);
 
   &:hover {
     background-color: var(--vapor-gray-100);
+    color: var(--vapor-gray-900);
   }
 
   &:active {
@@ -36,17 +38,13 @@
     transition: opacity 0.25s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 
     svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    svg path {
-      fill: var(--vapor-gray-600);
-      transition: fill 0.2s ease;
+      width: 20px;
+      height: 20px;
+      overflow: visible;
     }
   }
 
-  // Default state (light): show sun, hide moon
+  // Default (light): show sun, hide moon
   &__icon--sun {
     opacity: 1;
     transform: rotate(0deg) scale(1);
@@ -56,7 +54,7 @@
     transform: rotate(-90deg) scale(0.6);
   }
 
-  // Dark state: swap
+  // Dark: swap
   &.is-dark &__icon--sun {
     opacity: 0;
     transform: rotate(90deg) scale(0.6);
@@ -64,9 +62,5 @@
   &.is-dark &__icon--moon {
     opacity: 1;
     transform: rotate(0deg) scale(1);
-  }
-
-  &:hover svg path {
-    fill: var(--vapor-gray-900);
   }
 }

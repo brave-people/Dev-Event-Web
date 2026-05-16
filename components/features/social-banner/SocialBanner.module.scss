@@ -5,7 +5,10 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  margin: 20px 0 24px;
+  // Top margin is generous because the banner now sits between the sticky
+  // page header and the "전체 행사" filter heading — needs breathing room
+  // so it doesn't read as glued to the header.
+  margin: 40px 0 28px;
   width: 100%;
 }
 
@@ -132,7 +135,10 @@
   padding: 7px 12px;
   border-radius: 9999px;
   background: #fff;
-  color: var(--vapor-gray-900);
+  // Pill bg is always white (sits on the always-dark/gradient card surface),
+  // so the text color must be a fixed dark value — not a theme-aware token,
+  // which would invert to near-white in dark mode and disappear.
+  color: #2B2D36;
   letter-spacing: -0.005em;
   white-space: nowrap;
 
@@ -145,7 +151,7 @@
   .banner {
     grid-template-columns: 1fr;
     gap: 8px;
-    margin: 16px 0 20px;
+    margin: 28px 0 20px;
   }
 
   .card {

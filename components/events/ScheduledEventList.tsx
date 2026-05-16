@@ -12,8 +12,8 @@ type Props = {
 const ScheduledEventList = ({ events, isError }: Props) => {
   return (
     <section>
-      <EventFilter />
       <SocialBanner />
+      <EventFilter />
       <ItemList events={events} isError={isError} />
     </section>
   );

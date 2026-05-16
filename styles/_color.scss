@@ -1,29 +1,35 @@
+// ========================================
+// Legacy theme vars (5-gray scale).
+// Dark values mapped to Wanted Design System semantic tokens (extracted from
+// figma.com/design/qQPdpnglONbuWul4cvodyj — node 15625:32983 Color/Semantic/Dark).
+// ========================================
+
 $light-primary: rgba(44, 76, 239, 1);
-$dark-primary: rgba(79, 108, 255, 1);
+$dark-primary: #3385FF;                  // Wanted: color-semantic-primary-normal (dark)
 
 $light-background-1: rgba(255, 255, 255, 1);
-$dark-background-1: rgba(13, 13, 13, 1);
+$dark-background-1: #1B1C1E;             // Wanted: background-normal-normal
 
 $light-background-2: rgba(242, 242, 242, 1);
-$dark-background-2: rgba(26, 26, 26, 1);
+$dark-background-2: #212225;             // Wanted: background-elevated-normal
 
 $light-gray-1: rgba(49, 50, 52, 1);
-$dark-gray-1: rgba(203, 203, 206, 1);
+$dark-gray-1: #FFFFFF;                   // Wanted: label-strong
 
 $light-gray-2: rgba(116, 117, 121, 1);
-$dark-gray-2: rgba(121, 122, 129, 1);
+$dark-gray-2: #AEB0B6;                   // Wanted: label-alternative (base)
 
 $light-gray-3: rgba(171, 172, 178, 1);
-$dark-gray-3: rgba(81, 83, 88, 1);
+$dark-gray-3: #5A5C63;                   // Wanted: interaction-inactive
 
 $light-gray-4: rgba(211, 212, 216, 1);
-$dark-gray-4: rgba(51, 52, 57, 1);
+$dark-gray-4: #37383C;                   // Wanted: line-solid-normal
 
 $light-gray-5: rgba(231, 232, 236, 1);
-$dark-gray-5: rgba(34, 35, 38, 1);
+$dark-gray-5: #2E2F33;                   // Wanted: line-solid-alternative
 
 // ========================================
-// KTB / Vapor design tokens (DESIGN.md)
+// KTB / Vapor design tokens (DESIGN.md — light theme)
 // ========================================
 
 // KTB brand
@@ -32,7 +38,7 @@ $ktb-tech-navy: #000040;
 $ktb-tech-navy-hover: #0238D1;
 $ktb-tech-sky: #78CDFF;
 
-// Vapor gray ramp
+// Vapor gray ramp (light)
 $vapor-gray-000: #ffffff;
 $vapor-gray-050: #F7F7FA;
 $vapor-gray-100: #F0F0F5;
@@ -51,3 +57,42 @@ $vapor-text-danger: #D91C29;
 $vapor-text-success: #08785E;
 $vapor-text-warning: #B45209;
 $vapor-text-primary: #1D6CE0;
+
+// ========================================
+// Wanted Design System — Dark Mode tokens
+// Extracted from Figma file qQPdpnglONbuWul4cvodyj, node 15625:32983
+// (Color → Semantic → Dark frame). These power the dark palette in Theme.scss
+// instead of inverting the light Vapor scale, which produced unreliable contrast.
+// ========================================
+
+// Background — page canvas + elevated surfaces
+$wanted-dark-bg-base:           #1B1C1E;   // background-normal-normal (page bg)
+$wanted-dark-bg-alt:            #0F0F10;   // background-normal-alternative (deepest)
+$wanted-dark-bg-elevated:       #212225;   // background-elevated-normal (cards, modals)
+$wanted-dark-bg-elevated-alt:   #141415;   // background-elevated-alternative
+
+// Line — borders and dividers
+$wanted-dark-line-solid:        #37383C;   // line-solid-normal (standard 1px border)
+$wanted-dark-line-neutral:      #333438;   // line-solid-neutral
+$wanted-dark-line-alt:          #2E2F33;   // line-solid-alternative (subtle)
+
+// Interaction — disabled/inactive states
+$wanted-dark-interaction-inactive: #5A5C63;
+$wanted-dark-interaction-disable:  #2E2F33;
+
+// Label — text colors (semantic)
+$wanted-dark-label-strong:      #FFFFFF;   // label-strong
+$wanted-dark-label-normal:      #F7F7F8;   // label-normal
+$wanted-dark-label-neutral:     #C2C4C8;   // label-neutral (base, 88% alpha in spec)
+$wanted-dark-label-alternative: #AEB0B6;   // label-alternative (base, 61% alpha in spec)
+$wanted-dark-label-disable:     #989BA2;   // label-disable (base, 16% alpha in spec)
+
+// Primary — brand blue scale for dark mode
+$wanted-dark-primary-normal:    #3385FF;   // primary-normal
+$wanted-dark-primary-strong:    #1A75FF;   // primary-strong
+$wanted-dark-primary-heavy:     #0066FF;   // primary-heavy
+
+// Status
+$wanted-dark-status-positive:   #1ED45A;
+$wanted-dark-status-cautionary: #FFA938;
+$wanted-dark-status-negative:   #FF6363;

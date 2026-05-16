@@ -59,7 +59,7 @@ const SocialBanner: React.FC = () => {
         target="_blank"
         rel="noopener noreferrer"
         className={cn('card', 'card--threads')}
-        aria-label="Threads에서 데브이벤트 팔로우"
+        aria-label="Threads에서 데브이벤트 계정 보러가기"
       >
         <span className={cn('icon')}>
           <ThreadsIcon />
@@ -70,7 +70,7 @@ const SocialBanner: React.FC = () => {
           <span className={cn('handle')}>{HANDLE}</span>
         </span>
         <span className={cn('cta')}>
-          팔로우
+          보러가기
           <ArrowIcon />
         </span>
       </a>
@@ -80,18 +80,18 @@ const SocialBanner: React.FC = () => {
         target="_blank"
         rel="noopener noreferrer"
         className={cn('card', 'card--ig')}
-        aria-label="Instagram에서 데브이벤트 팔로우"
+        aria-label="Instagram에서 데브이벤트 계정 보러가기"
       >
         <span className={cn('icon')}>
           <InstagramIcon />
         </span>
         <span className={cn('body')}>
           <span className={cn('label')}>Instagram</span>
-          <span className={cn('copy')}>행사 현장 사진 · 후기 둘러보기</span>
+          <span className={cn('copy')}>익숙한 피드에서 행사 소식 받기</span>
           <span className={cn('handle')}>{HANDLE}</span>
         </span>
         <span className={cn('cta')}>
-          팔로우
+          보러가기
           <ArrowIcon />
         </span>
       </a>
