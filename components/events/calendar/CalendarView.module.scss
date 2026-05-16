@@ -1,6 +1,6 @@
 .viewToggle {
   display: inline-flex;
-  background: #F0F0F5;
+  background: var(--toggle-track-bg);
   padding: 4px;
   border-radius: 10px;
 }
@@ -12,15 +12,15 @@
   border-radius: 7px;
   font-size: 13px;
   font-weight: 600;
-  color: #6C6E7E;
+  color: var(--vapor-gray-600);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 6px;
 
   &.on {
-    background: #fff;
-    color: #2B2D36;
+    background: var(--toggle-active-bg);
+    color: var(--vapor-gray-900);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
   }
 }
@@ -44,30 +44,32 @@
   font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.012em;
+  color: var(--vapor-gray-900);
 }
 
 .header__navBtn {
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  border: 1px solid #E1E1E8;
-  background: #fff;
+  border: 1px solid var(--vapor-gray-300);
+  background: var(--vapor-gray-000);
   cursor: pointer;
   font-size: 16px;
-  color: #6C6E7E;
-  &:hover { border-color: #CDCED6; }
+  color: var(--vapor-gray-600);
+  &:hover { border-color: var(--vapor-gray-400); }
 }
 
 .header__todayBtn {
   margin-left: 8px;
   padding: 6px 12px;
   border-radius: 8px;
-  border: 1px solid #E1E1E8;
-  background: #fff;
-  color: #2B2D36;
+  border: 1px solid var(--vapor-gray-300);
+  background: var(--vapor-gray-000);
+  color: var(--vapor-gray-900);
   font-size: 13px;
   font-weight: 500;
   cursor: pointer;
+  &:hover { border-color: var(--vapor-gray-400); }
 }
 
 .grid__weekdays {
@@ -78,27 +80,27 @@
   div {
     font-size: 12px;
     font-weight: 600;
-    color: #6C6E7E;
+    color: var(--vapor-gray-600);
     text-align: center;
     padding: 8px 0;
     min-width: 0;
   }
-  div:first-child { color: #D91C29; }
-  div:last-child  { color: #1D6CE0; }
+  div:first-child { color: var(--vapor-text-danger); }
+  div:last-child  { color: var(--vapor-text-primary); }
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 1px;
-  background: #E8E8EE;
-  border: 1px solid #E8E8EE;
+  background: var(--vapor-gray-200);
+  border: 1px solid var(--vapor-gray-200);
   border-radius: 8px;
   overflow: hidden;
 }
 
 .grid__cell {
-  background: #fff;
+  background: var(--vapor-gray-000);
   min-height: 110px;
   min-width: 0;
   padding: 8px;
@@ -108,23 +110,28 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  &:hover { background: #F7F7FA; }
+  color: var(--vapor-gray-900);
+  &:hover { background: var(--vapor-gray-050); }
 
-  &.outside { background: #F7F7FA; color: #8C8F9F; }
+  &.outside {
+    background: var(--vapor-gray-050);
+    color: var(--vapor-gray-500);
+  }
 }
 
 .grid__num {
   font-size: 13px;
   font-weight: 600;
   padding: 2px 4px;
+  color: var(--vapor-gray-900);
 
-  &.sun { color: #D91C29; }
-  &.sat { color: #1D6CE0; }
-  &.outside { color: #8C8F9F; }
+  &.sun { color: var(--vapor-text-danger); }
+  &.sat { color: var(--vapor-text-primary); }
+  &.outside { color: var(--vapor-gray-500); }
 }
 
 .grid__numToday {
-  background: #0043FF;
+  background: var(--ktb-tech-blue);
   color: #fff !important;
   width: 22px;
   height: 22px;
@@ -142,8 +149,18 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.3;
+
+  // Dark mode override — the inline style sets `color: <tag hex>` and
+  // `background: rgba(<tag>, 0.08)`. Both are tuned for light bg; on a
+  // dark page they collapse to dark-on-dark and become unreadable.
+  // We force a high-contrast text + elevated surface here, but keep the
+  // left border (also inline) tinted so category color cue is preserved.
+  :global(html[data-theme='dark']) & {
+    color: var(--vapor-gray-900) !important;
+    background: var(--vapor-gray-100) !important;
+  }
 }
 .grid__chip--start { border-radius: 4px 0 0 4px; margin-right: -9px; padding-right: 12px; }
 .grid__chip--mid   { border-radius: 0; margin-left: -9px; margin-right: -9px; padding-left: 12px; padding-right: 12px; }
@@ -151,7 +168,7 @@
 
 .grid__more {
   font-size: 11px;
-  color: #6C6E7E;
+  color: var(--vapor-gray-600);
   padding: 2px 6px;
 }
 
@@ -173,12 +190,13 @@
   gap: 2px;
   cursor: pointer;
   position: relative;
+  color: var(--vapor-gray-900);
 
-  &.outside { color: #8C8F9F; }
-  &.today   { background: #0043FF; color: #fff; }
-  &.selected { outline: 2px solid #0043FF; outline-offset: -2px; }
-  &.sun:not(.today):not(.outside) { color: #D91C29; }
-  &.sat:not(.today):not(.outside) { color: #1D6CE0; }
+  &.outside { color: var(--vapor-gray-500); }
+  &.today   { background: var(--ktb-tech-blue); color: #fff; }
+  &.selected { outline: 2px solid var(--ktb-tech-blue); outline-offset: -2px; }
+  &.sun:not(.today):not(.outside) { color: var(--vapor-text-danger); }
+  &.sat:not(.today):not(.outside) { color: var(--vapor-text-primary); }
 }
 
 .dot__dots {
@@ -191,7 +209,7 @@
     border-radius: 50%;
     display: inline-block;
   }
-  i.plus { background: #8C8F9F; }
+  i.plus { background: var(--vapor-gray-500); }
 }
 
 .sheet__overlay {
@@ -205,13 +223,14 @@
 }
 
 .sheet {
-  background: #fff;
+  background: var(--vapor-gray-000);
   border-radius: 12px;
   padding: 20px;
   max-width: 480px;
   width: 90vw;
   max-height: 80vh;
   overflow-y: auto;
+  color: var(--vapor-gray-900);
 }
 
 .sheet__header {
@@ -225,6 +244,7 @@
   font-size: 16px;
   font-weight: 800;
   letter-spacing: -0.012em;
+  color: var(--vapor-gray-900);
 }
 
 .sheet__close {
@@ -232,12 +252,12 @@
   border: 0;
   font-size: 18px;
   cursor: pointer;
-  color: #6C6E7E;
+  color: var(--vapor-gray-600);
 }
 
 .sheet__empty {
   text-align: center;
-  color: #6C6E7E;
+  color: var(--vapor-gray-600);
   padding: 32px 0;
   font-size: 13px;
 }
@@ -246,15 +266,15 @@
   display: flex;
   gap: 12px;
   padding: 12px 0;
-  border-bottom: 1px solid #F0F0F5;
+  border-bottom: 1px solid var(--vapor-gray-100);
   cursor: pointer;
 
   &:last-child { border-bottom: 0; }
 
   .sheet__bar { width: 3px; flex-shrink: 0; border-radius: 2px; }
   .sheet__body {
-    .sheet__itemTitle { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-    .sheet__itemMeta  { font-size: 12px; color: #6C6E7E; }
+    .sheet__itemTitle { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: var(--vapor-gray-900); }
+    .sheet__itemMeta  { font-size: 12px; color: var(--vapor-gray-600); }
   }
 }
 
@@ -270,8 +290,8 @@
 }
 
 .container {
-  background: #fff;
-  border: 1px solid #E1E1E8;
+  background: var(--vapor-gray-000);
+  border: 1px solid var(--vapor-gray-300);
   border-radius: 12px;
   padding: 24px;
   margin: 16px 0 40px;

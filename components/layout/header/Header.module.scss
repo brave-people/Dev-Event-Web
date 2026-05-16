@@ -10,7 +10,7 @@
   z-index: 99;
   min-height: 3.5rem;
   border-bottom: 1px solid var(--vapor-gray-300);
-  background-color: hsla(0, 0%, 100%, .88);
+  background-color: var(--header-bg);
   backdrop-filter: saturate(150%) blur(32px);
 
   &__inner {
@@ -66,30 +66,81 @@
     .wrapper {
       padding-left: 24px;
     }
+
+    // Login text button — align hover treatment with ThemeToggle:
+    // same border-radius + hover bg so the two header buttons read as a pair.
+    .login button {
+      border-radius: 10px;
+      transition: background-color 0.18s ease, color 0.15s ease,
+        transform 0.12s ease;
+      -webkit-tap-highlight-color: transparent;
+
+      &:hover {
+        background-color: var(--vapor-gray-100);
+        color: var(--vapor-gray-900);
+      }
+      &:active {
+        transform: scale(0.96);
+      }
+      &:focus-visible {
+        outline: 2px solid var(--ktb-tech-blue);
+        outline-offset: 2px;
+      }
+    }
   }
 }
 
 .profile {
   position: relative;
-  padding: 0px;
-  margin: 0px;
-  height: 24px;
+  padding: 0;
+  margin: 0;
+  // Match ThemeToggle's 40×40 frame so the icon button shares the same
+  // tap target and visual rhythm with the theme toggle on its left.
+  height: 40px;
+
   .profile-button {
     border: none;
     background-color: transparent;
-    width: 24px;
-    height: 24px;
-    padding: 0px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 10px;
     cursor: pointer;
+    color: var(--vapor-gray-500);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.18s ease, color 0.15s ease,
+      transform 0.12s ease;
+    -webkit-tap-highlight-color: transparent;
 
-    svg path {
-      fill: var(--vapor-gray-500);
+    svg {
+      width: 20px;
+      height: 20px;
+      overflow: visible;
+    }
+    // Glyph is stroke-based (fill="none" + stroke="currentColor"), so we
+    // do NOT force a fill here — doing so would override the inline
+    // fill="none" via CSS specificity and render the icon as a solid blob.
+    // Color flows via the button's `color` property → currentColor → stroke.
+
+    &:hover {
+      background-color: var(--vapor-gray-100);
+      color: var(--vapor-gray-900);
+    }
+    &:active {
+      transform: scale(0.92);
+    }
+    &:focus-visible {
+      outline: 2px solid var(--ktb-tech-blue);
+      outline-offset: 2px;
     }
   }
 
   .profile-menu {
     position: absolute;
-    top: 44px;
+    // 40px button + 8px gap. Was 44px when the button was 24×24.
+    top: 48px;
     right: 0;
     left: auto;
     margin-left: 0;

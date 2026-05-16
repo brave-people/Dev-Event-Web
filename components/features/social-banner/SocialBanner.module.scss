@@ -1,0 +1,191 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.banner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  // Top margin is generous because the banner now sits between the sticky
+  // page header and the "전체 행사" filter heading — needs breathing room
+  // so it doesn't read as glued to the header.
+  margin: 40px 0 28px;
+  width: 100%;
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 80px;
+  text-decoration: none;
+  color: #fff;
+  transition: transform 0.18s ease;
+  -webkit-tap-highlight-color: transparent;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ktb-tech-blue);
+    outline-offset: 2px;
+  }
+
+  &--threads {
+    background: linear-gradient(135deg, #0e0e14 0%, #1c1c24 100%);
+  }
+
+  &--ig {
+    background: linear-gradient(
+      135deg,
+      #ffe08a 0%,
+      #ff6f4d 25%,
+      #e53e5e 50%,
+      #c13584 75%,
+      #5b3f9f 100%
+    );
+
+    // Subtle top-right shine over the gradient.
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at 100% 0%,
+        rgba(255, 255, 255, 0.18),
+        transparent 60%
+      );
+      pointer-events: none;
+    }
+  }
+}
+
+.icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    color: #fff;
+  }
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 10.5px;
+  font-weight: 600;
+  opacity: 0.78;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.copy {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.012rem;
+  line-height: 1.3;
+  margin-bottom: 3px;
+  word-break: keep-all;
+  // Cap to two lines worst case; visual contract is single-line on desktop.
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.handle {
+  font-size: 11.5px;
+  font-weight: 500;
+  opacity: 0.78;
+  font-family: 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cta {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 7px 12px;
+  border-radius: 9999px;
+  background: #fff;
+  // Pill bg is always white (sits on the always-dark/gradient card surface),
+  // so the text color must be a fixed dark value — not a theme-aware token,
+  // which would invert to near-white in dark mode and disappear.
+  color: #2B2D36;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+
+  .card--ig & {
+    color: #c13584;
+  }
+}
+
+@media (max-width: 768px) {
+  .banner {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin: 28px 0 20px;
+  }
+
+  .card {
+    padding: 14px 16px;
+    min-height: 68px;
+    gap: 12px;
+    border-radius: 12px;
+  }
+
+  .icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  .copy {
+    font-size: 14px;
+  }
+
+  .handle {
+    font-size: 11px;
+  }
+
+  .cta {
+    padding: 6px 10px;
+    font-size: 11px;
+
+    svg {
+      display: none;
+    }
+  }
+}

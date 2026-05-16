@@ -22,6 +22,12 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          {/* FOUC prevention: resolve theme before React boots */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(){try{var s=localStorage.getItem('dev-event:theme');var t=s||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();`,
+            }}
+          />
           <meta property="og:type" content="website" />
           <meta property="og:site_name" content="Dev Event" />
           <meta

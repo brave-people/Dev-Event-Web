@@ -7,6 +7,7 @@ import { marked } from 'marked';
 import Layout from 'components/layout';
 import ShareIcon from 'components/icons/ShareIcon';
 import BookmarkIcon from 'components/icons/BookmarkIcon';
+import CalendarExportButton from 'components/common/calendar-export/CalendarExportButton';
 import DdayTag from 'components/common/tag/DdayTag';
 import FilterTag from 'components/common/tag/FilterTag';
 import LoginModal from 'components/common/modal/LoginModal';
@@ -217,11 +218,12 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
             </div>
 
             <div className={cx('event-detail__info-section')}>
-              {/* 공유/북마크 아이콘 */}
+              {/* 공유/캘린더/북마크 아이콘 */}
               <div className={cx('event-detail__header-actions')}>
                 <button className={cx('icon-btn')} onClick={handleShare}>
                   <ShareIcon color="var(--vapor-gray-500)" />
                 </button>
+                <CalendarExportButton event={eventData} />
                 <button className={cx('icon-btn')} onClick={handleBookmark}>
                   <BookmarkIcon
                     color={

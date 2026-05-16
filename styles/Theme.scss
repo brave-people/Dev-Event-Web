@@ -10,6 +10,18 @@ html[data-theme='light'] {
   --gray-4: #{$light-gray-4};
   --gray-5: #{$light-gray-5};
 
+  // Translucent surfaces (sticky header / glass overlays).
+  // Pre-composed rgba so SCSS does not have to interpolate runtime variables.
+  --header-bg: hsla(0, 0%, 100%, 0.88);
+  --glass-overlay: rgba(255, 255, 255, 0.9);
+  --glass-overlay-strong: rgba(255, 255, 255, 1);
+  --notice-bg: rgba(0, 67, 255, 0.08);
+
+  // Segmented control / pill toggle (e.g. 리스트/캘린더).
+  // active needs to sit visibly above track in both themes.
+  --toggle-track-bg: #F0F0F5;
+  --toggle-active-bg: #ffffff;
+
   // KTB brand
   --ktb-tech-blue: #{$ktb-tech-blue};
   --ktb-tech-navy: #{$ktb-tech-navy};
@@ -37,39 +49,59 @@ html[data-theme='light'] {
   --vapor-text-primary: #{$vapor-text-primary};
 }
 
+// ============================================================
+// DARK THEME — Wanted Design System palette
+// Extracted from Figma file qQPdpnglONbuWul4cvodyj, node 15625:32983
+// (Color → Semantic → Dark). Replaces the older "invert light scale"
+// approach which caused tokens like vapor-gray-950 to flip to white
+// and break components that expected a stable dark surface.
+// ============================================================
 html[data-theme='dark'] {
-  --primary: #{$dark-primary};
-  --background-1: #{$dark-background-1};
-  --background-2: #{$dark-background-2};
-  --gray-1: #{$dark-gray-1};
-  --gray-2: #{$dark-gray-2};
-  --gray-3: #{$dark-gray-3};
-  --gray-4: #{$dark-gray-4};
-  --gray-5: #{$dark-gray-5};
+  --primary: #{$wanted-dark-primary-normal};
+  --background-1: #{$wanted-dark-bg-base};
+  --background-2: #{$wanted-dark-bg-elevated};
+  --gray-1: #{$wanted-dark-label-strong};
+  --gray-2: #{$wanted-dark-label-alternative};
+  --gray-3: #{$wanted-dark-interaction-inactive};
+  --gray-4: #{$wanted-dark-line-solid};
+  --gray-5: #{$wanted-dark-line-alt};
 
-  // KTB brand (same hex in dark — saturated blue still reads on dark)
-  --ktb-tech-blue: #{$ktb-tech-blue};
+  // Translucent surfaces — rgba composed from Wanted background-normal/elevated
+  --header-bg: rgba(27, 28, 30, 0.86);              // #1B1C1E @ 86%
+  --glass-overlay: rgba(33, 34, 37, 0.72);          // #212225 @ 72%
+  --glass-overlay-strong: rgba(33, 34, 37, 0.94);   // #212225 @ 94%
+  --notice-bg: rgba(51, 133, 255, 0.12);            // #3385FF @ 12%
+
+  // Segmented control: track = elevated surface, active = one step brighter line.
+  --toggle-track-bg: #{$wanted-dark-bg-elevated};       // #212225
+  --toggle-active-bg: #{$wanted-dark-line-solid};       // #37383C
+
+  // KTB brand — brand blue stays for light/dark identity, but the
+  // dark variant uses the brighter Wanted primary-normal for legibility.
+  --ktb-tech-blue: #{$wanted-dark-primary-normal};      // #3385FF (was #0043FF)
   --ktb-tech-navy: #{$ktb-tech-navy};
-  --ktb-tech-navy-hover: #{$ktb-tech-navy-hover};
+  --ktb-tech-navy-hover: #{$wanted-dark-primary-strong}; // #1A75FF
   --ktb-tech-sky: #{$ktb-tech-sky};
 
-  // Vapor gray ramp (dark theme: 000 = near-black bg → 950 = white text)
-  --vapor-gray-000: #{$vapor-gray-950};
-  --vapor-gray-050: #{$vapor-gray-900};
-  --vapor-gray-100: #{$vapor-gray-800};
-  --vapor-gray-200: #{$vapor-gray-800};
-  --vapor-gray-300: #{$vapor-gray-700};
-  --vapor-gray-400: #{$vapor-gray-500};
-  --vapor-gray-500: #{$vapor-gray-400};
-  --vapor-gray-600: #{$vapor-gray-300};
-  --vapor-gray-700: #{$vapor-gray-200};
-  --vapor-gray-800: #{$vapor-gray-100};
-  --vapor-gray-900: #{$vapor-gray-050};
-  --vapor-gray-950: #{$vapor-gray-000};
+  // Vapor gray ramp — explicit dark values (NOT inverted from light).
+  // 000–050: page + elevated surfaces. 100–300: subtle dividers / borders.
+  // 400: hover border. 500–950: text scale from disabled → strongest.
+  --vapor-gray-000: #{$wanted-dark-bg-base};            // page bg              #1B1C1E
+  --vapor-gray-050: #{$wanted-dark-bg-elevated};        // alt surface          #212225
+  --vapor-gray-100: #{$wanted-dark-line-alt};           // placeholder bg       #2E2F33
+  --vapor-gray-200: #{$wanted-dark-line-neutral};       // subtle divider       #333438
+  --vapor-gray-300: #{$wanted-dark-line-solid};         // standard border      #37383C
+  --vapor-gray-400: #{$wanted-dark-interaction-inactive}; // border hover       #5A5C63
+  --vapor-gray-500: #{$wanted-dark-label-disable};      // icon, placeholder    #989BA2
+  --vapor-gray-600: #{$wanted-dark-label-alternative};  // hint text            #AEB0B6
+  --vapor-gray-700: #{$wanted-dark-label-neutral};      // secondary on alt     #C2C4C8
+  --vapor-gray-800: #{$wanted-dark-label-normal};       // secondary text       #F7F7F8
+  --vapor-gray-900: #{$wanted-dark-label-strong};       // body, heading        #FFFFFF
+  --vapor-gray-950: #{$wanted-dark-label-strong};       // strongest emphasis   #FFFFFF
 
-  // Semantic
-  --vapor-text-danger: #{$vapor-text-danger};
-  --vapor-text-success: #{$vapor-text-success};
-  --vapor-text-warning: #{$vapor-text-warning};
-  --vapor-text-primary: #{$vapor-text-primary};
+  // Semantic — Wanted status colors (brighter, more saturated for dark legibility)
+  --vapor-text-danger: #{$wanted-dark-status-negative};   // #FF6363
+  --vapor-text-success: #{$wanted-dark-status-positive};  // #1ED45A
+  --vapor-text-warning: #{$wanted-dark-status-cautionary}; // #FFA938
+  --vapor-text-primary: #{$wanted-dark-primary-normal};   // #3385FF
 }

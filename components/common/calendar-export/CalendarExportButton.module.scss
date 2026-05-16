@@ -1,0 +1,163 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.trigger {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.18s ease, transform 0.12s ease, color 0.18s ease;
+  padding: 4px;
+  color: var(--vapor-gray-500);
+  -webkit-tap-highlight-color: transparent;
+
+  &:hover {
+    background-color: var(--vapor-gray-100);
+    color: var(--vapor-gray-700);
+  }
+
+  &:active {
+    transform: scale(0.92);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ktb-tech-blue);
+    outline-offset: 2px;
+  }
+
+  &.is-open {
+    background-color: var(--vapor-gray-100);
+    color: var(--ktb-tech-blue);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 50;
+  width: 240px;
+  padding: 6px;
+  border-radius: 14px;
+  background-color: var(--vapor-gray-000);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 64, 0.06),
+    0 12px 32px rgba(0, 0, 64, 0.1),
+    0 4px 8px rgba(0, 0, 64, 0.04);
+  transform-origin: top right;
+  animation: menuIn 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
+  text-align: left;
+
+  &__head {
+    padding: 8px 10px 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--vapor-gray-500);
+  }
+
+  &__item {
+    width: 100%;
+    padding: 9px 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--vapor-gray-900);
+    transition: background-color 0.15s ease, transform 0.1s ease;
+    -webkit-tap-highlight-color: transparent;
+    text-align: left;
+
+    &:hover {
+      background-color: var(--vapor-gray-050);
+    }
+    &:active {
+      background-color: var(--vapor-gray-100);
+      transform: scale(0.99);
+    }
+    &:focus-visible {
+      background-color: var(--vapor-gray-050);
+      outline: 2px solid var(--ktb-tech-blue);
+      outline-offset: -2px;
+    }
+  }
+
+  &__swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+  }
+
+  &__label {
+    flex: 1;
+    letter-spacing: -0.005em;
+  }
+
+  &__hint {
+    font-family: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--vapor-gray-500);
+  }
+}
+
+@keyframes menuIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Mobile parity with EventDetail's icon-btn
+@media (max-width: 1199px) {
+  .trigger {
+    width: 36px;
+    height: 36px;
+    background-color: var(--glass-overlay);
+    backdrop-filter: saturate(150%) blur(8px);
+    -webkit-backdrop-filter: saturate(150%) blur(8px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+
+    &:hover {
+      background-color: var(--glass-overlay-strong);
+    }
+  }
+
+  .menu {
+    width: 220px;
+  }
+}

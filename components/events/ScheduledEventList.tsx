@@ -1,5 +1,6 @@
 import ItemList from 'components/common/item/ItemList';
 import EventFilter from 'components/features/filters/EventFilter';
+import SocialBanner from 'components/features/social-banner/SocialBanner';
 import { EventResponse } from 'model/event';
 import React from 'react';
 
@@ -11,6 +12,7 @@ type Props = {
 const ScheduledEventList = ({ events, isError }: Props) => {
   return (
     <section>
+      <SocialBanner />
       <EventFilter />
       <ItemList events={events} isError={isError} />
     </section>

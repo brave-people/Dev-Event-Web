@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dev Event Web · Social Banner Mockup</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Mapped 1:1 to project DESIGN.md tokens */
+  --gray-000:#ffffff;
+  --gray-050:#F7F7FA;       /* background-alternative */
+  --gray-100:#F0F0F5;
+  --gray-200:#E8E8EE;
+  --gray-300:#E1E1E8;       /* border-color */
+  --gray-400:#CDCED6;       /* border-hover */
+  --gray-500:#8C8F9F;
+  --gray-600:#6C6E7E;       /* text-hint */
+  --gray-700:#525463;
+  --gray-800:#3E404C;       /* text-secondary */
+  --gray-900:#2B2D36;       /* text-normal */
+  --gray-950:#252730;
+  --ktb-blue:#0043ff;
+  --ktb-navy:#000040;
+  --ktb-navy-hover:#0238D1;
+  --ktb-sky:#78CDFF;
+
+  --ig-grad:linear-gradient(135deg,#FFE08A 0%,#FF6F4D 25%,#E53E5E 50%,#C13584 75%,#5B3F9F 100%);
+  --threads-ink:#0E0E14;
+
+  --r-200:6px;   /* badge */
+  --r-400:12px;  /* standard */
+  --r-600:24px;  /* elevated */
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  background:var(--gray-050);
+  color:var(--gray-900);
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;
+  line-height:1.5;
+}
+.serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;}
+.mono{font-family:'JetBrains Mono',monospace;}
+button{font:inherit;background:none;border:none;cursor:pointer;color:inherit;}
+a{color:inherit;text-decoration:none;}
+
+/* ============ TOP BAR ============ */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:hsla(0,0%,100%,.88);
+  backdrop-filter:blur(20px) saturate(150%);
+  border-bottom:1px solid var(--gray-300);
+}
+.topbar__inner{
+  max-width:1104px;margin:0 auto;
+  padding:14px 48px;
+  display:flex;align-items:center;gap:24px;
+  font-size:13px;
+}
+.topbar__logo{font-weight:800;letter-spacing:-0.02em;font-size:15px;}
+.topbar__logo b{color:var(--ktb-blue);}
+.topbar__nav{display:flex;gap:24px;flex:1;}
+.topbar__nav a{color:var(--gray-600);font-weight:500;font-size:13px;transition:color .15s;}
+.topbar__nav a:hover{color:var(--ktb-blue);}
+.topbar__date{
+  color:var(--gray-600);font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:0.06em;
+}
+
+/* ============ HERO ============ */
+.hero{
+  max-width:1104px;margin:0 auto;
+  padding:80px 48px 64px;
+}
+.hero__eyebrow{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:11px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--ktb-blue);font-weight:700;margin-bottom:32px;
+}
+.hero__eyebrow::before{content:"";width:36px;height:1px;background:var(--ktb-blue);}
+.hero h1{
+  font-size:clamp(40px,6.5vw,84px);
+  line-height:0.98;
+  letter-spacing:-0.035em;
+  font-weight:800;
+  margin-bottom:28px;
+}
+.hero h1 em{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;font-weight:400;
+  color:var(--ktb-blue);
+}
+.hero__lede{
+  max-width:640px;font-size:18px;color:var(--gray-700);
+  line-height:1.6;
+}
+.hero__lede mark{
+  background:linear-gradient(180deg,transparent 60%,rgba(0,67,255,0.08) 60%);
+  padding:0 4px;color:var(--gray-900);font-weight:600;
+}
+.hero__meta{
+  margin-top:48px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:32px;
+  border-top:1px solid var(--gray-900);padding-top:24px;
+}
+.hero__meta dt{
+  font-size:10.5px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--gray-600);margin-bottom:8px;font-weight:600;
+}
+.hero__meta dd{font-size:15px;font-weight:600;letter-spacing:-0.01em;}
+.hero__meta dd b{
+  font-family:'JetBrains Mono',monospace;
+  font-weight:500;color:var(--ktb-blue);font-size:12px;
+  display:block;margin-top:2px;
+}
+
+/* ============ FEATURE COMMON ============ */
+.feature{
+  max-width:1104px;margin:0 auto;
+  padding:96px 48px;
+  border-top:1px solid var(--gray-900);
+}
+.feature__head{margin-bottom:48px;max-width:720px;}
+.feature__num{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;
+  font-size:96px;line-height:1;color:var(--ktb-blue);
+  margin-bottom:20px;letter-spacing:-0.02em;
+}
+.feature__label{
+  font-size:11px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--gray-600);font-weight:700;margin-bottom:16px;
+  display:flex;align-items:center;gap:10px;
+}
+.feature__label::before{content:"";width:24px;height:1px;background:var(--gray-600);}
+.feature__title{
+  font-size:clamp(32px,3.6vw,48px);
+  line-height:1.1;letter-spacing:-0.03em;font-weight:700;
+  margin-bottom:20px;
+}
+.feature__title em{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;font-weight:400;color:var(--ktb-blue);
+}
+.feature__lede{
+  font-size:16px;color:var(--gray-700);line-height:1.65;
+}
+.feature__chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 12px;border-radius:9999px;
+  border:1px solid var(--gray-400);
+  font-family:'JetBrains Mono',monospace;
+  font-size:10.5px;color:var(--gray-800);letter-spacing:0.02em;
+}
+.chip--ink{background:var(--gray-900);color:#fff;border-color:var(--gray-900);}
+.chip--accent{background:rgba(0,67,255,0.08);color:var(--ktb-blue);border-color:transparent;font-weight:600;}
+.chip--good{background:rgba(8,120,94,0.1);color:#08785E;border-color:transparent;font-weight:600;}
+.chip--soft{background:var(--gray-100);color:var(--gray-700);border-color:transparent;}
+
+/* ============ MOCKUP CANVAS ============ */
+.canvas{
+  background:var(--gray-050);
+  border:1px solid var(--gray-300);
+  border-radius:var(--r-600);
+  padding:48px;
+  position:relative;
+  overflow:hidden;
+}
+.canvas::before{
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle at 1px 1px,rgba(14,14,20,0.05) 1px,transparent 0);
+  background-size:24px 24px;
+  pointer-events:none;
+  mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%);
+}
+.canvas__cap{
+  position:absolute;top:18px;left:24px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--gray-600);letter-spacing:0.1em;
+  text-transform:uppercase;
+  display:flex;align-items:center;gap:8px;
+  z-index:2;
+}
+.canvas__cap::before{
+  content:"";width:6px;height:6px;background:var(--ktb-blue);border-radius:50%;
+  box-shadow:0 0 0 3px rgba(0,67,255,0.12);
+}
+.canvas__inner{position:relative;z-index:1;}
+
+/* /events page chrome simulation */
+.page{
+  background:var(--gray-000);
+  border:1px solid var(--gray-300);
+  border-radius:var(--r-600);
+  padding:24px;
+  max-width:880px;margin:0 auto;
+}
+.page__title{
+  font-size:24px;font-weight:700;
+  letter-spacing:-0.012rem;
+  margin-bottom:6px;color:var(--gray-900);
+}
+.page__count{
+  font-size:13px;color:var(--gray-600);font-weight:500;
+  margin-bottom:20px;
+}
+.page__filter{
+  display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;
+}
+.page__chip{
+  padding:6px 12px;border:1px solid var(--gray-300);
+  border-radius:9999px;background:var(--gray-000);
+  font-size:13px;font-weight:500;color:var(--gray-700);
+}
+.page__chip.is-on{background:var(--gray-900);color:#fff;border-color:var(--gray-900);}
+.page__grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px;
+}
+.mini-card{
+  background:transparent;
+}
+.mini-card__thumb{
+  width:100%;aspect-ratio:5/3;border-radius:var(--r-400);
+  background:var(--gray-100);position:relative;overflow:hidden;
+  margin-bottom:12px;
+}
+.mini-card__thumb.g1{background:linear-gradient(135deg,#0043ff 0%,#7B9DFF 100%);}
+.mini-card__thumb.g2{background:linear-gradient(135deg,#08785E 0%,#7DDBA8 100%);}
+.mini-card__thumb.g3{background:linear-gradient(135deg,#FF6F4D 0%,#FFB155 100%);}
+.mini-card__badge{
+  position:absolute;top:12px;left:12px;
+  font-size:10.5px;font-weight:600;
+  background:rgba(255,255,255,0.96);
+  color:var(--gray-900);
+  padding:3px 8px;border-radius:9999px;
+}
+.mini-card__name{
+  font-size:13.5px;font-weight:700;
+  letter-spacing:-0.012rem;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  margin-bottom:4px;
+}
+.mini-card__period{
+  font-size:11px;color:var(--gray-600);
+  display:flex;align-items:center;gap:4px;
+}
+
+/* ============ LOGOS ============ */
+.logo-ig{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--ig-grad);
+  border-radius:8px;
+  color:#fff;
+}
+.logo-threads{
+  display:inline-flex;align-items:center;justify-content:center;
+  background:var(--threads-ink);
+  border-radius:8px;
+  color:#fff;
+}
+
+/* ============================================================
+   VARIANT A — Split Card (RECOMMENDED placement: above event list)
+   ============================================================ */
+.va{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  margin-bottom:24px;
+}
+.va__card{
+  position:relative;overflow:hidden;
+  border-radius:var(--r-400);
+  padding:18px 20px;
+  display:flex;align-items:center;gap:16px;
+  transition:transform .18s ease;
+  cursor:pointer;
+}
+.va__card:hover{transform:translateY(-1px);}
+
+.va__card--threads{
+  background:linear-gradient(135deg,#0E0E14 0%,#1C1C24 100%);
+  color:#fff;
+}
+.va__card--ig{
+  background:var(--ig-grad);
+  color:#fff;
+}
+.va__card--ig::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 100% 0%,rgba(255,255,255,0.18),transparent 60%);
+  pointer-events:none;
+}
+.va__icon{
+  width:44px;height:44px;
+  background:rgba(255,255,255,0.14);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;backdrop-filter:blur(8px);
+}
+.va__icon svg{width:24px;height:24px;color:#fff;}
+.va__body{flex:1;min-width:0;position:relative;z-index:1;}
+.va__label{
+  font-size:10.5px;font-weight:600;
+  opacity:0.78;letter-spacing:0.06em;text-transform:uppercase;
+  margin-bottom:2px;
+}
+.va__copy{
+  font-size:15px;font-weight:700;
+  letter-spacing:-0.012rem;line-height:1.3;
+  margin-bottom:2px;
+}
+.va__handle{
+  font-size:11.5px;font-weight:500;opacity:0.78;
+  font-family:'JetBrains Mono',monospace;
+}
+.va__cta{
+  font-size:12px;font-weight:700;
+  padding:7px 12px;border-radius:9999px;
+  background:#fff;color:var(--gray-900);
+  flex-shrink:0;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.va__card--ig .va__cta{color:#C13584;}
+
+/* ============================================================
+   VARIANT B — Slim Strip (placement: inline, narrow)
+   ============================================================ */
+.vb{
+  display:flex;align-items:center;gap:14px;
+  background:var(--gray-000);
+  border:1px solid var(--gray-300);
+  border-radius:var(--r-400);
+  padding:14px 20px;
+  margin-bottom:24px;
+}
+.vb__icons{display:flex;gap:6px;}
+.vb__icon-pill{
+  width:32px;height:32px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+}
+.vb__icon-pill svg{width:18px;height:18px;color:#fff;}
+.vb__copy{
+  flex:1;font-size:13.5px;font-weight:600;
+  letter-spacing:-0.005em;color:var(--gray-900);
+}
+.vb__copy span{color:var(--gray-600);font-weight:500;margin-left:4px;}
+.vb__actions{display:flex;gap:6px;}
+.vb__btn{
+  padding:7px 12px;
+  border-radius:9999px;
+  font-size:12px;font-weight:700;
+  display:inline-flex;align-items:center;gap:4px;
+  border:1px solid var(--gray-300);
+  background:var(--gray-000);
+  color:var(--gray-900);
+  transition:border-color .15s,background .15s;
+}
+.vb__btn:hover{border-color:var(--gray-900);}
+.vb__btn--threads:hover{background:#0E0E14;color:#fff;border-color:#0E0E14;}
+.vb__btn--ig:hover{background:var(--ig-grad);color:#fff;border-color:transparent;}
+.vb__close{
+  width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gray-500);
+}
+.vb__close:hover{background:var(--gray-100);color:var(--gray-900);}
+
+/* ============================================================
+   VARIANT C — Hero Gradient Card (placement: replaces existing top banner)
+   ============================================================ */
+.vc{
+  position:relative;overflow:hidden;
+  border-radius:var(--r-600);
+  padding:32px 36px;
+  background:linear-gradient(135deg,#0E0E14 0%,#1C1C24 45%,#3A1E62 100%);
+  color:#fff;
+  margin-bottom:24px;
+  display:flex;align-items:center;gap:32px;
+}
+.vc::before{
+  content:"";position:absolute;
+  inset:auto -100px -120px auto;
+  width:340px;height:340px;
+  background:var(--ig-grad);
+  border-radius:50%;
+  filter:blur(70px);opacity:0.55;
+  pointer-events:none;
+}
+.vc::after{
+  content:"";position:absolute;
+  inset:-120px auto auto -80px;
+  width:240px;height:240px;
+  background:radial-gradient(circle,rgba(0,67,255,0.55),transparent 70%);
+  border-radius:50%;
+  filter:blur(50px);
+  pointer-events:none;
+}
+.vc__body{position:relative;z-index:1;flex:1;}
+.vc__eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;
+  color:#fff;opacity:0.78;margin-bottom:14px;
+}
+.vc__eyebrow::before{
+  content:"";width:6px;height:6px;border-radius:50%;
+  background:var(--ktb-sky);
+  box-shadow:0 0 0 3px rgba(120,205,255,0.22);
+  animation:pulse-sky 2s infinite;
+}
+@keyframes pulse-sky{
+  0%,100%{box-shadow:0 0 0 3px rgba(120,205,255,0.22);}
+  50%{box-shadow:0 0 0 6px rgba(120,205,255,0);}
+}
+.vc__title{
+  font-size:26px;font-weight:800;
+  letter-spacing:-0.022em;line-height:1.2;
+  margin-bottom:8px;
+}
+.vc__title em{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;font-weight:400;
+  background:var(--ig-grad);
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;
+}
+.vc__text{
+  font-size:13.5px;color:rgba(255,255,255,0.78);
+  margin-bottom:18px;max-width:440px;line-height:1.55;
+}
+.vc__buttons{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1;}
+.vc__btn{
+  padding:9px 16px;border-radius:9999px;
+  font-size:13px;font-weight:700;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:transform .15s ease;
+}
+.vc__btn:hover{transform:translateY(-1px);}
+.vc__btn svg{width:16px;height:16px;}
+.vc__btn--threads{background:#fff;color:#0E0E14;}
+.vc__btn--ig{
+  background:var(--ig-grad);
+  color:#fff;
+}
+.vc__handle-mono{
+  font-family:'JetBrains Mono',monospace;font-size:11.5px;
+  opacity:0.7;
+}
+
+/* ============ DEVICE PREVIEW (mobile mini) ============ */
+.mobile-stack{
+  display:flex;gap:32px;align-items:flex-start;
+  margin-top:32px;flex-wrap:wrap;
+}
+.phone{
+  width:280px;flex-shrink:0;
+  background:#0E0E14;
+  border-radius:32px;
+  padding:8px;
+  box-shadow:0 20px 48px rgba(14,14,20,0.18),0 4px 12px rgba(14,14,20,0.08);
+}
+.phone__notch{
+  width:90px;height:18px;background:#000;
+  border-radius:0 0 14px 14px;margin:0 auto 4px;
+}
+.phone__screen{
+  background:var(--gray-000);
+  border-radius:24px;
+  padding:14px;min-height:480px;
+  overflow:hidden;
+}
+.phone__nav{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:14px;
+  font-size:14px;font-weight:800;letter-spacing:-0.02em;
+}
+.phone__nav small{font-size:10px;color:var(--gray-600);font-weight:500;}
+.phone__title{
+  font-size:16px;font-weight:700;
+  letter-spacing:-0.012rem;
+  margin:8px 0 4px;
+}
+.phone__count{font-size:11px;color:var(--gray-600);margin-bottom:12px;}
+.phone__card{
+  margin-top:10px;display:flex;flex-direction:column;gap:8px;
+}
+.phone__card-thumb{
+  width:100%;aspect-ratio:5/3;
+  border-radius:10px;
+  background:linear-gradient(135deg,#0043ff,#7B9DFF);
+}
+.phone__card-thumb.g2{background:linear-gradient(135deg,#FF6F4D,#FFB155);}
+.phone__card-name{font-size:12.5px;font-weight:700;letter-spacing:-0.012rem;}
+.phone__card-meta{font-size:10px;color:var(--gray-600);}
+
+/* phone-scoped banners */
+.phone .va{margin-bottom:14px;gap:8px;}
+.phone .va__card{padding:11px 12px;gap:9px;border-radius:10px;}
+.phone .va__icon{width:32px;height:32px;border-radius:8px;}
+.phone .va__icon svg{width:18px;height:18px;}
+.phone .va__label{font-size:8.5px;margin-bottom:1px;}
+.phone .va__copy{font-size:11.5px;}
+.phone .va__handle{display:none;}
+.phone .va__cta{display:none;}
+
+.phone .vb{padding:9px 12px;gap:8px;border-radius:10px;margin-bottom:14px;}
+.phone .vb__icon-pill{width:24px;height:24px;border-radius:6px;}
+.phone .vb__icon-pill svg{width:14px;height:14px;}
+.phone .vb__copy{font-size:11px;}
+.phone .vb__copy span{display:none;}
+.phone .vb__actions{display:none;}
+.phone .vb__close{width:18px;height:18px;}
+.phone .vb__close svg{width:10px;height:10px;}
+
+.phone .vc{padding:16px 16px;border-radius:14px;margin-bottom:14px;}
+.phone .vc__title{font-size:14.5px;margin-bottom:4px;}
+.phone .vc__text{font-size:10.5px;margin-bottom:10px;}
+.phone .vc__buttons{gap:6px;}
+.phone .vc__btn{padding:6px 10px;font-size:10.5px;}
+.phone .vc__btn svg{width:11px;height:11px;}
+.phone .vc__eyebrow{font-size:8.5px;margin-bottom:8px;}
+
+/* ============ COMPARE TABLE ============ */
+.compare{
+  margin-top:80px;
+  border:1px solid var(--gray-300);
+  background:var(--gray-000);
+  border-radius:var(--r-400);
+  overflow:hidden;
+}
+.compare table{width:100%;border-collapse:collapse;}
+.compare th,.compare td{
+  padding:14px 18px;text-align:left;vertical-align:top;
+  border-bottom:1px solid var(--gray-300);font-size:13.5px;
+}
+.compare thead th{
+  background:var(--gray-050);
+  font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
+  font-weight:700;color:var(--gray-700);
+}
+.compare tbody th{
+  font-weight:600;color:var(--gray-600);width:160px;background:var(--gray-000);
+  font-size:11.5px;letter-spacing:0.08em;text-transform:uppercase;
+}
+.compare tbody tr:last-child th,.compare tbody tr:last-child td{border-bottom:none;}
+.compare strong{font-weight:700;color:var(--ktb-blue);}
+.compare .pros{color:#08785E;font-weight:600;}
+.compare .cons{color:#B45209;font-weight:600;}
+
+/* ============ FOOTER ============ */
+.footer{
+  max-width:1104px;margin:0 auto;
+  padding:80px 48px 56px;
+  border-top:1px solid var(--gray-900);
+}
+.footer__bigline{
+  font-size:clamp(24px,2.6vw,36px);
+  font-weight:600;letter-spacing:-0.025em;
+  line-height:1.25;max-width:640px;
+  margin-bottom:48px;
+}
+.footer__bigline em{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;font-weight:400;color:var(--ktb-blue);
+}
+.footer__bottom{
+  display:flex;justify-content:space-between;
+  font-size:11px;color:var(--gray-600);
+  font-family:'JetBrains Mono',monospace;letter-spacing:0.04em;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:780px){
+  .topbar__nav{display:none;}
+  .hero,.feature,.footer{padding-left:24px;padding-right:24px;}
+  .hero{padding-top:48px;padding-bottom:48px;}
+  .feature{padding:72px 24px;}
+  .hero__meta{grid-template-columns:repeat(2,1fr);gap:20px;}
+  .canvas{padding:24px;}
+  .va{grid-template-columns:1fr;}
+  .vc{flex-direction:column;align-items:flex-start;padding:24px;}
+  .page__grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="topbar__inner">
+    <div class="topbar__logo">dev<b>·</b>event<b>/</b><span style="color:var(--gray-600);font-weight:500;">social-banner</span></div>
+    <nav class="topbar__nav">
+      <a href="#va">A · Split Card</a>
+      <a href="#vb">B · Slim Strip</a>
+      <a href="#vc">C · Hero Gradient</a>
+      <a href="#compare">비교</a>
+    </nav>
+    <div class="topbar__date">2026.05.15 · proposal</div>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero__eyebrow">DEV EVENT · /events SOCIAL BANNER</div>
+  <h1>새 행사 소식,<br><em>먼저</em> 받아보세요.</h1>
+  <p class="hero__lede">
+    <mark>Threads · Instagram</mark> 공식 계정으로 가는 진입점을 <code class="mono" style="font-size:14px;background:var(--gray-100);padding:2px 6px;border-radius:4px;">/events</code> 페이지에 자연스럽게 끼워 넣는 세 가지 배치 안.
+    DESIGN.md 토큰을 모두 따르면서, 인스타 그라데이션은 §2 KTB Gradient Accents 규칙(<i>display-only</i>)을 인용 — 일반 카드 텍스트에는 적용 안 함.
+  </p>
+  <dl class="hero__meta">
+    <div><dt>토큰</dt><dd>DESIGN.md §2 · §4 <b>준수</b></dd></div>
+    <div><dt>그라데이션</dt><dd>display-only <b>§2 exception</b></dd></div>
+    <div><dt>위치</dt><dd>/events · 상단/중간 <b>placement TBD</b></dd></div>
+    <div><dt>예상 공수</dt><dd>0.5 ~ 1 day <b>frontend only</b></dd></div>
+  </dl>
+</section>
+
+<!-- ============================================================
+     VARIANT A — SPLIT CARD
+     ============================================================ -->
+<section class="feature" id="va">
+  <div class="feature__head">
+    <div class="feature__num">A</div>
+    <div class="feature__label">Recommended · split card · above list</div>
+    <h2 class="feature__title"><em>두 장</em> 나란히, 균형감 있게.</h2>
+    <p class="feature__lede">
+      Threads는 잉크 블랙, Instagram은 공식 그라데이션. 각 카드가 자체 브랜드 컬러를 가져
+      "공식 채널이구나"가 한눈에 읽힙니다. KTB의 카드 형태(12px radius, no shadow)를 그대로 따르되 그라데이션은 표면 색으로만 한정해 §2 규칙을 침범하지 않습니다.
+    </p>
+    <div class="feature__chips">
+      <span class="chip chip--ink">권장</span>
+      <span class="chip chip--accent">High visibility</span>
+      <span class="chip chip--soft">12px radius · no shadow</span>
+      <span class="chip chip--good">Pros: 2채널 동등 노출</span>
+    </div>
+  </div>
+
+  <div class="canvas">
+    <span class="canvas__cap">/events · 상단 (필터칩 아래 / 리스트 위)</span>
+    <div class="canvas__inner">
+      <div class="page">
+        <h2 class="page__title">개발자 행사</h2>
+        <div class="page__count">총 124개의 행사가 등록되어 있어요</div>
+        <div class="page__filter">
+          <span class="page__chip is-on">전체</span>
+          <span class="page__chip">컨퍼런스</span>
+          <span class="page__chip">웨비나</span>
+          <span class="page__chip">해커톤</span>
+          <span class="page__chip">밋업</span>
+        </div>
+
+        <!-- VARIANT A inline -->
+        <div class="va">
+          <a class="va__card va__card--threads" href="#">
+            <span class="va__icon" aria-hidden>
+              <!-- Threads logo -->
+              <svg viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                <path d="M141.5 86.6c-.7-.3-1.4-.7-2.1-1-1.3-23.4-14.1-36.8-35.6-37-9.7 0-17.7 4.2-22.9 11.4l11.9 8.2c3.7-5.6 9.5-6.8 14.8-6.8h.2c6.6 0 11.5 1.9 14.7 5.7 2.3 2.7 3.9 6.5 4.7 11.2-6.1-1-12.6-1.4-19.7-1-19.8 1.1-32.4 12.6-31.6 28.6.4 8.1 4.4 15 11.5 19.6 5.9 3.8 13.6 5.7 21.6 5.3 10.6-.6 18.9-4.6 24.7-11.9 4.4-5.5 7.2-12.7 8.4-21.6 5 3 8.7 7 10.7 11.7 3.5 8.1 3.7 21.5-7.2 32.4-9.6 9.6-21.1 13.7-38.5 13.8C84 156.3 70.7 150 61.9 137c-8.2-12.2-12.5-29.7-12.6-52.1.1-22.4 4.4-39.9 12.6-52 8.8-13 22.1-19.3 40.6-19.5 18.6.1 32.1 6.4 41.3 19.5 4.5 6.4 7.9 14.4 10.2 23.7l14-3.7c-2.7-11.4-7-21.3-12.8-29.5-11.7-16.6-28.9-25.1-51.1-25.2H104c-22.2.2-39 8.8-50.1 25.5-9.9 14.9-15 35.6-15.2 61.6.2 26 5.3 46.7 15.2 61.6 11.1 16.7 27.9 25.3 50.1 25.5h.1c19.7-.1 33.6-5.3 45.1-16.8 15-15 14.6-33.8 9.6-45.3-3.6-8.3-10.4-15-19.7-19.4Zm-29.7 22.8c-8.8.5-17.9-3.5-18.3-11.8-.3-6.2 4.4-13.1 18.8-13.9 1.7-.1 3.3-.1 4.9-.1 5.2 0 10.1.5 14.5 1.5-1.7 20.6-11.4 23.9-19.9 24.3Z"/>
+              </svg>
+            </span>
+            <div class="va__body">
+              <div class="va__label">Threads</div>
+              <div class="va__copy">새 행사 소식, 가장 먼저 받기</div>
+              <div class="va__handle">@dev_event_kr</div>
+            </div>
+            <span class="va__cta">팔로우
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+
+          <a class="va__card va__card--ig" href="#">
+            <span class="va__icon" aria-hidden>
+              <!-- Instagram glyph -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+              </svg>
+            </span>
+            <div class="va__body">
+              <div class="va__label">Instagram</div>
+              <div class="va__copy">행사 현장 사진 · 후기 둘러보기</div>
+              <div class="va__handle">@dev_event_kr</div>
+            </div>
+            <span class="va__cta">팔로우
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+        </div>
+
+        <div class="page__grid">
+          <article class="mini-card">
+            <div class="mini-card__thumb g1">
+              <div class="mini-card__badge">진행중</div>
+            </div>
+            <div class="mini-card__name">FEConf Korea 2026</div>
+            <div class="mini-card__period">5월 18일 · 코엑스</div>
+          </article>
+          <article class="mini-card">
+            <div class="mini-card__thumb g2">
+              <div class="mini-card__badge">D-5</div>
+            </div>
+            <div class="mini-card__name">AWS Summit Seoul 2026</div>
+            <div class="mini-card__period">5월 20일 · 코엑스</div>
+          </article>
+          <article class="mini-card">
+            <div class="mini-card__thumb g3">
+              <div class="mini-card__badge">D-7</div>
+            </div>
+            <div class="mini-card__name">서울 디지털 해커톤</div>
+            <div class="mini-card__period">5월 25일 · 동대문</div>
+          </article>
+        </div>
+      </div>
+
+      <div class="mobile-stack">
+        <div class="phone">
+          <div class="phone__notch"></div>
+          <div class="phone__screen">
+            <div class="phone__nav">Dev Event <small>5/15</small></div>
+            <div class="phone__title">개발자 행사</div>
+            <div class="phone__count">총 124개</div>
+
+            <div class="va">
+              <a class="va__card va__card--threads" href="#">
+                <span class="va__icon"><svg viewBox="0 0 192 192" fill="currentColor"><path d="M141.5 86.6c-.7-.3-1.4-.7-2.1-1-1.3-23.4-14.1-36.8-35.6-37-9.7 0-17.7 4.2-22.9 11.4l11.9 8.2c3.7-5.6 9.5-6.8 14.8-6.8h.2c6.6 0 11.5 1.9 14.7 5.7 2.3 2.7 3.9 6.5 4.7 11.2-6.1-1-12.6-1.4-19.7-1-19.8 1.1-32.4 12.6-31.6 28.6.4 8.1 4.4 15 11.5 19.6 5.9 3.8 13.6 5.7 21.6 5.3 10.6-.6 18.9-4.6 24.7-11.9 4.4-5.5 7.2-12.7 8.4-21.6 5 3 8.7 7 10.7 11.7 3.5 8.1 3.7 21.5-7.2 32.4-9.6 9.6-21.1 13.7-38.5 13.8C84 156.3 70.7 150 61.9 137c-8.2-12.2-12.5-29.7-12.6-52.1.1-22.4 4.4-39.9 12.6-52 8.8-13 22.1-19.3 40.6-19.5 18.6.1 32.1 6.4 41.3 19.5 4.5 6.4 7.9 14.4 10.2 23.7l14-3.7c-2.7-11.4-7-21.3-12.8-29.5-11.7-16.6-28.9-25.1-51.1-25.2H104c-22.2.2-39 8.8-50.1 25.5-9.9 14.9-15 35.6-15.2 61.6.2 26 5.3 46.7 15.2 61.6 11.1 16.7 27.9 25.3 50.1 25.5h.1c19.7-.1 33.6-5.3 45.1-16.8 15-15 14.6-33.8 9.6-45.3-3.6-8.3-10.4-15-19.7-19.4Zm-29.7 22.8c-8.8.5-17.9-3.5-18.3-11.8-.3-6.2 4.4-13.1 18.8-13.9 1.7-.1 3.3-.1 4.9-.1 5.2 0 10.1.5 14.5 1.5-1.7 20.6-11.4 23.9-19.9 24.3Z"/></svg></span>
+                <div class="va__body">
+                  <div class="va__label">Threads</div>
+                  <div class="va__copy">새 소식 받기</div>
+                </div>
+              </a>
+              <a class="va__card va__card--ig" href="#">
+                <span class="va__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></span>
+                <div class="va__body">
+                  <div class="va__label">Instagram</div>
+                  <div class="va__copy">행사 현장 후기</div>
+                </div>
+              </a>
+            </div>
+
+            <div class="phone__card">
+              <div class="phone__card-thumb"></div>
+              <div class="phone__card-name">FEConf Korea 2026</div>
+              <div class="phone__card-meta">5월 18일 · 코엑스</div>
+            </div>
+            <div class="phone__card">
+              <div class="phone__card-thumb g2"></div>
+              <div class="phone__card-name">AWS Summit Seoul 2026</div>
+              <div class="phone__card-meta">5월 20일 · 코엑스</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:1;min-width:260px;">
+          <h4 style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-600);font-weight:700;margin-bottom:14px;">스펙</h4>
+          <ul style="list-style:none;font-size:13.5px;color:var(--gray-800);line-height:1.7;">
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>위치</b> — 필터 칩 줄 바로 아래, 첫 행사 카드 위</li>
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>그리드</b> — 데스크탑 1:1 / 모바일 stack (1열)</li>
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>높이</b> — 80px desktop / 64px mobile</li>
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>Radius</b> — <code class="mono">--border-radius-400</code> (12px)</li>
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>Threads</b> — bg `#0E0E14 → #1C1C24`</li>
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>Instagram</b> — official gradient (display-only 예외)</li>
+            <li style="border-top:1px solid var(--gray-300);border-bottom:1px solid var(--gray-300);padding:10px 0;"><b>Hover</b> — translateY(-1px), no shadow</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     VARIANT B — SLIM STRIP
+     ============================================================ -->
+<section class="feature" id="vb">
+  <div class="feature__head">
+    <div class="feature__num">B</div>
+    <div class="feature__label">Subtle · slim strip · dismissible</div>
+    <h2 class="feature__title">조용히 한 줄로<br><em>덜 방해하게</em>.</h2>
+    <p class="feature__lede">
+      행사 카드의 시각적 무게를 그대로 두고 싶을 때. 단정한 1px 보더 + 작은 아이콘 페어 + 텍스트 한 줄로 끝.
+      X 버튼으로 닫을 수 있고(localStorage 기억), 닫혀도 Footer에서는 항상 찾을 수 있게 합니다.
+    </p>
+    <div class="feature__chips">
+      <span class="chip chip--soft">Minimal noise</span>
+      <span class="chip chip--good">Pros: 콘텐츠 우선</span>
+      <span class="chip">dismissible · localStorage</span>
+    </div>
+  </div>
+
+  <div class="canvas">
+    <span class="canvas__cap">/events · 상단 (헤더 바로 아래)</span>
+    <div class="canvas__inner">
+      <div class="page">
+
+        <div class="vb">
+          <div class="vb__icons">
+            <span class="vb__icon-pill" style="background:#0E0E14;">
+              <svg viewBox="0 0 192 192" fill="currentColor"><path d="M141.5 86.6c-.7-.3-1.4-.7-2.1-1-1.3-23.4-14.1-36.8-35.6-37-9.7 0-17.7 4.2-22.9 11.4l11.9 8.2c3.7-5.6 9.5-6.8 14.8-6.8h.2c6.6 0 11.5 1.9 14.7 5.7 2.3 2.7 3.9 6.5 4.7 11.2-6.1-1-12.6-1.4-19.7-1-19.8 1.1-32.4 12.6-31.6 28.6.4 8.1 4.4 15 11.5 19.6 5.9 3.8 13.6 5.7 21.6 5.3 10.6-.6 18.9-4.6 24.7-11.9 4.4-5.5 7.2-12.7 8.4-21.6 5 3 8.7 7 10.7 11.7 3.5 8.1 3.7 21.5-7.2 32.4-9.6 9.6-21.1 13.7-38.5 13.8C84 156.3 70.7 150 61.9 137c-8.2-12.2-12.5-29.7-12.6-52.1.1-22.4 4.4-39.9 12.6-52 8.8-13 22.1-19.3 40.6-19.5 18.6.1 32.1 6.4 41.3 19.5 4.5 6.4 7.9 14.4 10.2 23.7l14-3.7c-2.7-11.4-7-21.3-12.8-29.5-11.7-16.6-28.9-25.1-51.1-25.2H104c-22.2.2-39 8.8-50.1 25.5-9.9 14.9-15 35.6-15.2 61.6.2 26 5.3 46.7 15.2 61.6 11.1 16.7 27.9 25.3 50.1 25.5h.1c19.7-.1 33.6-5.3 45.1-16.8 15-15 14.6-33.8 9.6-45.3-3.6-8.3-10.4-15-19.7-19.4Zm-29.7 22.8c-8.8.5-17.9-3.5-18.3-11.8-.3-6.2 4.4-13.1 18.8-13.9 1.7-.1 3.3-.1 4.9-.1 5.2 0 10.1.5 14.5 1.5-1.7 20.6-11.4 23.9-19.9 24.3Z"/></svg>
+            </span>
+            <span class="vb__icon-pill" style="background:var(--ig-grad);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+            </span>
+          </div>
+          <div class="vb__copy">데브이벤트 소식, SNS에서 먼저 받아보세요<span>· 새 행사가 올라오면 가장 먼저 알려드려요</span></div>
+          <div class="vb__actions">
+            <a class="vb__btn vb__btn--threads" href="#">Threads 팔로우</a>
+            <a class="vb__btn vb__btn--ig" href="#">Instagram 팔로우</a>
+          </div>
+          <button class="vb__close" aria-label="배너 닫기">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <h2 class="page__title">개발자 행사</h2>
+        <div class="page__count">총 124개의 행사가 등록되어 있어요</div>
+        <div class="page__filter">
+          <span class="page__chip is-on">전체</span>
+          <span class="page__chip">컨퍼런스</span>
+          <span class="page__chip">웨비나</span>
+          <span class="page__chip">해커톤</span>
+          <span class="page__chip">밋업</span>
+        </div>
+        <div class="page__grid">
+          <article class="mini-card">
+            <div class="mini-card__thumb g1"><div class="mini-card__badge">진행중</div></div>
+            <div class="mini-card__name">FEConf Korea 2026</div>
+            <div class="mini-card__period">5월 18일 · 코엑스</div>
+          </article>
+          <article class="mini-card">
+            <div class="mini-card__thumb g2"><div class="mini-card__badge">D-5</div></div>
+            <div class="mini-card__name">AWS Summit Seoul 2026</div>
+            <div class="mini-card__period">5월 20일 · 코엑스</div>
+          </article>
+          <article class="mini-card">
+            <div class="mini-card__thumb g3"><div class="mini-card__badge">D-7</div></div>
+            <div class="mini-card__name">서울 디지털 해커톤</div>
+            <div class="mini-card__period">5월 25일 · 동대문</div>
+          </article>
+        </div>
+      </div>
+
+      <div class="mobile-stack">
+        <div class="phone">
+          <div class="phone__notch"></div>
+          <div class="phone__screen">
+            <div class="phone__nav">Dev Event <small>5/15</small></div>
+
+            <div class="vb">
+              <div class="vb__icons">
+                <span class="vb__icon-pill" style="background:#0E0E14;">
+                  <svg viewBox="0 0 192 192" fill="currentColor"><path d="M141.5 86.6c-.7-.3-1.4-.7-2.1-1-1.3-23.4-14.1-36.8-35.6-37-9.7 0-17.7 4.2-22.9 11.4l11.9 8.2c3.7-5.6 9.5-6.8 14.8-6.8h.2c6.6 0 11.5 1.9 14.7 5.7 2.3 2.7 3.9 6.5 4.7 11.2-6.1-1-12.6-1.4-19.7-1-19.8 1.1-32.4 12.6-31.6 28.6.4 8.1 4.4 15 11.5 19.6 5.9 3.8 13.6 5.7 21.6 5.3 10.6-.6 18.9-4.6 24.7-11.9 4.4-5.5 7.2-12.7 8.4-21.6 5 3 8.7 7 10.7 11.7 3.5 8.1 3.7 21.5-7.2 32.4-9.6 9.6-21.1 13.7-38.5 13.8C84 156.3 70.7 150 61.9 137c-8.2-12.2-12.5-29.7-12.6-52.1.1-22.4 4.4-39.9 12.6-52 8.8-13 22.1-19.3 40.6-19.5 18.6.1 32.1 6.4 41.3 19.5 4.5 6.4 7.9 14.4 10.2 23.7l14-3.7c-2.7-11.4-7-21.3-12.8-29.5-11.7-16.6-28.9-25.1-51.1-25.2H104c-22.2.2-39 8.8-50.1 25.5-9.9 14.9-15 35.6-15.2 61.6.2 26 5.3 46.7 15.2 61.6 11.1 16.7 27.9 25.3 50.1 25.5h.1c19.7-.1 33.6-5.3 45.1-16.8 15-15 14.6-33.8 9.6-45.3-3.6-8.3-10.4-15-19.7-19.4Zm-29.7 22.8c-8.8.5-17.9-3.5-18.3-11.8-.3-6.2 4.4-13.1 18.8-13.9 1.7-.1 3.3-.1 4.9-.1 5.2 0 10.1.5 14.5 1.5-1.7 20.6-11.4 23.9-19.9 24.3Z"/></svg>
+                </span>
+                <span class="vb__icon-pill" style="background:var(--ig-grad);">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+                </span>
+              </div>
+              <div class="vb__copy">SNS 팔로우</div>
+              <button class="vb__close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+              </button>
+            </div>
+
+            <div class="phone__title">개발자 행사</div>
+            <div class="phone__count">총 124개</div>
+
+            <div class="phone__card">
+              <div class="phone__card-thumb"></div>
+              <div class="phone__card-name">FEConf Korea 2026</div>
+              <div class="phone__card-meta">5월 18일 · 코엑스</div>
+            </div>
+            <div class="phone__card">
+              <div class="phone__card-thumb g2"></div>
+              <div class="phone__card-name">AWS Summit Seoul 2026</div>
+              <div class="phone__card-meta">5월 20일 · 코엑스</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:1;min-width:260px;">
+          <h4 style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-600);font-weight:700;margin-bottom:14px;">스펙</h4>
+          <ul style="list-style:none;font-size:13.5px;color:var(--gray-800);line-height:1.7;">
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>위치</b> — 헤더 바로 아래, 필터 위</li>
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>높이</b> — 56px desktop / 44px mobile</li>
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>표면</b> — `--gray-000` bg + 1px `--gray-300` border</li>
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>아이콘</b> — 32px 페어 (Threads 잉크 / IG 그라데이션)</li>
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>닫기</b> — X 버튼, localStorage <code class="mono">'dev-event:social-banner:dismissed'</code></li>
+            <li style="border-top:1px solid var(--gray-300);border-bottom:1px solid var(--gray-300);padding:10px 0;"><b>Hover</b> — 버튼 hover 시 각 채널 색으로 채워짐</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     VARIANT C — HERO GRADIENT
+     ============================================================ -->
+<section class="feature" id="vc">
+  <div class="feature__head">
+    <div class="feature__num">C</div>
+    <div class="feature__label">Brand-forward · hero gradient · marketing</div>
+    <h2 class="feature__title">기존 영상 배너 <em>대체</em>안.</h2>
+    <p class="feature__lede">
+      현재 <code class="mono" style="font-size:14px;background:var(--gray-100);padding:2px 6px;border-radius:4px;">/events</code> 상단에 있는 영상 배너 자리를 SNS 마케팅 슬롯으로 활용하는 안.
+      깊은 잉크 + IG 그라데이션 블러 오브 + 살짝 도는 pulse-sky → DESIGN.md §6 "pulse keyframe은 라이브/긴급에만" 규칙을 인용한 단일 모션.
+    </p>
+    <div class="feature__chips">
+      <span class="chip chip--accent">Maximum visibility</span>
+      <span class="chip">replaces /events hero</span>
+      <span class="chip chip--soft">24px radius · gradient orb</span>
+      <span class="chip" style="background:rgba(180,82,9,0.1);color:#B45209;border-color:transparent;font-weight:600;">Cons: 페이지 톤 무거워짐</span>
+    </div>
+  </div>
+
+  <div class="canvas">
+    <span class="canvas__cap">/events · 페이지 최상단 (영상 배너 자리)</span>
+    <div class="canvas__inner">
+      <div class="page">
+
+        <div class="vc">
+          <div class="vc__body">
+            <div class="vc__eyebrow">SOCIAL · 데브이벤트 공식 채널</div>
+            <h3 class="vc__title">새 행사는 <em>SNS에서</em><br>가장 먼저 알려드려요.</h3>
+            <p class="vc__text">컨퍼런스 · 해커톤 · 웨비나 · 밋업. 매주 새로 올라오는 행사 소식과 현장 후기를 Threads와 Instagram에서 받아보세요.</p>
+            <div class="vc__buttons">
+              <a class="vc__btn vc__btn--threads" href="#">
+                <svg viewBox="0 0 192 192" fill="currentColor"><path d="M141.5 86.6c-.7-.3-1.4-.7-2.1-1-1.3-23.4-14.1-36.8-35.6-37-9.7 0-17.7 4.2-22.9 11.4l11.9 8.2c3.7-5.6 9.5-6.8 14.8-6.8h.2c6.6 0 11.5 1.9 14.7 5.7 2.3 2.7 3.9 6.5 4.7 11.2-6.1-1-12.6-1.4-19.7-1-19.8 1.1-32.4 12.6-31.6 28.6.4 8.1 4.4 15 11.5 19.6 5.9 3.8 13.6 5.7 21.6 5.3 10.6-.6 18.9-4.6 24.7-11.9 4.4-5.5 7.2-12.7 8.4-21.6 5 3 8.7 7 10.7 11.7 3.5 8.1 3.7 21.5-7.2 32.4-9.6 9.6-21.1 13.7-38.5 13.8C84 156.3 70.7 150 61.9 137c-8.2-12.2-12.5-29.7-12.6-52.1.1-22.4 4.4-39.9 12.6-52 8.8-13 22.1-19.3 40.6-19.5 18.6.1 32.1 6.4 41.3 19.5 4.5 6.4 7.9 14.4 10.2 23.7l14-3.7c-2.7-11.4-7-21.3-12.8-29.5-11.7-16.6-28.9-25.1-51.1-25.2H104c-22.2.2-39 8.8-50.1 25.5-9.9 14.9-15 35.6-15.2 61.6.2 26 5.3 46.7 15.2 61.6 11.1 16.7 27.9 25.3 50.1 25.5h.1c19.7-.1 33.6-5.3 45.1-16.8 15-15 14.6-33.8 9.6-45.3-3.6-8.3-10.4-15-19.7-19.4Zm-29.7 22.8c-8.8.5-17.9-3.5-18.3-11.8-.3-6.2 4.4-13.1 18.8-13.9 1.7-.1 3.3-.1 4.9-.1 5.2 0 10.1.5 14.5 1.5-1.7 20.6-11.4 23.9-19.9 24.3Z"/></svg>
+                Threads에서 보기
+              </a>
+              <a class="vc__btn vc__btn--ig" href="#">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+                Instagram에서 보기
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="page__title">개발자 행사</h2>
+        <div class="page__count">총 124개의 행사가 등록되어 있어요</div>
+        <div class="page__grid">
+          <article class="mini-card">
+            <div class="mini-card__thumb g1"><div class="mini-card__badge">진행중</div></div>
+            <div class="mini-card__name">FEConf Korea 2026</div>
+            <div class="mini-card__period">5월 18일 · 코엑스</div>
+          </article>
+          <article class="mini-card">
+            <div class="mini-card__thumb g2"><div class="mini-card__badge">D-5</div></div>
+            <div class="mini-card__name">AWS Summit Seoul 2026</div>
+            <div class="mini-card__period">5월 20일 · 코엑스</div>
+          </article>
+          <article class="mini-card">
+            <div class="mini-card__thumb g3"><div class="mini-card__badge">D-7</div></div>
+            <div class="mini-card__name">서울 디지털 해커톤</div>
+            <div class="mini-card__period">5월 25일 · 동대문</div>
+          </article>
+        </div>
+      </div>
+
+      <div class="mobile-stack">
+        <div class="phone">
+          <div class="phone__notch"></div>
+          <div class="phone__screen">
+            <div class="phone__nav">Dev Event <small>5/15</small></div>
+
+            <div class="vc">
+              <div class="vc__body">
+                <div class="vc__eyebrow">SOCIAL</div>
+                <h3 class="vc__title">새 행사 소식, SNS에서</h3>
+                <p class="vc__text">매주 새 행사 + 현장 후기.</p>
+                <div class="vc__buttons">
+                  <a class="vc__btn vc__btn--threads" href="#">
+                    <svg viewBox="0 0 192 192" fill="currentColor"><path d="M141.5 86.6c-.7-.3-1.4-.7-2.1-1-1.3-23.4-14.1-36.8-35.6-37-9.7 0-17.7 4.2-22.9 11.4l11.9 8.2c3.7-5.6 9.5-6.8 14.8-6.8h.2c6.6 0 11.5 1.9 14.7 5.7 2.3 2.7 3.9 6.5 4.7 11.2-6.1-1-12.6-1.4-19.7-1-19.8 1.1-32.4 12.6-31.6 28.6.4 8.1 4.4 15 11.5 19.6 5.9 3.8 13.6 5.7 21.6 5.3 10.6-.6 18.9-4.6 24.7-11.9 4.4-5.5 7.2-12.7 8.4-21.6 5 3 8.7 7 10.7 11.7 3.5 8.1 3.7 21.5-7.2 32.4-9.6 9.6-21.1 13.7-38.5 13.8C84 156.3 70.7 150 61.9 137c-8.2-12.2-12.5-29.7-12.6-52.1.1-22.4 4.4-39.9 12.6-52 8.8-13 22.1-19.3 40.6-19.5 18.6.1 32.1 6.4 41.3 19.5 4.5 6.4 7.9 14.4 10.2 23.7l14-3.7c-2.7-11.4-7-21.3-12.8-29.5-11.7-16.6-28.9-25.1-51.1-25.2H104c-22.2.2-39 8.8-50.1 25.5-9.9 14.9-15 35.6-15.2 61.6.2 26 5.3 46.7 15.2 61.6 11.1 16.7 27.9 25.3 50.1 25.5h.1c19.7-.1 33.6-5.3 45.1-16.8 15-15 14.6-33.8 9.6-45.3-3.6-8.3-10.4-15-19.7-19.4Zm-29.7 22.8c-8.8.5-17.9-3.5-18.3-11.8-.3-6.2 4.4-13.1 18.8-13.9 1.7-.1 3.3-.1 4.9-.1 5.2 0 10.1.5 14.5 1.5-1.7 20.6-11.4 23.9-19.9 24.3Z"/></svg>
+                    Threads
+                  </a>
+                  <a class="vc__btn vc__btn--ig" href="#">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+                    Instagram
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="phone__title">개발자 행사</div>
+            <div class="phone__card">
+              <div class="phone__card-thumb"></div>
+              <div class="phone__card-name">FEConf Korea 2026</div>
+              <div class="phone__card-meta">5월 18일 · 코엑스</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="flex:1;min-width:260px;">
+          <h4 style="font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-600);font-weight:700;margin-bottom:14px;">스펙</h4>
+          <ul style="list-style:none;font-size:13.5px;color:var(--gray-800);line-height:1.7;">
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>위치</b> — /events 최상단 (영상 배너 자리)</li>
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>높이</b> — 200px desktop / 240px mobile</li>
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>Radius</b> — <code class="mono">--border-radius-600</code> (24px)</li>
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>표면</b> — 잉크 그라데이션 + IG 그라데이션 블러 오브 + KTB Blue 오브</li>
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>모션</b> — <code class="mono">@keyframes pulse-sky</code> on eyebrow dot (§6)</li>
+            <li style="border-top:1px solid var(--gray-300);padding:10px 0;"><b>타이포 그라데이션</b> — `em` 부분만 IG 그라데이션 텍스트 (§2 예외)</li>
+            <li style="border-top:1px solid var(--gray-300);border-bottom:1px solid var(--gray-300);padding:10px 0;"><b>리스크</b> — 기존 영상 배너 제거 필요. 마케팅 의사결정 동반.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPARE ============ -->
+<section class="feature" id="compare">
+  <div class="feature__head">
+    <div class="feature__num">⇌</div>
+    <div class="feature__label">Compare · 의사결정 표</div>
+    <h2 class="feature__title">셋 중 <em>어떤 결</em>로 갈까요?</h2>
+  </div>
+
+  <div class="compare">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>A · Split Card</th>
+          <th>B · Slim Strip</th>
+          <th>C · Hero Gradient</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>가시성</th>
+          <td><strong>중상</strong></td>
+          <td>낮음</td>
+          <td><strong>최상</strong></td>
+        </tr>
+        <tr>
+          <th>콘텐츠 방해</th>
+          <td>적음</td>
+          <td class="pros">거의 없음</td>
+          <td class="cons">큼</td>
+        </tr>
+        <tr>
+          <th>구현 공수</th>
+          <td>0.5d</td>
+          <td class="pros">0.3d</td>
+          <td>1d</td>
+        </tr>
+        <tr>
+          <th>위치</th>
+          <td>필터 칩 아래</td>
+          <td>헤더 바로 아래</td>
+          <td>페이지 최상단</td>
+        </tr>
+        <tr>
+          <th>닫기 가능</th>
+          <td>—</td>
+          <td class="pros">localStorage</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <th>DESIGN.md 충실도</th>
+          <td class="pros">완벽 · 12px radius · flat</td>
+          <td class="pros">완벽 · 표준 카드</td>
+          <td>§2 예외 인용 · 24px radius</td>
+        </tr>
+        <tr>
+          <th>2채널 균형</th>
+          <td class="pros">동등 노출</td>
+          <td>동등 노출</td>
+          <td>버튼 동등</td>
+        </tr>
+        <tr>
+          <th>한 줄 요약</th>
+          <td><strong>균형감 있는 정공법</strong></td>
+          <td>조용한 한 줄 · 닫기 가능</td>
+          <td>강한 인상 · 영상 배너 대체</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__bigline">
+    어느 결로 갈지 정해주시면,<br>
+    그 방향으로 <em>한 묶음</em>으로 구현하겠습니다.
+  </div>
+  <div class="footer__bottom">
+    <span>DEV·EVENT / SOCIAL BANNER · v0.1</span>
+    <span>2026.05.15 · DESIGN.md §2 · §4 · §6 conformant</span>
+  </div>
+</footer>
+
+</body>
+</html>

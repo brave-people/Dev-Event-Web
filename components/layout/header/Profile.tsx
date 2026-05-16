@@ -2,13 +2,33 @@ import axios from 'axios';
 import { AuthContext } from 'context/auth';
 import { useOnClickOutside } from 'lib/hooks/useOnClickOutside';
 import * as ga from 'lib/utils/gTag';
-import ProfileIcon from 'public/icon/profile_outlined_regular.svg';
 import React, { useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import { useRouter } from 'next/router';
 import style from './Header.module.scss';
 
 const cn = classNames.bind(style);
+
+// Inline glyph — kept local for the same reason ThemeToggle inlines its
+// SunGlyph/MoonGlyph: the shared ProfileIcon SVG (`public/icon/profile_outlined_regular.svg`)
+// has a tight 0–24 viewBox where the body fills to y=22, so when scaled
+// down inside the 40×40 header button the shoulders read as "clipped"
+// against the visual baseline. This Lucide-style stroke glyph has natural
+// rounded caps and breathing room → visually pairs with SunGlyph.
+const UserGlyph = () => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden
+  >
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+    <circle cx={12} cy={7} r={4} />
+  </svg>
+);
 
 const Profile = () => {
   const [profileMenuIsOpen, setProfileMenuIsOpen] = useState(false);
@@ -36,8 +56,12 @@ const Profile = () => {
 
   return (
     <div className={cn(`profile`)}>
-      <button className={cn(`profile-button`)} onClick={handleClickProfile}>
-        <ProfileIcon />
+      <button
+        className={cn(`profile-button`)}
+        onClick={handleClickProfile}
+        aria-label="프로필 메뉴 열기"
+      >
+        <UserGlyph />
       </button>
       {profileMenuIsOpen ? (
         <div className={cn('profile-menu')} ref={outsideRef}>

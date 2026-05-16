@@ -21,6 +21,10 @@
   &.color {
     &--primary {
       background-color: var(--ktb-tech-blue);
+      // KTB Blue surface stays saturated blue in both themes, so the label
+      // must be hardcoded white. Using var(--vapor-gray-000) would invert
+      // to the dark page bg (#1B1C1E) and render as black text on blue.
+      color: #ffffff;
       font-size: 14px;
       font-weight: 700;
       box-shadow:

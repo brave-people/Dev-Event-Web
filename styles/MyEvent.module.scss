@@ -66,6 +66,12 @@
     padding-left: $mobile-padding;
     padding-right: $mobile-padding;
   }
+
+  @include mobile {
+    max-width: 100%;
+    padding-left: $mobile-padding;
+    padding-right: $mobile-padding;
+  }
 }
 
 .tab {

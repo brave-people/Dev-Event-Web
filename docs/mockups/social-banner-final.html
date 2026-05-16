@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dev Event Web · Social Banner — Final (Variant A)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gray-000:#ffffff;
+  --gray-050:#F7F7FA;
+  --gray-100:#F0F0F5;
+  --gray-200:#E8E8EE;
+  --gray-300:#E1E1E8;
+  --gray-400:#CDCED6;
+  --gray-500:#8C8F9F;
+  --gray-600:#6C6E7E;
+  --gray-700:#525463;
+  --gray-800:#3E404C;
+  --gray-900:#2B2D36;
+  --gray-950:#252730;
+  --ktb-blue:#0043ff;
+  --ktb-navy:#000040;
+
+  --threads-ink:#0E0E14;
+  --threads-ink-2:#1C1C24;
+  --ig-grad:linear-gradient(135deg,#FFE08A 0%,#FF6F4D 25%,#E53E5E 50%,#C13584 75%,#5B3F9F 100%);
+
+  --r-200:6px;
+  --r-400:12px;
+  --r-600:24px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  background:var(--gray-050);
+  color:var(--gray-900);
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;
+  line-height:1.5;
+}
+.serif{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;}
+.mono{font-family:'JetBrains Mono',monospace;}
+button{font:inherit;background:none;border:none;cursor:pointer;color:inherit;}
+a{color:inherit;text-decoration:none;}
+
+/* ============ TOP BAR ============ */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:hsla(0,0%,100%,.88);
+  backdrop-filter:blur(20px) saturate(150%);
+  border-bottom:1px solid var(--gray-300);
+}
+.topbar__inner{
+  max-width:1280px;margin:0 auto;
+  padding:14px 48px;
+  display:flex;align-items:center;gap:24px;
+  font-size:13px;
+}
+.topbar__logo{font-weight:800;letter-spacing:-0.02em;font-size:15px;}
+.topbar__logo b{color:var(--ktb-blue);}
+.topbar__nav{display:flex;gap:24px;flex:1;}
+.topbar__nav a{color:var(--gray-600);font-weight:500;font-size:13px;}
+.topbar__nav a:hover{color:var(--ktb-blue);}
+.topbar__date{
+  color:var(--gray-600);font-family:'JetBrains Mono',monospace;
+  font-size:11px;letter-spacing:0.06em;
+}
+
+/* ============ HERO ============ */
+.hero{
+  max-width:1280px;margin:0 auto;
+  padding:64px 48px 48px;
+}
+.hero__eyebrow{
+  display:inline-flex;align-items:center;gap:12px;
+  font-size:11px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--ktb-blue);font-weight:700;margin-bottom:28px;
+}
+.hero__eyebrow::before{content:"";width:36px;height:1px;background:var(--ktb-blue);}
+.hero h1{
+  font-size:clamp(36px,5.2vw,72px);
+  line-height:1.0;
+  letter-spacing:-0.035em;
+  font-weight:800;
+  margin-bottom:24px;
+}
+.hero h1 em{
+  font-family:'Instrument Serif',serif;
+  font-style:italic;font-weight:400;
+  color:var(--ktb-blue);
+}
+.hero__lede{
+  max-width:680px;font-size:17px;color:var(--gray-700);
+  line-height:1.6;
+}
+.hero__lede mark{
+  background:linear-gradient(180deg,transparent 60%,rgba(0,67,255,0.1) 60%);
+  padding:0 4px;color:var(--gray-900);font-weight:600;
+}
+
+/* ============ FRAME WRAPPER ============ */
+.section{
+  max-width:1280px;margin:0 auto;
+  padding:64px 48px;
+  border-top:1px solid var(--gray-900);
+}
+.section__head{margin-bottom:32px;}
+.section__label{
+  font-size:11px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--gray-600);font-weight:700;margin-bottom:12px;
+  display:flex;align-items:center;gap:10px;
+}
+.section__label::before{content:"";width:24px;height:1px;background:var(--gray-600);}
+.section__title{
+  font-size:32px;font-weight:700;letter-spacing:-0.025em;
+  margin-bottom:10px;
+}
+.section__title em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--ktb-blue);}
+.section__desc{font-size:15px;color:var(--gray-700);max-width:680px;line-height:1.6;}
+.section__desc code{
+  font-family:'JetBrains Mono',monospace;
+  background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:13px;
+}
+
+.frame{
+  background:var(--gray-050);
+  border:1px solid var(--gray-300);
+  border-radius:var(--r-600);
+  padding:32px;
+  position:relative;
+  overflow:hidden;
+}
+.frame::before{
+  content:"";position:absolute;inset:0;
+  background-image:radial-gradient(circle at 1px 1px,rgba(14,14,20,0.04) 1px,transparent 0);
+  background-size:24px 24px;
+  pointer-events:none;
+  mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%);
+}
+.frame__cap{
+  position:absolute;top:14px;left:20px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;color:var(--gray-600);letter-spacing:0.1em;
+  text-transform:uppercase;
+  display:inline-flex;align-items:center;gap:8px;
+  z-index:2;
+}
+.frame__cap::before{
+  content:"";width:6px;height:6px;background:var(--ktb-blue);border-radius:50%;
+  box-shadow:0 0 0 3px rgba(0,67,255,0.14);
+}
+.frame__inner{position:relative;z-index:1;padding-top:24px;}
+
+/* ============ SOCIAL BANNER (the actual component) ============ */
+.sb{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  width:100%;
+}
+.sb__card{
+  position:relative;overflow:hidden;
+  border-radius:var(--r-400);
+  padding:18px 20px;
+  display:flex;align-items:center;gap:16px;
+  transition:transform .18s ease;
+  cursor:pointer;
+  min-height:80px;
+}
+.sb__card:hover{transform:translateY(-1px);}
+.sb__card:focus-visible{outline:2px solid var(--ktb-blue);outline-offset:2px;}
+
+.sb__card--threads{
+  background:linear-gradient(135deg,var(--threads-ink) 0%,var(--threads-ink-2) 100%);
+  color:#fff;
+}
+.sb__card--ig{
+  background:var(--ig-grad);
+  color:#fff;
+}
+.sb__card--ig::after{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(circle at 100% 0%,rgba(255,255,255,0.18),transparent 60%);
+  pointer-events:none;
+}
+
+.sb__icon{
+  width:44px;height:44px;
+  background:rgba(255,255,255,0.16);
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  backdrop-filter:blur(8px);
+}
+.sb__icon svg{width:24px;height:24px;color:#fff;}
+.sb__body{flex:1;min-width:0;position:relative;z-index:1;}
+.sb__label{
+  font-size:10.5px;font-weight:600;
+  opacity:0.78;letter-spacing:0.06em;text-transform:uppercase;
+  margin-bottom:3px;
+}
+.sb__copy{
+  font-size:15px;font-weight:700;
+  letter-spacing:-0.012rem;line-height:1.3;
+  margin-bottom:3px;
+}
+.sb__handle{
+  font-size:11.5px;font-weight:500;opacity:0.78;
+  font-family:'JetBrains Mono',monospace;
+}
+.sb__cta{
+  font-size:12px;font-weight:700;
+  padding:7px 12px;border-radius:9999px;
+  background:#fff;color:var(--gray-900);
+  flex-shrink:0;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.sb__card--ig .sb__cta{color:#C13584;}
+
+/* RESPONSIVE BREAK — exact rule */
+@media (max-width:768px){
+  .sb{
+    grid-template-columns:1fr;
+    gap:8px;
+  }
+  .sb__card{
+    padding:14px 16px;
+    min-height:68px;
+    gap:12px;
+  }
+  .sb__icon{width:36px;height:36px;border-radius:9px;}
+  .sb__icon svg{width:20px;height:20px;}
+  .sb__copy{font-size:14px;}
+  .sb__handle{font-size:11px;}
+  .sb__cta{padding:6px 10px;font-size:11px;}
+}
+
+/* Phone preview always uses mobile layout (mockup is rendered at desktop
+   viewport, so media queries above don't fire inside the phone frame). */
+.phone .sb{
+  grid-template-columns:1fr;
+  gap:8px;
+}
+.phone .sb__card{
+  padding:12px 14px;
+  min-height:60px;
+  gap:11px;
+}
+.phone .sb__icon{width:34px;height:34px;border-radius:8px;}
+.phone .sb__icon svg{width:18px;height:18px;}
+.phone .sb__label{font-size:9.5px;margin-bottom:2px;}
+.phone .sb__copy{font-size:12.5px;margin-bottom:2px;}
+.phone .sb__handle{font-size:10px;}
+.phone .sb__cta{padding:5px 9px;font-size:10.5px;}
+.phone .sb__cta svg{display:none;}
+
+/* ============ PAGE MOCKUP (/events) ============ */
+.page{
+  background:var(--gray-000);
+  border:1px solid var(--gray-300);
+  border-radius:var(--r-600);
+  padding:32px;
+  margin:0 auto;
+}
+.page__title{
+  font-size:28px;font-weight:700;
+  letter-spacing:-0.012rem;
+  margin-bottom:6px;color:var(--gray-900);
+}
+.page__count{
+  font-size:14px;color:var(--gray-600);font-weight:500;
+  margin-bottom:24px;
+}
+.page__filter{
+  display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;
+}
+.page__chip{
+  padding:7px 14px;border:1px solid var(--gray-300);
+  border-radius:9999px;background:var(--gray-000);
+  font-size:13px;font-weight:500;color:var(--gray-700);
+}
+.page__chip.is-on{background:var(--gray-900);color:#fff;border-color:var(--gray-900);}
+.page__grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:16px;margin-top:24px;
+}
+.mini-card{background:transparent;}
+.mini-card__thumb{
+  width:100%;aspect-ratio:5/3;border-radius:var(--r-400);
+  background:var(--gray-100);position:relative;overflow:hidden;
+  margin-bottom:12px;
+}
+.mini-card__thumb.g1{background:linear-gradient(135deg,#0043ff 0%,#7B9DFF 100%);}
+.mini-card__thumb.g2{background:linear-gradient(135deg,#08785E 0%,#7DDBA8 100%);}
+.mini-card__thumb.g3{background:linear-gradient(135deg,#FF6F4D 0%,#FFB155 100%);}
+.mini-card__thumb.g4{background:linear-gradient(135deg,#C13584 0%,#F57DF0 100%);}
+.mini-card__badge{
+  position:absolute;top:12px;left:12px;
+  font-size:10.5px;font-weight:600;
+  background:rgba(255,255,255,0.96);
+  color:var(--gray-900);
+  padding:3px 8px;border-radius:9999px;
+}
+.mini-card__name{
+  font-size:14px;font-weight:700;
+  letter-spacing:-0.012rem;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  margin-bottom:4px;
+}
+.mini-card__period{
+  font-size:11.5px;color:var(--gray-600);
+  display:flex;align-items:center;gap:4px;
+}
+
+/* ============ MOBILE PHONE PREVIEW ============ */
+.mobile-row{
+  display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap;
+}
+.mobile-col{flex:1;min-width:280px;}
+.phone{
+  width:320px;flex-shrink:0;
+  background:#0E0E14;
+  border-radius:36px;
+  padding:8px;
+  box-shadow:0 24px 56px rgba(14,14,20,0.18),0 4px 12px rgba(14,14,20,0.08);
+}
+.phone__notch{
+  width:100px;height:20px;background:#000;
+  border-radius:0 0 14px 14px;margin:0 auto 4px;
+}
+.phone__screen{
+  background:var(--gray-000);
+  border-radius:28px;
+  padding:18px;min-height:560px;
+  overflow:hidden;
+}
+.phone__nav{
+  display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:16px;
+  font-size:15px;font-weight:800;letter-spacing:-0.02em;
+}
+.phone__nav small{font-size:11px;color:var(--gray-600);font-weight:500;}
+.phone__title{
+  font-size:20px;font-weight:700;
+  letter-spacing:-0.012rem;
+  margin:8px 0 6px;
+}
+.phone__count{font-size:12px;color:var(--gray-600);margin-bottom:14px;}
+.phone__filter{
+  display:flex;gap:6px;margin-bottom:14px;overflow:hidden;
+}
+.phone__filter span{
+  font-size:11px;padding:5px 10px;border-radius:9999px;
+  border:1px solid var(--gray-300);color:var(--gray-700);font-weight:500;
+  white-space:nowrap;
+}
+.phone__filter span.is-on{background:var(--gray-900);color:#fff;border-color:var(--gray-900);}
+.phone__card{
+  margin-top:14px;display:flex;flex-direction:column;
+}
+.phone__card-thumb{
+  width:100%;aspect-ratio:5/3;
+  border-radius:10px;margin-bottom:10px;
+  background:linear-gradient(135deg,#0043ff,#7B9DFF);
+}
+.phone__card-thumb.g2{background:linear-gradient(135deg,#08785E,#7DDBA8);}
+.phone__card-name{font-size:13.5px;font-weight:700;letter-spacing:-0.012rem;margin-bottom:3px;}
+.phone__card-meta{font-size:10.5px;color:var(--gray-600);}
+
+/* ============ ARROW DIAGRAM ============ */
+.arrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:11px;color:var(--gray-600);
+  letter-spacing:0.04em;
+  margin:24px 0;padding:14px 18px;
+  background:var(--gray-100);border-radius:var(--r-400);
+}
+.arrow b{color:var(--ktb-blue);}
+
+/* ============ SPEC LIST ============ */
+.spec{
+  background:var(--gray-000);
+  border:1px solid var(--gray-300);
+  border-radius:var(--r-400);
+  overflow:hidden;
+}
+.spec__row{
+  display:grid;grid-template-columns:160px 1fr;
+  border-bottom:1px solid var(--gray-300);
+}
+.spec__row:last-child{border-bottom:none;}
+.spec__key{
+  padding:14px 18px;
+  font-size:11px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--gray-600);font-weight:700;
+  background:var(--gray-050);
+}
+.spec__val{
+  padding:14px 18px;
+  font-size:13.5px;color:var(--gray-900);
+}
+.spec__val code{
+  font-family:'JetBrains Mono',monospace;
+  background:var(--gray-100);padding:2px 6px;border-radius:4px;font-size:12px;
+  color:var(--gray-800);
+}
+
+/* ============ FOOTER ============ */
+.footer{
+  max-width:1280px;margin:0 auto;
+  padding:64px 48px 56px;
+  border-top:1px solid var(--gray-900);
+}
+.footer__line{
+  font-size:clamp(20px,2.2vw,28px);
+  font-weight:600;letter-spacing:-0.02em;line-height:1.3;
+  max-width:640px;margin-bottom:36px;
+}
+.footer__line em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--ktb-blue);}
+.footer__bottom{
+  display:flex;justify-content:space-between;
+  font-size:11px;color:var(--gray-600);
+  font-family:'JetBrains Mono',monospace;letter-spacing:0.04em;
+}
+
+@media (max-width:780px){
+  .topbar__nav{display:none;}
+  .hero,.section,.footer{padding-left:24px;padding-right:24px;}
+  .hero{padding-top:40px;padding-bottom:36px;}
+  .section{padding-top:48px;padding-bottom:48px;}
+  .frame{padding:20px;}
+  .page{padding:20px;}
+  .mobile-row{gap:24px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<div class="topbar">
+  <div class="topbar__inner">
+    <div class="topbar__logo">dev<b>·</b>event<b>/</b><span style="color:var(--gray-600);font-weight:500;">social-banner · final</span></div>
+    <nav class="topbar__nav">
+      <a href="#pc">PC 한 줄</a>
+      <a href="#mobile">모바일 stack</a>
+      <a href="#spec">스펙</a>
+    </nav>
+    <div class="topbar__date">2026.05.15 · variant A · locked</div>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero__eyebrow">DEV EVENT · /events · variant A · FINAL</div>
+  <h1>PC는 <em>한 줄로</em>,<br>모바일은 <em>위아래로</em>.</h1>
+  <p class="hero__lede">
+    선택하신 <mark>Variant A · Split Card</mark>를 그대로 구현 형태로 변환.
+    데스크탑(<code class="mono" style="font-size:13px;background:var(--gray-100);padding:2px 6px;border-radius:4px;">≥ 769px</code>)에선 Threads · Instagram을 1:1 그리드로 나란히 배치, 모바일(<code class="mono" style="font-size:13px;background:var(--gray-100);padding:2px 6px;border-radius:4px;">≤ 768px</code>)에선 1열로 위아래 stack.
+  </p>
+  <div class="arrow">
+    <span>BREAKPOINT</span>
+    <span style="color:var(--gray-400);">→</span>
+    <span><b>≥ 769px</b> · <code class="mono" style="background:transparent;">grid-template-columns: 1fr 1fr</code></span>
+    <span style="color:var(--gray-400);">/</span>
+    <span><b>≤ 768px</b> · <code class="mono" style="background:transparent;">grid-template-columns: 1fr</code></span>
+  </div>
+</section>
+
+<!-- ============================================================
+     PC — SIDE BY SIDE
+     ============================================================ -->
+<section class="section" id="pc">
+  <div class="section__head">
+    <div class="section__label">PC · 데스크탑 (≥ 769px)</div>
+    <h2 class="section__title">한 줄에 <em>나란히</em> 두 장.</h2>
+    <p class="section__desc">
+      필터 칩 줄 바로 아래, 첫 행사 카드 위에 들어갑니다. 1:1 그리드 + 12px 간격.
+      카드 자체 높이는 80px 고정 — 아래 행사 카드의 시각 무게를 누르지 않습니다.
+    </p>
+  </div>
+
+  <div class="frame">
+    <span class="frame__cap">/events · 1104px laptop · ≥ 769px</span>
+    <div class="frame__inner">
+      <div class="page">
+        <h2 class="page__title">개발자 행사</h2>
+        <div class="page__count">총 124개의 행사가 등록되어 있어요</div>
+        <div class="page__filter">
+          <span class="page__chip is-on">전체</span>
+          <span class="page__chip">컨퍼런스</span>
+          <span class="page__chip">웨비나</span>
+          <span class="page__chip">해커톤</span>
+          <span class="page__chip">밋업</span>
+          <span class="page__chip">네트워킹</span>
+        </div>
+
+        <!-- ★ THE BANNER — side by side on PC -->
+        <div class="sb">
+          <a class="sb__card sb__card--threads" href="#" aria-label="Threads에서 데브이벤트 팔로우">
+            <span class="sb__icon" aria-hidden>
+              <svg viewBox="0 0 192 192" fill="currentColor"><path d="M141.5 86.6c-.7-.3-1.4-.7-2.1-1-1.3-23.4-14.1-36.8-35.6-37-9.7 0-17.7 4.2-22.9 11.4l11.9 8.2c3.7-5.6 9.5-6.8 14.8-6.8h.2c6.6 0 11.5 1.9 14.7 5.7 2.3 2.7 3.9 6.5 4.7 11.2-6.1-1-12.6-1.4-19.7-1-19.8 1.1-32.4 12.6-31.6 28.6.4 8.1 4.4 15 11.5 19.6 5.9 3.8 13.6 5.7 21.6 5.3 10.6-.6 18.9-4.6 24.7-11.9 4.4-5.5 7.2-12.7 8.4-21.6 5 3 8.7 7 10.7 11.7 3.5 8.1 3.7 21.5-7.2 32.4-9.6 9.6-21.1 13.7-38.5 13.8C84 156.3 70.7 150 61.9 137c-8.2-12.2-12.5-29.7-12.6-52.1.1-22.4 4.4-39.9 12.6-52 8.8-13 22.1-19.3 40.6-19.5 18.6.1 32.1 6.4 41.3 19.5 4.5 6.4 7.9 14.4 10.2 23.7l14-3.7c-2.7-11.4-7-21.3-12.8-29.5-11.7-16.6-28.9-25.1-51.1-25.2H104c-22.2.2-39 8.8-50.1 25.5-9.9 14.9-15 35.6-15.2 61.6.2 26 5.3 46.7 15.2 61.6 11.1 16.7 27.9 25.3 50.1 25.5h.1c19.7-.1 33.6-5.3 45.1-16.8 15-15 14.6-33.8 9.6-45.3-3.6-8.3-10.4-15-19.7-19.4Zm-29.7 22.8c-8.8.5-17.9-3.5-18.3-11.8-.3-6.2 4.4-13.1 18.8-13.9 1.7-.1 3.3-.1 4.9-.1 5.2 0 10.1.5 14.5 1.5-1.7 20.6-11.4 23.9-19.9 24.3Z"/></svg>
+            </span>
+            <div class="sb__body">
+              <div class="sb__label">Threads</div>
+              <div class="sb__copy">새 행사 소식, 가장 먼저 받기</div>
+              <div class="sb__handle">@dev_event_kr</div>
+            </div>
+            <span class="sb__cta">팔로우
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+
+          <a class="sb__card sb__card--ig" href="#" aria-label="Instagram에서 데브이벤트 팔로우">
+            <span class="sb__icon" aria-hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor"/>
+              </svg>
+            </span>
+            <div class="sb__body">
+              <div class="sb__label">Instagram</div>
+              <div class="sb__copy">행사 현장 사진 · 후기 둘러보기</div>
+              <div class="sb__handle">@dev_event_kr</div>
+            </div>
+            <span class="sb__cta">팔로우
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+        </div>
+        <!-- /banner -->
+
+        <div class="page__grid">
+          <article class="mini-card">
+            <div class="mini-card__thumb g1"><div class="mini-card__badge">진행중</div></div>
+            <div class="mini-card__name">FEConf Korea 2026</div>
+            <div class="mini-card__period">5월 18일 · 코엑스</div>
+          </article>
+          <article class="mini-card">
+            <div class="mini-card__thumb g2"><div class="mini-card__badge">D-5</div></div>
+            <div class="mini-card__name">AWS Summit Seoul 2026</div>
+            <div class="mini-card__period">5월 20일 · 코엑스</div>
+          </article>
+          <article class="mini-card">
+            <div class="mini-card__thumb g3"><div class="mini-card__badge">D-7</div></div>
+            <div class="mini-card__name">서울 디지털 해커톤</div>
+            <div class="mini-card__period">5월 25일 · 동대문</div>
+          </article>
+          <article class="mini-card">
+            <div class="mini-card__thumb g4"><div class="mini-card__badge">D-12</div></div>
+            <div class="mini-card__name">PyCon KR 2026</div>
+            <div class="mini-card__period">5월 30일 · 코엑스</div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MOBILE — STACK
+     ============================================================ -->
+<section class="section" id="mobile">
+  <div class="section__head">
+    <div class="section__label">모바일 (≤ 768px)</div>
+    <h2 class="section__title">화면이 좁아지면 <em>위아래로</em>.</h2>
+    <p class="section__desc">
+      한 줄에 두 장을 욱여넣으면 글자 잘림 · 터치 영역 좁아짐. 768px 이하에선 자연스럽게 1열 stack으로 전환.
+      카드 padding도 약간 줄여 (18·20 → 14·16) 모바일 밀도 맞춤.
+    </p>
+  </div>
+
+  <div class="frame">
+    <span class="frame__cap">/events · 375px iPhone · ≤ 768px</span>
+    <div class="frame__inner">
+      <div class="mobile-row">
+        <div class="phone">
+          <div class="phone__notch"></div>
+          <div class="phone__screen">
+            <div class="phone__nav">Dev Event <small>5/15</small></div>
+            <div class="phone__title">개발자 행사</div>
+            <div class="phone__count">총 124개</div>
+            <div class="phone__filter">
+              <span class="is-on">전체</span>
+              <span>컨퍼런스</span>
+              <span>웨비나</span>
+              <span>해커톤</span>
+            </div>
+
+            <!-- ★ THE BANNER — stacked on mobile (same component, different breakpoint) -->
+            <div class="sb">
+              <a class="sb__card sb__card--threads" href="#">
+                <span class="sb__icon"><svg viewBox="0 0 192 192" fill="currentColor"><path d="M141.5 86.6c-.7-.3-1.4-.7-2.1-1-1.3-23.4-14.1-36.8-35.6-37-9.7 0-17.7 4.2-22.9 11.4l11.9 8.2c3.7-5.6 9.5-6.8 14.8-6.8h.2c6.6 0 11.5 1.9 14.7 5.7 2.3 2.7 3.9 6.5 4.7 11.2-6.1-1-12.6-1.4-19.7-1-19.8 1.1-32.4 12.6-31.6 28.6.4 8.1 4.4 15 11.5 19.6 5.9 3.8 13.6 5.7 21.6 5.3 10.6-.6 18.9-4.6 24.7-11.9 4.4-5.5 7.2-12.7 8.4-21.6 5 3 8.7 7 10.7 11.7 3.5 8.1 3.7 21.5-7.2 32.4-9.6 9.6-21.1 13.7-38.5 13.8C84 156.3 70.7 150 61.9 137c-8.2-12.2-12.5-29.7-12.6-52.1.1-22.4 4.4-39.9 12.6-52 8.8-13 22.1-19.3 40.6-19.5 18.6.1 32.1 6.4 41.3 19.5 4.5 6.4 7.9 14.4 10.2 23.7l14-3.7c-2.7-11.4-7-21.3-12.8-29.5-11.7-16.6-28.9-25.1-51.1-25.2H104c-22.2.2-39 8.8-50.1 25.5-9.9 14.9-15 35.6-15.2 61.6.2 26 5.3 46.7 15.2 61.6 11.1 16.7 27.9 25.3 50.1 25.5h.1c19.7-.1 33.6-5.3 45.1-16.8 15-15 14.6-33.8 9.6-45.3-3.6-8.3-10.4-15-19.7-19.4Zm-29.7 22.8c-8.8.5-17.9-3.5-18.3-11.8-.3-6.2 4.4-13.1 18.8-13.9 1.7-.1 3.3-.1 4.9-.1 5.2 0 10.1.5 14.5 1.5-1.7 20.6-11.4 23.9-19.9 24.3Z"/></svg></span>
+                <div class="sb__body">
+                  <div class="sb__label">Threads</div>
+                  <div class="sb__copy">새 소식 받기</div>
+                  <div class="sb__handle">@dev_event_kr</div>
+                </div>
+                <span class="sb__cta">팔로우</span>
+              </a>
+              <a class="sb__card sb__card--ig" href="#">
+                <span class="sb__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></span>
+                <div class="sb__body">
+                  <div class="sb__label">Instagram</div>
+                  <div class="sb__copy">현장 사진 · 후기</div>
+                  <div class="sb__handle">@dev_event_kr</div>
+                </div>
+                <span class="sb__cta">팔로우</span>
+              </a>
+            </div>
+            <!-- /banner -->
+
+            <div class="phone__card">
+              <div class="phone__card-thumb"></div>
+              <div class="phone__card-name">FEConf Korea 2026</div>
+              <div class="phone__card-meta">5월 18일 · 코엑스</div>
+            </div>
+            <div class="phone__card">
+              <div class="phone__card-thumb g2"></div>
+              <div class="phone__card-name">AWS Summit Seoul 2026</div>
+              <div class="phone__card-meta">5월 20일 · 코엑스</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mobile-col">
+          <h4 style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gray-600);font-weight:700;margin-bottom:14px;">반응형 규칙</h4>
+          <ul style="list-style:none;font-size:13.5px;color:var(--gray-800);line-height:1.7;">
+            <li style="border-top:1px solid var(--gray-300);padding:12px 0;">PC · <code class="mono" style="font-size:12px;background:var(--gray-100);padding:2px 6px;border-radius:4px;">grid-template-columns: 1fr 1fr</code> · gap 12px</li>
+            <li style="border-top:1px solid var(--gray-300);padding:12px 0;">모바일 · <code class="mono" style="font-size:12px;background:var(--gray-100);padding:2px 6px;border-radius:4px;">grid-template-columns: 1fr</code> · gap 8px</li>
+            <li style="border-top:1px solid var(--gray-300);padding:12px 0;">카드 padding · 18·20 → 14·16</li>
+            <li style="border-top:1px solid var(--gray-300);padding:12px 0;">아이콘 크기 · 44px → 36px</li>
+            <li style="border-top:1px solid var(--gray-300);padding:12px 0;">CTA · "팔로우" 텍스트만 (화살표 생략)</li>
+            <li style="border-top:1px solid var(--gray-300);border-bottom:1px solid var(--gray-300);padding:12px 0;">@handle · 동일하게 유지 (한 줄 ellipsis로)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FULL SPEC
+     ============================================================ -->
+<section class="section" id="spec">
+  <div class="section__head">
+    <div class="section__label">Spec sheet · 구현 계약서</div>
+    <h2 class="section__title">실제 컴포넌트 <em>스펙</em>.</h2>
+    <p class="section__desc">
+      <code>components/features/social-banner/SocialBanner.tsx</code> + <code>SocialBanner.module.scss</code> 2개 파일로 만들고,
+      <code>pages/events.tsx</code>의 필터 칩 줄 아래 단 한 줄로 import.
+    </p>
+  </div>
+
+  <div class="spec">
+    <div class="spec__row">
+      <div class="spec__key">파일</div>
+      <div class="spec__val">
+        <code>components/features/social-banner/SocialBanner.tsx</code><br>
+        <code>components/features/social-banner/SocialBanner.module.scss</code>
+      </div>
+    </div>
+    <div class="spec__row">
+      <div class="spec__key">노출 위치</div>
+      <div class="spec__val">
+        <code>/events</code> 페이지 · <code>ScheduledEventList</code> 컴포넌트 위 (필터 영역 직후)
+      </div>
+    </div>
+    <div class="spec__row">
+      <div class="spec__key">PC (≥ 769px)</div>
+      <div class="spec__val">
+        <code>display: grid; grid-template-columns: 1fr 1fr; gap: 12px;</code><br>
+        카드 높이 80px · padding 18px 20px · 아이콘 44×44px
+      </div>
+    </div>
+    <div class="spec__row">
+      <div class="spec__key">모바일 (≤ 768px)</div>
+      <div class="spec__val">
+        <code>grid-template-columns: 1fr; gap: 8px;</code><br>
+        카드 높이 68px · padding 14px 16px · 아이콘 36×36px · CTA 화살표 생략
+      </div>
+    </div>
+    <div class="spec__row">
+      <div class="spec__key">Threads 카드</div>
+      <div class="spec__val">
+        bg <code>linear-gradient(135deg, #0E0E14 0%, #1C1C24 100%)</code> · 텍스트 #fff · CTA pill <code>bg:#fff; color:var(--gray-900);</code>
+      </div>
+    </div>
+    <div class="spec__row">
+      <div class="spec__key">Instagram 카드</div>
+      <div class="spec__val">
+        bg <code>linear-gradient(135deg, #FFE08A, #FF6F4D, #E53E5E, #C13584, #5B3F9F)</code> · 우상단 highlight overlay · CTA pill <code>color:#C13584;</code>
+      </div>
+    </div>
+    <div class="spec__row">
+      <div class="spec__key">Radius</div>
+      <div class="spec__val"><code>var(--border-radius-400)</code> = 12px · DESIGN.md §5</div>
+    </div>
+    <div class="spec__row">
+      <div class="spec__key">Border / Shadow</div>
+      <div class="spec__val">없음 — DESIGN.md §6 flat 원칙 준수</div>
+    </div>
+    <div class="spec__row">
+      <div class="spec__key">Hover</div>
+      <div class="spec__val"><code>transform: translateY(-1px); transition: transform 0.18s ease;</code> — 그림자 추가 금지</div>
+    </div>
+    <div class="spec__row">
+      <div class="spec__key">A11y</div>
+      <div class="spec__val">
+        각 카드는 <code>&lt;a&gt;</code> · <code>aria-label</code> 명시 · 외부 링크는 <code>target="_blank" rel="noopener noreferrer"</code> · focus-visible 시 KTB Blue 2px outline
+      </div>
+    </div>
+    <div class="spec__row">
+      <div class="spec__key">링크 (구현 시 필요)</div>
+      <div class="spec__val">
+        <code>https://www.threads.net/@&lt;handle&gt;</code> · <code>https://www.instagram.com/&lt;handle&gt;</code> — 실제 핸들 확인 후 주입
+      </div>
+    </div>
+    <div class="spec__row">
+      <div class="spec__key">예상 공수</div>
+      <div class="spec__val">0.5 day · 외부 API · 백엔드 변경 없음</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__line">
+    이 mockup 그대로 구현으로 옮기면 됩니다.<br>
+    <em>실제 SNS 핸들 URL</em>만 알려주시면 바로 들어가요.
+  </div>
+  <div class="footer__bottom">
+    <span>DEV·EVENT / SOCIAL BANNER · variant A · final</span>
+    <span>2026.05.15 · breakpoint 768px</span>
+  </div>
+</footer>
+
+</body>
+</html>
