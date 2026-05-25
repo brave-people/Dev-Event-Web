@@ -17,6 +17,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const cn = classNames.bind(style);
 
@@ -56,6 +57,19 @@ const Item = ({
   const [isNew, setIsNew] = useState<boolean>(isEventNew());
   const { search } = useContext(EventContext);
   const { pushToast } = useToast();
+  const router = useRouter();
+
+  const handleHostClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!data.organizer) return;
+    router.push(`/hosts/${encodeURIComponent(data.organizer)}`);
+    ga.event({
+      action: 'web_event_주최클릭',
+      event_category: 'web_event',
+      event_label: '주최클릭',
+    });
+  };
 
   const handleShare = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -172,7 +186,21 @@ const Item = ({
                 <div>
                   <div className={cn('item__content--top')}>
                     <div className={cn('wrap')}>
-                      <span className={cn(isDone ? 'host__done' : 'host')}>
+                      <span
+                        className={cn(isDone ? 'host__done' : 'host', 'host__clickable')}
+                        onClick={handleHostClick}
+                        role="link"
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            if (data.organizer) {
+                              router.push(`/hosts/${encodeURIComponent(data.organizer)}`);
+                            }
+                          }
+                        }}
+                      >
                         {data.organizer}
                       </span>
                       {/* 공유 & 북마크 */}

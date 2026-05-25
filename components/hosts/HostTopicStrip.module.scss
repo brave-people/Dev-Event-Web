@@ -1,0 +1,51 @@
+@import '~styles/_variables.scss';
+
+.wrap {
+  margin-top: 48px;
+}
+
+.head {
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  color: var(--vapor-gray-900);
+}
+
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px;
+  background: var(--vapor-gray-000);
+  border: 1px solid var(--vapor-gray-300);
+  border-radius: 12px;
+}
+
+.chip {
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--vapor-gray-100);
+  color: var(--vapor-gray-800);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover {
+    background: var(--vapor-gray-200);
+  }
+}
+
+.chip__count {
+  color: var(--vapor-gray-500);
+  font-weight: 500;
+}

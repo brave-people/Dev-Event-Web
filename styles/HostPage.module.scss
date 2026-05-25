@@ -1,0 +1,51 @@
+@import '~styles/_variables.scss';
+
+.breadcrumb {
+  max-width: $laptop-max-width;
+  margin: 0 auto;
+  padding: 24px $laptop-padding 0;
+  padding-top: calc(#{$header-height} + 24px);
+  font-size: 13px;
+  color: var(--vapor-gray-600);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  a {
+    color: var(--vapor-gray-600);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--ktb-tech-blue, #0043ff);
+    }
+  }
+
+  @media (max-width: 880px) {
+    padding: calc(#{$header-height} + 16px) $mobile-padding 0;
+  }
+}
+
+.breadcrumb__sep {
+  color: var(--vapor-gray-400);
+}
+
+.breadcrumb__current {
+  color: var(--vapor-gray-900);
+  font-weight: 500;
+}
+
+.main {
+  max-width: $laptop-max-width;
+  margin: 0 auto;
+  padding: 48px $laptop-padding 96px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 304px;
+  gap: 48px;
+  align-items: start;
+
+  @media (max-width: 880px) {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 32px $mobile-padding 64px;
+  }
+}
