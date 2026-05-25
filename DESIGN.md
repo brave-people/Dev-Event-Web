@@ -84,82 +84,6 @@ The overall aesthetic is **flat-but-confident**: 그림자 거의 없음, 미디
 - `--background-normal` = `#ffffff` — primary surface
 - `--background-alternative` = `#F7F7FA` — section banding, common-card surface
 
-### Dark Mode Palette — Wanted Design System
-
-다크 모드는 라이트의 Vapor 스케일을 **역순 매핑하지 않는다**. 대신 Wanted Design System의 다크 시맨틱 토큰 (Figma `qQPdpnglONbuWul4cvodyj` → node `15625:32983` → Color/Semantic/Dark)을 직접 채용한다. 역순 매핑이 만들던 함정(예: `--vapor-gray-950` 이 다크에선 흰색으로 뒤집혀 카드 active 상태가 흰색 박스가 되던 버그)을 제거하기 위함.
-
-#### Background — page + elevated surfaces
-
-| Wanted 토큰 | hex | 우리 매핑 | Use |
-|---|---|---|---|
-| `background-normal-normal` | `#1B1C1E` | `--vapor-gray-000`, `--background-1` | 페이지 베이스 캔버스 |
-| `background-normal-alternative` | `#0F0F10` | (예약) | 가장 깊은 알트 (필요 시) |
-| `background-elevated-normal` | `#212225` | `--vapor-gray-050`, `--background-2`, `--toggle-track-bg` | 카드, 모달, alt 표면 |
-| `background-elevated-alternative` | `#141415` | (예약) | 깊은 alt elevated |
-
-#### Line — borders + dividers
-
-| Wanted 토큰 | hex | 우리 매핑 | Use |
-|---|---|---|---|
-| `line-solid-normal` | `#37383C` | `--vapor-gray-300`, `--gray-4`, `--toggle-active-bg` | 표준 1px 보더, 토글 active 표면 |
-| `line-solid-neutral` | `#333438` | `--vapor-gray-200` | subtle 구분선 |
-| `line-solid-alternative` | `#2E2F33` | `--vapor-gray-100`, `--gray-5` | placeholder bg, search field bg |
-
-#### Interaction
-
-| Wanted 토큰 | hex | 우리 매핑 |
-|---|---|---|
-| `interaction-inactive` | `#5A5C63` | `--vapor-gray-400`, `--gray-3` |
-| `interaction-disable` | `#2E2F33` | (line-solid-alt와 동일) |
-
-#### Label — text scale
-
-| Wanted 토큰 | hex | 우리 매핑 | Use |
-|---|---|---|---|
-| `label-strong` | `#FFFFFF` | `--vapor-gray-900`, `--vapor-gray-950`, `--gray-1` | body, heading, 최강 강조 |
-| `label-normal` | `#F7F7F8` | `--vapor-gray-800` | secondary 텍스트 |
-| `label-neutral` | `#C2C4C8` | `--vapor-gray-700` | 대체 표면 위의 보조 텍스트 |
-| `label-alternative` | `#AEB0B6` | `--vapor-gray-600`, `--gray-2` | hint, meta |
-| `label-disable` | `#989BA2` | `--vapor-gray-500` | placeholder, icon default |
-
-#### Primary — brand blue (dark variant)
-
-다크에서는 KTB Tech Blue (`#0043FF`)가 어두운 배경 위에서 가독성이 떨어져 Wanted primary scale로 한 단계 밝힌다.
-
-| Wanted 토큰 | hex | 우리 매핑 |
-|---|---|---|
-| `primary-normal` | `#3385FF` | `--ktb-tech-blue` (dark only), `--primary`, `--vapor-text-primary` |
-| `primary-strong` | `#1A75FF` | `--ktb-tech-navy-hover` (dark only) |
-| `primary-heavy` | `#0066FF` | (예약) |
-
-라이트는 `#0043FF`를 그대로 유지. 브랜드 색은 유지하되 다크에서만 한 단계 밝힌 변종을 쓰는 패턴.
-
-#### Status — saturated for dark legibility
-
-| Wanted 토큰 | hex | 우리 매핑 |
-|---|---|---|
-| `status-positive` | `#1ED45A` | `--vapor-text-success` (dark) |
-| `status-cautionary` | `#FFA938` | `--vapor-text-warning` (dark) |
-| `status-negative` | `#FF6363` | `--vapor-text-danger` (dark) |
-
-#### Translucent — sticky header + glass overlays
-
-다크 전용 반투명 토큰 (light에선 별도 white 알파 값 사용):
-
-| 토큰 | dark 값 | Use |
-|---|---|---|
-| `--header-bg` | `rgba(27, 28, 30, 0.86)` | sticky 헤더 |
-| `--glass-overlay` | `rgba(33, 34, 37, 0.72)` | 모바일 카드 아이콘 글래스 |
-| `--glass-overlay-strong` | `rgba(33, 34, 37, 0.94)` | 글래스 hover |
-| `--notice-bg` | `rgba(51, 133, 255, 0.12)` | 상단 공지 배너 틴트 |
-
-### Dark Mode Iteration Notes
-- 다크 모드 토큰은 `styles/_color.scss`의 `$wanted-dark-*` 변수에 한 곳에 모아두고, `styles/Theme.scss`의 `html[data-theme='dark']` 블록에서 시맨틱 토큰에 매핑한다.
-- 새 컴포넌트가 다크 변종이 필요하면 **반드시 시맨틱 토큰**(`var(--vapor-gray-*)`, `var(--ktb-tech-blue)` 등)을 통해 접근. 하드코딩한 흰색(`#fff`, `rgba(255,255,255,...)`)이 다크에 떨어지면 시각적 부조화 발생.
-- 예외 1 (어두운 brand surface 위 텍스트): light/dark 무관하게 항상 어두운 SNS 배너의 흰 pill 같은 surface는 그 위 텍스트도 하드코딩된 다크 값(`#2B2D36`)을 써야 함. 토큰 inversion이 텍스트를 흰색으로 뒤집어 invisible 화하는 사고 방지.
-- 예외 2 (KTB Blue surface 위 텍스트): KTB Tech Blue 배경(`--ktb-tech-blue` / `--primary`) 위 텍스트는 **반드시 하드코딩된 `#ffffff`** 를 쓴다. `var(--vapor-gray-000)` 이나 `var(--background-1)` 을 쓰면 다크에서 페이지 bg(`#1B1C1E`)로 뒤집혀 검정 글씨가 파란 버튼 위에 나타나는 사고가 발생. 이 패턴이 적용된 곳: `FillButton.color--primary`, `EmailSubscribeButton`.
-- 예외 3 (인라인 동적 색상): 캘린더 chip(`CalendarGrid.tsx`)처럼 인라인 `style={{ color: tagHex, background: rgba(tagHex, 0.08) }}` 으로 카테고리 색을 칠하는 케이스는 라이트 bg 가정으로 튜닝됨. 다크에선 dark-on-dark 가독성 붕괴 → SCSS 모듈에서 `:global(html[data-theme='dark']) &` 셀렉터로 `color`/`background`를 `!important` override하여 대비를 회복하고, 카테고리 색은 `border-left` 만 유지하여 시각적 큐로 남긴다.
-
 ## 3. Typography Rules
 
 ### Font Family
@@ -487,3 +411,131 @@ The signature 4-column grid for `/event/detail/[eventId]`.
 7. **Section banding**: white (`--gray-000`) ↔ near-white (`--background-alternative` `#F7F7FA`). Just two background tiers, alternated.
 8. **Korean-first typography**: `letter-spacing: -0.012rem` on headings, `word-break: keep-all` globally.
 9. **Token-discipline**: Reach for `var(--space-*)` / `var(--gray-*)` / `var(--text-*)` / `var(--border-radius-*)` before typing a hex or px. If the value isn't in the token table above, ask before adding.
+
+## 10. Host Pages (주최)
+
+주최(host) 영역은 두 페이지로 구성됩니다 — 각각 *발견(discovery)*과 *통합(consolidation)*의 역할을 분담합니다.
+
+| 라우트 | 역할 | 진입 경로 |
+|--------|------|-----------|
+| `/hosts` | 주최자 둘러보기 (list) | 글로벌 네비 |
+| `/hosts/[organizer]` | 한 주최자의 전체 행사 + 메타 | event 카드의 `organizer` 텍스트 클릭 |
+
+이 영역의 핵심 디자인 의도는 *주최자도 행사 만큼 1등 시민*이라는 점이에요. 단순히 "이벤트 모음 페이지"가 아니라 wanted/daangn careers처럼 주최 자체에 정체성을 부여하는 카드/페이지로 다룹니다.
+
+### 10.1 데이터 모델 (mock → API 설계 기준)
+
+```ts
+// 목록 카드용
+interface HostListItem {
+  organizer: string;          // URL slug & 표시 이름
+  logoEmoji: string;          // 첫 글자 또는 이모지
+  logoGradient: string;       // CSS gradient — 브랜드 색
+  logoTextColor?: string;     // 그라데이션 위 글자 색 (밝은 배경엔 navy)
+  verified: boolean;          // 공식 인증 배지
+  classification:             // 8개 카테고리 칩과 1:1 매칭
+    '기업' | '커뮤니티' | '학회/연구소' | '정부/공공' | '교육' | '미디어';
+  domain: string;             // 메타 라인의 두 번째 항목 (예: '핀테크', '클라우드')
+  ongoingCount: number;       // pulse 칩에 표시
+  totalCount: number;         // 누적 행사 칩
+  shortDescription: string;   // 2줄 ellipsis
+  topics: string[];           // 자주 다룬 주제 (3개 권장)
+}
+
+// 상세 페이지용 (HostListItem + 행사/메타/링크 확장)
+interface Host {
+  // ... HostListItem 의 필드와 호환
+  metaCategory: string;       // 헤더 메타 (예: '모바일 · 커뮤니티')
+  metaLocation: string | null;
+  metaHistory: string;        // '2015년부터 24건 주최'
+  homepageUrl: string | null;
+  description: string;        // 긴 설명
+  chips: { label: string; variant?: 'live'|'default'|'ghost' }[];
+  ongoingEvents: Event[];     // 기존 Event 타입 재사용
+  pastEvents: Event[];
+  topics: { name: string; count: number }[];
+  links: { label: string; url: string }[];
+  summary: {                  // 사이드바 활동 요약
+    totalEvents: number;
+    averageCadence: string;
+    firstEventDate: string;
+    recentDelta: string;
+  };
+}
+```
+
+> **API 설계 시 주의**: `null`을 명시적으로 쓸 것 (`undefined` 금지 — Next.js `getServerSideProps` 직렬화 에러 발생).
+
+### 10.2 호스트 로고 그라데이션 시스템
+
+브랜드 정체성을 시각적으로 잇기 위해 **48×48 / 64×64 둥근 사각형 + CSS 그라데이션**을 사용해요. 이모지나 알파벳 한 글자가 위에 올라가고, 노란 계열에는 navy 글자, 그 외에는 흰 글자.
+
+| 브랜드 톤 | 그라데이션 | 사용 예 |
+|-----------|------------|---------|
+| Warm | `linear-gradient(135deg,#FF804E,#FF0073)` | 당근, 패스트캠퍼스 |
+| Yellow | `linear-gradient(135deg,#FFE600,#FFB900)` | 카카오, AWSKRUG (글자색 navy) |
+| Blue | `linear-gradient(135deg,#00B7F8,#006EF7)` | 토스 |
+| Violet | `linear-gradient(135deg,#AF7DEB,#7A0CFF)` | 우아한형제들, DACON |
+| Sky | `linear-gradient(135deg,#34B7F9,#87E8DF)` | GDG Korea |
+| Green | `linear-gradient(135deg,#00C73C,#03A731)` | NAVER |
+
+이 6개 톤이 충분히 다양해서 추가 색을 만들지 마세요. 알 수 없는 호스트(API에서 새로 들어온)는 organizer 이름의 char-code 해시로 6개 중 하나를 결정론적으로 배정합니다 (`lib/mock/hosts.ts > pickGradient`).
+
+### 10.3 컴포넌트 구성
+
+```
+components/hosts/
+├── HostBanner.tsx          (detail: 상단 그라데이션 배너 160px)
+├── HostHeader.tsx          (detail: 로고 + 이름 + 메타 + 칩 + 설명)
+├── HostEventCard.tsx       (detail: 행사 한 줄 카드 — 썸네일 색 5종 순환)
+├── HostEventList.tsx       (detail: 탭(진행중/지난/전체) + 섹션)
+├── HostTopicStrip.tsx      (detail: 자주 다룬 주제 스트립)
+├── HostSidebar.tsx         (detail: 바로가기 + 활동 요약)
+├── HostCard.tsx            (list: 그리드 카드)
+└── HostListControls.tsx    (list: 검색 + 정렬 + 카테고리 칩)
+```
+
+### 10.4 핵심 시각 규칙
+
+**리스트 페이지 (`/hosts`)**
+- 그리드: 데스크탑 3열 / 920px 이하 2열 / 560px 이하 1열, `gap: 16px`
+- 카드 hover: `border-color: var(--vapor-gray-400)` + `transform: translateY(-2px)` + `box-shadow: 0 4px 16px rgba(15,17,28,0.06)`
+- 검색·정렬·카테고리 모두 **클라이언트 사이드 상태** — 새 페이지 로드 없이 즉시 반응 (서버 라운드트립 없음)
+- 카테고리 칩의 **활성 상태**: `background: var(--ktb-tech-navy)` + 흰 글자 — 일반 칩과 명확히 구분되는 dark fill
+- 정렬은 3-way 토글(`활동 많은 순 → 최근 행사 순 → 가나다순`)을 한 버튼으로 순환
+
+**상세 페이지 (`/hosts/[organizer]`)**
+- 메인 그리드: `minmax(0, 1fr) 304px`, 좌측 컨텐츠 / 우측 sticky 사이드바
+- 상단 배너 높이 160px, `border-radius: 24px`, 메인 컨텐츠와 24px gap
+- 호스트 로고는 **배너 위에 띄우지 않고** 호스트 이름 옆에 인라인 배치 (`profile__nameRow` flex row + gap 16px) — wanted 패턴의 떠있는 로고 카드는 시각적으로 어색해서 의도적으로 피함
+- 행사 카드 썸네일: 5색 순환(`thumb__c1` ~ `thumb__c5`) — 카테고리 라벨(blue) + 월 표기 텍스처로 단순 시각 구분
+- D-day 배지: 진행중이면 `rgba(217,28,41,0.08)` + `#D91C29`, 종료된 행사는 회색 fill
+
+**공통**
+- fixed `Header`(56px)를 페이지 컨텐츠가 가리지 않도록 페이지 최상단에 `padding-top: calc(#{$header-height} + 24px)` 보정 (다른 페이지의 `<Banner />` 컴포넌트와 동일한 패턴)
+- `Letter` 컴포넌트(매주 데브이벤트 소식)는 main과 footer 사이에 두기 — events 페이지와 일관성
+
+### 10.5 다크/라이트 모드
+
+호스트 영역은 **모든 색을 토큰 변수로 처리**해 자동 다크 대응됩니다. 절대 하드코딩하지 마세요.
+
+| 사용처 | 토큰 |
+|--------|------|
+| 카드 / 사이드바 surface | `var(--vapor-gray-000)` |
+| 페이지 배경 | (Layout 기본) |
+| 카드 border / divider | `var(--vapor-gray-300)` / `var(--vapor-gray-200)` |
+| 본문 / 제목 텍스트 | `var(--vapor-gray-900)` |
+| 메타 / 캡션 | `var(--vapor-gray-600)` ~ `--vapor-gray-700` |
+| 카테고리 활성 칩 fill | `var(--ktb-tech-navy)` |
+| 진행중 카운트 칩 | `rgba(0,67,255,0.08)` + `var(--ktb-tech-blue)` |
+| pulse keyframe | rgba 그대로 (양쪽 모드에서 동일 빛) |
+
+**예외 — 브랜드 그라데이션**: 호스트 로고의 그라데이션은 브랜드 정체성이라 다크 모드에서도 그대로 둡니다. 다만 그 위에 올라가는 글자 색(`logoTextColor`)은 그라데이션 명도에 따라 navy/white를 선택.
+
+### 10.6 어드민/API 작성 시 권장 사항
+
+1. **slug 정책**: organizer 한글 문자열을 URL slug로 그대로 사용 (URL-encode). 영문 alias가 필요하면 별도 필드(`slug_en`)로 추가하되, 한글 slug는 유지해 SEO/공유 링크 호환성 확보.
+2. **빈 값 처리**: `metaLocation`, `homepageUrl`은 `null`을 명시적으로 보내야 함 (위 직렬화 주의 참고).
+3. **검증 배지**: `verified` 기준은 어드민이 명시적으로 토글하는 manual flag. 자동 부여 금지 (스팸 호스트 등록 시 시각적 신뢰 훼손).
+4. **`ongoingCount`/`totalCount` 계산**: 클라이언트가 직접 세지 않고 서버가 집계해 내려주기. `pastEvents`/`ongoingEvents` 배열이 비어도 카운트는 서버 값을 신뢰.
+5. **topics 산출**: 행사 태그에서 빈도수 집계해 자동 생성하는 게 자연스럽지만 상위 3~8개로 cap. 어드민에서 수동 큐레이션 옵션도 열어두면 좋음.

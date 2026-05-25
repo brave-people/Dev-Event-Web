@@ -83,6 +83,17 @@
             color: var(--vapor-gray-500);
             margin-bottom: 6px;
           }
+
+          .host__clickable {
+            cursor: pointer;
+            transition: color 0.15s ease;
+
+            &:hover {
+              color: var(--ktb-tech-blue, #0043ff);
+              text-decoration: underline;
+              text-underline-offset: 2px;
+            }
+          }
         }
       }
 

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dev Event Web · Host List Mockup</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+:root{
+  --gray-000:#ffffff;
+  --gray-050:#F7F7FA;
+  --gray-100:#F0F0F5;
+  --gray-200:#E8E8EE;
+  --gray-300:#E1E1E8;
+  --gray-400:#CDCED6;
+  --gray-500:#8C8F9F;
+  --gray-600:#6C6E7E;
+  --gray-700:#525463;
+  --gray-800:#3E404C;
+  --gray-900:#2B2D36;
+  --gray-950:#252730;
+
+  --ktb-blue:#0043ff;
+  --ktb-navy:#000040;
+  --ktb-sky:#78CDFF;
+
+  --primary:#1D6CE0;
+  --danger:#D91C29;
+  --success:#08785E;
+  --warning:#B45209;
+
+  --r-200:6px;
+  --r-400:12px;
+  --r-600:24px;
+  --r-full:999px;
+
+  --shadow-sm:0 1px 2px rgba(15,17,28,0.04);
+  --shadow-md:0 4px 16px rgba(15,17,28,0.06);
+  --shadow-lg:0 8px 24px rgba(15,17,28,0.08);
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Pretendard Variable',Pretendard,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  background:var(--gray-050);
+  color:var(--gray-900);
+  -webkit-font-smoothing:antialiased;
+  word-break:keep-all;
+  line-height:1.5;
+}
+button{font:inherit;background:none;border:none;cursor:pointer;color:inherit;}
+a{color:inherit;text-decoration:none;}
+
+/* ============ TOP BAR ============ */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:hsla(0,0%,100%,.88);
+  backdrop-filter:blur(20px) saturate(150%);
+  border-bottom:1px solid var(--gray-300);
+}
+.topbar__inner{
+  max-width:1104px;margin:0 auto;
+  padding:14px 48px;
+  display:flex;align-items:center;gap:24px;
+  font-size:14px;
+}
+.topbar__logo{font-weight:800;letter-spacing:-0.02em;font-size:16px;}
+.topbar__logo b{color:var(--ktb-blue);}
+.topbar__nav{display:flex;gap:24px;flex:1;margin-left:8px;}
+.topbar__nav a{color:var(--gray-700);font-weight:500;font-size:14px;transition:color .15s;}
+.topbar__nav a:hover{color:var(--ktb-blue);}
+.topbar__nav a.is-active{color:var(--ktb-navy);font-weight:700;}
+
+/* ============ PAGE HEADER ============ */
+.pageHead{
+  max-width:1104px;margin:0 auto;
+  padding:48px 48px 24px;
+}
+.pageHead__title{
+  font-size:32px;line-height:1.2;font-weight:700;
+  letter-spacing:-0.012em;
+  color:var(--gray-900);
+}
+.pageHead__sub{
+  margin-top:8px;
+  font-size:15px;color:var(--gray-600);
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+}
+.pageHead__sub b{color:var(--gray-900);font-weight:700;}
+.pageHead__sub .dot{color:var(--gray-400);}
+
+/* ============ CONTROLS ============ */
+.controls{
+  max-width:1104px;margin:0 auto;
+  padding:0 48px 24px;
+  display:flex;align-items:center;gap:16px;
+  flex-wrap:wrap;
+}
+.search{
+  flex:1;min-width:240px;max-width:360px;
+  position:relative;
+}
+.search input{
+  width:100%;
+  height:44px;
+  padding:0 16px 0 44px;
+  border:1px solid var(--gray-300);
+  border-radius:var(--r-200);
+  background:var(--gray-000);
+  font-size:14px;
+  color:var(--gray-900);
+  outline:none;
+  transition:border-color .15s;
+}
+.search input::placeholder{color:var(--gray-500);}
+.search input:focus{border-color:var(--ktb-blue);}
+.search svg{
+  position:absolute;left:14px;top:50%;
+  transform:translateY(-50%);
+  width:18px;height:18px;color:var(--gray-500);
+}
+
+.sort{
+  display:flex;align-items:center;gap:6px;
+  margin-left:auto;
+  font-size:13px;color:var(--gray-700);
+}
+.sort__btn{
+  display:inline-flex;align-items:center;gap:4px;
+  height:36px;padding:0 14px;
+  border:1px solid var(--gray-300);
+  border-radius:var(--r-200);
+  background:var(--gray-000);
+  font-size:13px;font-weight:500;
+  color:var(--gray-900);
+  cursor:pointer;
+}
+.sort__btn:hover{border-color:var(--gray-400);}
+.sort__btn svg{width:14px;height:14px;color:var(--gray-500);}
+
+/* ============ CATEGORY CHIPS ============ */
+.cats{
+  max-width:1104px;margin:0 auto;
+  padding:0 48px 24px;
+  display:flex;gap:8px;flex-wrap:wrap;
+}
+.cat{
+  height:34px;padding:0 14px;
+  border-radius:var(--r-full);
+  font-size:13px;font-weight:500;
+  background:var(--gray-000);
+  border:1px solid var(--gray-300);
+  color:var(--gray-800);
+  cursor:pointer;
+  transition:all .15s;
+}
+.cat:hover{border-color:var(--gray-400);background:var(--gray-050);}
+.cat.is-active{
+  background:var(--ktb-navy);color:#fff;border-color:var(--ktb-navy);
+}
+
+/* ============ GRID ============ */
+.grid{
+  max-width:1104px;margin:0 auto;
+  padding:0 48px 96px;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+@media (max-width:920px){.grid{grid-template-columns:repeat(2,1fr);}}
+@media (max-width:560px){.grid{grid-template-columns:1fr;}}
+
+/* ============ HOST CARD ============ */
+.card{
+  display:flex;flex-direction:column;
+  padding:20px;
+  background:var(--gray-000);
+  border:1px solid var(--gray-300);
+  border-radius:var(--r-400);
+  cursor:pointer;
+  transition:border-color .15s,transform .15s,box-shadow .15s;
+}
+.card:hover{
+  border-color:var(--gray-400);
+  box-shadow:var(--shadow-md);
+  transform:translateY(-2px);
+}
+
+.card__top{
+  display:flex;align-items:center;gap:12px;
+  margin-bottom:14px;
+}
+.card__logo{
+  flex-shrink:0;
+  width:48px;height:48px;
+  border-radius:10px;
+  color:#fff;font-weight:800;font-size:22px;
+  display:flex;align-items:center;justify-content:center;
+  letter-spacing:-0.02em;
+  box-shadow:0 1px 4px rgba(15,17,28,0.08);
+}
+.card__name{
+  display:flex;align-items:center;gap:6px;
+  font-size:16px;font-weight:700;
+  letter-spacing:-0.012em;
+  color:var(--gray-900);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.card__verified{
+  flex-shrink:0;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--ktb-blue);color:#fff;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;
+}
+.card__meta{
+  margin-top:2px;
+  font-size:12px;color:var(--gray-600);
+  display:flex;align-items:center;gap:4px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.card__meta .dot{color:var(--gray-400);}
+
+.card__counts{
+  display:flex;gap:6px;
+  margin-bottom:12px;
+}
+.count{
+  display:inline-flex;align-items:center;gap:4px;
+  height:24px;padding:0 8px;
+  border-radius:var(--r-200);
+  font-size:12px;font-weight:600;letter-spacing:0.02em;
+}
+.count--live{
+  background:rgba(0,67,255,0.08);color:var(--ktb-blue);
+}
+.count--live::before{
+  content:"";width:5px;height:5px;border-radius:50%;
+  background:var(--ktb-blue);
+  animation:pulse-blue 1.6s ease-out infinite;
+}
+.count--total{
+  background:var(--gray-100);color:var(--gray-700);
+}
+@keyframes pulse-blue{
+  0%{box-shadow:0 0 0 0 rgba(0,67,255,.55);}
+  70%{box-shadow:0 0 0 6px rgba(0,67,255,0);}
+  100%{box-shadow:0 0 0 0 rgba(0,67,255,0);}
+}
+
+.card__desc{
+  font-size:13px;line-height:1.55;color:var(--gray-700);
+  margin-bottom:14px;
+  display:-webkit-box;
+  -webkit-line-clamp:2;-webkit-box-orient:vertical;
+  overflow:hidden;
+  min-height:40px;
+}
+
+.card__topics{
+  display:flex;gap:6px;flex-wrap:wrap;
+  margin-top:auto;
+}
+.topic{
+  height:24px;padding:0 10px;
+  border-radius:var(--r-full);
+  font-size:11px;font-weight:500;
+  background:var(--gray-050);
+  border:1px solid var(--gray-200);
+  color:var(--gray-700);
+  display:inline-flex;align-items:center;
+}
+
+/* ============ EMPTY ============ */
+.empty{
+  grid-column:1/-1;
+  text-align:center;
+  padding:64px 24px;
+  background:var(--gray-000);
+  border:1px dashed var(--gray-300);
+  border-radius:var(--r-400);
+  color:var(--gray-600);font-size:14px;
+}
+
+/* ============ FOOTER ============ */
+.footer{
+  border-top:1px solid var(--gray-300);
+  background:var(--gray-000);
+  padding:32px 0;
+  font-size:12px;color:var(--gray-600);
+}
+.footer__inner{
+  max-width:1104px;margin:0 auto;padding:0 48px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:880px){
+  .topbar__inner,.pageHead,.controls,.cats,.grid,.footer__inner{
+    padding-left:20px;padding-right:20px;
+  }
+  .topbar__nav{display:none;}
+  .pageHead{padding-top:32px;}
+  .pageHead__title{font-size:24px;}
+  .sort{margin-left:0;}
+  .search{max-width:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <div class="topbar__inner">
+    <a href="/" class="topbar__logo">Dev <b>Event</b></a>
+    <nav class="topbar__nav">
+      <a href="/events">행사</a>
+      <a href="/calender">캘린더</a>
+      <a href="/hosts" class="is-active">주최</a>
+      <a href="/my">내 행사</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ PAGE HEAD ============ -->
+<section class="pageHead">
+  <h1 class="pageHead__title">주최자 둘러보기</h1>
+  <p class="pageHead__sub">
+    개발자 행사를 꾸준히 여는 <b>342명의 주최자</b>를 만나보세요.
+    <span class="dot">•</span>
+    <span>지금 진행중인 행사 <b>89건</b></span>
+  </p>
+</section>
+
+<!-- ============ CONTROLS ============ -->
+<div class="controls">
+  <div class="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="11" cy="11" r="8"/>
+      <path d="m21 21-4.3-4.3"/>
+    </svg>
+    <input type="search" placeholder="주최자 이름 검색 (예: 당근, AWSKRUG)">
+  </div>
+
+  <div class="sort">
+    <button class="sort__btn">
+      활동 많은 순
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ============ CATEGORY CHIPS ============ -->
+<div class="cats">
+  <button class="cat is-active">전체</button>
+  <button class="cat">행사 진행중</button>
+  <button class="cat">기업</button>
+  <button class="cat">커뮤니티</button>
+  <button class="cat">학회/연구소</button>
+  <button class="cat">정부/공공</button>
+  <button class="cat">교육</button>
+  <button class="cat">미디어</button>
+</div>
+
+<!-- ============ GRID ============ -->
+<main class="grid">
+
+  <!-- 1. 당근 -->
+  <a class="card" href="/hosts/%EB%8B%B9%EA%B7%BC">
+    <div class="card__top">
+      <div class="card__logo" style="background:linear-gradient(135deg,#FF804E,#FF0073);">🥕</div>
+      <div style="min-width:0;flex:1;">
+        <div class="card__name">당근<span class="card__verified">✓</span></div>
+        <div class="card__meta">기업 <span class="dot">•</span> 모바일·커뮤니티</div>
+      </div>
+    </div>
+    <div class="card__counts">
+      <span class="count count--live">진행중 2</span>
+      <span class="count count--total">누적 24건</span>
+    </div>
+    <p class="card__desc">하이퍼로컬 플랫폼. 매월 사내 테크 토크를 공개 세션으로 운영하고 분기마다 컨퍼런스를 엽니다.</p>
+    <div class="card__topics">
+      <span class="topic">백엔드</span>
+      <span class="topic">SRE</span>
+      <span class="topic">머신러닝</span>
+    </div>
+  </a>
+
+  <!-- 2. AWSKRUG -->
+  <a class="card" href="/hosts/AWSKRUG">
+    <div class="card__top">
+      <div class="card__logo" style="background:linear-gradient(135deg,#FFE600,#FFB900);color:#000040;">A</div>
+      <div style="min-width:0;flex:1;">
+        <div class="card__name">AWSKRUG<span class="card__verified">✓</span></div>
+        <div class="card__meta">커뮤니티 <span class="dot">•</span> 클라우드</div>
+      </div>
+    </div>
+    <div class="card__counts">
+      <span class="count count--live">진행중 5</span>
+      <span class="count count--total">누적 187건</span>
+    </div>
+    <p class="card__desc">AWS Korea User Group. SRE, 컨테이너, 보안 등 다양한 소모임 밋업을 정기 운영해요.</p>
+    <div class="card__topics">
+      <span class="topic">클라우드</span>
+      <span class="topic">DevOps</span>
+      <span class="topic">컨테이너</span>
+    </div>
+  </a>
+
+  <!-- 3. 토스 -->
+  <a class="card" href="/hosts/%ED%86%A0%EC%8A%A4">
+    <div class="card__top">
+      <div class="card__logo" style="background:linear-gradient(135deg,#00B7F8,#006EF7);">T</div>
+      <div style="min-width:0;flex:1;">
+        <div class="card__name">토스<span class="card__verified">✓</span></div>
+        <div class="card__meta">기업 <span class="dot">•</span> 핀테크</div>
+      </div>
+    </div>
+    <div class="card__counts">
+      <span class="count count--live">진행중 1</span>
+      <span class="count count--total">누적 29건</span>
+    </div>
+    <p class="card__desc">SLASH 컨퍼런스를 매년 개최. 프론트엔드, 백엔드, 데이터 엔지니어링 등 전 영역의 기술 발표를 진행해요.</p>
+    <div class="card__topics">
+      <span class="topic">프론트엔드</span>
+      <span class="topic">백엔드</span>
+      <span class="topic">데이터</span>
+    </div>
+  </a>
+
+  <!-- 4. 카카오 -->
+  <a class="card" href="/hosts/%EC%B9%B4%EC%B9%B4%EC%98%A4">
+    <div class="card__top">
+      <div class="card__logo" style="background:linear-gradient(135deg,#FFE600,#FFB900);color:#000040;">K</div>
+      <div style="min-width:0;flex:1;">
+        <div class="card__name">카카오<span class="card__verified">✓</span></div>
+        <div class="card__meta">기업 <span class="dot">•</span> 플랫폼</div>
+      </div>
+    </div>
+    <div class="card__counts">
+      <span class="count count--total">누적 38건</span>
+    </div>
+    <p class="card__desc">if(kakao) 컨퍼런스를 비롯해 카카오 테크 부트캠프, 핀테크 밋업까지 다양한 행사를 운영합니다.</p>
+    <div class="card__topics">
+      <span class="topic">AI/ML</span>
+      <span class="topic">분산시스템</span>
+      <span class="topic">모바일</span>
+    </div>
+  </a>
+
+  <!-- 5. 우아한형제들 -->
+  <a class="card" href="/hosts/%EC%9A%B0%EC%95%84%ED%95%9C%ED%98%95%EC%A0%9C%EB%93%A4">
+    <div class="card__top">
+      <div class="card__logo" style="background:linear-gradient(135deg,#AF7DEB,#7A0CFF);">우</div>
+      <div style="min-width:0;flex:1;">
+        <div class="card__name">우아한형제들<span class="card__verified">✓</span></div>
+        <div class="card__meta">기업 <span class="dot">•</span> 푸드테크</div>
+      </div>
+    </div>
+    <div class="card__counts">
+      <span class="count count--live">진행중 1</span>
+      <span class="count count--total">누적 27건</span>
+    </div>
+    <p class="card__desc">우아콘, 우아한테크코스, 우아한 세미나까지 — 교육과 컨퍼런스 양쪽에서 활발히 활동하는 주최.</p>
+    <div class="card__topics">
+      <span class="topic">백엔드</span>
+      <span class="topic">DDD</span>
+      <span class="topic">QA</span>
+    </div>
+  </a>
+
+  <!-- 6. GDG Korea -->
+  <a class="card" href="/hosts/GDG%20Korea">
+    <div class="card__top">
+      <div class="card__logo" style="background:linear-gradient(135deg,#34B7F9,#87E8DF);">G</div>
+      <div style="min-width:0;flex:1;">
+        <div class="card__name">GDG Korea</div>
+        <div class="card__meta">커뮤니티 <span class="dot">•</span> 구글 개발자 그룹</div>
+      </div>
+    </div>
+    <div class="card__counts">
+      <span class="count count--live">진행중 3</span>
+      <span class="count count--total">누적 142건</span>
+    </div>
+    <p class="card__desc">Android, Web, Cloud, ML 등 Google 기술 전반의 정기 밋업과 DevFest를 운영하는 한국 커뮤니티.</p>
+    <div class="card__topics">
+      <span class="topic">Android</span>
+      <span class="topic">Web</span>
+      <span class="topic">ML</span>
+    </div>
+  </a>
+
+  <!-- 7. NAVER -->
+  <a class="card" href="/hosts/NAVER">
+    <div class="card__top">
+      <div class="card__logo" style="background:linear-gradient(135deg,#00C73C,#03A731);">N</div>
+      <div style="min-width:0;flex:1;">
+        <div class="card__name">NAVER<span class="card__verified">✓</span></div>
+        <div class="card__meta">기업 <span class="dot">•</span> 플랫폼</div>
+      </div>
+    </div>
+    <div class="card__counts">
+      <span class="count count--total">누적 45건</span>
+    </div>
+    <p class="card__desc">DEVIEW 컨퍼런스를 비롯해 검색, 클로바 AI, 클라우드까지 전 분야의 기술 발표를 매년 진행합니다.</p>
+    <div class="card__topics">
+      <span class="topic">검색</span>
+      <span class="topic">AI</span>
+      <span class="topic">클라우드</span>
+    </div>
+  </a>
+
+  <!-- 8. DACON -->
+  <a class="card" href="/hosts/DACON">
+    <div class="card__top">
+      <div class="card__logo" style="background:linear-gradient(135deg,#5B3F9F,#7A0CFF);">D</div>
+      <div style="min-width:0;flex:1;">
+        <div class="card__name">DACON</div>
+        <div class="card__meta">미디어 <span class="dot">•</span> 데이터 경진대회</div>
+      </div>
+    </div>
+    <div class="card__counts">
+      <span class="count count--live">진행중 7</span>
+      <span class="count count--total">누적 213건</span>
+    </div>
+    <p class="card__desc">월간 해커톤·머신러닝 경진대회를 운영. 실력 향상과 포트폴리오를 한 번에 챙길 수 있어요.</p>
+    <div class="card__topics">
+      <span class="topic">해커톤</span>
+      <span class="topic">ML</span>
+      <span class="topic">대회</span>
+    </div>
+  </a>
+
+  <!-- 9. 패스트캠퍼스 -->
+  <a class="card" href="/hosts/%ED%8C%A8%EC%8A%A4%ED%8A%B8%EC%BA%A0%ED%8D%BC%EC%8A%A4">
+    <div class="card__top">
+      <div class="card__logo" style="background:linear-gradient(135deg,#FF6B6B,#FF0073);">F</div>
+      <div style="min-width:0;flex:1;">
+        <div class="card__name">패스트캠퍼스</div>
+        <div class="card__meta">교육 <span class="dot">•</span> 부트캠프</div>
+      </div>
+    </div>
+    <div class="card__counts">
+      <span class="count count--live">진행중 4</span>
+      <span class="count count--total">누적 89건</span>
+    </div>
+    <p class="card__desc">백엔드, AI, 데이터 분야의 무료 세미나와 채용 박람회를 정기적으로 운영하는 교육 플랫폼.</p>
+    <div class="card__topics">
+      <span class="topic">AI</span>
+      <span class="topic">백엔드</span>
+      <span class="topic">데이터</span>
+    </div>
+  </a>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div>© 2026 Dev Event Web</div>
+    <div>made with ❤ for the developer community</div>
+  </div>
+</footer>
+
+</body>
+</html>

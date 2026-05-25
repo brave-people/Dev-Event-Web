@@ -1,0 +1,127 @@
+@import '~styles/_variables.scss';
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.search {
+  flex: 1;
+  min-width: 240px;
+  max-width: 360px;
+  position: relative;
+
+  @media (max-width: 880px) {
+    max-width: none;
+  }
+}
+
+.search__icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--vapor-gray-500);
+  pointer-events: none;
+}
+
+.search__input {
+  width: 100%;
+  height: 44px;
+  padding: 0 16px 0 44px;
+  border: 1px solid var(--vapor-gray-300);
+  border-radius: 6px;
+  background: var(--vapor-gray-000);
+  font-size: 14px;
+  color: var(--vapor-gray-900);
+  outline: none;
+  transition: border-color 0.15s ease;
+  font-family: inherit;
+
+  &::placeholder {
+    color: var(--vapor-gray-500);
+  }
+
+  &:focus {
+    border-color: var(--ktb-tech-blue, #0043ff);
+  }
+}
+
+.sort {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 880px) {
+    margin-left: 0;
+  }
+}
+
+.sort__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--vapor-gray-300);
+  border-radius: 6px;
+  background: var(--vapor-gray-000);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--vapor-gray-900);
+  cursor: pointer;
+  font-family: inherit;
+
+  &:hover {
+    border-color: var(--vapor-gray-400);
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+    color: var(--vapor-gray-500);
+  }
+}
+
+.cats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.cat {
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  background: var(--vapor-gray-000);
+  border: 1px solid var(--vapor-gray-300);
+  color: var(--vapor-gray-800);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  font-family: inherit;
+
+  &:hover {
+    border-color: var(--vapor-gray-400);
+    background: var(--vapor-gray-050);
+  }
+}
+
+.cat__active {
+  composes: cat;
+  background: var(--ktb-tech-navy, #000040);
+  color: #ffffff;
+  border-color: var(--ktb-tech-navy, #000040);
+
+  &:hover {
+    background: var(--ktb-tech-navy, #000040);
+    border-color: var(--ktb-tech-navy, #000040);
+  }
+}

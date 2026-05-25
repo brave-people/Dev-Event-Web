@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dev Event Web · Frontend-only Feature Mockups</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+:root {
+  --blue: #0043ff;
+  --blue-hover: #0238d1;
+  --navy: #000040;
+  --sky: #78cdff;
+  --white: #ffffff;
+  --gray-50: #f7f7fa;
+  --gray-100: #f0f0f5;
+  --gray-200: #e8e8ee;
+  --gray-300: #e1e1e8;
+  --gray-400: #cdced6;
+  --gray-500: #8c8f9f;
+  --gray-600: #6c6e7e;
+  --gray-700: #525463;
+  --gray-800: #3e404c;
+  --gray-900: #2b2d36;
+  --green: #08785e;
+  --yellow: #b45209;
+  --red: #d91c29;
+  --blue-soft: #edf3ff;
+  --green-soft: #e8f6f1;
+  --yellow-soft: #fff5e7;
+  --red-soft: #fff0f1;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  --shadow: 0 18px 50px rgba(0, 0, 64, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--gray-900);
+  background:
+    linear-gradient(180deg, rgba(120, 205, 255, 0.18), rgba(255, 255, 255, 0) 360px),
+    var(--gray-50);
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  line-height: 1.5;
+  word-break: keep-all;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.page {
+  min-height: 100vh;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  border-bottom: 1px solid rgba(225, 225, 232, 0.88);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+}
+
+.topbar-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 15px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.brand-mark {
+  width: 26px;
+  height: 26px;
+  border-radius: 9px;
+  background: var(--blue);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.topbar nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.topbar a {
+  color: var(--gray-700);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 10px;
+  border-radius: 999px;
+}
+
+.topbar a:hover {
+  color: var(--blue);
+  background: var(--blue-soft);
+}
+
+.hero {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 72px 24px 36px;
+  display: grid;
+  grid-template-columns: minmax(0, 0.96fr) minmax(420px, 1.04fr);
+  align-items: end;
+  gap: 44px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 18px;
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 2px;
+  border-radius: 99px;
+  background: currentColor;
+}
+
+h1 {
+  margin: 0;
+  max-width: 720px;
+  color: var(--navy);
+  font-size: 54px;
+  line-height: 1.06;
+  letter-spacing: 0;
+}
+
+.lead {
+  margin: 20px 0 0;
+  max-width: 650px;
+  color: var(--gray-700);
+  font-size: 18px;
+}
+
+.hero-panel {
+  padding: 22px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: var(--shadow);
+}
+
+.hero-panel-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  color: var(--gray-600);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.metric {
+  min-height: 104px;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+}
+
+.metric strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--navy);
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+.metric span {
+  color: var(--gray-600);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.workspace {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 24px 88px;
+}
+
+.surface {
+  overflow: hidden;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 18px;
+  border-bottom: 1px solid var(--gray-200);
+  background: var(--white);
+}
+
+.toolbar-left,
+.toolbar-right,
+.chip-row,
+.segmented {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip,
+.toggle-button,
+.icon-button,
+.primary-button,
+.outline-button {
+  min-height: 38px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  color: var(--gray-800);
+  font-weight: 800;
+  font-size: 13px;
+  transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.chip,
+.toggle-button,
+.primary-button,
+.outline-button {
+  padding: 0 14px;
+}
+
+.chip:hover,
+.toggle-button:hover,
+.icon-button:hover,
+.outline-button:hover {
+  border-color: var(--gray-400);
+  background: var(--gray-50);
+}
+
+.chip.active,
+.toggle-button.active {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: var(--white);
+}
+
+.primary-button {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: var(--white);
+}
+
+.primary-button:hover {
+  background: var(--blue-hover);
+}
+
+.icon-button {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button svg,
+.toggle-button svg,
+.primary-button svg,
+.outline-button svg,
+.meta svg {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+}
+
+.toggle-button,
+.primary-button,
+.outline-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  min-height: 620px;
+}
+
+.main-panel {
+  min-width: 0;
+  padding: 22px;
+  background: var(--gray-50);
+}
+
+.side-panel {
+  border-left: 1px solid var(--gray-200);
+  background: var(--white);
+}
+
+.section {
+  padding: 22px;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.section:last-child {
+  border-bottom: 0;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.section-title h2,
+.section-title h3 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 18px;
+  line-height: 1.32;
+}
+
+.section-title small {
+  color: var(--gray-600);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.recent-list {
+  display: grid;
+  gap: 10px;
+}
+
+.recent-item {
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  background: var(--gray-50);
+}
+
+.recent-thumb {
+  width: 54px;
+  height: 44px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, var(--blue), var(--sky));
+}
+
+.recent-item strong,
+.summary-row strong {
+  display: block;
+  overflow: hidden;
+  color: var(--gray-900);
+  font-size: 13px;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recent-item span,
+.summary-row span {
+  color: var(--gray-600);
+  font-size: 12px;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.summary-cell {
+  min-height: 86px;
+  padding: 14px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  background: var(--gray-50);
+}
+
+.summary-cell strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--navy);
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.summary-cell span {
+  color: var(--gray-600);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.summary-bar {
+  height: 8px;
+  margin-top: 12px;
+  display: flex;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--gray-200);
+}
+
+.summary-bar b:first-child {
+  background: var(--blue);
+}
+
+.summary-bar b:last-child {
+  background: var(--sky);
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.summary-row:last-child {
+  border-bottom: 0;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.cards.compact {
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.event-card {
+  position: relative;
+  display: grid;
+  border-radius: var(--radius-md);
+  background: var(--white);
+}
+
+.event-card.visual {
+  gap: 12px;
+}
+
+.event-card.compact {
+  grid-template-columns: 88px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid var(--gray-200);
+}
+
+.event-thumb {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  aspect-ratio: 5 / 3;
+  border-radius: var(--radius-md);
+  background:
+    linear-gradient(135deg, rgba(0, 67, 255, 0.88), rgba(120, 205, 255, 0.66)),
+    url("../../public/default/event-thumbnail-light.png") center / cover;
+}
+
+.compact .event-thumb {
+  width: 88px;
+  height: 62px;
+  aspect-ratio: auto;
+}
+
+.event-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 64, 0.12), rgba(0, 0, 64, 0.36)),
+    radial-gradient(circle at 78% 22%, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0) 34%);
+}
+
+.deadline-badge,
+.status-badge {
+  position: absolute;
+  z-index: 2;
+  top: 10px;
+  left: 10px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 9px;
+  border-radius: 999px;
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.deadline-badge.today {
+  background: var(--red);
+}
+
+.deadline-badge.soon {
+  background: var(--yellow);
+}
+
+.deadline-badge.week {
+  background: var(--navy);
+}
+
+.compact .deadline-badge {
+  top: 7px;
+  left: 7px;
+  min-height: 20px;
+  padding: 0 7px;
+  font-size: 10px;
+}
+
+.event-info {
+  min-width: 0;
+}
+
+.visual .event-info {
+  padding: 0 2px 2px;
+}
+
+.event-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.event-title {
+  margin: 0 0 6px;
+  color: var(--gray-900);
+  font-size: 16px;
+  line-height: 1.45;
+  font-weight: 800;
+}
+
+.compact .event-title {
+  overflow: hidden;
+  margin-bottom: 3px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+  color: var(--gray-600);
+  font-size: 13px;
+}
+
+.compact .meta {
+  margin-bottom: 0;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 8px;
+  border-radius: var(--radius-sm);
+  background: var(--gray-100);
+  color: var(--gray-800);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.save-button {
+  position: relative;
+  z-index: 3;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--gray-300);
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--gray-700);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.visual .save-button {
+  margin-top: -3px;
+}
+
+.save-button:hover {
+  color: var(--blue);
+  border-color: var(--blue);
+}
+
+.save-button.saved {
+  color: var(--white);
+  border-color: var(--blue);
+  background: var(--blue);
+}
+
+.save-button svg {
+  width: 17px;
+  height: 17px;
+}
+
+.empty-state {
+  display: none;
+  min-height: 430px;
+  padding: 64px 20px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.empty-box {
+  max-width: 500px;
+}
+
+.empty-visual {
+  width: 98px;
+  height: 98px;
+  margin: 0 auto 22px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, rgba(0, 67, 255, 0.1), rgba(120, 205, 255, 0.18)),
+    var(--white);
+  display: grid;
+  place-items: center;
+}
+
+.empty-visual svg {
+  width: 44px;
+  height: 44px;
+  color: var(--blue);
+}
+
+.empty-box h2 {
+  margin: 0 0 10px;
+  color: var(--navy);
+  font-size: 24px;
+}
+
+.empty-box p {
+  margin: 0 0 22px;
+  color: var(--gray-700);
+}
+
+.empty-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.surface.show-empty .cards {
+  display: none;
+}
+
+.surface.show-empty .empty-state {
+  display: flex;
+}
+
+.explain {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px 96px;
+}
+
+.explain h2 {
+  margin: 0 0 18px;
+  color: var(--navy);
+  font-size: 30px;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.feature-note {
+  padding: 22px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+}
+
+.feature-note h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 10px;
+  color: var(--navy);
+  font-size: 18px;
+}
+
+.feature-note h3 span {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.feature-note p {
+  margin: 0 0 13px;
+  color: var(--gray-700);
+  font-size: 14px;
+}
+
+.feature-note code {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 7px;
+  border-radius: 6px;
+  background: var(--gray-100);
+  color: var(--navy);
+  font-size: 12px;
+}
+
+.feature-note ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--gray-800);
+  font-size: 14px;
+}
+
+.feature-note li + li {
+  margin-top: 5px;
+}
+
+.backend-report {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px 104px;
+}
+
+.report-band {
+  overflow: hidden;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.report-head {
+  padding: 30px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 24px;
+  align-items: end;
+  border-bottom: 1px solid var(--gray-200);
+  background:
+    linear-gradient(135deg, rgba(0, 67, 255, 0.12), rgba(120, 205, 255, 0.12)),
+    var(--white);
+}
+
+.report-kicker {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 28px;
+  margin-bottom: 12px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.report-head h2 {
+  margin: 0 0 10px;
+  color: var(--navy);
+  font-size: 30px;
+  line-height: 1.25;
+}
+
+.report-head p {
+  margin: 0;
+  max-width: 720px;
+  color: var(--gray-700);
+  font-size: 15px;
+}
+
+.effort-card {
+  padding: 18px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  background: var(--white);
+}
+
+.effort-card strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--blue);
+  font-size: 34px;
+  line-height: 1;
+}
+
+.effort-card span {
+  color: var(--gray-700);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.report-body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 1.08fr);
+  gap: 0;
+}
+
+.report-copy {
+  padding: 30px;
+  border-right: 1px solid var(--gray-200);
+}
+
+.report-copy h3,
+.submission-panel h3 {
+  margin: 0 0 12px;
+  color: var(--navy);
+  font-size: 20px;
+}
+
+.report-copy p {
+  margin: 0 0 18px;
+  color: var(--gray-700);
+}
+
+.impact-list {
+  display: grid;
+  gap: 10px;
+}
+
+.impact-item {
+  padding: 14px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  background: var(--gray-50);
+}
+
+.impact-item strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--gray-900);
+  font-size: 14px;
+}
+
+.impact-item span {
+  color: var(--gray-600);
+  font-size: 13px;
+}
+
+.scope-table {
+  width: 100%;
+  margin-top: 20px;
+  border-collapse: collapse;
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  font-size: 13px;
+}
+
+.scope-table th,
+.scope-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--gray-200);
+  text-align: left;
+  vertical-align: top;
+}
+
+.scope-table tr:last-child th,
+.scope-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.scope-table th {
+  width: 132px;
+  background: var(--gray-50);
+  color: var(--navy);
+}
+
+.scope-table td {
+  color: var(--gray-700);
+}
+
+.submission-panel {
+  padding: 30px;
+  background: var(--gray-50);
+}
+
+.submission-card {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+}
+
+.form-field {
+  display: grid;
+  gap: 6px;
+}
+
+.form-field label {
+  color: var(--gray-800);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.fake-input,
+.fake-textarea,
+.fake-select {
+  width: 100%;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  background: var(--white);
+  color: var(--gray-900);
+  font-size: 14px;
+}
+
+.fake-input,
+.fake-select {
+  min-height: 42px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+}
+
+.fake-textarea {
+  min-height: 92px;
+  padding: 12px;
+}
+
+.submission-status {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.status-step {
+  min-height: 72px;
+  padding: 12px;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  background: var(--white);
+}
+
+.status-step strong {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--navy);
+  font-size: 13px;
+}
+
+.status-step span {
+  color: var(--gray-600);
+  font-size: 12px;
+}
+
+@media (max-width: 980px) {
+  .hero,
+  .content,
+  .feature-grid,
+  .report-head,
+  .report-body {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding-top: 46px;
+  }
+
+  .side-panel {
+    border-top: 1px solid var(--gray-200);
+    border-left: 0;
+  }
+
+  .report-copy {
+    border-right: 0;
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .topbar-inner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .topbar nav {
+    justify-content: flex-start;
+  }
+
+  h1 {
+    font-size: 38px;
+  }
+
+  .lead {
+    font-size: 16px;
+  }
+
+  .hero-metrics,
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .toolbar {
+    align-items: stretch;
+  }
+
+  .toolbar-left,
+  .toolbar-right {
+    width: 100%;
+  }
+
+  .chip-row,
+  .segmented {
+    width: 100%;
+  }
+
+  .chip,
+  .toggle-button,
+  .outline-button,
+  .primary-button {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .event-card.compact {
+    grid-template-columns: 72px minmax(0, 1fr);
+  }
+
+  .compact .event-thumb {
+    width: 72px;
+    height: 54px;
+  }
+
+  .event-card.compact .save-button {
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    width: 32px;
+    height: 32px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><span class="brand-mark">D</span> Dev Event Web</div>
+      <nav aria-label="목업 섹션">
+        <a href="#mockup">동작 목업</a>
+        <a href="#notes">기능 설명</a>
+        <a href="#backend-light">백엔드 소폭</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Frontend-only Feature Mockups</p>
+        <h1>백엔드 수정 없이 추가 가능한 행사 탐색 기능</h1>
+        <p class="lead">기존 이벤트 API 응답과 브라우저 저장소만 사용해 구현할 수 있는 기능들을 한 화면에서 시연합니다. 버튼을 눌러 저장, 최근 본 행사, 밀도 전환, 빈 상태를 직접 확인할 수 있습니다.</p>
+      </div>
+      <aside class="hero-panel" aria-label="구현 범위 요약">
+        <div class="hero-panel-head">
+          <span>구현 방식</span>
+          <span>API 변경 없음</span>
+        </div>
+        <div class="hero-metrics">
+          <div class="metric">
+            <strong>7</strong>
+            <span>프론트 기능</span>
+          </div>
+          <div class="metric">
+            <strong>2</strong>
+            <span>localStorage 상태</span>
+          </div>
+          <div class="metric">
+            <strong>0</strong>
+            <span>백엔드 작업</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="mockup" class="workspace">
+      <div id="surface" class="surface">
+        <div class="toolbar" aria-label="행사 목록 도구 모음">
+          <div class="toolbar-left">
+            <div class="chip-row" aria-label="날짜별 빠른 탐색">
+              <button class="chip active" data-date-range="all" type="button">전체</button>
+              <button class="chip" data-date-range="today" type="button">오늘</button>
+              <button class="chip" data-date-range="week" type="button">이번 주</button>
+              <button class="chip" data-date-range="month" type="button">이번 달</button>
+              <button class="chip" data-date-range="next" type="button">다음 달</button>
+            </div>
+          </div>
+          <div class="toolbar-right">
+            <button id="savedOnly" class="toggle-button" type="button" aria-pressed="false">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+              저장한 행사만
+            </button>
+            <div class="segmented" aria-label="행사 카드 밀도">
+              <button id="viewCard" class="toggle-button active" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                카드형
+              </button>
+              <button id="viewCompact" class="toggle-button" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+                컴팩트
+              </button>
+            </div>
+            <button id="emptyDemo" class="outline-button" type="button">빈 상태 보기</button>
+          </div>
+        </div>
+
+        <div class="content">
+          <section class="main-panel" aria-label="행사 목록">
+            <div class="section-title">
+              <h2>개발자 행사</h2>
+              <small id="resultCount">6개 행사</small>
+            </div>
+            <div id="cards" class="cards"></div>
+            <div class="empty-state">
+              <div class="empty-box">
+                <div class="empty-visual" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/><path d="M8.5 11h5"/></svg>
+                </div>
+                <h2>조건에 맞는 행사가 없습니다</h2>
+                <p>현재 필터를 유지하면 결과가 없습니다. 사용자가 바로 회복할 수 있도록 가능한 액션을 제안합니다.</p>
+                <div class="empty-actions">
+                  <button class="primary-button" id="resetEmpty" type="button">전체 행사 보기</button>
+                  <button class="outline-button" id="onlineOnly" type="button">온라인 행사 보기</button>
+                  <button class="outline-button" id="monthOnly" type="button">이번 달 보기</button>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <aside class="side-panel">
+            <section class="section" aria-label="최근 본 행사">
+              <div class="section-title">
+                <h3>최근 본 행사</h3>
+                <small id="recentCount">0개</small>
+              </div>
+              <div id="recentList" class="recent-list"></div>
+            </section>
+
+            <section class="section" aria-label="캘린더 월간 요약">
+              <div class="section-title">
+                <h3>5월 요약</h3>
+                <small>월간 데이터 집계</small>
+              </div>
+              <div class="summary-grid">
+                <div class="summary-cell">
+                  <strong id="monthTotal">0</strong>
+                  <span>이번 달 행사</span>
+                </div>
+                <div class="summary-cell">
+                  <strong id="topTag">-</strong>
+                  <span>가장 많은 태그</span>
+                </div>
+              </div>
+              <div class="summary-row">
+                <div>
+                  <strong>온라인 / 오프라인</strong>
+                  <span id="ratioText">계산 중</span>
+                </div>
+              </div>
+              <div class="summary-bar" aria-label="온라인 오프라인 비율">
+                <b id="onlineBar" style="width:50%"></b>
+                <b id="offlineBar" style="width:50%"></b>
+              </div>
+            </section>
+
+            <section class="section" aria-label="마감 임박 기준">
+              <div class="section-title">
+                <h3>마감 임박 뱃지</h3>
+              </div>
+              <div class="summary-row">
+                <div>
+                  <strong>오늘 마감</strong>
+                  <span>end_date_time이 오늘인 경우</span>
+                </div>
+              </div>
+              <div class="summary-row">
+                <div>
+                  <strong>3일 남음</strong>
+                  <span>남은 일수가 1-3일인 경우</span>
+                </div>
+              </div>
+              <div class="summary-row">
+                <div>
+                  <strong>이번 주 마감</strong>
+                  <span>남은 일수가 4-7일인 경우</span>
+                </div>
+              </div>
+            </section>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="notes" class="explain">
+      <h2>항목별 구현 설명</h2>
+      <div class="feature-grid">
+        <article class="feature-note">
+          <h3><span>01</span>관심 행사 북마크</h3>
+          <p>카드 우측 저장 버튼을 누르면 event id를 브라우저에 저장합니다. 상단의 “저장한 행사만” 필터는 저장된 id 목록으로 현재 이벤트 배열을 필터링합니다.</p>
+          <ul>
+            <li>저장소: <code>localStorage.savedEventIds</code></li>
+            <li>필요 데이터: <code>event.id</code></li>
+            <li>적용 위치: 행사 카드, /events 필터 영역</li>
+          </ul>
+        </article>
+
+        <article class="feature-note">
+          <h3><span>02</span>최근 본 행사</h3>
+          <p>행사 카드를 클릭하거나 상세 페이지에 진입할 때 event id를 최근 목록 맨 앞에 기록합니다. 기존 리스트 API 응답에서 id를 매칭해 작은 카드로 다시 보여줄 수 있습니다.</p>
+          <ul>
+            <li>저장소: <code>localStorage.recentEventIds</code></li>
+            <li>정책: 중복 제거 후 최근 5개 유지</li>
+            <li>적용 위치: 홈, /events 상단, 상세 추천 영역</li>
+          </ul>
+        </article>
+
+        <article class="feature-note">
+          <h3><span>03</span>행사 마감 임박 뱃지</h3>
+          <p>행사의 모집 종료일 또는 종료일을 오늘 날짜와 비교해 뱃지를 계산합니다. 리스트와 캘린더에 같은 계산 함수를 공유하면 화면 간 표현이 일관됩니다.</p>
+          <ul>
+            <li>오늘 마감: 남은 일수 0일</li>
+            <li>3일 남음: 남은 일수 1-3일</li>
+            <li>이번 주 마감: 남은 일수 4-7일</li>
+          </ul>
+        </article>
+
+        <article class="feature-note">
+          <h3><span>04</span>캘린더 월간 요약 패널</h3>
+          <p>월간 캘린더 응답을 다시 요청하지 않고 클라이언트에서 집계합니다. 행사 수, 온라인/오프라인 비율, 최빈 태그를 계산해 캘린더 우측 또는 헤더 아래에 배치합니다.</p>
+          <ul>
+            <li>필요 데이터: 월간 이벤트 배열</li>
+            <li>집계 값: 전체 수, 유형 비율, 태그 빈도</li>
+            <li>효과: 캘린더 뷰의 정보 밀도 향상</li>
+          </ul>
+        </article>
+
+        <article class="feature-note">
+          <h3><span>05</span>행사 카드 밀도 전환</h3>
+          <p>같은 데이터를 카드형과 컴팩트형으로 전환합니다. 많은 행사를 빠르게 훑는 사용자는 컴팩트형, 썸네일 중심 탐색은 카드형을 선택할 수 있습니다.</p>
+          <ul>
+            <li>상태: query 또는 localStorage에 viewDensity 저장 가능</li>
+            <li>API 영향: 없음</li>
+            <li>주의: 모바일에서는 터치 영역 32px 이상 유지</li>
+          </ul>
+        </article>
+
+        <article class="feature-note">
+          <h3><span>06</span>날짜별 빠른 탐색</h3>
+          <p>“오늘”, “이번 주”, “이번 달”, “다음 달” 칩은 기존 date 필터 또는 query string으로 변환할 수 있습니다. 사용자가 날짜 조건을 직접 입력하지 않아도 빠르게 범위를 좁힙니다.</p>
+          <ul>
+            <li>상태 위치: EventContext의 date 또는 URL query</li>
+            <li>화면 공유: 리스트와 캘린더 공통 사용</li>
+            <li>장점: 검색 진입 장벽 감소</li>
+          </ul>
+        </article>
+
+        <article class="feature-note">
+          <h3><span>07</span>빈 상태 개선</h3>
+          <p>결과 없음 화면에 복구 액션을 제공합니다. “지역 필터 해제”, “온라인 행사만 보기”, “이번 달 전체 보기”처럼 현재 필터 상태에서 바로 실행 가능한 액션을 제안합니다.</p>
+          <ul>
+            <li>필요 데이터: 현재 필터 상태</li>
+            <li>API 영향: 없음</li>
+            <li>효과: 막힌 화면에서 다음 행동 유도</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="backend-light" class="backend-report" aria-label="백엔드 소폭 변경 기능 리포트">
+      <div class="report-band">
+        <div class="report-head">
+          <div>
+            <span class="report-kicker">Backend-light Feature Report</span>
+            <h2>추가 제안: 행사 제보·수정 요청 큐</h2>
+            <p>사용자가 누락된 행사나 잘못된 행사 정보를 직접 제보하게 만드는 기능입니다. 기존 행사 조회 API, 이벤트 모델, 필터 로직은 건드리지 않고 제출용 엔드포인트 하나와 간단한 검수 상태만 추가하면 됩니다.</p>
+          </div>
+          <div class="effort-card" aria-label="백엔드 변경 규모">
+            <strong>Low</strong>
+            <span>백엔드 변경 규모: 작음<br>프론트 체감 가치: 높음</span>
+          </div>
+        </div>
+
+        <div class="report-body">
+          <div class="report-copy">
+            <h3>왜 이 기능이 좋은가</h3>
+            <p>Dev Event Web은 큐레이션 서비스라서 행사 데이터의 신선도가 곧 서비스 품질입니다. 제보 기능은 운영자가 직접 찾지 못한 웨비나, 컨퍼런스, 해커톤 정보를 사용자에게서 받을 수 있어 콘텐츠 풀을 늘리는 데 바로 도움이 됩니다.</p>
+
+            <div class="impact-list">
+              <div class="impact-item">
+                <strong>사용자 가치</strong>
+                <span>내가 아는 개발자 행사를 쉽게 제출하고, 잘못된 날짜나 링크를 신고할 수 있습니다.</span>
+              </div>
+              <div class="impact-item">
+                <strong>운영 가치</strong>
+                <span>행사 수집 채널이 하나 늘어나며, 검수 큐를 기준으로 등록 우선순위를 정할 수 있습니다.</span>
+              </div>
+              <div class="impact-item">
+                <strong>기술 범위</strong>
+                <span>이벤트 조회/검색 API를 수정하지 않고 별도 submit API와 관리자 확인 흐름만 추가합니다.</span>
+              </div>
+            </div>
+
+            <table class="scope-table">
+              <tbody>
+                <tr>
+                  <th>프론트엔드</th>
+                  <td>행사 제보 버튼, 제출 폼, URL/날짜/주최자 입력, 제출 완료 토스트, 상세 페이지의 “정보 수정 요청” 진입점</td>
+                </tr>
+                <tr>
+                  <th>백엔드</th>
+                  <td><code>POST /front/v2/event-submissions</code> 또는 Next API proxy 1개. 입력 검증 후 Slack, 이메일, DB 테이블 중 하나로 전달</td>
+                </tr>
+                <tr>
+                  <th>데이터</th>
+                  <td>title, url, startDate, endDate, host, category, memo, requesterEmail 정도의 독립 submission payload</td>
+                </tr>
+                <tr>
+                  <th>변경 회피</th>
+                  <td>기존 이벤트 목록 응답, 캘린더 API, 필터 API, 인증 플로우, 이벤트 상세 모델은 변경하지 않음</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="submission-panel">
+            <h3>목업: 행사 제보 폼</h3>
+            <div class="submission-card">
+              <div class="form-field">
+                <label>행사명</label>
+                <div class="fake-input">Korean Developers Summit 2026</div>
+              </div>
+              <div class="form-field">
+                <label>행사 URL</label>
+                <div class="fake-input">https://example.com/dev-summit</div>
+              </div>
+              <div class="form-field">
+                <label>행사 유형</label>
+                <div class="fake-select">컨퍼런스 · 온라인/오프라인 선택</div>
+              </div>
+              <div class="form-field">
+                <label>운영자에게 남길 메모</label>
+                <div class="fake-textarea">모집 마감은 6월 10일이고, 학생 할인 코드가 있습니다.</div>
+              </div>
+              <button class="primary-button" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                제보 제출
+              </button>
+            </div>
+
+            <div class="submission-status" aria-label="제보 처리 상태">
+              <div class="status-step">
+                <strong>1. 제출</strong>
+                <span>사용자가 폼 작성</span>
+              </div>
+              <div class="status-step">
+                <strong>2. 검수</strong>
+                <span>운영자 큐 확인</span>
+              </div>
+              <div class="status-step">
+                <strong>3. 등록</strong>
+                <span>기존 등록 흐름 사용</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+const today = new Date("2026-05-22T09:00:00+09:00");
+
+const events = [
+  { id: 101, title: "AI 서비스 개발 컨퍼런스 2026", date: "2026-05-22", deadline: "2026-05-22", type: "온라인", tag: "AI", location: "온라인" },
+  { id: 102, title: "프론트엔드 성능 최적화 웨비나", date: "2026-05-24", deadline: "2026-05-25", type: "온라인", tag: "Frontend", location: "온라인" },
+  { id: 103, title: "서울 클라우드 네이티브 밋업", date: "2026-05-28", deadline: "2026-05-28", type: "오프라인", tag: "Cloud", location: "서울" },
+  { id: 104, title: "주니어 개발자 커리어 네트워킹", date: "2026-05-31", deadline: "2026-05-29", type: "오프라인", tag: "Career", location: "판교" },
+  { id: 105, title: "오픈소스 해커톤 참가자 모집", date: "2026-06-07", deadline: "2026-06-01", type: "오프라인", tag: "OpenSource", location: "부산" },
+  { id: 106, title: "데이터 엔지니어링 실전 세미나", date: "2026-06-12", deadline: "2026-06-05", type: "온라인", tag: "Data", location: "온라인" }
+];
+
+const savedKey = "devEventMockSavedIds";
+const recentKey = "devEventMockRecentIds";
+
+let savedIds = loadIds(savedKey);
+let recentIds = loadIds(recentKey);
+let density = "card";
+let dateRange = "all";
+let savedOnly = false;
+let typeFilter = "all";
+let forceEmpty = false;
+
+const surface = document.querySelector("#surface");
+const cardsEl = document.querySelector("#cards");
+const resultCount = document.querySelector("#resultCount");
+const recentList = document.querySelector("#recentList");
+const recentCount = document.querySelector("#recentCount");
+const savedOnlyButton = document.querySelector("#savedOnly");
+const viewCard = document.querySelector("#viewCard");
+const viewCompact = document.querySelector("#viewCompact");
+const emptyDemo = document.querySelector("#emptyDemo");
+
+function loadIds(key) {
+  try {
+    return JSON.parse(localStorage.getItem(key) || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function saveIds(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+function diffDays(dateValue) {
+  const target = new Date(`${dateValue}T23:59:59+09:00`);
+  const ms = target.getTime() - today.getTime();
+  return Math.ceil(ms / 86400000);
+}
+
+function deadlineLabel(event) {
+  const days = diffDays(event.deadline);
+  if (days < 0) return null;
+  if (days === 0) return { text: "오늘 마감", tone: "today" };
+  if (days <= 3) return { text: `${days}일 남음`, tone: "soon" };
+  if (days <= 7) return { text: "이번 주 마감", tone: "week" };
+  return null;
+}
+
+function isInRange(event) {
+  const days = diffDays(event.date);
+  if (dateRange === "today") return days === 0;
+  if (dateRange === "week") return days >= 0 && days <= 7;
+  if (dateRange === "month") return event.date.startsWith("2026-05");
+  if (dateRange === "next") return event.date.startsWith("2026-06");
+  return true;
+}
+
+function visibleEvents() {
+  return events.filter((event) => {
+    if (savedOnly && !savedIds.includes(event.id)) return false;
+    if (typeFilter === "online" && event.type !== "온라인") return false;
+    return isInRange(event);
+  });
+}
+
+function renderCards() {
+  const visible = forceEmpty ? [] : visibleEvents();
+  cardsEl.className = density === "compact" ? "cards compact" : "cards";
+  resultCount.textContent = `${visible.length}개 행사`;
+  surface.classList.toggle("show-empty", visible.length === 0);
+  cardsEl.innerHTML = visible.map((event) => {
+    const saved = savedIds.includes(event.id);
+    const badge = deadlineLabel(event);
+    const cardClass = density === "compact" ? "event-card compact" : "event-card visual";
+    return `
+      <article class="${cardClass}" data-event-id="${event.id}">
+        <div class="event-thumb">
+          ${badge ? `<span class="deadline-badge ${badge.tone}">${badge.text}</span>` : ""}
+        </div>
+        <div class="event-info">
+          <div class="event-title-row">
+            <h3 class="event-title">${event.title}</h3>
+            ${density === "card" ? saveButton(event.id, saved) : ""}
+          </div>
+          <div class="meta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            ${event.date} · ${event.location}
+          </div>
+          ${density === "card" ? `<div class="tags"><span class="tag">${event.tag}</span><span class="tag">${event.type}</span></div>` : ""}
+        </div>
+        ${density === "compact" ? saveButton(event.id, saved) : ""}
+      </article>
+    `;
+  }).join("");
+}
+
+function saveButton(id, saved) {
+  return `
+    <button class="save-button ${saved ? "saved" : ""}" type="button" data-save-id="${id}" aria-label="관심 행사 저장">
+      <svg viewBox="0 0 24 24" fill="${saved ? "currentColor" : "none"}" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+    </button>
+  `;
+}
+
+function renderRecent() {
+  const recentEvents = recentIds
+    .map((id) => events.find((event) => event.id === id))
+    .filter(Boolean)
+    .slice(0, 5);
+
+  recentCount.textContent = `${recentEvents.length}개`;
+  recentList.innerHTML = recentEvents.length
+    ? recentEvents.map((event) => `
+      <div class="recent-item">
+        <div class="recent-thumb"></div>
+        <div>
+          <strong>${event.title}</strong>
+          <span>${event.date} · ${event.tag}</span>
+        </div>
+      </div>
+    `).join("")
+    : `<div class="summary-row"><div><strong>아직 본 행사가 없습니다</strong><span>행사 카드를 클릭하면 여기에 쌓입니다.</span></div></div>`;
+}
+
+function renderSummary() {
+  const monthEvents = events.filter((event) => event.date.startsWith("2026-05"));
+  const online = monthEvents.filter((event) => event.type === "온라인").length;
+  const offline = monthEvents.length - online;
+  const tagCounts = monthEvents.reduce((acc, event) => {
+    acc[event.tag] = (acc[event.tag] || 0) + 1;
+    return acc;
+  }, {});
+  const topTag = Object.entries(tagCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || "-";
+  const onlineWidth = monthEvents.length ? Math.round((online / monthEvents.length) * 100) : 0;
+
+  document.querySelector("#monthTotal").textContent = monthEvents.length;
+  document.querySelector("#topTag").textContent = topTag;
+  document.querySelector("#ratioText").textContent = `온라인 ${online}개 · 오프라인 ${offline}개`;
+  document.querySelector("#onlineBar").style.width = `${onlineWidth}%`;
+  document.querySelector("#offlineBar").style.width = `${100 - onlineWidth}%`;
+}
+
+function recordRecent(id) {
+  recentIds = [id, ...recentIds.filter((recentId) => recentId !== id)].slice(0, 5);
+  saveIds(recentKey, recentIds);
+  renderRecent();
+}
+
+function updateAll() {
+  renderCards();
+  renderRecent();
+  renderSummary();
+  savedOnlyButton.classList.toggle("active", savedOnly);
+  savedOnlyButton.setAttribute("aria-pressed", String(savedOnly));
+}
+
+cardsEl.addEventListener("click", (event) => {
+  const saveTarget = event.target.closest("[data-save-id]");
+  if (saveTarget) {
+    event.stopPropagation();
+    const id = Number(saveTarget.dataset.saveId);
+    savedIds = savedIds.includes(id)
+      ? savedIds.filter((savedId) => savedId !== id)
+      : [...savedIds, id];
+    saveIds(savedKey, savedIds);
+    updateAll();
+    return;
+  }
+
+  const card = event.target.closest("[data-event-id]");
+  if (card) {
+    recordRecent(Number(card.dataset.eventId));
+  }
+});
+
+document.querySelectorAll("[data-date-range]").forEach((button) => {
+  button.addEventListener("click", () => {
+    forceEmpty = false;
+    typeFilter = "all";
+    dateRange = button.dataset.dateRange;
+    document.querySelectorAll("[data-date-range]").forEach((item) => item.classList.toggle("active", item === button));
+    updateAll();
+  });
+});
+
+savedOnlyButton.addEventListener("click", () => {
+  forceEmpty = false;
+  savedOnly = !savedOnly;
+  updateAll();
+});
+
+viewCard.addEventListener("click", () => {
+  forceEmpty = false;
+  density = "card";
+  viewCard.classList.add("active");
+  viewCompact.classList.remove("active");
+  updateAll();
+});
+
+viewCompact.addEventListener("click", () => {
+  forceEmpty = false;
+  density = "compact";
+  viewCompact.classList.add("active");
+  viewCard.classList.remove("active");
+  updateAll();
+});
+
+emptyDemo.addEventListener("click", () => {
+  forceEmpty = true;
+  updateAll();
+});
+
+document.querySelector("#resetEmpty").addEventListener("click", () => {
+  forceEmpty = false;
+  savedOnly = false;
+  typeFilter = "all";
+  dateRange = "all";
+  document.querySelectorAll("[data-date-range]").forEach((item) => item.classList.toggle("active", item.dataset.dateRange === "all"));
+  updateAll();
+});
+
+document.querySelector("#onlineOnly").addEventListener("click", () => {
+  forceEmpty = false;
+  savedOnly = false;
+  typeFilter = "online";
+  dateRange = "all";
+  document.querySelectorAll("[data-date-range]").forEach((item) => item.classList.toggle("active", item.dataset.dateRange === "all"));
+  updateAll();
+});
+
+document.querySelector("#monthOnly").addEventListener("click", () => {
+  forceEmpty = false;
+  typeFilter = "all";
+  dateRange = "month";
+  document.querySelectorAll("[data-date-range]").forEach((item) => item.classList.toggle("active", item.dataset.dateRange === "month"));
+  updateAll();
+});
+
+updateAll();
+</script>
+</body>
+</html>
