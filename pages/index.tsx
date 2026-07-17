@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import HeroStarfield from 'components/brand/HeroStarfield';
 import styles from 'styles/Brand.module.scss';
 
 const GITHUB_URL = 'https://github.com/brave-people/Dev-Event';
@@ -63,9 +64,6 @@ const Home = () => {
             className={`${styles.nav} ${menuOpen ? styles.navOpen : ''}`}
             aria-label="브랜드 페이지 주요 메뉴"
           >
-            <a href="#about" onClick={() => setMenuOpen(false)}>
-              소개
-            </a>
             <Link href="/events">
               <a onClick={() => setMenuOpen(false)}>행사</a>
             </Link>
@@ -77,27 +75,7 @@ const Home = () => {
             >
               행사 제보
             </a>
-            <a
-              href={GITHUB_URL}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => setMenuOpen(false)}
-            >
-              GitHub
-            </a>
           </nav>
-
-          <a
-            className={styles.githubButton}
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m12 2 2.1 6.2h6.5l-5.3 3.8 2 6.2-5.3-3.8-5.3 3.8 2-6.2-5.3-3.8h6.5L12 2Z" />
-            </svg>
-            GitHub에서 보기
-          </a>
 
           <button
             type="button"
@@ -116,11 +94,9 @@ const Home = () => {
       <main>
         <section className={styles.hero} aria-labelledby="hero-title">
           <div className={styles.heroBackdrop} aria-hidden="true" />
+          <HeroStarfield />
           <div className={styles.heroShade} aria-hidden="true" />
           <div className={styles.heroContent}>
-            <p className={styles.eyebrow}>
-              <span /> 개발자를 위한 모든 이벤트
-            </p>
             <h1 id="hero-title">
               <span>DEV</span> <span>EVENT</span>
             </h1>
@@ -160,9 +136,6 @@ const Home = () => {
           aria-labelledby="about-title"
         >
           <div className={styles.aboutInner}>
-            <p className={styles.sectionLabel}>
-              <span>✦</span> 우리가 하는 일
-            </p>
             <h2 id="about-title">
               개발자를 위한
               <br className={styles.mobileBreak} /> 가치 있는 정보
@@ -230,9 +203,6 @@ const Home = () => {
       <footer className={styles.footer}>
         <span>DEV EVENT</span>
         <p>개발자를 위한 행사 정보, 데브이벤트</p>
-        <a href={GITHUB_URL} target="_blank" rel="noreferrer">
-          GitHub
-        </a>
       </footer>
     </div>
   );

@@ -1,9 +1,7 @@
 @import '~styles/_mixin.scss';
 
 $surface: #080a0e;
-$surface-elevated: #0d1016;
 $text-muted: #aeb2bd;
-$violet: #9c6dff;
 
 .page {
   min-height: 100vh;
@@ -56,34 +54,6 @@ $violet: #9c6dff;
   }
 }
 
-.githubButton {
-  height: 44px;
-  padding: 0 18px;
-  margin-left: auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border-radius: 12px;
-  color: #111319;
-  background: #fff;
-  font-size: 14px;
-  font-weight: 700;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.28);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
-
-  svg {
-    width: 17px;
-    fill: none;
-    stroke: currentColor;
-    stroke-linejoin: round;
-  }
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
-  }
-}
-
 .menuButton {
   display: none;
 }
@@ -112,8 +82,26 @@ $violet: #9c6dff;
   animation: heroReveal 1.2s cubic-bezier(0.2, 0.75, 0.25, 1) both;
 }
 
-.heroShade {
+.hero :global(.hero-starfield) {
+  position: absolute;
+  inset: 0;
   z-index: -2;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  opacity: 0.68;
+  mix-blend-mode: screen;
+  mask-image: radial-gradient(
+    ellipse at 50% 48%,
+    #000 0%,
+    rgba(0, 0, 0, 0.9) 58%,
+    transparent 100%
+  );
+}
+
+.heroShade {
+  z-index: -1;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, transparent 25%),
     radial-gradient(
       circle at 50% 47%,
@@ -131,7 +119,7 @@ $violet: #9c6dff;
   animation: contentIn 0.9s 0.18s cubic-bezier(0.2, 0.75, 0.25, 1) both;
 
   h1 {
-    margin: 13px 0 18px;
+    margin: 0 0 18px;
     font-size: clamp(76px, 10.5vw, 164px);
     line-height: 0.88;
     letter-spacing: -0.075em;
@@ -141,25 +129,6 @@ $violet: #9c6dff;
     span {
       display: inline;
     }
-  }
-}
-
-.eyebrow {
-  margin: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  color: rgba(255, 255, 255, 0.68);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-
-  span {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #6dffb7;
-    box-shadow: 0 0 16px #46ffa9;
   }
 }
 
@@ -279,17 +248,6 @@ $violet: #9c6dff;
   text-align: center;
 }
 
-.sectionLabel {
-  margin: 0 0 16px;
-  color: $violet;
-  font-size: 14px;
-  font-weight: 700;
-
-  span {
-    margin-right: 7px;
-  }
-}
-
 .about h2 {
   margin: 0;
   font-size: clamp(32px, 3.3vw, 48px);
@@ -381,14 +339,9 @@ $violet: #9c6dff;
   justify-content: space-between;
   gap: 32px;
   text-align: left;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid #26364d;
   border-radius: 24px;
-  background: linear-gradient(
-      125deg,
-      rgba(65, 98, 255, 0.16),
-      rgba(188, 66, 255, 0.08)
-    ),
-    $surface-elevated;
+  background: #111827;
 
   p {
     margin: 0 0 8px;
@@ -436,11 +389,6 @@ $violet: #9c6dff;
   p {
     margin: 0;
   }
-
-  a {
-    margin-left: auto;
-    color: #c4c8d1;
-  }
 }
 
 @keyframes heroReveal {
@@ -476,13 +424,16 @@ $violet: #9c6dff;
 }
 
 @media (max-width: 900px) {
+  .hero :global(.hero-starfield) {
+    display: none;
+  }
+
   .headerInner {
     width: min(100% - 40px, 820px);
     height: 72px;
   }
 
-  .nav,
-  .githubButton {
+  .nav {
     display: none;
   }
 
@@ -587,7 +538,7 @@ $violet: #9c6dff;
 
     h1 {
       max-width: 360px;
-      margin: 14px auto 20px;
+      margin: 0 auto 20px;
       font-size: clamp(64px, 20vw, 78px);
       line-height: 0.8;
       letter-spacing: -0.07em;
@@ -596,10 +547,6 @@ $violet: #9c6dff;
         display: block;
       }
     }
-  }
-
-  .eyebrow {
-    font-size: 11px;
   }
 
   .heroDescription {
@@ -628,11 +575,6 @@ $violet: #9c6dff;
 
   .about {
     padding: 72px 22px 80px;
-  }
-
-  .sectionLabel {
-    margin-bottom: 14px;
-    font-size: 13px;
   }
 
   .about h2 {
@@ -704,21 +646,20 @@ $violet: #9c6dff;
     align-items: flex-start;
     flex-direction: column;
     gap: 8px;
-
-    a {
-      margin: 10px 0 0;
-    }
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero :global(.hero-starfield) {
+    display: none;
+  }
+
   .heroBackdrop,
   .heroContent,
   .scrollHint span {
     animation: none;
   }
 
-  .githubButton,
   .primaryAction,
   .textAction span {
     transition: none;
