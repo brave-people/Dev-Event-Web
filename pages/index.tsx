@@ -1,14 +1,107 @@
 import { serialize } from 'cookie';
 import jwt_decode from 'jwt-decode';
-import { useState } from 'react';
+import { MdOutlineEmail } from 'react-icons/md';
+import {
+  SiAndroid,
+  SiApple,
+  SiGithub,
+  SiInstagram,
+  SiThreads,
+} from 'react-icons/si';
 import type { GetServerSideProps } from 'next';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import HeroStarfield from 'components/brand/HeroStarfield';
 import styles from 'styles/Brand.module.scss';
 
 const GITHUB_URL = 'https://github.com/brave-people/Dev-Event';
-const SUBMIT_URL = 'https://forms.gle/UUjUVg1tTrKhemKu9';
+
+const COMPANION_SERVICES = [
+  {
+    name: 'Android 앱',
+    href: 'https://play.google.com/store/apps/details?id=com.bravepeople.devevent.android.app',
+    description:
+      'Google Play에서 데브이벤트 앱으로 새로운 개발자 행사를 빠르게 확인하세요.',
+    icon: 'android',
+    className: styles.serviceAndroid,
+  },
+  {
+    name: 'iOS 앱',
+    href: 'https://apps.apple.com/kr/app/%EB%8D%B0%EB%B8%8C%EC%9D%B4%EB%B2%A4%ED%8A%B8-%EA%B0%9C%EB%B0%9C%EC%9E%90-%ED%96%89%EC%82%AC-%EC%A0%95%EB%B3%B4/id6502765233',
+    description:
+      'App Store에서 데브이벤트를 설치하고 관심 있는 행사 소식을 놓치지 마세요.',
+    icon: 'ios',
+    className: styles.serviceApple,
+  },
+  {
+    name: 'Instagram',
+    href: 'https://www.instagram.com/dev.event.official/',
+    description:
+      '행사 소식과 큐레이션 콘텐츠를 인스타그램에서 가볍게 만나보세요.',
+    icon: 'instagram',
+    className: styles.serviceInstagram,
+  },
+  {
+    name: 'Threads',
+    href: 'https://www.threads.com/@dev.event.official?hl=ko',
+    description:
+      '데브이벤트의 짧은 소식과 이야기를 Threads에서 편하게 이어서 만나보세요.',
+    icon: 'threads',
+    className: styles.serviceThreads,
+  },
+  {
+    name: 'Email 구독',
+    href: 'https://github.com/brave-people/Dev-Event-Subscribe',
+    description: '새로운 개발자 행사 정보를 정리된 이메일로 받아보세요.',
+    icon: 'mail',
+    className: styles.serviceEmail,
+  },
+  {
+    name: '웨일 확장앱',
+    href: 'https://store.whale.naver.com/detail/dfhagfnmecmkhdoeggeokfmmkbpiahek',
+    description:
+      '웨일 브라우저에 데브이벤트를 추가하고 새로운 행사 소식을 더 빠르게 확인하세요.',
+    icon: 'whale',
+    className: styles.serviceWhale,
+  },
+] as const;
+
+type ServiceIconProps = {
+  type: typeof COMPANION_SERVICES[number]['icon'];
+};
+
+function ServiceIcon({ type }: ServiceIconProps) {
+  if (type === 'android') {
+    return <SiAndroid aria-hidden="true" />;
+  }
+
+  if (type === 'ios') {
+    return <SiApple aria-hidden="true" />;
+  }
+
+  if (type === 'instagram') {
+    return <SiInstagram aria-hidden="true" />;
+  }
+
+  if (type === 'threads') {
+    return <SiThreads aria-hidden="true" />;
+  }
+
+  if (type === 'whale') {
+    return (
+      <Image
+        src="/icon/whale.png"
+        alt=""
+        width={29}
+        height={29}
+        aria-hidden="true"
+      />
+    );
+  }
+
+  return <MdOutlineEmail aria-hidden="true" />;
+}
 
 type FeatureIconProps = {
   type: 'bolt' | 'globe' | 'heart';
@@ -40,8 +133,6 @@ function FeatureIcon({ type }: FeatureIconProps) {
 }
 
 const Home = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   return (
     <div className={styles.page}>
       <Head>
@@ -59,35 +150,6 @@ const Home = () => {
               DEV EVENT
             </a>
           </Link>
-
-          <nav
-            className={`${styles.nav} ${menuOpen ? styles.navOpen : ''}`}
-            aria-label="브랜드 페이지 주요 메뉴"
-          >
-            <Link href="/events">
-              <a onClick={() => setMenuOpen(false)}>행사</a>
-            </Link>
-            <a
-              href={SUBMIT_URL}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => setMenuOpen(false)}
-            >
-              행사 제보
-            </a>
-          </nav>
-
-          <button
-            type="button"
-            className={styles.menuButton}
-            aria-label={menuOpen ? '메뉴 닫기' : '메뉴 열기'}
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 7h16M4 12h16M4 17h16" />
-            </svg>
-          </button>
         </div>
       </header>
 
@@ -193,11 +255,88 @@ const Home = () => {
             </div>
           </div>
         </section>
+
+        <section className={styles.services} aria-labelledby="services-title">
+          <div className={styles.servicesInner}>
+            <h2 id="services-title">데브이벤트를 더 가까이</h2>
+            <p>
+              앱과 소셜 미디어, 이메일에서도 새로운 개발자 행사 소식을
+              만나보세요.
+            </p>
+            <div className={styles.serviceGrid}>
+              {COMPANION_SERVICES.map((service) => (
+                <a
+                  key={service.name}
+                  className={`${styles.serviceCard} ${service.className}`}
+                  href={service.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={`${service.name} 바로가기`}
+                >
+                  <div className={styles.serviceHeader}>
+                    <span className={styles.serviceIcon}>
+                      <ServiceIcon type={service.icon} />
+                    </span>
+                    <h3>{service.name}</h3>
+                  </div>
+                  <p>{service.description}</p>
+                  <span className={styles.serviceArrow} aria-hidden="true">
+                    →
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer className={styles.footer}>
-        <span>DEV EVENT</span>
-        <p>개발자를 위한 행사 정보, 데브이벤트</p>
+        <div className={styles.footerInner}>
+          <div className={styles.footerContent}>
+            <span className={styles.footerWordmark}>DEV EVENT</span>
+            <p className={styles.footerDescription}>
+              개발자를 위한 행사 정보, 데브이벤트
+            </p>
+            <p className={styles.footerCopyright}>
+              ⓒ 2022.{' '}
+              <a
+                href="https://github.com/brave-people/dev-Event"
+                target="_blank"
+                rel="noreferrer"
+              >
+                용감한 친구들 with 남송리 삼번지
+              </a>{' '}
+              all rights reserved.
+            </p>
+          </div>
+
+          <nav className={styles.footerLinks} aria-label="관련 서비스 바로가기">
+            <a
+              className={styles.footerIconLink}
+              href={GITHUB_URL}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Dev Event GitHub 저장소"
+            >
+              <SiGithub aria-hidden="true" />
+            </a>
+            <a
+              className={styles.footerIconLink}
+              href="https://store.whale.naver.com/detail/dfhagfnmecmkhdoeggeokfmmkbpiahek"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Dev Event 웨일 확장앱"
+            >
+              <Image
+                src="/icon/whale.png"
+                alt=""
+                width={30}
+                height={30}
+                aria-hidden="true"
+              />
+            </a>
+          </nav>
+        </div>
       </footer>
     </div>
   );
