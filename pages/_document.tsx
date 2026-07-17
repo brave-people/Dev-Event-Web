@@ -20,7 +20,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="ko">
         <Head>
           {/* FOUC prevention: resolve theme before React boots */}
           <script
@@ -40,10 +40,10 @@ class MyDocument extends Document {
           />
           <link
             rel="icon"
-            href="/default/favicon.ico"
-            sizes="any"
+            href="/default/favicon-v2.png"
+            type="image/png"
+            sizes="512x512"
           />
-          <link rel="canonical" href="https://dev-event.vercel.app" />
           <script
             async
             src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_TRACKING_ID}`}

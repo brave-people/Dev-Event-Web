@@ -487,3 +487,36 @@ The signature 4-column grid for `/event/detail/[eventId]`.
 7. **Section banding**: white (`--gray-000`) ↔ near-white (`--background-alternative` `#F7F7FA`). Just two background tiers, alternated.
 8. **Korean-first typography**: `letter-spacing: -0.012rem` on headings, `word-break: keep-all` globally.
 9. **Token-discipline**: Reach for `var(--space-*)` / `var(--gray-*)` / `var(--text-*)` / `var(--border-radius-*)` before typing a hex or px. If the value isn't in the token table above, ask before adding.
+
+## 10. Brand Landing Hero Motion Contract
+
+The `/` brand landing hero uses its generated desktop/mobile artwork as the complete visual baseline. Three.js may add depth, but it must never carry essential content or replace the static art.
+
+- **Role**: a transparent starfield plus low-density cyan, blue, and violet nebula-dust layer. The dust follows visible curl-like paths, drifts as a group, and gently pulses while the stars retain subtle pointer parallax and restrained twinkle; HTML remains responsible for the `DEV EVENT` title, description, and actions.
+- **Visual priority**: motion stays behind the shade and content layers. Keep the center readable and avoid bloom, lens distortion, logo deformation, or dense particle trails.
+- **Performance**: render only while the hero intersects the viewport, cap pixel ratio, prefer low-power WebGL, and dispose GPU resources when the component unmounts.
+- **Fallback**: disable WebGL decoration at widths up to 600px, when `prefers-reduced-motion: reduce` is active, or when WebGL initialization fails. The static image must remain visually complete in every fallback.
+- **Interaction**: pointer movement may shift camera perspective slightly, but the canvas must use `pointer-events: none` and must not compete with navigation or CTAs.
+
+## 11. Brand Landing Companion Services Contract
+
+The `/` brand landing page presents Android, iOS, Instagram, Threads, email subscription, and the Whale browser extension as companion ways to keep using Dev Event beyond the website.
+
+- **Placement**: keep companion services in a dedicated section between the brand introduction and footer so they remain visible without competing with the primary event CTA.
+- **Card anatomy**: each card owns a code-native service icon, service name, one concise benefit-led description, and a directional arrow. Do not reuse third-party promotional banners as the card surface.
+- **Visual language**: use a flat near-black card surface, 24px radius, and solid color only. Decorative gradients, blurred glows, and card shadows are prohibited in this functional section.
+- **Layout**: pair services in a two-column grid on desktop/tablet — Android with iOS, Instagram with Threads, and email subscription with Whale — then collapse to one column on mobile with the same source order and no horizontal scrolling.
+- **Interaction**: the full card opens the external service in a new tab, provides a descriptive accessible name, and changes only its background and border color on hover. Do not translate, scale, or shadow the card; retain a visible keyboard focus outline.
+- **Assets**: use accurate Android, Apple, Instagram, and Threads brand glyphs from the existing local icon package. Reuse the repository's official Whale artwork for the browser extension. Email subscription is vendor-neutral, so use a polished generic mail symbol rather than a Gmail or other vendor mark.
+
+## 12. Brand Landing Supporting Chrome Contract
+
+- **Header**: the brand landing header is wordmark-only. Primary event discovery remains in the hero CTA; do not add duplicate navigation links or an empty mobile menu.
+- **Supporting CTA**: use a solid neutral charcoal surface with a subtle neutral border. Avoid blue-tinted panels, gradients, or decorative glow; the white action button carries the emphasis.
+- **Footer**: retain the `DEV EVENT` wordmark, service description, and project copyright with the contributor name linked to the public GitHub repository. Pair these details with compact GitHub and Whale service links, following the information hierarchy of the `/events` footer while using the brand landing page's flat charcoal surfaces and focus treatment.
+
+## 13. Brand Landing Route Entry Contract
+
+- **Route ownership**: the brand landing page lives at `/about`; `/` remains the service entry route and redirects to `/events` while preserving the existing authentication-token cookie handoff.
+- **Service entry point**: the shared service header places a compact `데브이벤트 소개` link immediately after the `DEV.EVENT` logo. It routes internally to `/about` and remains visible on desktop and mobile.
+- **Hierarchy**: style the introduction link as a quiet secondary button so event discovery, theme controls, and account actions retain priority.
