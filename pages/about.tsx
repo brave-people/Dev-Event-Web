@@ -13,6 +13,27 @@ import HeroStarfield from 'components/brand/HeroStarfield';
 import styles from 'styles/Brand.module.scss';
 
 const GITHUB_URL = 'https://github.com/brave-people/Dev-Event';
+const SITE_URL = (
+  process.env.NEXT_PUBLIC_BASE_URL || 'https://dev-event.vercel.app'
+).replace(/\/$/, '');
+const ABOUT_URL = `${SITE_URL}/about`;
+const OG_IMAGE_URL = `${SITE_URL}/default/og_image.png`;
+
+const ORGANIZATION_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Dev Event',
+  alternateName: '데브이벤트',
+  url: ABOUT_URL,
+  logo: `${SITE_URL}/default/favicon.png`,
+  description:
+    '개발자 컨퍼런스, 밋업, 해커톤과 네트워킹 일정을 큐레이션하는 개발자 행사 정보 서비스입니다.',
+  sameAs: [
+    GITHUB_URL,
+    'https://www.instagram.com/dev.event.official/',
+    'https://www.threads.com/@dev.event.official?hl=ko',
+  ],
+};
 
 const COMPANION_SERVICES = [
   {
@@ -133,17 +154,48 @@ const About = () => {
   return (
     <div className={styles.page}>
       <Head>
-        <title>Dev Event | 개발자 행사를 한눈에</title>
+        <title>데브이벤트 소개 | 개발자 행사를 한눈에</title>
         <meta
           name="description"
           content="개발자 컨퍼런스, 밋업, 해커톤과 네트워킹 일정을 가장 먼저 만나보세요."
+        />
+        <link rel="canonical" href={ABOUT_URL} />
+        <meta
+          property="og:title"
+          content="데브이벤트 소개 | 개발자 행사를 한눈에"
+        />
+        <meta
+          property="og:description"
+          content="개발자 컨퍼런스, 밋업, 해커톤과 네트워킹 일정을 가장 먼저 만나보세요."
+        />
+        <meta property="og:url" content={ABOUT_URL} />
+        <meta property="og:image" content={OG_IMAGE_URL} />
+        <meta
+          property="og:image:alt"
+          content="데브이벤트 개발자 행사 정보 서비스"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="데브이벤트 소개 | 개발자 행사를 한눈에"
+        />
+        <meta
+          name="twitter:description"
+          content="개발자 컨퍼런스, 밋업, 해커톤과 네트워킹 일정을 가장 먼저 만나보세요."
+        />
+        <meta name="twitter:image" content={OG_IMAGE_URL} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(ORGANIZATION_SCHEMA),
+          }}
         />
       </Head>
 
       <header className={styles.header}>
         <div className={styles.headerInner}>
           <Link href="/about">
-            <a className={styles.wordmark} aria-label="Dev Event 홈">
+            <a className={styles.wordmark} aria-label="데브이벤트 소개">
               DEV EVENT
             </a>
           </Link>

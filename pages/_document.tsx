@@ -20,7 +20,7 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="ko">
         <Head>
           {/* FOUC prevention: resolve theme before React boots */}
           <script
@@ -38,12 +38,7 @@ class MyDocument extends Document {
             name="naver-site-verification"
             content={`${process.env.NAVER_SITE_VERIFICATION}`}
           />
-          <link
-            rel="icon"
-            href="/default/favicon.ico"
-            sizes="any"
-          />
-          <link rel="canonical" href="https://dev-event.vercel.app" />
+          <link rel="icon" href="/default/favicon.ico" sizes="any" />
           <script
             async
             src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_TRACKING_ID}`}
