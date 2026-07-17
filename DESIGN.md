@@ -514,3 +514,9 @@ The `/` brand landing page presents Android, iOS, Instagram, Threads, email subs
 - **Header**: the brand landing header is wordmark-only. Primary event discovery remains in the hero CTA; do not add duplicate navigation links or an empty mobile menu.
 - **Supporting CTA**: use a solid neutral charcoal surface with a subtle neutral border. Avoid blue-tinted panels, gradients, or decorative glow; the white action button carries the emphasis.
 - **Footer**: retain the `DEV EVENT` wordmark, service description, and project copyright with the contributor name linked to the public GitHub repository. Pair these details with compact GitHub and Whale service links, following the information hierarchy of the `/events` footer while using the brand landing page's flat charcoal surfaces and focus treatment.
+
+## 13. Brand Landing Route Entry Contract
+
+- **Route ownership**: the brand landing page lives at `/about`; `/` remains the service entry route and redirects to `/events` while preserving the existing authentication-token cookie handoff.
+- **Service entry point**: the shared service header places a compact `데브이벤트 소개` link immediately after the `DEV.EVENT` logo. It routes internally to `/about` and remains visible on desktop and mobile.
+- **Hierarchy**: style the introduction link as a quiet secondary button so event discovery, theme controls, and account actions retain priority.

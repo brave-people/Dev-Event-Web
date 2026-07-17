@@ -9,7 +9,6 @@ import { AuthContext } from 'context/auth';
 import React, { useContext, useState } from 'react';
 import classNames from 'classnames/bind';
 import Link from 'next/link';
-import HeaderTab from './HeaderTab';
 
 const cn = classNames.bind(style);
 
@@ -21,12 +20,12 @@ function Header() {
       <NoticeModal />
       <div className={cn('header__inner')}>
         <nav className={cn('header__inner__nav')}>
-          <Link href="/" passHref>
-            <div className={cn('header__logo')}>
-              <Logo />
-            </div>
+          <div className={cn('header__logo')}>
+            <Logo />
+          </div>
+          <Link href="/about">
+            <a className={cn('header__about-link')}>데브이벤트 소개</a>
           </Link>
-          <HeaderTab />
         </nav>
         <div className={cn('header__buttons')}>
           <ThemeToggle />
