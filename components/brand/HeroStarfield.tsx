@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 const DESKTOP_STAR_COUNT = 360;
+const DESKTOP_NEBULA_DUST_COUNT = 216;
 
 const vertexShader = `
   attribute float starSize;
@@ -38,6 +39,52 @@ const fragmentShader = `
   }
 `;
 
+const nebulaVertexShader = `
+  attribute float dustSize;
+  attribute float dustOpacity;
+  attribute float phase;
+  varying vec3 vColor;
+  varying float vOpacity;
+  uniform float time;
+  uniform float pixelRatio;
+
+  void main() {
+    vColor = color;
+
+    vec3 animatedPosition = position;
+    float flowTime = time * 0.28;
+    float curl = sin(position.x * 0.54 + flowTime + phase)
+      + cos(position.y * 0.82 - flowTime * 0.72 + phase * 0.7);
+    animatedPosition.x += cos(curl + phase + flowTime) * 0.34;
+    animatedPosition.y += sin(curl * 0.8 + phase + flowTime * 0.82) * 0.28;
+    animatedPosition.z += sin(time * 0.18 + phase) * 0.16;
+
+    float centerDistance = length(vec2(animatedPosition.x * 0.74, animatedPosition.y));
+    float breathing = 0.82 + sin(time * 0.46 + phase) * 0.18;
+    vOpacity = dustOpacity * breathing
+      * mix(0.75, 1.0, smoothstep(0.7, 2.35, centerDistance));
+
+    vec4 modelViewPosition = modelViewMatrix * vec4(animatedPosition, 1.0);
+    gl_Position = projectionMatrix * modelViewPosition;
+    gl_PointSize = dustSize * pixelRatio * (5.8 / -modelViewPosition.z);
+  }
+`;
+
+const nebulaFragmentShader = `
+  varying vec3 vColor;
+  varying float vOpacity;
+
+  void main() {
+    float distanceFromCenter = distance(gl_PointCoord, vec2(0.5));
+    float haze = 1.0 - smoothstep(0.04, 0.5, distanceFromCenter);
+    float softCore = 1.0 - smoothstep(0.0, 0.22, distanceFromCenter);
+    float alpha = (haze * 0.72 + softCore * 0.28) * vOpacity;
+
+    if (alpha < 0.004) discard;
+    gl_FragColor = vec4(vColor, alpha);
+  }
+`;
+
 function HeroStarfield() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -47,7 +94,7 @@ function HeroStarfield() {
     if (!canvas) return;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const compactViewport = window.matchMedia('(max-width: 900px)');
+    const compactViewport = window.matchMedia('(max-width: 600px)');
 
     if (
       reducedMotion.matches ||
@@ -137,6 +184,79 @@ function HeroStarfield() {
         const stars = new THREE.Points(geometry, material);
         scene.add(stars);
 
+        const nebulaPositions = new Float32Array(DESKTOP_NEBULA_DUST_COUNT * 3);
+        const nebulaColors = new Float32Array(DESKTOP_NEBULA_DUST_COUNT * 3);
+        const nebulaSizes = new Float32Array(DESKTOP_NEBULA_DUST_COUNT);
+        const nebulaOpacities = new Float32Array(DESKTOP_NEBULA_DUST_COUNT);
+        const nebulaPhases = new Float32Array(DESKTOP_NEBULA_DUST_COUNT);
+
+        for (let index = 0; index < DESKTOP_NEBULA_DUST_COUNT; index += 1) {
+          const offset = index * 3;
+          const stream = index % 3;
+          const x = -3.6 + Math.random() * 7.8;
+          const streamOffset =
+            stream === 0 ? 1.05 : stream === 1 ? 0.35 : -0.42;
+          const tint = Math.random();
+
+          nebulaPositions[offset] = x;
+          nebulaPositions[offset + 1] =
+            x * 0.18 + streamOffset + (Math.random() - 0.5) * 0.5;
+          nebulaPositions[offset + 2] = 0.3 + Math.random() * 1.7;
+
+          if (tint > 0.68) {
+            color.setRGB(0.48, 0.38, 1);
+          } else if (tint > 0.34) {
+            color.setRGB(0.12, 0.5, 1);
+          } else {
+            color.setRGB(0.08, 0.86, 0.82);
+          }
+
+          nebulaColors[offset] = color.r;
+          nebulaColors[offset + 1] = color.g;
+          nebulaColors[offset + 2] = color.b;
+          nebulaSizes[index] = 120 + Math.random() * 140;
+          nebulaOpacities[index] = 0.18 + Math.random() * 0.22;
+          nebulaPhases[index] = Math.random() * Math.PI * 2;
+        }
+
+        const nebulaGeometry = new THREE.BufferGeometry();
+        nebulaGeometry.setAttribute(
+          'position',
+          new THREE.BufferAttribute(nebulaPositions, 3)
+        );
+        nebulaGeometry.setAttribute(
+          'color',
+          new THREE.BufferAttribute(nebulaColors, 3)
+        );
+        nebulaGeometry.setAttribute(
+          'dustSize',
+          new THREE.BufferAttribute(nebulaSizes, 1)
+        );
+        nebulaGeometry.setAttribute(
+          'dustOpacity',
+          new THREE.BufferAttribute(nebulaOpacities, 1)
+        );
+        nebulaGeometry.setAttribute(
+          'phase',
+          new THREE.BufferAttribute(nebulaPhases, 1)
+        );
+
+        const nebulaMaterial = new THREE.ShaderMaterial({
+          blending: THREE.AdditiveBlending,
+          depthWrite: false,
+          fragmentShader: nebulaFragmentShader,
+          transparent: true,
+          uniforms: {
+            pixelRatio: { value: renderer.getPixelRatio() },
+            time: { value: 0 },
+          },
+          vertexColors: true,
+          vertexShader: nebulaVertexShader,
+        });
+        const nebulaDust = new THREE.Points(nebulaGeometry, nebulaMaterial);
+        nebulaDust.renderOrder = -1;
+        scene.add(nebulaDust);
+
         const pointer = new THREE.Vector2(0, 0);
         const pointerTarget = new THREE.Vector2(0, 0);
         const clock = new THREE.Clock();
@@ -185,7 +305,13 @@ function HeroStarfield() {
           camera.position.y = pointer.y * 0.1;
           camera.lookAt(0, 0, 0);
           stars.rotation.z = elapsed * 0.0025;
+          nebulaDust.position.x =
+            Math.sin(elapsed * 0.22) * 0.2 + pointer.x * -0.06;
+          nebulaDust.position.y =
+            Math.cos(elapsed * 0.18) * 0.14 + pointer.y * -0.04;
+          nebulaDust.rotation.z = Math.sin(elapsed * 0.12) * 0.018;
           material.uniforms.time.value = elapsed;
+          nebulaMaterial.uniforms.time.value = elapsed;
           renderer.render(scene, camera);
           animationFrame = window.requestAnimationFrame(render);
         };
@@ -255,6 +381,8 @@ function HeroStarfield() {
           );
           geometry.dispose();
           material.dispose();
+          nebulaGeometry.dispose();
+          nebulaMaterial.dispose();
           renderer.dispose();
         };
       } catch {

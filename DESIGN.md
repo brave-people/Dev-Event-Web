@@ -487,3 +487,13 @@ The signature 4-column grid for `/event/detail/[eventId]`.
 7. **Section banding**: white (`--gray-000`) ↔ near-white (`--background-alternative` `#F7F7FA`). Just two background tiers, alternated.
 8. **Korean-first typography**: `letter-spacing: -0.012rem` on headings, `word-break: keep-all` globally.
 9. **Token-discipline**: Reach for `var(--space-*)` / `var(--gray-*)` / `var(--text-*)` / `var(--border-radius-*)` before typing a hex or px. If the value isn't in the token table above, ask before adding.
+
+## 10. Brand Landing Hero Motion Contract
+
+The `/` brand landing hero uses its generated desktop/mobile artwork as the complete visual baseline. Three.js may add depth, but it must never carry essential content or replace the static art.
+
+- **Role**: a transparent starfield plus low-density cyan, blue, and violet nebula-dust layer. The dust follows visible curl-like paths, drifts as a group, and gently pulses while the stars retain subtle pointer parallax and restrained twinkle; HTML remains responsible for the `DEV EVENT` title, description, and actions.
+- **Visual priority**: motion stays behind the shade and content layers. Keep the center readable and avoid bloom, lens distortion, logo deformation, or dense particle trails.
+- **Performance**: render only while the hero intersects the viewport, cap pixel ratio, prefer low-power WebGL, and dispose GPU resources when the component unmounts.
+- **Fallback**: disable WebGL decoration at widths up to 600px, when `prefers-reduced-motion: reduce` is active, or when WebGL initialization fails. The static image must remain visually complete in every fallback.
+- **Interaction**: pointer movement may shift camera perspective slightly, but the canvas must use `pointer-events: none` and must not compete with navigation or CTAs.

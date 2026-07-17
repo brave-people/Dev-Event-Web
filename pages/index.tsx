@@ -107,12 +107,7 @@ const Home = () => {
             </p>
             <div className={styles.heroActions}>
               <Link href="/events">
-                <a className={styles.primaryAction}>
-                  <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="m13.2 2-8 11h6l-1 9 8.6-12h-6.2l.6-8Z" />
-                  </svg>
-                  행사 둘러보기
-                </a>
+                <a className={styles.primaryAction}>행사 둘러보기</a>
               </Link>
               <a
                 className={styles.textAction}
