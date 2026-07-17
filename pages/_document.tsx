@@ -38,7 +38,12 @@ class MyDocument extends Document {
             name="naver-site-verification"
             content={`${process.env.NAVER_SITE_VERIFICATION}`}
           />
-          <link rel="icon" href="/default/favicon.ico" sizes="any" />
+          <link
+            rel="icon"
+            href="/default/favicon-v2.png"
+            type="image/png"
+            sizes="512x512"
+          />
           <script
             async
             src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_TRACKING_ID}`}
