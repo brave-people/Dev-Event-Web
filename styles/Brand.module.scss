@@ -718,14 +718,15 @@ $text-muted: #aeb2bd;
     margin-top: -4px;
 
     h1 {
-      max-width: 360px;
+      max-width: none;
       margin: 0 auto 20px;
-      font-size: clamp(64px, 20vw, 78px);
-      line-height: 0.8;
+      font-size: clamp(46px, 14vw, 60px);
+      line-height: 0.9;
       letter-spacing: -0.07em;
+      white-space: nowrap;
 
       span {
-        display: block;
+        display: inline;
       }
     }
   }
