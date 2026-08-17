@@ -56,7 +56,7 @@ const List = ({ data, parentLast }: Props) => {
     return DateUtil.isDone(endDate);
   };
 
-  const getFavoriteId = ({ id }: { id: string }) => {
+  const getFavoriteId = ({ id }: { id: number }) => {
     if (myEvent) {
       const result = myEvent.find((item) => {
         return item.dev_event.id === id;
@@ -100,7 +100,7 @@ const List = ({ data, parentLast }: Props) => {
     );
   };
 
-  const createMyEvent = async ({ eventId }: { eventId: string }) => {
+  const createMyEvent = async ({ eventId }: { eventId: number }) => {
     if (eventId) {
       const result = await createMyEventApi(
         `/front/v1/favorite/events/${eventId}`,

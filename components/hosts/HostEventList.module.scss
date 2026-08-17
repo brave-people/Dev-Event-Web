@@ -105,3 +105,70 @@
     background: var(--vapor-gray-050);
   }
 }
+
+/* 카운트 0인 탭은 흐리게 — 클릭 전에 비어 있음을 알 수 있게 (WEB-029) */
+.tab__empty {
+  .tab__count {
+    opacity: 0.45;
+  }
+}
+
+/* 더보기 (WEB-027) */
+.more {
+  display: block;
+  width: 100%;
+  margin: 16px 0 0;
+  padding: 12px 16px;
+  border: 1px solid var(--vapor-gray-200);
+  border-radius: 12px;
+  background: var(--vapor-white);
+  color: var(--vapor-gray-700);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+
+  &:hover:not(:disabled) {
+    border-color: var(--ktb-tech-blue);
+    color: var(--ktb-tech-blue);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: default;
+  }
+}
+
+.loadError {
+  margin: 12px 0 0;
+  color: var(--vapor-gray-600);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* DES-104: 한국어 단어 중간 줄바꿈 방지 */
+.section__title,
+.tab,
+.tab__active {
+  word-break: keep-all;
+}
+
+/* GAP-9: 모바일에서 탭이 넘치지 않게 가로 스크롤 */
+@media (max-width: 560px) {
+  .tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar { display: none; }
+  }
+
+  .section__head {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .section__sub {
+    font-size: 12px;
+  }
+}

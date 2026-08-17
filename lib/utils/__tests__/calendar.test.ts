@@ -6,7 +6,7 @@ import {
 import { Event } from 'model/event';
 
 const makeEvent = (overrides: Partial<Event> = {}): Event => ({
-  id: '123',
+  id: 123,
   title: 'FEConf Korea 2026',
   description: '프론트엔드 컨퍼런스',
   organizer: '코엑스 그랜드볼룸',

@@ -1,5 +1,7 @@
 import style from 'components/hosts/HostCard.module.scss';
-import { classificationLabel, resolveHostLogo } from 'lib/host/logoFallback';
+import { classificationLabel, fallbackLogo, resolveHostLogo } from 'lib/host/logoFallback';
+import React, { useState } from 'react';
+import * as ga from 'lib/utils/gTag';
 import { HostListItem } from 'model/host';
 import Link from 'next/link';
 import classNames from 'classnames/bind';
@@ -12,25 +14,39 @@ type Props = {
 
 const HostCard = ({ host }: Props) => {
   const logo = resolveHostLogo(host);
+  // 이미지 URL 이 죽어 있으면 이니셜 뱃지로 대체한다 (DES-100)
+  const [imgFailed, setImgFailed] = useState(false);
+  const badge = logo.kind === 'fallback' ? logo : fallbackLogo(host.host_name);
+  const showImage = logo.kind === 'image' && !imgFailed;
 
   return (
     <Link href={`/hosts/${host.id}`}>
-      <a className={cn('card')}>
+      <a
+        className={cn('card')}
+        onClick={() =>
+          ga.event({
+            action: 'host_card_click',
+            event_category: 'web_host',
+            event_label: host.host_name,
+          })
+        }
+      >
         <div className={cn('top')}>
-          {logo.kind === 'image' ? (
+          {showImage ? (
             <img
               className={cn('logo', 'logo__img')}
-              src={logo.src}
+              src={(logo as { src: string }).src}
               alt=""
               aria-hidden="true"
+              onError={() => setImgFailed(true)}
             />
           ) : (
             <div
               className={cn('logo')}
-              style={{ background: logo.gradient, color: logo.textColor }}
+              style={{ background: badge.gradient, color: badge.textColor }}
               aria-hidden="true"
             >
-              {logo.initial}
+              {badge.initial}
             </div>
           )}
           <div className={cn('nameWrap')}>
@@ -60,6 +76,10 @@ const HostCard = ({ host }: Props) => {
           )}
           <span className={cn('count__total')}>누적 {host.total_count}건</span>
         </div>
+
+        {host.short_description && (
+          <p className={cn('desc')}>{host.short_description}</p>
+        )}
 
         {host.topics.length > 0 && (
           <div className={cn('topics')}>

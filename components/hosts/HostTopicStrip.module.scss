@@ -49,3 +49,20 @@
   color: var(--vapor-gray-500);
   font-weight: 500;
 }
+
+/* DES-104 */
+.title,
+.chip {
+  word-break: keep-all;
+}
+
+/* GAP-9 */
+@media (max-width: 560px) {
+  .strip {
+    gap: 6px;
+  }
+
+  .chip {
+    font-size: 12px;
+  }
+}

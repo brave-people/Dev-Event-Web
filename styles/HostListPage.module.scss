@@ -78,3 +78,33 @@
   color: var(--vapor-gray-600);
   font-size: 14px;
 }
+
+/* 재검증 중에는 그리드를 흐리게 해 사용자가 갱신 중임을 알 수 있게 한다 (DES-107) */
+.grid__loading {
+  opacity: 0.6;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+/* SWR 재검증 실패 배너 — 데이터는 fallback 을 계속 보여준다 (WEB-036) */
+.staleBanner {
+  margin: 0 0 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--vapor-gray-200);
+  border-radius: 8px;
+  background: var(--vapor-gray-50);
+  color: var(--vapor-gray-700);
+  font-size: 14px;
+}
+
+/* 검색·필터 적용 시 결과 건수 (GAP-10) */
+.resultCount {
+  margin: 0 0 12px;
+  color: var(--vapor-gray-700);
+  font-size: 14px;
+
+  b {
+    color: var(--vapor-gray-900);
+    font-weight: 700;
+  }
+}

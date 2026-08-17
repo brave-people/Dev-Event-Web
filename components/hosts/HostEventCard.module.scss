@@ -6,6 +6,7 @@
   gap: 20px;
   align-items: center;
   padding: 16px;
+  position: relative; /* .action(북마크 버튼) 기준 */
   background: var(--vapor-gray-000);
   border: 1px solid var(--vapor-gray-300);
   border-radius: 12px;
@@ -54,6 +55,19 @@
 .thumb__c3 { background: linear-gradient(135deg, #E8FAF3, #BFEED9); color: #08785E; }
 .thumb__c4 { background: linear-gradient(135deg, #FFF4E0, #FFD9A8); color: #B45209; }
 .thumb__c5 { background: linear-gradient(135deg, #F0E8FF, #D6C2FF); color: #5B3F9F; }
+
+/*
+ * 5색 파스텔 썸네일은 다크 배경 위에서 지나치게 밝아 눈을 찌른다.
+ * 같은 색상(hue)의 저채도 알파 배경 + 밝은 텍스트로 낮춘다 (DES-103).
+ * 색 블록 썸네일 자체는 DESIGN.md 10.4 가 명시한 규격이라 유지한다.
+ */
+:global(html[data-theme='dark']) {
+  .thumb__c1 { background: rgba(51, 133, 255, 0.18);  color: #8FBEFF; }
+  .thumb__c2 { background: rgba(255, 99, 99, 0.18);   color: #FF9B9B; }
+  .thumb__c3 { background: rgba(24, 191, 143, 0.18);  color: #6FE0C0; }
+  .thumb__c4 { background: rgba(255, 168, 61, 0.18);  color: #FFC880; }
+  .thumb__c5 { background: rgba(155, 118, 255, 0.18); color: #C3AEFF; }
+}
 
 .body {
   min-width: 0;
@@ -116,11 +130,64 @@
 }
 
 .badge__dday {
-  background: rgba(217, 28, 41, 0.08);
-  color: #D91C29;
+  // 라이트 값은 기존과 동일. 다크에서 대비가 무너지지 않도록 토큰 경유 (DES-097)
+  background: var(--badge-danger-bg);
+  color: var(--vapor-text-danger);
 }
 
 .badge__done {
   background: var(--vapor-gray-100);
   color: var(--vapor-gray-600);
+}
+
+/* 행사 카드 북마크 버튼 (DES-093) */
+.action {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.bookmarkBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--vapor-white);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: transform 0.12s ease;
+
+  &:hover {
+    transform: scale(1.06);
+  }
+}
+
+/* GAP-9: 모바일에서는 썸네일을 줄이고 세로로 접는다 */
+@media (max-width: 560px) {
+  .card {
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .title,
+  .title__done {
+    font-size: 14px;
+    word-break: keep-all;
+  }
+
+  .meta {
+    flex-wrap: wrap;
+    row-gap: 4px;
+    font-size: 12px;
+  }
+
+  .action {
+    top: 8px;
+    right: 8px;
+  }
 }

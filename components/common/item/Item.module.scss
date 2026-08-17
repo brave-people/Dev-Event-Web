@@ -85,14 +85,80 @@
           }
 
           .host__clickable {
+            /* span → button 으로 바뀌었으므로 브라우저 기본 버튼 스타일을 지운다 (WEB-035) */
+            /* 카드 전체가 행사 상세 링크라, 주최자만 다른 곳으로 간다는 걸 로고+셰브론으로 구분한다 */
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            /* 좌측 padding 만큼 당겨서 제목과 시작선을 맞춘다 */
+            padding: 3px 8px 3px 3px;
+            margin-left: -3px;
+            margin-bottom: 3px;
+            border: 0;
+            border-radius: 999px;
+            background: none;
+            font: inherit;
+            text-align: left;
             cursor: pointer;
-            transition: color 0.15s ease;
+            transition: background-color 0.15s ease;
 
-            &:hover {
-              color: var(--ktb-tech-blue, #0043ff);
-              text-decoration: underline;
-              text-underline-offset: 2px;
+            &:hover,
+            &:focus-visible {
+              background-color: var(--vapor-gray-100);
             }
+
+            &:focus-visible {
+              outline: 2px solid var(--ktb-tech-blue);
+              outline-offset: 2px;
+            }
+
+            &:hover .host__name,
+            &:focus-visible .host__name {
+              color: var(--ktb-tech-blue);
+            }
+
+            /* 카드가 촘촘해서 셰브론은 hover 때만 드러낸다 */
+            &:hover .host__chevron,
+            &:focus-visible .host__chevron {
+              opacity: 1;
+              margin-left: 0;
+            }
+          }
+
+          .host__logo {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 9px;
+            font-weight: 700;
+            line-height: 1;
+          }
+
+          /* 지난 행사는 텍스트가 흐려지므로 로고만 선명하게 남지 않도록 같이 낮춘다 */
+          .host__done .host__logo {
+            opacity: 0.55;
+          }
+
+          .host__logo--img {
+            object-fit: cover;
+          }
+
+          .host__name {
+            transition: color 0.15s ease;
+          }
+
+          .host__chevron {
+            flex-shrink: 0;
+            width: 12px;
+            height: 12px;
+            color: var(--ktb-tech-blue);
+            opacity: 0;
+            /* 숨어 있을 때 이름 옆 공백을 만들지 않도록 폭만큼 당겨둔다 */
+            margin-left: -12px;
+            transition: opacity 0.15s ease, margin-left 0.15s ease;
           }
         }
       }

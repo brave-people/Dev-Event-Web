@@ -44,6 +44,7 @@ html[data-theme='light'] {
 
   // Semantic
   --vapor-text-danger: #{$vapor-text-danger};
+  --badge-danger-bg: rgba(217, 28, 41, 0.08); // D-day 배지 배경 (DES-097)
   --vapor-text-success: #{$vapor-text-success};
   --vapor-text-warning: #{$vapor-text-warning};
   --vapor-text-primary: #{$vapor-text-primary};
@@ -101,6 +102,7 @@ html[data-theme='dark'] {
 
   // Semantic — Wanted status colors (brighter, more saturated for dark legibility)
   --vapor-text-danger: #{$wanted-dark-status-negative};   // #FF6363
+  --badge-danger-bg: rgba(255, 99, 99, 0.16); // D-day 배지 배경 (다크)
   --vapor-text-success: #{$wanted-dark-status-positive};  // #1ED45A
   --vapor-text-warning: #{$wanted-dark-status-cautionary}; // #FFA938
   --vapor-text-primary: #{$wanted-dark-primary-normal};   // #3385FF

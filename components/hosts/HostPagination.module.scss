@@ -1,0 +1,67 @@
+@import '~styles/_variables.scss';
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin: 32px 0 8px;
+}
+
+.page,
+.page__active,
+.nav {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--vapor-gray-200);
+  border-radius: 8px;
+  background: var(--vapor-white);
+  color: var(--vapor-gray-700);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+
+  &:hover:not(:disabled) {
+    border-color: var(--ktb-tech-blue);
+    color: var(--ktb-tech-blue);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+}
+
+.page__active {
+  border-color: var(--ktb-tech-blue);
+  background: var(--ktb-tech-blue);
+  color: var(--vapor-white);
+  font-weight: 700;
+
+  &:hover {
+    color: var(--vapor-white);
+  }
+}
+
+.nav {
+  font-size: 18px;
+  line-height: 1;
+}
+
+@media (max-width: 480px) {
+  .pagination {
+    gap: 4px;
+    margin: 24px 0 4px;
+  }
+
+  .page,
+  .page__active,
+  .nav {
+    min-width: 32px;
+    height: 32px;
+    padding: 0 6px;
+    font-size: 13px;
+  }
+}

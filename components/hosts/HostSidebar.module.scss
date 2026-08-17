@@ -93,3 +93,11 @@
   letter-spacing: -0.012em;
   margin: 0;
 }
+
+/* DES-104 */
+.summary__label,
+.summary__value,
+.links__link,
+.card__title {
+  word-break: keep-all;
+}

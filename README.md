@@ -60,6 +60,20 @@ $ pnpm test -- buildCalendarMatrix    # 단일 파일
 $ npx tsc --noEmit
 ```
 
+### 백엔드 연결 (`.env`)
+
+```sh
+# 로컬 서버를 볼 때
+BASE_SERVER_URL=http://127.0.0.1:9000
+
+# 주최자 API 목업 스위치 — 기본값(미설정 포함)은 실서버 호출
+NEXT_PUBLIC_USE_HOST_MOCK=false
+```
+
+- **`BASE_SERVER_URL`을 바꾸면 dev 서버를 반드시 재시작**하세요. `next.config.js`가 이 값을 빌드 타임에 인라인하므로 재시작 없이는 반영되지 않습니다.
+- **주최자 조회 API(`/front/v2/hosts*`)는 서버의 `feature/host-260518` 브랜치에만 있습니다.** 운영·dev 서버 주소(예: `https://<real-host>` / `https://<dev-host>`)를 가리킨 채로 mock 을 끄면 `/hosts` 관련 호출이 전부 404 입니다. 머지·배포 전에는 로컬 서버로만 확인하세요.
+- 목업 데이터로 화면만 보려면 `NEXT_PUBLIC_USE_HOST_MOCK=true` 로 두면 됩니다(서버 없이 동작).
+
 <br />
 
 ## 디렉터리 구조

@@ -17,6 +17,11 @@ async function handleError(props: Prop) {
 }
 
 function getErrorAlert(props: Prop) {
+  // getServerSideProps 등 SSR 경로에서도 이 인터셉터가 돌기 때문에 alert 가 없는 환경을 방어한다.
+  if (typeof window === 'undefined') {
+    return undefined;
+  }
+
   if (props.status_code === 400) {
     if (props.status === 'TOKEN_400_01') {
       alert(

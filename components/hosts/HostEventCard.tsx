@@ -1,4 +1,6 @@
+import BookmarkIcon from 'components/icons/BookmarkIcon';
 import style from 'components/hosts/HostEventCard.module.scss';
+import * as ga from 'lib/utils/gTag';
 import { Event } from 'model/event';
 import dayjs from 'dayjs';
 import Link from 'next/link';
@@ -10,6 +12,9 @@ type Props = {
   event: Event;
   isDone?: boolean;
   colorVariant: 1 | 2 | 3 | 4 | 5;
+  /** 북마크 상태. 미지정이면 버튼을 렌더하지 않는다. */
+  isBookmarked?: boolean;
+  onClickBookmark?: (event: Event) => void;
 };
 
 const KOREAN_WEEKDAY = ['일', '월', '화', '수', '목', '금', '토'];
@@ -34,34 +39,73 @@ const locationFromTags = (event: Event): string | null => {
   return names.find((n) => !skip.has(n)) ?? null;
 };
 
-const formatDateRange = (event: Event): string => {
-  const start = dayjs(event.start_date_time);
-  const end = dayjs(event.end_date_time);
+/** dayjs 가 'Invalid Date' 문자열을 화면에 흘리지 않도록 유효한 값만 통과시킨다. */
+const parseDate = (value: string | null | undefined) => {
+  if (!value) return null;
+  const parsed = dayjs(value);
+  return parsed.isValid() ? parsed : null;
+};
+
+const formatDateRange = (event: Event): string | null => {
+  const start = parseDate(event.start_date_time);
+  const end = parseDate(event.end_date_time);
+  const isRecruit = event.event_time_type === 'RECRUIT';
+
+  // 모집(RECRUIT)은 '언제 열리는 행사'가 아니라 '언제까지 접수'다.
+  if (isRecruit) {
+    if (!start && !end) return null;
+    if (start && end) {
+      return `접수 ${start.format('YYYY.MM.DD')} ~ ${end.format('YYYY.MM.DD')}`;
+    }
+    if (end) return `접수 ~ ${end.format('YYYY.MM.DD')}`;
+    return `접수 ${start!.format('YYYY.MM.DD')} ~`;
+  }
+
+  if (!start) {
+    return end ? `${end.format('YYYY.MM.DD')} 까지` : null;
+  }
+
   const startDay = KOREAN_WEEKDAY[start.day()];
-  const sameDay = start.isSame(end, 'day');
+  const sameDay = end ? start.isSame(end, 'day') : true;
   if (sameDay) {
     if (event.use_start_date_time_yn === 'Y') {
       return `${start.format('YYYY.MM.DD')} (${startDay}) ${start.format('HH:mm')}`;
     }
     return `${start.format('YYYY.MM.DD')} (${startDay})`;
   }
-  return `${start.format('YYYY.MM.DD')} – ${end.format('MM.DD')}`;
+  return `${start.format('YYYY.MM.DD')} – ${end!.format('MM.DD')}`;
 };
 
-const formatDday = (event: Event): string => {
-  const today = dayjs().startOf('day');
-  const start = dayjs(event.start_date_time).startOf('day');
-  const diff = start.diff(today, 'day');
-  if (diff <= 0) return 'D-DAY';
-  return `D-${diff}`;
+const formatDday = (event: Event): string | null => {
+  const isRecruit = event.event_time_type === 'RECRUIT';
+  // 모집은 마감(종료일) 기준, 일반 행사는 시작일 기준
+  const target = isRecruit
+    ? parseDate(event.end_date_time)
+    : parseDate(event.start_date_time);
+  if (!target) return null;
+
+  const diff = target.startOf('day').diff(dayjs().startOf('day'), 'day');
+  if (diff < 0) return null;
+  if (diff === 0) return isRecruit ? '오늘 마감' : 'D-DAY';
+  return isRecruit ? `마감 D-${diff}` : `D-${diff}`;
 };
 
-const HostEventCard = ({ event, isDone = false, colorVariant }: Props) => {
+const HostEventCard = ({
+  event,
+  isDone = false,
+  colorVariant,
+  isBookmarked,
+  onClickBookmark,
+}: Props) => {
   const category = categoryFromTags(event);
   const venue = venueFromTags(event);
   const location = locationFromTags(event);
-  const start = dayjs(event.start_date_time);
-  const ribbon = `${category.slice(0, 4).toUpperCase()} · ${start.format('MM')}`;
+  const start = parseDate(event.start_date_time);
+  const dateRange = formatDateRange(event);
+  const dday = formatDday(event);
+  const ribbon = start
+    ? `${category.slice(0, 4).toUpperCase()} · ${start.format('MM')}`
+    : category.slice(0, 4).toUpperCase();
 
   return (
     <Link href={`/event/detail/${event.id}`}>
@@ -84,7 +128,7 @@ const HostEventCard = ({ event, isDone = false, colorVariant }: Props) => {
             {event.title}
           </h3>
           <div className={cn('meta')}>
-            <span>{formatDateRange(event)}</span>
+            {dateRange && <span>{dateRange}</span>}
             {location && (
               <>
                 <span className={cn('meta__dot')}>•</span>
@@ -100,10 +144,36 @@ const HostEventCard = ({ event, isDone = false, colorVariant }: Props) => {
             {isDone ? (
               <span className={cn('badge', 'badge__done')}>종료</span>
             ) : (
-              <span className={cn('badge', 'badge__dday')}>{formatDday(event)}</span>
+              dday && <span className={cn('badge', 'badge__dday')}>{dday}</span>
             )}
           </div>
         </div>
+
+        {/* 카드 전체가 <a> 로 감싸져 있으므로 기본 동작을 반드시 막는다 */}
+        {onClickBookmark && (
+          <div className={cn('action')}>
+            <button
+              type="button"
+              className={cn('bookmarkBtn')}
+              aria-label={isBookmarked ? '북마크 해제' : '북마크 추가'}
+              aria-pressed={Boolean(isBookmarked)}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onClickBookmark(event);
+                ga.event({
+                  action: isBookmarked
+                    ? 'web_event_관심행사삭제버튼클릭'
+                    : 'web_event_관심행사추가버튼클릭',
+                  event_category: 'web_event',
+                  event_label: '관심행사',
+                });
+              }}
+            >
+              <BookmarkIcon isFavorite={Boolean(isBookmarked)} />
+            </button>
+          </div>
+        )}
       </a>
     </Link>
   );

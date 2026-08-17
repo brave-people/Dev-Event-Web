@@ -177,3 +177,24 @@
   display: inline-flex;
   align-items: center;
 }
+
+/* GAP-9: 375px 폭에서 카드 내부 여백·글자 축소 */
+@media (max-width: 560px) {
+  .card {
+    padding: 16px;
+    min-height: 0;
+  }
+
+  .name {
+    font-size: 15px;
+  }
+
+  .desc {
+    min-height: 0;
+    margin-bottom: 10px;
+  }
+
+  .topics {
+    flex-wrap: wrap;
+  }
+}

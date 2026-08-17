@@ -3,7 +3,7 @@ import { Event } from 'model/event';
 import { CalendarCell } from './buildCalendarMatrix';
 
 export interface EventSegment {
-  eventId: string;
+  eventId: number;
   event: Event;
   weekIndex: number;   // 0~5
   startCol: number;    // 0~6 (inclusive)

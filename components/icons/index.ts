@@ -20,12 +20,14 @@ import SunIcon from './SunIcon';
 import ToggleActiveIcon from './ToggleActiveIcon';
 import ToggleIcon from './ToggleIcon';
 import CalenderLogo from './CalenderLogo';
+import ChevronRightIcon from './ChevronRightIcon';
 
 export {
   PlusIcon,
   SearchIcon,
   RightArrowIcon,
   LeftArrowIcon,
+  ChevronRightIcon,
   FilledPlusIcon,
   ShareIcon,
   BookmarkIcon,

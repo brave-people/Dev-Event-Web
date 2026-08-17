@@ -1,5 +1,10 @@
 import { HostClassification } from 'model/host';
 
+/**
+ * 로고 그라데이션 8톤 (DESIGN.md 10.2).
+ * DES-110: 문서에는 6톤만 있었으나, 톤을 줄이면 해시 분포가 바뀌어
+ * 기존 주최자의 색이 전부 달라지므로 **코드(8톤)를 정본으로 두고 문서를 갱신**했다.
+ */
 const LOGO_GRADIENTS = [
   'linear-gradient(135deg,#FF804E,#FF0073)',
   'linear-gradient(135deg,#00B7F8,#006EF7)',
@@ -27,6 +32,19 @@ export type HostLogo =
   | { kind: 'image'; src: string }
   | { kind: 'fallback'; initial: string; gradient: string; textColor: string };
 
+/**
+ * 로고 이미지가 없거나 로드에 실패했을 때 쓰는 이니셜 뱃지.
+ * resolveHostLogo 를 두 번 호출하지 않도록 따로 뽑아둔다 (DES-100).
+ */
+export const fallbackLogo = (
+  hostName: string
+): { initial: string; gradient: string; textColor: string } => {
+  const gradient = LOGO_GRADIENTS[hashCode(hostName) % LOGO_GRADIENTS.length];
+  const textColor = LIGHT_GRADIENTS.has(gradient) ? '#000040' : '#ffffff';
+  const initial = hostName.trim().charAt(0).toUpperCase() || '?';
+  return { initial, gradient, textColor };
+};
+
 export const resolveHostLogo = (host: {
   host_name: string;
   logo_image_link: string | null;
@@ -34,10 +52,7 @@ export const resolveHostLogo = (host: {
   if (host.logo_image_link) {
     return { kind: 'image', src: host.logo_image_link };
   }
-  const gradient = LOGO_GRADIENTS[hashCode(host.host_name) % LOGO_GRADIENTS.length];
-  const textColor = LIGHT_GRADIENTS.has(gradient) ? '#000040' : '#ffffff';
-  const initial = host.host_name.trim().charAt(0).toUpperCase() || '?';
-  return { kind: 'fallback', initial, gradient, textColor };
+  return { kind: 'fallback', ...fallbackLogo(host.host_name) };
 };
 
 const CLASSIFICATION_LABEL: Record<HostClassification, string> = {

@@ -92,7 +92,7 @@
 }
 
 .meta__link {
-  color: var(--vapor-primary, #1D6CE0);
+  color: var(--vapor-text-primary); // --vapor-primary 는 정의된 적 없는 토큰이었다 (DES-099)
   text-decoration: underline;
   text-underline-offset: 2px;
 
@@ -137,12 +137,6 @@
   }
 }
 
-.chip__ghost {
-  background: transparent;
-  border: 1px solid var(--vapor-gray-300);
-  color: var(--vapor-gray-700);
-}
-
 .desc {
   margin-top: 18px;
   font-size: 15px;
@@ -150,4 +144,32 @@
   color: var(--vapor-gray-700);
   max-width: 720px;
   word-break: keep-all;
+}
+
+/* 프로필 설명 접기/펼치기 (DES-101) */
+.descWrap {
+  max-width: 720px;
+}
+
+.desc__clamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.descToggle {
+  margin-top: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--vapor-gray-900);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--ktb-tech-blue);
+  }
 }

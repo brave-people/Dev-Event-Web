@@ -49,3 +49,14 @@
     padding: 32px $mobile-padding 64px;
   }
 }
+
+/* SWR 재검증 실패 배너 (WEB-036) */
+.staleBanner {
+  margin: 12px 0 0;
+  padding: 10px 14px;
+  border: 1px solid var(--vapor-gray-200);
+  border-radius: 8px;
+  background: var(--vapor-gray-50);
+  color: var(--vapor-gray-700);
+  font-size: 14px;
+}

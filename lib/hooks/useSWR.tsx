@@ -116,9 +116,10 @@ const useHostList = (
   params: HostListParams,
   fallbackData?: HostListResponse
 ) => {
-  const { data, error } = useSWR(
+  const { data, error, isValidating } = useSWR(
     ['/front/v2/hosts', params],
-    ([url, p]: [string, HostListParams]) => getHostListApi(url, p),
+    // SWR 1.x는 배열 key를 fetcher 인자로 전개한다(구조분해 X). useMyEvent와 같은 규약.
+    (url: string, p: HostListParams) => getHostListApi(url, p),
     {
       fallbackData,
       shouldRetryOnError: false,
@@ -131,6 +132,7 @@ const useHostList = (
     hostList: data,
     isLoading: !error && !data,
     isError: error,
+    isValidating,
   };
 };
 
@@ -160,7 +162,8 @@ const useHostEvents = (
 ) => {
   const { data, error } = useSWR(
     [`/front/v2/hosts/${hostId}/events`, params],
-    ([url, p]: [string, HostEventsParams]) => getHostEventsApi(url, p),
+    // SWR 1.x는 배열 key를 fetcher 인자로 전개한다(구조분해 X).
+    (url: string, p: HostEventsParams) => getHostEventsApi(url, p),
     {
       fallbackData,
       shouldRetryOnError: false,

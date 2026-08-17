@@ -8,6 +8,9 @@ import {
   ShareIconMobile,
 } from 'components/icons';
 import { EventContext } from 'context/event';
+import { getHostIdFromEvent, pushHostDetail } from 'lib/host/hostLink';
+import { useEventHostLogo } from 'lib/host/useEventHostLogo';
+import ChevronRightIcon from 'components/icons/ChevronRightIcon';
 import { useToast } from 'context/toast';
 import { DateUtil } from 'lib/utils/dateUtil';
 import * as ga from 'lib/utils/gTag';
@@ -59,16 +62,19 @@ const Item = ({
   const { pushToast } = useToast();
   const router = useRouter();
 
+  // 주최자 상세 라우팅 키는 숫자 hostId(서버 PK)다. 이름 문자열로 push 하면 무조건 404.
+  // 목록/행사 상세가 같은 로직·같은 GA 이벤트를 쓰도록 lib/host/hostLink 로 추출했다.
+  const isHostLinkable = getHostIdFromEvent(data) !== null;
+
+  // 로고가 없거나 URL 이 죽어 있으면 이니셜 뱃지로 대체한다 (DES-100). 행사 상세와 같은 훅.
+  const hostLogo = useEventHostLogo(data);
+
+  const moveToHostDetail = () => pushHostDetail(router, data);
+
   const handleHostClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!data.organizer) return;
-    router.push(`/hosts/${encodeURIComponent(data.organizer)}`);
-    ga.event({
-      action: 'web_event_주최클릭',
-      event_category: 'web_event',
-      event_label: '주최클릭',
-    });
+    moveToHostDetail();
   };
 
   const handleShare = async (e: React.MouseEvent) => {
@@ -186,23 +192,51 @@ const Item = ({
                 <div>
                   <div className={cn('item__content--top')}>
                     <div className={cn('wrap')}>
-                      <span
-                        className={cn(isDone ? 'host__done' : 'host', 'host__clickable')}
-                        onClick={handleHostClick}
-                        role="link"
-                        tabIndex={0}
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            if (data.organizer) {
-                              router.push(`/hosts/${encodeURIComponent(data.organizer)}`);
-                            }
-                          }
-                        }}
-                      >
-                        {data.organizer}
-                      </span>
+                      {/*
+                        연결된 주최자가 없으면 클릭 가능한 UI 자체를 렌더하지 않는다.
+                        카드 전체가 <a> 라 중첩 링크가 되지 않도록 role="link" 대신 button 을 쓴다 (WEB-035).
+                        button 은 Space/Enter 를 브라우저가 알아서 처리하므로 keydown 분기가 필요 없다.
+                      */}
+                      {isHostLinkable ? (
+                        <button
+                          type="button"
+                          className={cn(
+                            isDone ? 'host__done' : 'host',
+                            'host__clickable'
+                          )}
+                          onClick={handleHostClick}
+                          aria-label={`${data.organizer} 주최자 페이지로 이동`}
+                        >
+                          {hostLogo.showImage ? (
+                            <img
+                              className={cn('host__logo', 'host__logo--img')}
+                              src={hostLogo.imageSrc}
+                              alt=""
+                              aria-hidden="true"
+                              onError={hostLogo.handleImageError}
+                            />
+                          ) : (
+                            <span
+                              className={cn('host__logo')}
+                              style={{
+                                background: hostLogo.badge.gradient,
+                                color: hostLogo.badge.textColor,
+                              }}
+                              aria-hidden="true"
+                            >
+                              {hostLogo.badge.initial}
+                            </span>
+                          )}
+                          <span className={cn('host__name')}>
+                            {data.organizer}
+                          </span>
+                          <ChevronRightIcon className={cn('host__chevron')} />
+                        </button>
+                      ) : (
+                        <span className={cn(isDone ? 'host__done' : 'host')}>
+                          {data.organizer}
+                        </span>
+                      )}
                       {/* 공유 & 북마크 */}
                       <div className={cn('item__buttons')}>
                         <button

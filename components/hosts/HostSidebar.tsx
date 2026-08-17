@@ -1,4 +1,5 @@
 import style from 'components/hosts/HostSidebar.module.scss';
+import * as ga from 'lib/utils/gTag';
 import { HostLink, HostSummary } from 'model/host';
 import classNames from 'classnames/bind';
 
@@ -47,6 +48,13 @@ const HostSidebar = ({ links, summary }: Props) => {
               <li key={link.id} className={cn('links__item')}>
                 <a
                   className={cn('links__link')}
+                  onClick={() =>
+                    ga.event({
+                      action: 'host_link_click',
+                      event_category: 'web_host',
+                      event_label: link.type,
+                    })
+                  }
                   href={link.url}
                   target="_blank"
                   rel="noreferrer"
@@ -67,13 +75,19 @@ const HostSidebar = ({ links, summary }: Props) => {
             <dt className={cn('summary__label')}>누적 행사</dt>
             <dd className={cn('summary__value')}>{summary.total_events}건</dd>
           </div>
+          {summary.average_cadence && (
+            <div className={cn('summary__row')}>
+              <dt className={cn('summary__label')}>평균 주기</dt>
+              <dd className={cn('summary__value')}>{summary.average_cadence}</dd>
+            </div>
+          )}
           <div className={cn('summary__row')}>
             <dt className={cn('summary__label')}>첫 등록일</dt>
             <dd className={cn('summary__value')}>{formatFirstDate(summary.first_event_date)}</dd>
           </div>
           <div className={cn('summary__row')}>
             <dt className={cn('summary__label')}>최근 6개월</dt>
-            <dd className={cn('summary__value')}>{summary.recent_delta}</dd>
+            <dd className={cn('summary__value')}>{summary.recent_delta ?? '—'}</dd>
           </div>
         </dl>
       </div>

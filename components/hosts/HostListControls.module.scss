@@ -56,6 +56,8 @@
   margin-left: auto;
   display: flex;
   align-items: center;
+  /* 드롭다운 메뉴의 기준점 */
+  position: relative;
 
   @media (max-width: 880px) {
     margin-left: 0;
@@ -81,11 +83,88 @@
     border-color: var(--vapor-gray-400);
   }
 
+  &:focus-visible {
+    outline: 2px solid var(--ktb-tech-blue);
+    outline-offset: 2px;
+  }
+
+  &[aria-expanded='true'] {
+    border-color: var(--ktb-tech-blue);
+  }
+
   svg {
     width: 14px;
     height: 14px;
     color: var(--vapor-gray-500);
+    transition: transform 0.15s ease;
   }
+
+  &[aria-expanded='true'] svg {
+    transform: rotate(180deg);
+    color: var(--ktb-tech-blue);
+  }
+}
+
+.sort__menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  z-index: 20;
+  min-width: 100%;
+  width: max-content;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--vapor-gray-300);
+  border-radius: 8px;
+  background: var(--vapor-gray-000);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* 컨트롤이 왼쪽으로 붙는 구간에서는 메뉴도 왼쪽 기준으로 편다 */
+  @media (max-width: 880px) {
+    right: auto;
+    left: 0;
+  }
+}
+
+.sort__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--vapor-gray-700);
+  text-align: left;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    background-color: var(--vapor-gray-100);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ktb-tech-blue);
+    outline-offset: -2px;
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+}
+
+.sort__option--active {
+  color: var(--ktb-tech-blue);
+  font-weight: 600;
 }
 
 .cats {
@@ -123,5 +202,17 @@
   &:hover {
     background: var(--ktb-tech-navy, #000040);
     border-color: var(--ktb-tech-navy, #000040);
+  }
+
+  /* #000040 은 다크 배경과 거의 같은 명도라 선택 상태가 안 보인다 (DES-096) */
+  :global(html[data-theme='dark']) & {
+    background: var(--ktb-tech-blue);
+    border-color: var(--ktb-tech-blue);
+    color: #ffffff;
+
+    &:hover {
+      background: var(--ktb-tech-blue);
+      border-color: var(--ktb-tech-blue);
+    }
   }
 }

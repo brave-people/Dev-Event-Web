@@ -7,6 +7,7 @@ import { marked } from 'marked';
 import Layout from 'components/layout';
 import ShareIcon from 'components/icons/ShareIcon';
 import BookmarkIcon from 'components/icons/BookmarkIcon';
+import ChevronRightIcon from 'components/icons/ChevronRightIcon';
 import CalendarExportButton from 'components/common/calendar-export/CalendarExportButton';
 import DdayTag from 'components/common/tag/DdayTag';
 import FilterTag from 'components/common/tag/FilterTag';
@@ -17,6 +18,8 @@ import { AuthContext } from 'context/auth';
 import { createMyEventApi } from 'lib/api/post';
 import { deleteMyEventApi } from 'lib/api/delete';
 import { useMyEvent } from 'lib/hooks/useSWR';
+import { getHostIdFromEvent, pushHostDetail } from 'lib/host/hostLink';
+import { useEventHostLogo } from 'lib/host/useEventHostLogo';
 import * as ga from 'lib/utils/gTag';
 import { mutate } from 'swr';
 import style from 'styles/EventDetail.module.scss';
@@ -44,6 +47,9 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
   const param = { filter: '' };
   const { myEvent } = useMyEvent(param, isLoggedIn);
 
+  // 주최자 로고 — 이미지가 없거나 URL 이 죽어 있으면 이니셜 뱃지로 대체한다 (DES-100)
+  const hostLogo = useEventHostLogo(eventData);
+
   // 마크다운을 HTML로 변환
   const descriptionHtml = useMemo(() => {
     if (!eventData.description) return '';
@@ -54,7 +60,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
   }, [eventData.description]);
 
   // 북마크 상태 확인
-  const getFavoriteId = (id: string) => {
+  const getFavoriteId = (id: number) => {
     const favoriteEvent = myEvent?.find((item) => item.dev_event.id === id);
     return favoriteEvent?.favorite_id || 0;
   };
@@ -239,9 +245,44 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
               <div className={cx('event-detail__organizer')}>
                 {/* 주최 뱃지 비활성화 */}
                 {/*<div className={cx('organizer-badge')}></div>*/}
-                <span className={cx('organizer-text')}>
-                  {eventData.organizer}
-                </span>
+                {/* hosts 가 있으면 주최자 상세로 이동, 없으면 순수 텍스트 (DES-094) */}
+                {getHostIdFromEvent(eventData) !== null ? (
+                  <button
+                    type="button"
+                    className={cx('organizer-text', 'organizer-text--link')}
+                    onClick={() => pushHostDetail(router, eventData)}
+                    aria-label={`${eventData.organizer} 주최자 페이지로 이동`}
+                  >
+                    {hostLogo.showImage ? (
+                      <img
+                        className={cx('organizer-logo', 'organizer-logo--img')}
+                        src={hostLogo.imageSrc}
+                        alt=""
+                        aria-hidden="true"
+                        onError={hostLogo.handleImageError}
+                      />
+                    ) : (
+                      <span
+                        className={cx('organizer-logo')}
+                        style={{
+                          background: hostLogo.badge.gradient,
+                          color: hostLogo.badge.textColor,
+                        }}
+                        aria-hidden="true"
+                      >
+                        {hostLogo.badge.initial}
+                      </span>
+                    )}
+                    <span className={cx('organizer-name')}>
+                      {eventData.organizer}
+                    </span>
+                    <ChevronRightIcon className={cx('organizer-chevron')} />
+                  </button>
+                ) : (
+                  <span className={cx('organizer-text')}>
+                    {eventData.organizer}
+                  </span>
+                )}
               </div>
 
               <h1 className={cx('event-detail__title')}>{eventData.title}</h1>

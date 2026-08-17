@@ -510,8 +510,21 @@ interface Host {
 | Violet | `linear-gradient(135deg,#AF7DEB,#7A0CFF)` | 우아한형제들, DACON |
 | Sky | `linear-gradient(135deg,#34B7F9,#87E8DF)` | GDG Korea |
 | Green | `linear-gradient(135deg,#00C73C,#03A731)` | NAVER |
+| Deep Violet | `linear-gradient(135deg,#5B3F9F,#7A0CFF)` | (해시 배정용) |
+| Coral | `linear-gradient(135deg,#FF6B6B,#FF0073)` | (해시 배정용) |
 
-이 6개 톤이 충분히 다양해서 추가 색을 만들지 마세요. 알 수 없는 호스트(API에서 새로 들어온)는 organizer 이름의 char-code 해시로 6개 중 하나를 결정론적으로 배정합니다 (`lib/mock/hosts.ts > pickGradient`).
+이 **8개 톤**이 충분히 다양해서 추가 색을 만들지 마세요. 로고 이미지가 없는 주최자는 `host_name` 의 char-code 해시로 8개 중 하나를 결정론적으로 배정합니다 (`lib/host/logoFallback.ts > LOGO_GRADIENTS`).
+
+> **DES-110 정정(2026-08-17)**: 문서에는 6톤만 적혀 있었지만 코드는 8톤을 쓰고 있었습니다.
+> 톤을 6개로 줄이면 해시 분포가 바뀌어 **기존 주최자의 로고 색이 전부 달라지므로**, 코드(8톤)를 정본으로 두고 이 표를 갱신했습니다.
+> 경로 표기도 실제 위치(`lib/host/logoFallback.ts`)로 고쳤습니다 — 예전 `lib/mock/hosts.ts > pickGradient` 는 존재하지 않습니다.
+
+**로고 이미지 로딩 정책 (WEB-034 결정, 2026-08-17)**
+
+주최자 로고는 `next/image` 가 아니라 **일반 `<img>` + `onError` 폴백**을 씁니다.
+`next/image` 는 `next.config.js > images.domains` 화이트리스트에 없는 호스트를 받으면 **페이지 전체를 런타임 에러로 죽입니다.**
+로고 URL 은 어드민이 입력·업로드하는 값이라 화이트리스트를 미리 확정할 수 없으므로, 깨진 이미지 하나가 화면을 못 쓰게 만드는 위험을 피했습니다.
+대신 로드 실패 시 `lib/host/logoFallback.ts > fallbackLogo` 의 이니셜 뱃지로 대체합니다(DES-100).
 
 ### 14.3 컴포넌트 구성
 
@@ -536,12 +549,16 @@ components/hosts/
 - 카테고리 칩의 **활성 상태**: `background: var(--ktb-tech-navy)` + 흰 글자 — 일반 칩과 명확히 구분되는 dark fill
 - 정렬은 3-way 토글(`활동 많은 순 → 최근 행사 순 → 가나다순`)을 한 버튼으로 순환
 
-**상세 페이지 (`/hosts/[organizer]`)**
+**상세 페이지 (`/hosts/[hostId]`)** — 라우팅 키는 주최자 이름이 아니라 서버 PK 숫자다
 - 메인 그리드: `minmax(0, 1fr) 304px`, 좌측 컨텐츠 / 우측 sticky 사이드바
 - 상단 배너 높이 160px, `border-radius: 24px`, 메인 컨텐츠와 24px gap
 - 호스트 로고는 **배너 위에 띄우지 않고** 호스트 이름 옆에 인라인 배치 (`profile__nameRow` flex row + gap 16px) — wanted 패턴의 떠있는 로고 카드는 시각적으로 어색해서 의도적으로 피함
 - 행사 카드 썸네일: 5색 순환(`thumb__c1` ~ `thumb__c5`) — 카테고리 라벨(blue) + 월 표기 텍스처로 단순 시각 구분
 - D-day 배지: 진행중이면 `rgba(217,28,41,0.08)` + `#D91C29`, 종료된 행사는 회색 fill
+  - `event_time_type === 'RECRUIT'` 인 행사는 개최일이 아니라 **접수 마감일 기준**으로 계산하고 `마감 D-n` 으로 표기 (GAP-8)
+- '자주 다룬 주제' 칩은 **표시 전용이 아니라 검색 이동**이다 — 클릭 시 `/events?search={topic}` 로 push (WEB-030 / DES-102 결정).
+  button + hover 인터랙션 스타일을 이미 갖고 있어 '눌리는 것처럼' 보이므로, span 으로 강등하는 대신 실제 동작을 붙였다.
+- 주최자 이름은 목록·행사 상세 어디서든 **숫자 `hosts[0].id`** 로 라우팅한다. `hosts` 가 비면 링크를 렌더하지 않는다 (WEB-023 / DES-094).
 
 **공통**
 - fixed `Header`(56px)를 페이지 컨텐츠가 가리지 않도록 페이지 최상단에 `padding-top: calc(#{$header-height} + 24px)` 보정 (다른 페이지의 `<Banner />` 컴포넌트와 동일한 패턴)

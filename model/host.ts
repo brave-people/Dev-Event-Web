@@ -34,6 +34,7 @@ export interface HostListItem {
   ongoing_count: number;
   total_count: number;
   topics: string[];
+  short_description: string | null;
 }
 
 export interface HostListMeta {
@@ -42,6 +43,8 @@ export interface HostListMeta {
   page: number;
   size: number;
   total_pages: number;
+  /** 검색어·분류 조건을 만족하는 전체 건수 */
+  filtered_hosts: number;
 }
 
 export interface HostListResponse {
@@ -51,7 +54,8 @@ export interface HostListResponse {
 
 export interface HostChip {
   label: string;
-  variant: 'live' | 'default' | 'ghost';
+  // 'ghost' 는 서버 buildChips 가 만들지 않는 미사용 값이라 계약에서 제거했다 (CON-058).
+  variant: 'live' | 'default';
 }
 
 export interface HostLink {
@@ -72,7 +76,10 @@ export interface HostTopic {
 export interface HostSummary {
   total_events: number;
   first_event_date: string | null;
-  recent_delta: string;
+  /** 평균 개최 주기 문구 (예: '월 1.2회'). 산출 불가 시 null */
+  average_cadence: string | null;
+  // 서버 EventHostFacade 가 null 을 반환할 수 있다.
+  recent_delta: string | null;
 }
 
 export interface HostDetail {
@@ -84,11 +91,15 @@ export interface HostDetail {
   classification: HostClassification;
   domain: string | null;
   meta_location: string | null;
-  meta_history: string;
-  description: string;
+  // 서버가 null 을 반환할 수 있다 (meta_history: 행사 이력 없음 / description: nullable 컬럼).
+  meta_history: string | null;
+  description: string | null;
   chips: HostChip[];
   ongoing_events: Event[];
   past_events: Event[];
+  /** 탭 카운트용 총건수. ongoing_events/past_events 는 서버가 20건으로 캡한다. */
+  ongoing_events_total: number;
+  past_events_total: number;
   topics: HostTopic[];
   links: HostLink[];
   summary: HostSummary;

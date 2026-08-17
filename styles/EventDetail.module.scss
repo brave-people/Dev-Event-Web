@@ -187,6 +187,75 @@
       line-height: 1.4;
       color: var(--vapor-gray-600);
     }
+
+    // hosts 가 연결된 경우에만 붙는 링크 변형 (DES-094)
+    // 로고 + 이름 + 셰브론으로 "다른 페이지로 이동한다"는 신호를 hover 전에도 준다.
+    .organizer-text--link {
+      /* span → button (중첩 링크 회피, WEB-035) */
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      /* 좌측 padding 만큼 당겨서 제목과 시작선을 맞춘다 */
+      padding: 4px 10px 4px 4px;
+      margin-left: -4px;
+      border: 0;
+      border-radius: 999px;
+      background: none;
+      font: inherit;
+      cursor: pointer;
+      transition: background-color 0.15s ease;
+
+      &:hover,
+      &:focus-visible {
+        background-color: var(--vapor-gray-100);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--ktb-tech-blue);
+        outline-offset: 2px;
+      }
+
+      &:hover .organizer-name,
+      &:focus-visible .organizer-name {
+        color: var(--ktb-tech-blue);
+      }
+
+      &:hover .organizer-chevron,
+      &:focus-visible .organizer-chevron {
+        color: var(--ktb-tech-blue);
+        transform: translateX(2px);
+      }
+    }
+
+    .organizer-logo {
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .organizer-logo--img {
+      object-fit: cover;
+    }
+
+    .organizer-name {
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--vapor-gray-700);
+      transition: color 0.15s ease;
+    }
+
+    .organizer-chevron {
+      flex-shrink: 0;
+      color: var(--vapor-gray-500);
+      transition: transform 0.15s ease, color 0.15s ease;
+    }
   }
 
   // 이벤트 제목
