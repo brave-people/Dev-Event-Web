@@ -27,7 +27,8 @@
       flex-direction: row;
       align-items: center;
       justify-content: flex-start;
-      gap: 24px;
+      /* nav 링크끼리는 붙여서 한 묶음으로 읽히게 한다 — 로고와의 거리는 아래 logo 의 margin 이 만든다 */
+      gap: 8px;
     }
   }
 
@@ -38,9 +39,12 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    /* 브랜드와 링크 묶음 사이는 링크 간격보다 넓게 (8 + 16 = 24px) */
+    margin-right: 16px;
   }
 
-  &__about-link {
+  /* 소개·주최자 등 nav 링크는 같은 옷을 입는다 — 형태가 갈리면 위계로 오독된다 */
+  &__nav-link {
     min-height: 32px;
     padding: 0 12px;
     display: inline-flex;
@@ -66,6 +70,24 @@
     &:focus-visible {
       outline: 2px solid var(--ktb-tech-blue);
       outline-offset: 2px;
+    }
+  }
+
+  /* 좁은 화면에서만 짧은 라벨로 바꿔치기 (모바일 블록에서 뒤집는다) */
+  &__nav-link__short {
+    display: none;
+  }
+
+  /* 현재 보고 있는 페이지 */
+  &__nav-link--active {
+    border-color: var(--ktb-tech-blue);
+    color: var(--ktb-tech-blue);
+    background-color: var(--nav-link-active-bg);
+
+    &:hover {
+      border-color: var(--ktb-tech-blue);
+      color: var(--ktb-tech-blue);
+      background-color: var(--nav-link-active-bg);
     }
   }
 
@@ -267,14 +289,27 @@
     width: 100%;
 
     &__nav {
-      gap: 12px;
+      gap: 6px;
     }
   }
 
-  .header__about-link {
+  .header__logo {
+    /* 좁은 화면에서도 로고 ↔ 링크 묶음이 링크 간격보다 넓게 (6 + 6 = 12px) */
+    margin-right: 6px;
+  }
+
+  .header__nav-link {
     min-height: 30px;
     padding: 0 9px;
     font-size: 12px;
+  }
+
+  .header__nav-link__full {
+    display: none;
+  }
+
+  .header__nav-link__short {
+    display: inline;
   }
 
   .header__buttons {

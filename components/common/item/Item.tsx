@@ -13,6 +13,7 @@ import { useEventHostLogo } from 'lib/host/useEventHostLogo';
 import ChevronRightIcon from 'components/icons/ChevronRightIcon';
 import { useToast } from 'context/toast';
 import { DateUtil } from 'lib/utils/dateUtil';
+import { eventThumbnail } from 'lib/utils/eventThumbnail';
 import * as ga from 'lib/utils/gTag';
 import { Event } from 'model/event';
 import { TagResponse } from 'model/tag';
@@ -168,13 +169,7 @@ const Item = ({
                   unoptimized
                   className={cn('item__content__img__mask')}
                   alt="이벤트 이미지"
-                  src={
-                    data.cover_image_link.includes(
-                      'brave-people-3.s3.ap-northeast-2.amazonaws.com'
-                    )
-                      ? data.cover_image_link
-                      : '/default/event-thumbnail-light.png'
-                  }
+                  src={eventThumbnail(data.cover_image_link)}
                   priority={true}
                   layout="fill"
                 />

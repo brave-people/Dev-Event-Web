@@ -23,6 +23,15 @@ function NoticeModal() {
     }
   }, []);
 
+  // 배너를 닫으면 fixed Header 가 48px 줄어드는데, 페이지 상단 여백이 그걸 따라가야 한다.
+  // 초기값은 _document.tsx 의 인라인 스크립트가 이미 잡아둔다.
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      '--notice-h',
+      isNotice ? '48px' : '0px'
+    );
+  }, [isNotice]);
+
   return (
     <div
       className={cn('notice', !isNotice && 'status--delete', 'notice--light')}

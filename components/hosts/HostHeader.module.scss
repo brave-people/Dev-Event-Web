@@ -151,11 +151,152 @@
   max-width: 720px;
 }
 
+/*
+ * 소개가 마크다운이 되면서 제목·목록·이미지가 섞인다.
+ * -webkit-line-clamp 는 블록이 섞이면 어긋나므로 높이로 접고 아래를 페이드 처리한다.
+ */
 .desc__clamped {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+  max-height: 7.5em;
   overflow: hidden;
+}
+
+/*
+ * 잘린 게 확인된 뒤에만 아랫단을 흐린다.
+ * (접기 상태라도 내용이 짧으면 마스크가 멀쩡한 마지막 줄을 흐리게 만든다)
+ * 배경색을 덮는 그라데이션 대신 마스크를 쓰므로 다크 모드에서도 안전하다.
+ */
+.desc__faded {
+  -webkit-mask-image: linear-gradient(to bottom, #000 68%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 68%, transparent 100%);
+}
+
+/* 마크다운 본문 — 행사 상세 내용과 같은 규칙을 소개 폭에 맞춰 축소 적용 */
+.descBody {
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  p {
+    margin: 0 0 12px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 20px 0 10px;
+    color: var(--vapor-gray-900);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.012rem;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  h2 {
+    font-size: 19px;
+  }
+
+  h3 {
+    font-size: 17px;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: 15px;
+  }
+
+  ul,
+  ol {
+    margin: 12px 0;
+    padding-left: 22px;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  li {
+    margin: 6px 0;
+  }
+
+  a {
+    color: var(--ktb-tech-blue, #0043ff);
+    text-decoration: underline;
+    word-break: break-all;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 12px 0;
+    border-radius: 8px;
+  }
+
+  blockquote {
+    margin: 12px 0;
+    padding-left: 14px;
+    border-left: 3px solid var(--vapor-gray-300);
+    color: var(--vapor-gray-600);
+  }
+
+  code {
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--vapor-gray-100);
+    font-size: 0.9em;
+  }
+
+  pre {
+    margin: 12px 0;
+    padding: 12px;
+    border-radius: 8px;
+    background: var(--vapor-gray-100);
+    overflow-x: auto;
+
+    code {
+      padding: 0;
+      background: none;
+    }
+  }
+
+  hr {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid var(--vapor-gray-300);
+  }
+
+  table {
+    width: 100%;
+    margin: 12px 0;
+    border-collapse: collapse;
+
+    th,
+    td {
+      padding: 6px 8px;
+      border: 1px solid var(--vapor-gray-300);
+      text-align: left;
+    }
+
+    th {
+      background: var(--vapor-gray-100);
+      font-weight: 600;
+    }
+  }
 }
 
 .descToggle {

@@ -21,9 +21,6 @@ type Props = {
 
 const PAGE_SIZE = 20;
 
-const colorFor = (idx: number): 1 | 2 | 3 | 4 | 5 =>
-  (((idx % 5) + 1) as 1 | 2 | 3 | 4 | 5);
-
 /** 진행중 행사가 하나도 없으면 지난 행사 탭으로 착지시킨다. */
 const initialTab = (ongoingTotal: number, pastTotal: number): Tab => {
   if (ongoingTotal > 0) return 'ongoing';
@@ -129,12 +126,11 @@ const HostEventList = ({
               <span className={cn('section__sub')}>신청 마감 임박 순</span>
             </div>
             <div className={cn('list')}>
-              {visible.ongoing.map((event, idx) => (
+              {visible.ongoing.map((event) => (
                 <HostEventCard
                   key={event.id}
                   event={event}
                   isDone={false}
-                  colorVariant={colorFor(idx)}
                 />
               ))}
             </div>
@@ -150,12 +146,11 @@ const HostEventList = ({
               <span className={cn('section__sub')}>최근 순</span>
             </div>
             <div className={cn('list')}>
-              {visible.past.map((event, idx) => (
+              {visible.past.map((event) => (
                 <HostEventCard
                   key={event.id}
                   event={event}
                   isDone
-                  colorVariant={colorFor(idx + 2)}
                 />
               ))}
             </div>

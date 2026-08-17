@@ -28,6 +28,16 @@ class MyDocument extends Document {
               __html: `(function(){try{var s=localStorage.getItem('dev-event:theme');var t=s||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();`,
             }}
           />
+          {/*
+            공지 배너는 fixed Header 안에 들어가 헤더 실높이를 48px 늘린다.
+            페이지 상단 여백이 이를 반영해야 해서, 하이드레이션 전에 쿠키로 높이를 확정한다
+            (React 이후에 세팅하면 배너를 닫아둔 사용자에게 콘텐츠 점프가 보인다).
+          */}
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(){try{var hidden=document.cookie.indexOf('dev-event-notice=true')>-1;document.documentElement.style.setProperty('--notice-h',hidden?'0px':'48px');}catch(e){document.documentElement.style.setProperty('--notice-h','48px');}})();`,
+            }}
+          />
           <meta property="og:type" content="website" />
           <meta property="og:site_name" content="Dev Event" />
           <meta

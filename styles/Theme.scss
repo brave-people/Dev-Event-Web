@@ -16,6 +16,8 @@ html[data-theme='light'] {
   --glass-overlay: rgba(255, 255, 255, 0.9);
   --glass-overlay-strong: rgba(255, 255, 255, 1);
   --notice-bg: rgba(0, 67, 255, 0.08);
+  // 헤더 nav 링크의 현재 페이지 표시. notice 보다 옅게 — 배너가 아니라 상태 표시다.
+  --nav-link-active-bg: rgba(0, 67, 255, 0.06);
 
   // Segmented control / pill toggle (e.g. 리스트/캘린더).
   // active needs to sit visibly above track in both themes.
@@ -72,6 +74,7 @@ html[data-theme='dark'] {
   --glass-overlay: rgba(33, 34, 37, 0.72);          // #212225 @ 72%
   --glass-overlay-strong: rgba(33, 34, 37, 0.94);   // #212225 @ 94%
   --notice-bg: rgba(51, 133, 255, 0.12);            // #3385FF @ 12%
+  --nav-link-active-bg: rgba(51, 133, 255, 0.14);   // #3385FF @ 14% — 어두운 배경에선 조금 더 올려야 보인다
 
   // Segmented control: track = elevated surface, active = one step brighter line.
   --toggle-track-bg: #{$wanted-dark-bg-elevated};       // #212225

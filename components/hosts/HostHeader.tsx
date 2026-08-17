@@ -1,7 +1,8 @@
 import style from 'components/hosts/HostHeader.module.scss';
 import { classificationLabel, fallbackLogo, resolveHostLogo } from 'lib/host/logoFallback';
 import { HostDetail } from 'model/host';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { marked } from 'marked';
 import classNames from 'classnames/bind';
 
 const cn = classNames.bind(style);
@@ -16,11 +17,22 @@ const primaryHomepage = (host: HostDetail) =>
   null;
 
 const HostHeader = ({ host }: Props) => {
-  const descRef = useRef<HTMLParagraphElement | null>(null);
+  const descRef = useRef<HTMLDivElement | null>(null);
+  const descBodyRef = useRef<HTMLDivElement | null>(null);
   const [expanded, setExpanded] = useState(false);
   const [clamped, setClamped] = useState(false);
 
-  // 3줄을 넘겨 실제로 잘리는 경우에만 '더보기'를 노출한다.
+  // 소개는 어드민에서 마크다운으로 작성한다 (행사 상세 내용과 동일한 방식)
+  const descriptionHtml = useMemo(() => {
+    if (!host.description) return '';
+    return marked(host.description, {
+      breaks: true, // 줄바꿈을 <br>로 변환
+      gfm: true, // GitHub Flavored Markdown 지원
+    });
+  }, [host.description]);
+
+  // 접힌 높이를 넘겨 실제로 잘리는 경우에만 '더보기'를 노출한다.
+  // 마크다운은 제목·목록·이미지가 섞여 줄 수가 일정치 않아 높이로 잰다.
   useEffect(() => {
     const el = descRef.current;
     if (!el) {
@@ -29,9 +41,20 @@ const HostHeader = ({ host }: Props) => {
     }
     const measure = () => setClamped(el.scrollHeight > el.clientHeight + 1);
     measure();
+
+    // 본문 이미지는 늦게 로드돼 첫 측정에는 높이가 0 이다. 내용 높이를 계속 관찰한다.
+    // (접힌 박스는 max-height 로 고정돼 있어 바깥이 아닌 안쪽을 봐야 한다)
+    const body = descBodyRef.current;
+    const observer =
+      typeof ResizeObserver !== 'undefined' && body ? new ResizeObserver(measure) : null;
+    observer?.observe(body as Element);
+
     window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  }, [host.description, expanded]);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, [descriptionHtml, expanded]);
 
   const logo = resolveHostLogo(host);
   // 이미지 URL 이 죽어 있으면 이니셜 뱃지로 대체한다 (DES-100)
@@ -117,14 +140,21 @@ const HostHeader = ({ host }: Props) => {
         </div>
       )}
 
-      {host.description && (
+      {descriptionHtml && (
         <div className={cn('descWrap')}>
-          <p
+          <div
             ref={descRef}
-            className={cn('desc', { desc__clamped: !expanded })}
+            className={cn('desc', {
+              desc__clamped: !expanded,
+              desc__faded: !expanded && clamped,
+            })}
           >
-            {host.description}
-          </p>
+            <div
+              ref={descBodyRef}
+              className={cn('descBody')}
+              dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+            />
+          </div>
           {/* 실제로 잘릴 때만 버튼을 보여준다 */}
           {clamped && (
             <button

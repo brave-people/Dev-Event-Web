@@ -547,13 +547,16 @@ components/hosts/
 - 카드 hover: `border-color: var(--vapor-gray-400)` + `transform: translateY(-2px)` + `box-shadow: 0 4px 16px rgba(15,17,28,0.06)`
 - 검색·정렬·카테고리 모두 **클라이언트 사이드 상태** — 새 페이지 로드 없이 즉시 반응 (서버 라운드트립 없음)
 - 카테고리 칩의 **활성 상태**: `background: var(--ktb-tech-navy)` + 흰 글자 — 일반 칩과 명확히 구분되는 dark fill
-- 정렬은 3-way 토글(`활동 많은 순 → 최근 행사 순 → 가나다순`)을 한 버튼으로 순환
+- 정렬은 **드롭다운**(`활동 많은 순` / `최근 행사 순` / `가나다순`)으로 고른다. 선택지가 셋이라 순환 토글로는 원하는 값을 한 번에 집을 수 없고, 어떤 선택지가 있는지도 알 수 없어 목록을 펼치는 방식으로 바꿨다 (WEB-036).
+  현재 값은 트리거 라벨과 메뉴 안 체크 표시 양쪽에 드러내고, `aria-haspopup="listbox"` + `role="option"` + 키보드(↑/↓/Esc)를 지원한다
 
 **상세 페이지 (`/hosts/[hostId]`)** — 라우팅 키는 주최자 이름이 아니라 서버 PK 숫자다
 - 메인 그리드: `minmax(0, 1fr) 304px`, 좌측 컨텐츠 / 우측 sticky 사이드바
 - 상단 배너 높이 160px, `border-radius: 24px`, 메인 컨텐츠와 24px gap
 - 호스트 로고는 **배너 위에 띄우지 않고** 호스트 이름 옆에 인라인 배치 (`profile__nameRow` flex row + gap 16px) — wanted 패턴의 떠있는 로고 카드는 시각적으로 어색해서 의도적으로 피함
-- 행사 카드 썸네일: 5색 순환(`thumb__c1` ~ `thumb__c5`) — 카테고리 라벨(blue) + 월 표기 텍스처로 단순 시각 구분
+- 행사 카드 썸네일: **`/events` 목록 카드와 같은 이미지 정책**을 쓴다 — `lib/utils/eventThumbnail.ts` 한 곳에서 판정하고, 허용된 S3 호스트면 `cover_image_link`, 아니면 `/default/event-thumbnail-light.png`.
+  예전에는 5색 순환 블록(`thumb__c1` ~ `thumb__c5`)이었으나, **같은 행사가 목록에서는 썸네일 이미지로 주최자 페이지에서는 색 블록으로 보여** 같은 행사인지 알아보기 어려웠다. 시각적 다양성보다 식별 일관성을 택했다 (WEB-037).
+  지난 행사는 목록 카드와 동일하게 `rgba(0,0,0,0.4)` 오버레이로 누른다
 - D-day 배지: 진행중이면 `rgba(217,28,41,0.08)` + `#D91C29`, 종료된 행사는 회색 fill
   - `event_time_type === 'RECRUIT'` 인 행사는 개최일이 아니라 **접수 마감일 기준**으로 계산하고 `마감 D-n` 으로 표기 (GAP-8)
 - '자주 다룬 주제' 칩은 **표시 전용이 아니라 검색 이동**이다 — 클릭 시 `/events?search={topic}` 로 push (WEB-030 / DES-102 결정).

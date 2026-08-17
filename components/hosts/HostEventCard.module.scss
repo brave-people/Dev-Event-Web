@@ -31,18 +31,18 @@
   }
 }
 
+/*
+ * 썸네일은 /events 카드와 같은 이미지 정책을 쓴다 (lib/utils/eventThumbnail).
+ * 예전의 5색 블록은 같은 행사가 페이지마다 달라 보이는 문제가 있어 걷어냈다.
+ */
 .thumb {
+  position: relative;
+  flex-shrink: 0;
   width: 152px;
   height: 96px;
   border-radius: 6px;
+  overflow: hidden;
   background: var(--vapor-gray-100);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--vapor-gray-500);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  font-family: 'SF Mono', SFMono-Regular, Menlo, Consolas, monospace;
 
   @media (max-width: 880px) {
     width: 96px;
@@ -50,23 +50,12 @@
   }
 }
 
-.thumb__c1 { background: linear-gradient(135deg, #E8F0FF, #C7DAFF); color: #0043ff; }
-.thumb__c2 { background: linear-gradient(135deg, #FFE8EE, #FFC8D6); color: #D91C29; }
-.thumb__c3 { background: linear-gradient(135deg, #E8FAF3, #BFEED9); color: #08785E; }
-.thumb__c4 { background: linear-gradient(135deg, #FFF4E0, #FFD9A8); color: #B45209; }
-.thumb__c5 { background: linear-gradient(135deg, #F0E8FF, #D6C2FF); color: #5B3F9F; }
-
-/*
- * 5색 파스텔 썸네일은 다크 배경 위에서 지나치게 밝아 눈을 찌른다.
- * 같은 색상(hue)의 저채도 알파 배경 + 밝은 텍스트로 낮춘다 (DES-103).
- * 색 블록 썸네일 자체는 DESIGN.md 10.4 가 명시한 규격이라 유지한다.
- */
-:global(html[data-theme='dark']) {
-  .thumb__c1 { background: rgba(51, 133, 255, 0.18);  color: #8FBEFF; }
-  .thumb__c2 { background: rgba(255, 99, 99, 0.18);   color: #FF9B9B; }
-  .thumb__c3 { background: rgba(24, 191, 143, 0.18);  color: #6FE0C0; }
-  .thumb__c4 { background: rgba(255, 168, 61, 0.18);  color: #FFC880; }
-  .thumb__c5 { background: rgba(155, 118, 255, 0.18); color: #C3AEFF; }
+/* 지난 행사는 목록 카드와 같은 방식으로 눌러둔다 */
+.thumb__done {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .body {

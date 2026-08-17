@@ -1,8 +1,10 @@
 import BookmarkIcon from 'components/icons/BookmarkIcon';
 import style from 'components/hosts/HostEventCard.module.scss';
+import { eventThumbnail } from 'lib/utils/eventThumbnail';
 import * as ga from 'lib/utils/gTag';
 import { Event } from 'model/event';
 import dayjs from 'dayjs';
+import Image from 'next/image';
 import Link from 'next/link';
 import classNames from 'classnames/bind';
 
@@ -11,7 +13,6 @@ const cn = classNames.bind(style);
 type Props = {
   event: Event;
   isDone?: boolean;
-  colorVariant: 1 | 2 | 3 | 4 | 5;
   /** 북마크 상태. 미지정이면 버튼을 렌더하지 않는다. */
   isBookmarked?: boolean;
   onClickBookmark?: (event: Event) => void;
@@ -93,34 +94,29 @@ const formatDday = (event: Event): string | null => {
 const HostEventCard = ({
   event,
   isDone = false,
-  colorVariant,
   isBookmarked,
   onClickBookmark,
 }: Props) => {
   const category = categoryFromTags(event);
   const venue = venueFromTags(event);
   const location = locationFromTags(event);
-  const start = parseDate(event.start_date_time);
   const dateRange = formatDateRange(event);
   const dday = formatDday(event);
-  const ribbon = start
-    ? `${category.slice(0, 4).toUpperCase()} · ${start.format('MM')}`
-    : category.slice(0, 4).toUpperCase();
 
   return (
     <Link href={`/event/detail/${event.id}`}>
       <a className={cn('card')}>
-        <div
-          className={cn('thumb', {
-            thumb__c1: colorVariant === 1,
-            thumb__c2: colorVariant === 2,
-            thumb__c3: colorVariant === 3,
-            thumb__c4: colorVariant === 4,
-            thumb__c5: colorVariant === 5,
-          })}
-          aria-hidden="true"
-        >
-          {ribbon}
+        {/* 썸네일 규칙은 /events 목록과 공유한다 (lib/utils/eventThumbnail) */}
+        <div className={cn('thumb')}>
+          <Image
+            unoptimized
+            alt=""
+            aria-hidden="true"
+            src={eventThumbnail(event.cover_image_link)}
+            layout="fill"
+            objectFit="cover"
+          />
+          {isDone && <div className={cn('thumb__done')} />}
         </div>
         <div className={cn('body')}>
           <span className={cn('category')}>{category}</span>

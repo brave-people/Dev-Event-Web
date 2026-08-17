@@ -4,10 +4,12 @@
   max-width: $laptop-max-width;
   margin: 0 auto;
   padding: 48px $laptop-padding 24px;
-  padding-top: calc(#{$header-height} + 48px);
+  /* $header-height 는 공지 배너를 뺀 값이라 배너가 떠 있으면 여백이 그만큼 먹힌다 */
+  padding-top: calc(#{$header-height} + var(--notice-h, 48px) + 48px);
 
   @media (max-width: 880px) {
-    padding: calc(#{$header-height} + 24px) $mobile-padding 16px;
+    padding: calc(#{$header-height} + var(--notice-h, 48px) + 24px)
+      $mobile-padding 16px;
   }
 }
 
