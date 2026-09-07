@@ -123,7 +123,6 @@ const HostEventList = ({
               <h2 className={cn('section__title')}>
                 진행중인 행사<b>{ongoingTotal}</b>
               </h2>
-              <span className={cn('section__sub')}>신청 마감 임박 순</span>
             </div>
             <div className={cn('list')}>
               {visible.ongoing.map((event) => (
@@ -143,7 +142,6 @@ const HostEventList = ({
               <h2 className={cn('section__title')}>
                 지난 행사<b>{pastTotal}</b>
               </h2>
-              <span className={cn('section__sub')}>최근 순</span>
             </div>
             <div className={cn('list')}>
               {visible.past.map((event) => (

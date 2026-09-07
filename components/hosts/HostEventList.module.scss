@@ -46,9 +46,6 @@
 }
 
 .section__head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
   margin-bottom: 20px;
 }
 
@@ -63,11 +60,6 @@
     font-weight: 700;
     margin-left: 6px;
   }
-}
-
-.section__sub {
-  font-size: 13px;
-  color: var(--vapor-gray-600);
 }
 
 .list {
@@ -163,12 +155,4 @@
     &::-webkit-scrollbar { display: none; }
   }
 
-  .section__head {
-    flex-wrap: wrap;
-    gap: 4px;
-  }
-
-  .section__sub {
-    font-size: 12px;
-  }
 }

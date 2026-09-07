@@ -2,18 +2,6 @@
 @import '~styles/_variables.scss';
 @import '~styles/_common.scss';
 
-// ===== Pulse keyframes (DESIGN.md §7) — live/urgent badges only =====
-@keyframes pulse-blue {
-  0%   { box-shadow: 0 0 0 0 rgba(0, 67, 255, 0.55); }
-  70%  { box-shadow: 0 0 0 8px rgba(0, 67, 255, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(0, 67, 255, 0); }
-}
-@keyframes pulse-danger {
-  0%   { box-shadow: 0 0 0 0 rgba(217, 28, 41, 0.55); }
-  70%  { box-shadow: 0 0 0 8px rgba(217, 28, 41, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(217, 28, 41, 0); }
-}
-
 .item__container {
   width: 100%;
   padding: 24px 0;

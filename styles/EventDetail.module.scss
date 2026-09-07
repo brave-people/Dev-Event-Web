@@ -3,7 +3,9 @@
 
 .event-detail {
   width: 100%;
-  padding-top: 64px; // Header 높이만큼 추가
+  // fixed Header 만큼 밀어준다. $header-height 는 공지 배너를 뺀 값이라 --notice-h 를 더해야
+  // 배너가 떠 있을 때도 아래 &__header 의 padding 이 온전히 여백으로 남는다.
+  padding-top: calc(#{$header-height} + var(--notice-h, 48px));
   background-color: var(--vapor-gray-000);
 
   // 이벤트 헤더 영역

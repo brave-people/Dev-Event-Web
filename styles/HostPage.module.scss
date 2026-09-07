@@ -41,8 +41,12 @@
   margin: 0 auto;
   padding: 48px $laptop-padding 96px;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 304px;
-  gap: 48px;
+  /*
+   * 사이드바는 '활동 요약' 같은 짧은 라벨/값 쌍만 담는다.
+   * 304px + gap 48px 는 본문에서 352px 를 가져가 정작 주인공인 행사 카드가 눌렸다.
+   */
+  grid-template-columns: minmax(0, 1fr) 272px;
+  gap: 40px;
   align-items: start;
 
   @media (max-width: 880px) {

@@ -324,7 +324,7 @@ The signature 4-column grid for `/event/detail/[eventId]`.
 - Apply `letter-spacing: -0.012rem` to headings/card titles (not body)
 - Apply `word-break: keep-all` globally for Korean text integrity
 - Use `transform: scale(1.05)` on `.event-video` for the only card-hover signature
-- Use `pulse-blue` / `pulse-navy` / `pulse-danger` keyframe **only** on status badges that indicate live/urgent state
+- ~~Use `pulse-blue` / `pulse-navy` / `pulse-danger` keyframe on status badges~~ → 이 서비스에서는 쓰지 않는다. §7 핵심 원칙 5번 참고 (WEB-038)
 - Use Vapor design tokens (`--space-*`, `--gray-*`, `--text-*`, `--border-radius-*`) — never hardcode values when a token exists
 - Stack thumb (1/4 square) + info column (3/4) for detail hero on desktop; collapse to vertical on mobile
 - Render `<video autoplay loop muted playsinline>` for course/event thumbnails on desktop; fall back to `<picture>` on mobile (cellular-safe)
@@ -338,7 +338,7 @@ The signature 4-column grid for `/event/detail/[eventId]`.
 - **Don't add multi-line card titles** — `.event-name`은 single-line ellipsis. 두 줄이 필요하면 카드 grid를 다시 짠다.
 - **Don't autoplay video on mobile** — cellular cost. Use `<picture>` with `source media="(max-width: 576px)"`.
 - **Don't use weights outside 400/500/700/800** — Pretendard variable이지만 토큰 밖 weight는 ship하지 않는다.
-- **Don't replace pulse keyframe with hover shadow** — 라이브 상태와 hover는 다른 감각. pulse는 자동 반복, hover는 사용자 의도.
+- **Don't bring the pulse keyframe back** — 라이브 상태는 색으로만 구분한다. 무한 반복 글로우는 목록에서 제목보다 먼저 눈에 띈다 (WEB-038).
 
 ## 8. Responsive Behavior
 
@@ -406,7 +406,9 @@ The signature 4-column grid for `/event/detail/[eventId]`.
 2. **Two radii do 90% of the work**: 12px (`--border-radius-400`) for list cards/buttons/inputs, 24px (`--border-radius-600`) for detail surfaces.
 3. **The card is shape-less; the thumb carries the silhouette**. Don't add borders or shadows to cards.
 4. **Hover is media-only**: `.event-video { transform: scale(1.05); transition: transform 0.3s ease; }` — nothing else changes on hover.
-5. **Status badges pulse, nothing else does**: `pulse-blue` / `pulse-navy` / `pulse-danger` keyframes are the only motion language outside of media zoom.
+5. ~~**Status badges pulse, nothing else does**~~ → **모션은 hover 전환뿐**. KTB 원본은 라이브 배지에 `pulse-*` 키프레임을 썼지만, 이 서비스에서는 **걷어냈다** (WEB-038).
+   D-day 배지와 '행사 진행중' 칩이 화면에 여러 개 깔리는 구조라, 무한 반복하는 글로우가 목록을 훑는 내내 시선을 잡아채 정작 행사 제목을 읽기 어려웠다.
+   상태 구분은 색(blue/navy/danger)만으로 충분하다. 아래 §4·§6 의 `pulse-*` 서술은 KTB 원본 기록으로만 남긴다.
 6. **Gradient accents are display-only**: hero copy, marketing banner. Never on functional UI.
 7. **Section banding**: white (`--gray-000`) ↔ near-white (`--background-alternative` `#F7F7FA`). Just two background tiers, alternated.
 8. **Korean-first typography**: `letter-spacing: -0.012rem` on headings, `word-break: keep-all` globally.
@@ -468,7 +470,7 @@ interface HostListItem {
   classification:             // 8개 카테고리 칩과 1:1 매칭
     '기업' | '커뮤니티' | '학회/연구소' | '정부/공공' | '교육' | '미디어';
   domain: string;             // 메타 라인의 두 번째 항목 (예: '핀테크', '클라우드')
-  ongoingCount: number;       // pulse 칩에 표시
+  ongoingCount: number;       // '행사 진행중 N' 칩에 표시
   totalCount: number;         // 누적 행사 칩
   shortDescription: string;   // 2줄 ellipsis
   topics: string[];           // 자주 다룬 주제 (3개 권장)
@@ -551,7 +553,8 @@ components/hosts/
   현재 값은 트리거 라벨과 메뉴 안 체크 표시 양쪽에 드러내고, `aria-haspopup="listbox"` + `role="option"` + 키보드(↑/↓/Esc)를 지원한다
 
 **상세 페이지 (`/hosts/[hostId]`)** — 라우팅 키는 주최자 이름이 아니라 서버 PK 숫자다
-- 메인 그리드: `minmax(0, 1fr) 304px`, 좌측 컨텐츠 / 우측 sticky 사이드바
+- 메인 그리드: `minmax(0, 1fr) 272px` + `gap: 40px`, 좌측 컨텐츠 / 우측 sticky 사이드바.
+  사이드바는 짧은 라벨/값 쌍만 담으므로 폭을 아끼고 주인공인 행사 카드에 넓이를 준다 (예전 `304px` + `gap 48px` 는 본문에서 352px 를 가져가 카드가 눌렸다)
 - 상단 배너 높이 160px, `border-radius: 24px`, 메인 컨텐츠와 24px gap
 - 호스트 로고는 **배너 위에 띄우지 않고** 호스트 이름 옆에 인라인 배치 (`profile__nameRow` flex row + gap 16px) — wanted 패턴의 떠있는 로고 카드는 시각적으로 어색해서 의도적으로 피함
 - 행사 카드 썸네일: **`/events` 목록 카드와 같은 이미지 정책**을 쓴다 — `lib/utils/eventThumbnail.ts` 한 곳에서 판정하고, 허용된 S3 호스트면 `cover_image_link`, 아니면 `/default/event-thumbnail-light.png`.

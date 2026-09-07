@@ -72,7 +72,8 @@ const HostsListPage = ({ fallbackData, params }: Props) => {
 
   const hasFilter = Boolean(params.q) || (params.category ?? 'all') !== 'all';
 
-  const pageDescription = `개발자 행사를 꾸준히 여는 ${meta.total_hosts}명의 주최자를 만나보세요. 지금 진행중인 행사 ${meta.total_ongoing_events}건.`;
+  // 주최자에는 기업·커뮤니티·학회가 섞여 있어 사람 단위인 '명' 대신 '곳'으로 센다
+  const pageDescription = `개발자 행사를 꾸준히 여는 주최자 ${meta.total_hosts}곳을 만나보세요. 지금 진행중인 행사 ${meta.total_ongoing_events}건.`;
 
   useEffect(() => {
     if (pendingRef.current) return;
@@ -139,7 +140,7 @@ const HostsListPage = ({ fallbackData, params }: Props) => {
         <h1 className={cn('title')}>주최자 둘러보기</h1>
         <p className={cn('sub')}>
           <span>
-            개발자 행사를 꾸준히 여는 <b>{meta.total_hosts}명의 주최자</b>를 만나보세요.
+            개발자 행사를 꾸준히 여는 <b>주최자 {meta.total_hosts}곳</b>을 만나보세요.
           </span>
           <span className={cn('sub__dot')}>•</span>
           <span>
