@@ -9,7 +9,7 @@ import {
 } from 'components/icons';
 import { EventContext } from 'context/event';
 import { useToast } from 'context/toast';
-import { DateUtil } from 'lib/utils/dateUtil';
+import { formatEventPeriod, getEventTimeLabel } from 'lib/utils/eventDate';
 import * as ga from 'lib/utils/gTag';
 import { Event } from 'model/event';
 import { TagResponse } from 'model/tag';
@@ -19,12 +19,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 const cn = classNames.bind(style);
-
-const DateType = {
-  dateTime: 'dateTime',
-  date: 'date',
-  time: 'time',
-};
 
 const shortenYear = (s: string | undefined): string => {
   if (!s) return '';
@@ -40,6 +34,7 @@ type Props = {
   childLast?: boolean;
   parentLast?: boolean;
   isLast?: boolean;
+  priority?: boolean;
 };
 
 const Item = ({
@@ -50,6 +45,7 @@ const Item = ({
   onClickFavorite,
   childLast,
   parentLast,
+  priority = false,
 }: Props) => {
   const [isLast, setIsLast] = useState<boolean>(false);
   const [isDone, setIsDone] = useState<boolean>(isEventDone());
@@ -74,49 +70,6 @@ const Item = ({
     });
   };
 
-  const getEventDate = () => {
-    let eventDate;
-
-    if (data.start_date_time && !data.end_date_time) {
-      const startDateType =
-        data.use_start_date_time_yn === 'Y' ? DateType.dateTime : DateType.date;
-      eventDate = convertDateFormat(data.start_date_time, startDateType);
-    }
-    if (!data.start_date_time && data.end_date_time) {
-      const endDateType =
-        data.use_end_date_time_yn === 'Y' ? DateType.dateTime : DateType.date;
-      eventDate = convertDateFormat(data.end_date_time, endDateType) + ' 까지';
-    }
-    if (data.start_date_time && data.end_date_time) {
-      const isSameDay =
-        DateUtil.getDateFormat(data.start_date_time) ===
-        DateUtil.getDateFormat(data.end_date_time);
-      const startDateType =
-        data.use_start_date_time_yn === 'Y' ? DateType.dateTime : DateType.date;
-      const endDateType = isSameDay
-        ? DateType.time
-        : data.use_end_date_time_yn === 'Y'
-        ? DateType.dateTime
-        : DateType.date;
-
-      eventDate =
-        convertDateFormat(data.start_date_time, startDateType) +
-        ' ~ ' +
-        convertDateFormat(data.end_date_time, endDateType);
-    }
-    return eventDate;
-  };
-
-  const convertDateFormat = (date: string, type: string) => {
-    switch (type) {
-      case 'time':
-        return DateUtil.getTimeFormat(date);
-      case 'date':
-        return DateUtil.getDateFormat(date, { hasWeek: true });
-      case 'dateTime':
-        return DateUtil.getDateTimeFormat(date);
-    }
-  };
   useEffect(() => {
     if ((!search && childLast) || (search && parentLast)) {
       setIsLast(true);
@@ -155,7 +108,7 @@ const Item = ({
                       ? data.cover_image_link
                       : '/default/event-thumbnail-light.png'
                   }
-                  priority={true}
+                  priority={priority}
                   layout="fill"
                 />
                 {isDone && <div className={cn('item__content__img__done')} />}
@@ -240,7 +193,7 @@ const Item = ({
                           isDone ? 'date__type__done' : 'date__type'
                         )}
                       >
-                        {data.event_time_type === 'DATE' ? '일시' : '접수'}
+                        {getEventTimeLabel(data.event_time_type)}
                       </span>
                       {/* 행사 시작 시간 */}
                       <span
@@ -248,7 +201,7 @@ const Item = ({
                           isDone ? `date__date__done` : 'date__date'
                         )}
                       >
-                        {shortenYear(getEventDate())}
+                        {shortenYear(formatEventPeriod(data))}
                       </span>
                       {/* 행사 종료 시간 */}
                       <span
@@ -258,7 +211,7 @@ const Item = ({
                             : 'date__date__mobile'
                         )}
                       >
-                        {shortenYear(getEventDate())}
+                        {shortenYear(formatEventPeriod(data))}
                       </span>
                     </div>
                   </span>
