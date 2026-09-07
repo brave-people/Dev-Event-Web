@@ -8,8 +8,7 @@ import {
 } from 'lib/utils/eventUtil';
 import { checkSearch } from 'lib/utils/searchUtil';
 import { Event, EventResponse } from 'model/event';
-import React, { useState, useEffect, useContext } from 'react';
-import { ThreeDots } from 'react-loader-spinner';
+import React, { useContext, useMemo } from 'react';
 import classNames from 'classnames/bind';
 import { useRouter } from 'next/router';
 import EventNull from '../modal/EventNull';
@@ -26,6 +25,26 @@ type Props = {
   search?: string;
 };
 
+const passes = (
+  item: Event,
+  jobGroups: string | undefined,
+  eventType: string | undefined,
+  location: string | undefined,
+  coast: string | undefined,
+  search: string | undefined,
+  asPath: string
+) =>
+  !checkEventDone({
+    endDate: getEventEndDate({
+      start_date_time: item.start_date_time,
+      end_date_time: item.end_date_time,
+      use_start_date_time_yn: item.use_start_date_time_yn,
+      use_end_date_time_yn: item.use_end_date_time_yn,
+    }),
+  }) &&
+  checkCondition(jobGroups, eventType, location, coast, item) &&
+  checkSearch(search, asPath, item);
+
 function ItemList({
   events,
   isError,
@@ -35,49 +54,34 @@ function ItemList({
   coast,
   search,
 }: Props) {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [searchRes, setSearchRes] = useState<Event[] | undefined>(undefined);
   const { modalState } = useContext(WindowContext);
   const router = useRouter();
-  let eventCount = 0;
 
-  useEffect(() => {
-    setIsLoading(true);
-    setEventList();
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 300);
+  // 월 그룹별 필터 결과 (SSR에서도 동기 계산됨)
+  const groups = useMemo(
+    () =>
+      (events ?? []).filter(Boolean).map((group) => ({
+        metadata: group.metadata,
+        items: group.dev_event.filter((item) =>
+          passes(
+            item,
+            jobGroups,
+            eventType,
+            location,
+            coast,
+            search,
+            router.asPath
+          )
+        ),
+      })),
+    [events, jobGroups, eventType, location, coast, search, router.asPath]
+  );
 
-    return () => {
-      setIsLoading(false);
-      setSearchRes(undefined);
-    };
-  }, [modalState, jobGroups, eventType, location, coast, search]);
-
-  const setEventList = () => {
-    const res: Event[] = [];
-    events &&
-      events.map((event: EventResponse) => {
-        event &&
-          event.dev_event.filter((item) => {
-            if (
-              !checkEventDone({
-                endDate: getEventEndDate({
-                  start_date_time: item.start_date_time,
-                  end_date_time: item.end_date_time,
-                  use_start_date_time_yn: item.use_start_date_time_yn,
-                  use_end_date_time_yn: item.use_end_date_time_yn,
-                }),
-              }) &&
-              checkCondition(jobGroups, eventType, location, coast, item) &&
-              checkSearch(search, router.asPath, item)
-            ) {
-              res.push(item);
-            }
-          });
-      });
-    setSearchRes(res);
-  };
+  const searchRes = useMemo(
+    () => groups.flatMap((group) => group.items),
+    [groups]
+  );
+  const eventCount = searchRes.length;
 
   if (isError) {
     return (
@@ -86,95 +90,58 @@ function ItemList({
       </div>
     );
   }
+
   return (
     <>
-      {search && modalState.currentModal === 0 && searchRes && (
+      {search && modalState.currentModal === 0 && (
         <>
           <div className={cn('search__header')}>
             <span className={cn('list__title')}>{`${search}`}</span>
-            <span className={cn('total__count')}>
-              {searchRes ? searchRes.length : '0'}
-            </span>
+            <span className={cn('total__count')}>{searchRes.length}</span>
           </div>
           <div className={cn('search__list')}>
             {searchRes.length !== 0 ? (
-              <List data={searchRes} parentLast={true} />
+              <List data={searchRes} parentLast={true} eagerCount={4} />
             ) : (
               <EventNull />
             )}
           </div>
         </>
       )}
-      {search && modalState.currentModal === 1 && searchRes && (
+      {search && modalState.currentModal === 1 && (
         <>
           <div className={cn('search__header__modal')}>
             <div className={cn('list__title')}>`{`${search}`}` 검색결과</div>
-            <div className={cn('total__count')}>
-              {searchRes ? searchRes.length : '0'}개
-            </div>
+            <div className={cn('total__count')}>{searchRes.length}개</div>
           </div>
           <div className={cn('search__list')}>
             {searchRes.length !== 0 ? (
-              <List data={searchRes} parentLast={true} />
+              <List data={searchRes} parentLast={true} eagerCount={4} />
             ) : (
               <EventNull />
             )}
           </div>
         </>
       )}
-      {isLoading ? (
-        <div className={cn('null-container')}>
-          <ThreeDots color="#479EF1" height={60} width={60} />
-        </div>
-      ) : events ? (
-        events.map((event: EventResponse, index) => {
-          if (!search) {
-            const lists =
-              event &&
-              event.dev_event.filter(
-                (item) =>
-                  !checkEventDone({
-                    endDate: getEventEndDate({
-                      start_date_time: item.start_date_time,
-                      end_date_time: item.end_date_time,
-                      use_start_date_time_yn: item.use_start_date_time_yn,
-                      use_end_date_time_yn: item.use_end_date_time_yn,
-                    }),
-                  }) &&
-                  checkCondition(jobGroups, eventType, location, coast, item) &&
-                  checkSearch(search, router.asPath, item)
-              );
-            eventCount += lists.length;
-            const isLast = eventCount === lists.length;
-            return (
-              <div key={index}>
-                {lists !== undefined && lists.length !== 0 ? (
-                  <div
-                    className={cn(
-                      `${search ? 'search__list' : 'section__list'}`
-                    )}
-                  >
-                    {search === undefined && (
-                      <div className={cn('list__title')}>
-                        <span>
-                          {search ||
-                            `${event.metadata.year}년 ${event.metadata.month}월`}
-                        </span>
-                      </div>
-                    )}
-                    <List data={lists} parentLast={search ? isLast : false} />
-                  </div>
-                ) : null}
+      {!search &&
+        events &&
+        groups.map((group, index) =>
+          group.items.length !== 0 ? (
+            <div key={index} className={cn('section__list')}>
+              <div className={cn('list__title')}>
+                <span>{`${group.metadata.year}년 ${group.metadata.month}월`}</span>
               </div>
-            );
-          }
-        })
-      ) : (
-        <EventNull />
-      )}
+              <List
+                data={group.items}
+                parentLast={false}
+                eagerCount={index === 0 ? 4 : 0}
+              />
+            </div>
+          ) : null
+        )}
+      {!search && !events && <EventNull />}
       {/* 행사 조회 결과가 없을떄 */}
-      {!isLoading &&
-        eventCount === 0 &&
+      {eventCount === 0 &&
         modalState.currentModal === 0 &&
         search === undefined && <EventNull />}
     </>

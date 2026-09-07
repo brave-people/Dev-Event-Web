@@ -1,5 +1,4 @@
 import React, { useState, useContext, useMemo } from 'react';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
@@ -17,6 +16,19 @@ import { AuthContext } from 'context/auth';
 import { createMyEventApi } from 'lib/api/post';
 import { deleteMyEventApi } from 'lib/api/delete';
 import { useMyEvent } from 'lib/hooks/useSWR';
+import {
+  buildEventMetaDescription,
+  buildEventPlaceholderSummary,
+  getEventOgImage,
+  getEventPageTitle,
+} from 'lib/seo/eventMeta';
+import {
+  buildBreadcrumbJsonLd,
+  buildEventJsonLd,
+  serializeJsonLd,
+} from 'lib/seo/jsonLd';
+import { eventDetailUrl } from 'lib/seo/site';
+import { formatEventPeriod, getEventTimeLabel } from 'lib/utils/eventDate';
 import * as ga from 'lib/utils/gTag';
 import { mutate } from 'swr';
 import style from 'styles/EventDetail.module.scss';
@@ -24,6 +36,11 @@ import classNames from 'classnames/bind';
 import Letter from '../../../components/features/letter/Letter';
 
 const cx = classNames.bind(style);
+
+const CACHE_CONTROL_DETAIL =
+  'public, s-maxage=3600, stale-while-revalidate=86400';
+const CACHE_CONTROL_NOT_FOUND =
+  'public, s-maxage=60, stale-while-revalidate=300';
 
 interface EventDetailProps {
   eventData: Event;
@@ -34,7 +51,6 @@ const isEventDone = (endDate: string): boolean => {
 };
 
 const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
-  const router = useRouter();
   const { isLoggedIn } = useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const { pushToast } = useToast();
@@ -60,6 +76,13 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
   };
 
   const isBookmarked = eventData ? getFavoriteId(eventData.id) !== 0 : false;
+
+  const pageTitle = getEventPageTitle(eventData);
+  const description = buildEventMetaDescription(eventData);
+  const ogImage = getEventOgImage(eventData);
+  const canonical = eventDetailUrl(eventData.id);
+  const eventJsonLd = buildEventJsonLd(eventData);
+  const breadcrumbJsonLd = buildBreadcrumbJsonLd(eventData);
 
   const handleShare = async () => {
     if (!eventData) return;
@@ -134,60 +157,33 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
     }
   };
 
-  // 날짜 포맷팅 함수
-  const formatEventDate = (startDate: string, endDate: string) => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-
-    const startMonth = start.getMonth() + 1;
-    const startDay = start.getDate();
-    const startWeekday = ['일', '월', '화', '수', '목', '금', '토'][
-      start.getDay()
-    ];
-    const startTime = start.toLocaleTimeString('ko-KR', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-    const endTime = end.toLocaleTimeString('ko-KR', {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-
-    return `${startMonth}월 ${startDay}일(${startWeekday}) ${startTime}~${endTime}`;
-  };
-
   return (
     <>
       <Head>
-        <title>{eventData.title} | DEV EVENT</title>
-        <meta
-          name="description"
-          content={`${eventData.organizer}에서 주최하는 ${eventData.title}`}
-        />
-        <meta property="og:title" content={`${eventData.title} | DEV EVENT`} />
-        <meta
-          property="og:description"
-          content={`${eventData.organizer}에서 주최하는 ${eventData.title}`}
-        />
-        <meta
-          property="og:image"
-          content={eventData.cover_image_link || '/default/event-thumbnail-light.png'}
-        />
-        <meta
-          property="og:url"
-          content={`${process.env.NEXT_PUBLIC_BASE_URL}/event/detail/${eventData.id}`}
-        />
+        <title>{pageTitle}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonical} />
         <meta property="og:type" content="website" />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:url" content={canonical} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${eventData.title} | DEV EVENT`} />
-        <meta
-          name="twitter:description"
-          content={`${eventData.organizer}에서 주최하는 ${eventData.title}`}
+        <meta name="twitter:title" content={pageTitle} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImage} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: serializeJsonLd(breadcrumbJsonLd),
+          }}
         />
-        <meta
-          name="twitter:image"
-          content={eventData.cover_image_link || '/default/event-thumbnail-light.png'}
-        />
+        {eventJsonLd && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: serializeJsonLd(eventJsonLd) }}
+          />
+        )}
       </Head>
 
       <Layout>
@@ -197,7 +193,10 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
             <div className={cx('event-detail__image-section')}>
               <div className={cx('event-detail__image')}>
                 <Image
-                  src={eventData.cover_image_link || '/default/event-thumbnail-light.png'}
+                  src={
+                    eventData.cover_image_link ||
+                    '/default/event-thumbnail-light.png'
+                  }
                   alt={eventData.title}
                   layout="fill"
                   objectFit="cover"
@@ -248,12 +247,11 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
 
               <div className={cx('event-detail__meta')}>
                 <div className={cx('meta-item')}>
-                  <span className={cx('meta-label')}>일시</span>
+                  <span className={cx('meta-label')}>
+                    {getEventTimeLabel(eventData.event_time_type)}
+                  </span>
                   <span className={cx('meta-value')}>
-                    {formatEventDate(
-                      eventData.start_date_time,
-                      eventData.end_date_time
-                    )}
+                    {formatEventPeriod(eventData)}
                   </span>
                 </div>
               </div>
@@ -292,8 +290,7 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
             ) : (
               <div className={cx('content-placeholder')}>
                 <div className={cx('placeholder-message')}>
-                  <p>행사 상세 내용은 준비중입니다.</p>
-                  <p>'참여하기' 버튼을 눌러서 상세 내용을 확인해주세요.</p>
+                  <p>{buildEventPlaceholderSummary(eventData)}</p>
                 </div>
               </div>
             )}
@@ -314,12 +311,15 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
   // eventId 유효성 검사
   if (!eventId || Array.isArray(eventId)) {
+    context.res.setHeader('Cache-Control', CACHE_CONTROL_NOT_FOUND);
     return {
       notFound: true,
     };
   }
 
   try {
+    context.res.setHeader('Cache-Control', CACHE_CONTROL_DETAIL);
+
     // 서버에서 API 호출
     const response = await fetch(
       `${process.env.BASE_SERVER_URL}/front/v1/events/${eventId}`
@@ -327,6 +327,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
     if (!response.ok) {
       if (response.status === 404) {
+        context.res.setHeader('Cache-Control', CACHE_CONTROL_NOT_FOUND);
         return {
           notFound: true,
         };
@@ -337,6 +338,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const eventData = await response.json();
 
     if (!eventData) {
+      context.res.setHeader('Cache-Control', CACHE_CONTROL_NOT_FOUND);
       return {
         notFound: true,
       };
@@ -349,6 +351,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     };
   } catch (error) {
     console.error('서버사이드 데이터 페칭 오류:', error);
+    context.res.setHeader('Cache-Control', CACHE_CONTROL_NOT_FOUND);
     return {
       notFound: true,
     };

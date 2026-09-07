@@ -6,55 +6,52 @@ import LoginModal from 'components/common/modal/LoginModal';
 import FilteredEventList from 'components/events/FilteredEventList';
 import Letter from 'components/features/letter/Letter';
 import Layout from 'components/layout';
-import { AuthContext } from 'context/auth';
 import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
-import cookie from 'cookie';
 import { useScheduledEvents } from 'lib/hooks/useSWR';
 import { blockMouseScroll, isModalOpen } from 'lib/utils/windowUtil';
+import { absoluteUrl, DEFAULT_OG_IMAGE_PATH, SITE_URL } from 'lib/seo/site';
 import { EventResponse } from 'model/event';
 import style from 'styles/Home.module.scss';
-import React, { useEffect, useState, useContext, useRef } from 'react';
+import { useEffect, useState, useContext, useRef } from 'react';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 
 const cn = classNames.bind(style);
 
 type Props = {
-  isLoggedIn: boolean;
   fallbackData: EventResponse[];
 };
 
-const Search = ({ isLoggedIn, fallbackData }: Props) => {
-  const authContext = React.useContext(AuthContext);
+const toLabel = (v: string | string[] | undefined): string[] =>
+  v === undefined ? [] : Array.isArray(v) ? v : [v];
+
+const Search = ({ fallbackData }: Props) => {
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
-  const [keyword, setKeyword] = useState<string | undefined>(undefined);
-  const { jobGroupList, eventType, location, coast, search, date } =
-    useContext(EventContext);
+  const { search, date } = useContext(EventContext);
   const { modalState } = useContext(WindowContext);
   const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
+  const router = useRouter();
+  const { tag, type, location: loc, coast: coastQuery, kwd } = router.query;
+  const searchLabel =
+    [
+      ...toLabel(tag),
+      ...toLabel(type),
+      ...toLabel(loc),
+      ...toLabel(coastQuery),
+      ...toLabel(kwd),
+    ]
+      .filter(Boolean)
+      .join(', ') || '개발자';
+  const searchTitle = `${searchLabel} 행사 검색 | 데브이벤트`;
+  const searchDescription = `${searchLabel} 관련 개발자 행사를 데브이벤트에서 찾아보세요.`;
 
   const bodyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setKeyword(`
-      ${
-        jobGroupList !== undefined && jobGroupList?.length !== 0
-          ? `${jobGroupList?.join(',')}`
-          : ''
-      } 
-      ${eventType !== undefined ? `${eventType},` : ''}
-      ${location !== undefined ? `${location},` : ''} 
-      ${coast !== undefined ? `${coast},` : ''} 
-      ${search !== undefined ? `${search}` : ''}`);
-
-    if (isLoggedIn) {
-      authContext.login();
-    } else {
-      authContext.logout();
-    }
     if (modalState.currentModal !== 0) {
       document.body.style.position = 'fixed';
       document.body.style.overflow = 'hidden';
@@ -65,38 +62,23 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
       document.body.style.overflow = 'unset';
       bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
       setLoginModalIsOpen(false);
-      setKeyword(undefined);
     };
-  }, [isLoggedIn, modalState, keyword, search, date]);
+  }, [modalState, search, date]);
 
   return (
     <main ref={bodyRef} className={cn('main')}>
       <Head>
-        <title>
-          {keyword !== undefined
-            ? `${keyword} - 데브이벤트 행사 키워드 검색`
-            : '데브이벤트 행사 키워드 검색'}
-        </title>
-        <meta
-          name="description"
-          content={`${keyword} 행사, 데브이벤트에서 찾아보세요!`}
-        />
-        <meta
-          name="keywords"
-          content={`${keyword}, 데브이벤트 웹, 개발자 행사, 이벤트, 행사, 웨비나, 컨퍼런스, 해커톤, 네트워킹, IT`}
-        />
+        <title>{searchTitle}</title>
+        <meta name="robots" content="noindex, follow" />
+        <meta name="description" content={searchDescription} />
+        <link rel="canonical" href={`${SITE_URL}/events`} />
+        <meta property="og:title" content={searchTitle} />
+        <meta property="og:description" content={searchDescription} />
         <meta
           property="og:image"
-          content="/default/og_image.png"
+          content={absoluteUrl(DEFAULT_OG_IMAGE_PATH)}
         />
-        <meta
-          property="og:title"
-          content={`${keyword} - 데브이벤트 행사 키워드 검색`}
-        />
-        <meta
-          property="og:description"
-          content={`${keyword} 개발자 행사, 데브이벤트에서 찾아보세요!`}
-        />
+        <meta property="og:url" content={`${SITE_URL}/events`} />
       </Head>
       {modalState.currentModal === 0 ? (
         <>
@@ -121,30 +103,16 @@ const Search = ({ isLoggedIn, fallbackData }: Props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const cookies = context.req.headers.cookie || '';
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=300, stale-while-revalidate=3600'
+  );
   const res = await fetch(
     `${process.env.BASE_SERVER_URL}/front/v2/events/current`
   );
   const events = await res.json();
-
-  if (cookies) {
-    const parsedCookies = cookie.parse(cookies);
-    const access_token = parsedCookies.access_token;
-    const refrest_token = parsedCookies.refresh_token;
-
-    if (access_token && refrest_token) {
-      return {
-        props: {
-          isLoggedIn: true,
-          fallbackData: events,
-        },
-      };
-    }
-  }
-
   return {
     props: {
-      isLoggedIn: false,
       fallbackData: events,
     },
   };

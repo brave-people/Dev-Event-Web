@@ -7,16 +7,25 @@ import ScheduledEventList from 'components/events/ScheduledEventList';
 import CalendarView from 'components/events/calendar/CalendarView';
 import Letter from 'components/features/letter/Letter';
 import Layout from 'components/layout';
-import { AuthContext } from 'context/auth';
 import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
-import cookie from 'cookie';
 import dayjs from 'dayjs';
 import { useScheduledEvents, useMonthlyEvent } from 'lib/hooks/useSWR';
 import { blockMouseScroll, isModalOpen } from 'lib/utils/windowUtil';
+import {
+  absoluteUrl,
+  DEFAULT_OG_IMAGE_PATH,
+  SITE_TITLE,
+  SITE_URL,
+} from 'lib/seo/site';
+import {
+  ORGANIZATION_JSON_LD,
+  serializeJsonLd,
+  WEBSITE_JSON_LD,
+} from 'lib/seo/jsonLd';
 import { Event, EventResponse } from 'model/event';
 import style from 'styles/Home.module.scss';
-import React, { useEffect, useContext, useState, useRef } from 'react';
+import { useEffect, useContext, useState, useRef } from 'react';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import { GetServerSideProps } from 'next';
@@ -24,9 +33,13 @@ import Head from 'next/head';
 
 const cn = classNames.bind(style);
 
+const EVENTS_URL = `${SITE_URL}/events`;
+const EVENTS_DESCRIPTION =
+  '개발자 컨퍼런스, 웨비나, 해커톤, 네트워킹 일정을 한곳에서. 매주 새로운 개발자 행사 소식을 데브이벤트에서 가장 먼저 확인하세요.';
+const OG_IMAGE = absoluteUrl(DEFAULT_OG_IMAGE_PATH);
+
 type ListProps = {
   view: 'list';
-  isLoggedIn: boolean;
   fallbackData: EventResponse[];
 };
 
@@ -34,14 +47,12 @@ type CalendarProps = {
   view: 'calendar';
   year: number;
   month: number;
-  isLoggedIn: boolean;
   fallbackData: Event[];
 };
 
 type Props = ListProps | CalendarProps;
 
 const Events = (props: Props) => {
-  const authContext = React.useContext(AuthContext);
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const { modalState } = useContext(WindowContext);
   const { date } = useContext(EventContext);
@@ -51,18 +62,14 @@ const Events = (props: Props) => {
     props.view === 'list' ? props.fallbackData : undefined
   );
   const calendarSWR = useMonthlyEvent({
-    param: props.view === 'calendar'
-      ? { year: props.year, month: props.month }
-      : { year: 1970, month: 1 },
+    param:
+      props.view === 'calendar'
+        ? { year: props.year, month: props.month }
+        : { year: 1970, month: 1 },
     fallbackData: props.view === 'calendar' ? props.fallbackData : [],
   });
 
   useEffect(() => {
-    if (props.isLoggedIn) {
-      authContext.login();
-    } else {
-      authContext.logout();
-    }
     if (modalState.currentModal !== 0) {
       document.body.style.position = 'fixed';
       document.body.style.overflow = 'hidden';
@@ -74,30 +81,46 @@ const Events = (props: Props) => {
       bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
       setLoginModalIsOpen(false);
     };
-  }, [props.isLoggedIn, modalState, date]);
+  }, [modalState, date]);
 
   return (
     <main ref={bodyRef} className={cn('main')}>
       <Head>
-        <title>Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!</title>
-        <meta
-          name="description"
-          content="데브이벤트 웹에서 개발자 행사를 놓치지 마세요! 개발자를 위한 {웨비나, 컨퍼런스, 해커톤, 네트워킹} 소식을 알려드립니다."
-        />
+        <title>{SITE_TITLE}</title>
+        <meta name="description" content={EVENTS_DESCRIPTION} />
         <meta
           name="keywords"
           content="데브이벤트 웹, Dev Event, 데브이벤트, 개발자 행사, 용감한 친구들, 개발자, 이벤트, 행사, 웨비나, 컨퍼런스, 해커톤, 네트워킹, IT"
         />
-        <meta property="og:image" content="/default/og_image.png" />
-        <meta property="og:title" content="Dev Event - 개발자 행사는 모두 데브이벤트 웹에서!" />
-        <meta property="og:description" content="개발자를 위한 {웨비나, 컨퍼런스, 해커톤, 네트워킹} 소식을 알려드립니다." />
+        <link rel="canonical" href={EVENTS_URL} />
+        <meta property="og:title" content={SITE_TITLE} />
+        <meta property="og:description" content={EVENTS_DESCRIPTION} />
+        <meta property="og:image" content={OG_IMAGE} />
+        <meta property="og:url" content={EVENTS_URL} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={SITE_TITLE} />
+        <meta name="twitter:description" content={EVENTS_DESCRIPTION} />
+        <meta name="twitter:image" content={OG_IMAGE} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(WEBSITE_JSON_LD) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: serializeJsonLd(ORGANIZATION_JSON_LD),
+          }}
+        />
       </Head>
       {modalState.currentModal === 0 && (
         <>
           <Banner />
           <section className={cn('section')}>
             {props.view === 'list' ? (
-              <ScheduledEventList events={listSWR.scheduledEvents} isError={listSWR.isError} />
+              <ScheduledEventList
+                events={listSWR.scheduledEvents}
+                isError={listSWR.isError}
+              />
             ) : (
               <CalendarView
                 year={props.year}
@@ -110,7 +133,10 @@ const Events = (props: Props) => {
         </>
       )}
       {isModalOpen(modalState.currentModal, 1) && props.view === 'list' && (
-        <FilterSearchModal events={listSWR.scheduledEvents} isError={listSWR.isError} />
+        <FilterSearchModal
+          events={listSWR.scheduledEvents}
+          isError={listSWR.isError}
+        />
       )}
       {isModalOpen(modalState.currentModal, 2) && <FilterTagModal />}
       {isModalOpen(modalState.currentModal, 3) && <FilterDateModal />}
@@ -123,39 +149,43 @@ const Events = (props: Props) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const cookies = context.req.headers.cookie || '';
+  context.res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=300, stale-while-revalidate=3600'
+  );
   const view = context.query.view === 'calendar' ? 'calendar' : 'list';
-
-  const parsedCookies = cookies ? cookie.parse(cookies) : {};
-  const isLoggedIn = Boolean(parsedCookies.access_token && parsedCookies.refresh_token);
 
   if (view === 'calendar') {
     const now = dayjs();
     const yearParam = Number(context.query.year);
     const monthParam = Number(context.query.month);
-    const year = Number.isFinite(yearParam) && yearParam > 0 ? yearParam : now.year();
-    const month = Number.isFinite(monthParam) && monthParam >= 1 && monthParam <= 12
-      ? monthParam
-      : now.month() + 1;
-    const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/${year}/${month}`);
+    const year =
+      Number.isFinite(yearParam) && yearParam > 0 ? yearParam : now.year();
+    const month =
+      Number.isFinite(monthParam) && monthParam >= 1 && monthParam <= 12
+        ? monthParam
+        : now.month() + 1;
+    const res = await fetch(
+      `${process.env.BASE_SERVER_URL}/front/v2/events/${year}/${month}`
+    );
     const events = await res.json();
     return {
       props: {
         view: 'calendar' as const,
         year,
         month,
-        isLoggedIn,
         fallbackData: events,
       },
     };
   }
 
-  const res = await fetch(`${process.env.BASE_SERVER_URL}/front/v2/events/current`);
+  const res = await fetch(
+    `${process.env.BASE_SERVER_URL}/front/v2/events/current`
+  );
   const events = await res.json();
   return {
     props: {
       view: 'list' as const,
-      isLoggedIn,
       fallbackData: events,
     },
   };
