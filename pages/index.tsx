@@ -5,6 +5,10 @@ import type { GetServerSideProps } from 'next';
 const Index = () => null;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
+  const hasTokens = Boolean(
+    context.query.accessToken && context.query.refreshToken
+  );
+
   if (context.query.accessToken && context.query.refreshToken) {
     const { exp: access_token_expired_at } = jwt_decode(
       String(context.query.accessToken)
@@ -34,7 +38,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     redirect: {
       destination: '/events',
-      permanent: false,
+      permanent: !hasTokens,
     },
   };
 };
