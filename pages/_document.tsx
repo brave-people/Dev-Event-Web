@@ -44,6 +44,12 @@ class MyDocument extends Document {
             type="image/png"
             sizes="512x512"
           />
+          <link
+            rel="alternate"
+            type="application/rss+xml"
+            title="데브이벤트 예정 개발자 행사"
+            href="/rss.xml"
+          />
           <script
             async
             src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GA_TRACKING_ID}`}

@@ -10,30 +10,13 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import HeroStarfield from 'components/brand/HeroStarfield';
+import { ORGANIZATION_JSON_LD, serializeJsonLd } from 'lib/seo/jsonLd';
+import { SITE_URL } from 'lib/seo/site';
 import styles from 'styles/Brand.module.scss';
 
 const GITHUB_URL = 'https://github.com/brave-people/Dev-Event';
-const SITE_URL = (
-  process.env.NEXT_PUBLIC_BASE_URL || 'https://dev-event.vercel.app'
-).replace(/\/$/, '');
 const ABOUT_URL = `${SITE_URL}/about`;
 const OG_IMAGE_URL = `${SITE_URL}/default/og_image.png`;
-
-const ORGANIZATION_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Dev Event',
-  alternateName: '데브이벤트',
-  url: ABOUT_URL,
-  logo: `${SITE_URL}/default/favicon.png`,
-  description:
-    '개발자 컨퍼런스, 밋업, 해커톤과 네트워킹 일정을 큐레이션하는 개발자 행사 정보 서비스입니다.',
-  sameAs: [
-    GITHUB_URL,
-    'https://www.instagram.com/dev.event.official/',
-    'https://www.threads.com/@dev.event.official?hl=ko',
-  ],
-};
 
 const COMPANION_SERVICES = [
   {
@@ -187,7 +170,7 @@ const About = () => {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(ORGANIZATION_SCHEMA),
+            __html: serializeJsonLd(ORGANIZATION_JSON_LD),
           }}
         />
       </Head>

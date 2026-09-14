@@ -19,9 +19,10 @@ const cn = classNames.bind(style);
 type Props = {
   data: Event[];
   parentLast: boolean;
+  eagerCount?: number;
 };
 
-const List = ({ data, parentLast }: Props) => {
+const List = ({ data, parentLast, eagerCount = 0 }: Props) => {
   const authContext = React.useContext(AuthContext);
   const { pushToast } = useToast();
   const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
@@ -95,9 +96,7 @@ const List = ({ data, parentLast }: Props) => {
   };
 
   const handleFavorite = (isRemoving: boolean) => {
-    pushToast(
-      isRemoving ? '북마크에서 제거되었어요' : '북마크에 추가되었어요'
-    );
+    pushToast(isRemoving ? '북마크에서 제거되었어요' : '북마크에 추가되었어요');
   };
 
   const createMyEvent = async ({ eventId }: { eventId: string }) => {
@@ -157,6 +156,7 @@ const List = ({ data, parentLast }: Props) => {
             key={index}
             childLast={isLast}
             parentLast={parentLast}
+            priority={index < eagerCount}
             data={item}
             isEventNew={() => {
               return checkEventNew({ createdDate: item.create_date_time });

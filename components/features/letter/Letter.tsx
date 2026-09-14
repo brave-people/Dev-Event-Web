@@ -18,21 +18,24 @@ const Letter = () => {
               소식을 받아보세요
             </div>
             <div className={cn('letter__desc')}>
-              일요일 저녁 8시 개발자 행사를{' '}
-              <br className={cn('break__line')} />
+              일요일 저녁 8시 개발자 행사를 <br className={cn('break__line')} />
               메일로 보내드려요
             </div>
           </div>
           <div className={cn('image__container')}>
             <Image
               src="/icon/letter_icon.svg"
-              alt="letter icon"
+              alt=""
               layout="fill"
-              priority={true}
+              unoptimized
             />
           </div>
           <Link href={'https://github.com/brave-people/Dev-Event-Subscribe'}>
-            <a className={cn('email_button_container')} target="_blank">
+            <a
+              className={cn('email_button_container')}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <EmailSubscribeButton />
             </a>
           </Link>

@@ -17,15 +17,19 @@ const Footer = () => {
         </div>
         <div className={cn('footer__copyright')}>
           ⓒ 2022.{' '}
-          <Link href={'https://github.com/brave-people/dev-Event'}>
+          <a
+            href="https://github.com/brave-people/Dev-Event"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             용감한 친구들 with 남송리 삼번지
-          </Link>{' '}
+          </a>{' '}
           all rights reserved.
         </div>
       </div>
       <div className={cn('footer__row')}>
         <Link href={'https://github.com/brave-people/Dev-Event'}>
-          <a target="_blank">
+          <a target="_blank" rel="noopener noreferrer">
             <GithubIcon className="github__icon" />
           </a>
         </Link>
@@ -34,7 +38,7 @@ const Footer = () => {
             'https://store.whale.naver.com/detail/dfhagfnmecmkhdoeggeokfmmkbpiahek'
           }
         >
-          <a target="_blank">
+          <a target="_blank" rel="noopener noreferrer">
             <Image
               src={'/icon/whale.png'}
               alt="naver whale extension"
