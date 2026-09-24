@@ -10,6 +10,13 @@ export const escapeXml = (s: string): string =>
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
 
+/**
+ * RSS <description>은 리더가 HTML로 해석한다. 평문의 `<`, `>`, `&`를 HTML 엔티티로 바꾼 뒤
+ * escapeXml을 한 번 더 적용해야 `<AI Agent>` 같은 제목이 태그로 삼켜지지 않는다.
+ */
+const escapeHtmlText = (s: string): string =>
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
 /** /front/v2/events/current 응답(월 그룹 배열)을 행사 배열로 평탄화. id 중복 제거. */
 export const flattenEvents = (res: EventResponse[]): Event[] => {
   const seen = new Set<string>();
@@ -74,9 +81,12 @@ export const buildRssXml = (events: Event[]): string => {
         `<guid isPermaLink="true">${url}</guid>` +
         pubDateTag +
         `<description>${escapeXml(
-          buildEventMetaDescription(e)
+          escapeHtmlText(buildEventMetaDescription(e))
         )}</description>` +
-        (e.organizer ? `<author>${escapeXml(e.organizer)}</author>` : '') +
+        // RSS 2.0 <author>는 이메일 주소 전용이라 주최자명은 dc:creator로 내보낸다.
+        (e.organizer
+          ? `<dc:creator>${escapeXml(e.organizer)}</dc:creator>`
+          : '') +
         (e.tags ?? [])
           .map((t) => `<category>${escapeXml(t.tag_name)}</category>`)
           .join('') +
@@ -87,7 +97,7 @@ export const buildRssXml = (events: Event[]): string => {
 
   return (
     '<?xml version="1.0" encoding="UTF-8"?>' +
-    '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">' +
+    '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">' +
     '<channel>' +
     `<title>${escapeXml(SITE_NAME)} - 예정 개발자 행사</title>` +
     `<link>${SITE_URL}/events</link>` +
