@@ -97,4 +97,47 @@ describe('buildRssXml', () => {
     expect(xml).not.toContain('<pubDate>');
     expect(xml).not.toContain('Invalid Date');
   });
+
+  // W3C Feed Validator 기준 (#155). 문자열 비교가 아니라 실제 XML·HTML 파서로 해석해 검증한다.
+  const DC_NS = 'http://purl.org/dc/elements/1.1/';
+
+  const parseXml = (xml: string): Document => {
+    const doc = new DOMParser().parseFromString(xml, 'application/xml');
+    const error = doc.getElementsByTagName('parsererror')[0];
+    if (error) throw new Error(`XML 파싱 실패: ${error.textContent}`);
+    return doc;
+  };
+
+  it('주최자는 dc:creator로 내보내고, 이메일 전용인 author는 쓰지 않는다 (InvalidContact)', () => {
+    const doc = parseXml(
+      buildRssXml([
+        {
+          ...ev('3353', '쿤텍 AI 보안 세미나'),
+          organizer: '한빛미디어 & 파트너스',
+        },
+      ])
+    );
+    const item = doc.getElementsByTagName('item')[0];
+
+    expect(item.getElementsByTagNameNS(DC_NS, 'creator')[0]?.textContent).toBe(
+      '한빛미디어 & 파트너스'
+    );
+    expect(item.getElementsByTagName('author')).toHaveLength(0);
+  });
+
+  it('description을 HTML로 해석해도 꺾쇠가 든 제목이 그대로 보인다 (NotHtml)', () => {
+    const title = '<AI Agent> 실전 & <클로드 코드 마스터> 세미나';
+    const doc = parseXml(buildRssXml([ev('3354', title)]));
+    const item = doc.getElementsByTagName('item')[0];
+    const descriptionHtml =
+      item.getElementsByTagName('description')[0].textContent ?? '';
+
+    const rendered = new DOMParser().parseFromString(
+      descriptionHtml,
+      'text/html'
+    ).body;
+
+    expect(rendered.textContent).toContain(title);
+    expect(rendered.children).toHaveLength(0);
+  });
 });
