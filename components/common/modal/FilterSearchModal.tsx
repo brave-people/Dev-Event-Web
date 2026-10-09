@@ -52,8 +52,7 @@ function FilterSearchModal({ events, isError }: Props) {
             jobGroupList,
             eventType,
             location,
-            coast,
-            search
+            coast
           )
         );
         router.push(
@@ -63,8 +62,7 @@ function FilterSearchModal({ events, isError }: Props) {
             jobGroupList,
             eventType,
             location,
-            coast,
-            search
+            coast
           )
         );
       }

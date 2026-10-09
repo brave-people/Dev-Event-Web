@@ -27,7 +27,7 @@ npx tsc --noEmit    # 타입 체크만 (빌드 없이)
 ### 라우팅 & 데이터 레이어
 - **Pages Router** (`pages/`) — 모든 페이지는 `getServerSideProps`로 SSR 렌더링. 클라이언트 라우팅은 `router.push`(SSR을 다시 돌려야 하면 `shallow: false`). `/calender` 라우트는 `/events?view=calendar&year=&month=`로 307 리디렉트만 함 (예전 북마크 호환).
 - **외부 API**가 데이터의 진실 근원. `${process.env.BASE_SERVER_URL}/front/v2/...` 에서 받아옵니다. Next.js의 `pages/api/*`는 auth/세션/쿠키용 얇은 헬퍼로만 쓰이며, 데이터 레이어가 아닙니다.
-- **데이터 페치**: SWR 훅들이 `lib/hooks/useSWR.tsx`에 있음 (`useScheduledEvents`, `useMonthlyEvent`, `useMyEvent`, `useTags`, `useUser`). 각 훅은 `fallbackData`를 받아 SSR로 받아온 데이터를 즉시 hydrate하고 이후 SWR이 revalidate. **새 훅을 추가할 때 이 패턴을 따르세요** — 컴포넌트 내부에서 `fetch`를 직접 호출하지 말 것.
+- **데이터 페치**: SWR 훅들이 `lib/hooks/useSWR.tsx`에 있음 (`useScheduledEvents`, `useMonthlyEvent`, `useMyEvent`, `useUser`). 각 훅은 `fallbackData`를 받아 SSR로 받아온 데이터를 즉시 hydrate하고 이후 SWR이 revalidate. **새 훅을 추가할 때 이 패턴을 따르세요** — 컴포넌트 내부에서 `fetch`를 직접 호출하지 말 것.
 - **HTTP**: `lib/api/`에 axios 인스턴스 — 비인증 콜은 `axiosInstance`, 인증 콜은 `axiosInstanceWithToken`. 에러 처리도 같은 디렉터리.
 
 ### 상태 관리 (Context)

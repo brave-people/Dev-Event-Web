@@ -44,7 +44,7 @@ function MonthlyEventList({ events, date }: Props) {
           <List data={events} parentLast={true} />
         </div>
       ) : (
-        <EventNull />
+        <EventNull events={events} />
       )}
     </>
   );

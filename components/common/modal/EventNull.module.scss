@@ -38,10 +38,20 @@
       margin-bottom: 15px;
     }
 
+    // 직군 칩 줄(FilterByJobGroup)과 같은 간격
     .tag__container {
       display: flex;
-      justify-content: space-around;
+      flex-wrap: wrap;
+      justify-content: center;
       align-items: center;
+      gap: 8px;
+
+      @include tablet {
+        gap: 6px;
+      }
+      @include mobile {
+        gap: 6px;
+      }
     }
   }
 }
