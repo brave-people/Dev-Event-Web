@@ -1,33 +1,43 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 import Image from 'next/image';
 import classNames from 'classnames/bind';
 import style from 'components/common/modal/EventNull.module.scss';
+import { Event } from 'model/event';
 import { TagResponse } from 'model/tag';
-import { getRandomTag } from 'lib/utils/tagUtil';
+import { getRandomTag, getRecommendableTags } from 'lib/utils/tagUtil';
 import { EventContext } from 'context/event';
 import JobGroupTag from 'components/common/tag/JobGroupTag';
-import { useTags } from 'lib/hooks/useSWR';
 
 const cn = classNames.bind(style);
 
-function EventNull() {
+type Props = {
+  events: Event[];
+};
+
+function EventNull({ events }: Props) {
   const [randomTags, setRandomTags] = useState<TagResponse[] | undefined>(
     undefined
   );
   const { jobGroupList, eventType, location, coast } = useContext(EventContext);
-  const { tags } = useTags();
+  const candidates = useMemo(
+    () =>
+      getRecommendableTags(
+        events,
+        jobGroupList?.join(', '),
+        eventType,
+        location,
+        coast
+      ),
+    [events, jobGroupList, eventType, location, coast]
+  );
 
+  // 무작위 선택은 서버 렌더 결과와 달라지지 않도록 마운트 뒤에 한다
   useEffect(() => {
-    if (tags !== undefined) {
-      const context = `${jobGroupList?.join(', ')}, ${
-        eventType ? eventType : ''
-      }, ${location ? location : ''}, ${coast ? coast : ''}`;
-      setRandomTags(getRandomTag(tags, context));
-    }
+    setRandomTags(getRandomTag(candidates));
     return () => {
       setRandomTags(undefined);
     };
-  }, []);
+  }, [candidates]);
 
   return (
     <section className={cn('section__list')}>
@@ -40,7 +50,9 @@ function EventNull() {
           width={58}
           height={58}
         />
-        <div className={cn('desc')}>추천태그로 검색해보세요</div>
+        {candidates.length !== 0 && (
+          <div className={cn('desc')}>추천태그로 검색해보세요</div>
+        )}
         {randomTags && randomTags.length !== 0 && (
           <div className={cn('tag__container')}>
             {randomTags.map((tag) => {

@@ -2,7 +2,6 @@ import {
   getEventsApi,
   getMyEventApi,
   getMonthlyEventApi,
-  getTagsApi,
   getUserApi,
 } from 'lib/api/handler';
 import { Calender } from 'model/calender';
@@ -72,20 +71,6 @@ const useMyEvent = (param: MyEventGetProps, isLoginIn: boolean) => {
   };
 };
 
-const useTags = () => {
-  const { data: tags, error } = useSWR(`/front/v1/events/tags`, getTagsApi, {
-    shouldRetryOnError: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: true,
-    revalidateIfStale: false,
-  });
-  return {
-    tags: tags,
-    isLoading: !error && !tags,
-    isError: error,
-  };
-};
-
 const useUser = () => {
   const { data: user, error } = useSWR(`/front/v1/users/profile`, getUserApi, {
     shouldRetryOnError: false,
@@ -100,4 +85,4 @@ const useUser = () => {
   };
 };
 
-export { useScheduledEvents, useMonthlyEvent, useTags, useUser, useMyEvent };
+export { useScheduledEvents, useMonthlyEvent, useUser, useMyEvent };

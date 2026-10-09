@@ -21,7 +21,6 @@ function JobGroupTag({ tagName, type, parent }: Prop) {
     eventType,
     location,
     coast,
-    search,
     date,
     url,
     updateJobGroupList,
@@ -71,8 +70,7 @@ function JobGroupTag({ tagName, type, parent }: Prop) {
               jobGroupList,
               eventType,
               location,
-              coast,
-              search
+              coast
             )}`
           );
           handleInit();

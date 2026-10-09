@@ -83,6 +83,12 @@ function ItemList({
   );
   const eventCount = searchRes.length;
 
+  // 결과가 없을 때 추천 태그를 고르는 데 쓰는 필터 전 전체 행사
+  const allEvents = useMemo(
+    () => (events ?? []).filter(Boolean).flatMap((group) => group.dev_event),
+    [events]
+  );
+
   if (isError) {
     return (
       <div className={cn('null-container')}>
@@ -103,7 +109,7 @@ function ItemList({
             {searchRes.length !== 0 ? (
               <List data={searchRes} parentLast={true} eagerCount={4} />
             ) : (
-              <EventNull />
+              <EventNull events={allEvents} />
             )}
           </div>
         </>
@@ -118,7 +124,7 @@ function ItemList({
             {searchRes.length !== 0 ? (
               <List data={searchRes} parentLast={true} eagerCount={4} />
             ) : (
-              <EventNull />
+              <EventNull events={allEvents} />
             )}
           </div>
         </>
@@ -139,11 +145,11 @@ function ItemList({
             </div>
           ) : null
         )}
-      {!search && !events && <EventNull />}
+      {!search && !events && <EventNull events={allEvents} />}
       {/* 행사 조회 결과가 없을떄 */}
       {eventCount === 0 &&
         modalState.currentModal === 0 &&
-        search === undefined && <EventNull />}
+        search === undefined && <EventNull events={allEvents} />}
     </>
   );
 }

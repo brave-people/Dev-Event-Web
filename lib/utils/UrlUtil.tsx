@@ -1,23 +1,34 @@
 import { UrlContext } from 'types/Context';
 import { handleUndefined } from 'lib/utils/eventUtil';
 
+// 'kwd=typescript'처럼 값에 다른 키 이름(type)이 들어 있어도 키로 오인하지 않도록 '=' 앞부분만 비교한다
+const getParamKey = (segment: string) => segment.split('=')[0];
+
+// 잘못된 % 인코딩(예: '50%')이 들어와도 화면이 깨지지 않도록 받은 문자열을 그대로 쓴다
+export const safeDecode = (value: string) => {
+  try {
+    return decodeURIComponent(value);
+  } catch {
+    return value;
+  }
+};
+
 export const initUrl = (
   url: string,
   type: string,
   jobGroupList: string[] | undefined,
   eventType: string | undefined,
   location: string | undefined,
-  coast: string | undefined,
-  search: string | undefined
+  coast: string | undefined
 ) => {
   if (handleUndefined(jobGroupList?.join(', '), eventType, location, coast))
     return '/events';
-  if (url.includes(type) === false) {
+  if (getKey(url, type) === undefined) {
     return url;
   } else {
     const sepUrls = url.split(/[?&]/).filter((sepUrl) => {
       return (
-        sepUrl.includes(type) === false && sepUrl.includes('/search') === false
+        getParamKey(sepUrl) !== type && sepUrl.includes('/search') === false
       );
     });
     const len = sepUrls.length;
@@ -36,14 +47,14 @@ export const parseUrl = (
   option: string,
   jobGroupList: string[] | undefined
 ) => {
+  // 검색어에는 &·#·%·+ 같은 문자가 들어올 수 있어 인코딩해서 넣는다
+  const paramValue = type === 'kwd' ? encodeURIComponent(option) : option;
   if (url.includes('/event') || url.includes('/calender'))
-    return `/search?${type}=${option}`;
-  if (url.includes(`${type}`) && type !== 'tag') {
-    const key = getKey(url, type);
-    if (key !== undefined) {
-      return url.replace(key, `${type}=${option}`);
-    }
-  } else if (url.includes(`${type}`) && type === 'tag') {
+    return `/search?${type}=${paramValue}`;
+  const key = getKey(url, type);
+  if (key !== undefined && type !== 'tag') {
+    return url.replace(key, `${type}=${paramValue}`);
+  } else if (key !== undefined && type === 'tag') {
     const value = getValue(option, jobGroupList);
     if (value === true) {
       const newUrl = deleteUrl(jobGroupList, option);
@@ -75,13 +86,13 @@ export const parseUrl = (
         return `/search?tag=${newUrl.join('&tag=')}&${currentUrl.join('&')}`;
     }
   }
-  return `${url}&${type}=${option}`;
+  return `${url}&${type}=${paramValue}`;
 };
 
 const getKey = (url: string, type: string) => {
   const newUrl: string[] = url.split(/[?&]/);
   for (let i = 0; i < newUrl.length; i++) {
-    if (newUrl[i].includes(`${type}`)) {
+    if (getParamKey(newUrl[i]) === type) {
       return newUrl[i];
     }
   }
@@ -100,7 +111,7 @@ export const getValue = (
 
 export const getCurrentUrl = (url: string): string[] | undefined => {
   const currentUrl = url.split(/[?&]/).filter((item) => {
-    return !item.includes('tag') && !item.includes('/search');
+    return getParamKey(item) !== 'tag' && !item.includes('/search');
   });
   return currentUrl;
 };
@@ -113,7 +124,7 @@ const deleteUrl = (jobGroupList: string[] | undefined, option: string) => {
 };
 
 export const reflactUrlContext = (url: string): UrlContext => {
-  let result: UrlContext = {
+  const result: UrlContext = {
     tagList: [],
     type: undefined,
     location: undefined,
@@ -122,15 +133,16 @@ export const reflactUrlContext = (url: string): UrlContext => {
   };
   const context = url.split(/[?&]/);
   for (let i = 0; i < context.length; i++) {
-    if (context[i].includes('tag')) {
+    const key = getParamKey(context[i]);
+    if (key === 'tag') {
       result.tagList.push(context[i].split('=')[1]);
-    } else if (context[i].includes('type')) {
+    } else if (key === 'type') {
       result.type = context[i].split('=')[1];
-    } else if (context[i].includes('location')) {
+    } else if (key === 'location') {
       result.location = context[i].split('=')[1];
-    } else if (context[i].includes('coast')) {
+    } else if (key === 'coast') {
       result.coast = context[i].split('=')[1];
-    } else if (context[i].includes('kwd')) {
+    } else if (key === 'kwd') {
       result.kwd = context[i].split('=')[1];
     }
   }

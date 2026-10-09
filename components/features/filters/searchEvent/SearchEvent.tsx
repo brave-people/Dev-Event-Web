@@ -3,11 +3,12 @@ import style from 'components/features/filters/searchEvent/SearchEvent.module.sc
 import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
 import * as ga from 'lib/utils/gTag';
+import { isEnterKey } from 'lib/utils/searchUtil';
 import { UrlContext } from 'types/Context';
 import React, { useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { useRouter } from 'next/router';
-import { initUrl, parseUrl } from '../../../../lib/utils/UrlUtil';
+import { initUrl, parseUrl, safeDecode } from '../../../../lib/utils/UrlUtil';
 
 const cn = classNames.bind(style);
 
@@ -23,7 +24,6 @@ function SearchEvent({ context }: Props) {
     eventType,
     location,
     coast,
-    search,
     handleDate,
     handleSearch,
   } = useContext(EventContext);
@@ -31,17 +31,19 @@ function SearchEvent({ context }: Props) {
   const router = useRouter();
 
   const submitInput = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.code == 'Enter') {
-      if (input) {
+    if (isEnterKey(event)) {
+      // 공백만 입력했으면 검색하지 않는다
+      const keyword = input?.trim();
+      if (keyword) {
         ga.event({
           action: 'web_event_키워드검색엔터클릭',
           event_category: 'web_event',
           event_label: '검색',
         });
         if (date !== undefined) handleDate(undefined);
-        handleSearch(input);
+        handleSearch(keyword);
         router.push(
-          `${parseUrl(`${router.asPath}`, 'kwd', input, jobGroupList)}`,
+          `${parseUrl(`${router.asPath}`, 'kwd', keyword, jobGroupList)}`,
           undefined,
           { scroll: false }
         );
@@ -72,8 +74,7 @@ function SearchEvent({ context }: Props) {
         jobGroupList,
         eventType,
         location,
-        coast,
-        undefined
+        coast
       ),
       undefined,
       {
@@ -86,7 +87,7 @@ function SearchEvent({ context }: Props) {
     if (context?.kwd === undefined) {
       handleSearch(undefined);
     } else if (context.kwd !== undefined) {
-      const decode = decodeURIComponent(context.kwd);
+      const decode = safeDecode(context.kwd);
       handleSearch(decode);
     }
   }, [context]);
@@ -109,7 +110,7 @@ function SearchEvent({ context }: Props) {
       className={cn('container')}
     >
       <BasicInput
-        label={decodeURIComponent(context?.kwd || '') || '행사 검색하기'}
+        label={safeDecode(context?.kwd || '') || '행사 검색하기'}
         size="large"
         icon="search"
         iconStyle="searchEvent"

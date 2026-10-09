@@ -39,7 +39,6 @@ function BasicDropdown({
     eventType,
     location,
     coast,
-    search,
     date,
     url,
     handleDate,
@@ -140,8 +139,7 @@ function BasicDropdown({
                           jobGroupList,
                           eventType,
                           location,
-                          coast,
-                          search
+                          coast
                         )}`
                       );
                     } else {
