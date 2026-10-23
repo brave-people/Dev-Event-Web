@@ -163,3 +163,123 @@ describe('buildGoogleCalendarUrl', () => {
     expect(url).toContain('dates=20260518T010000Z%2F20260518T090000Z');
   });
 });
+
+// 등록 스크립트·어드민 에디터가 description에 넣는 본문 이미지와 같은 모양 (주소 106자)
+const detailImage = (alt: string, seq = 1) =>
+  `![${alt}](https://brave-people-3.s3.ap-northeast-2.amazonaws.com/DEV_EVENT_DETAIL/2026-10-09-14-30-120${seq}-1a2b3c4${seq}.jpg)`;
+
+describe('캘린더 설명의 본문 이미지', () => {
+  const BASE_URL = 'https://dev-event.vercel.app';
+
+  const detailsOf = (description: string, baseUrl = '') =>
+    new URL(
+      buildGoogleCalendarUrl(makeEvent({ description }), baseUrl)
+    ).searchParams.get('details');
+
+  // 등록 스크립트 형식: 맨 위에 이미지마다 빈 줄로 띄운다. 한 줄 약 130자라 4장이면 500자를 넘는다.
+  const leadingImages = [
+    detailImage('행사 개요와 일정을 정리한 안내 포스터', 1),
+    detailImage('세션별 발표 시간과 연사를 정리한 시간표', 2),
+    detailImage('행사장 위치와 찾아오는 길을 그린 약도', 3),
+    detailImage('참가 신청 방법과 경품 안내를 담은 이미지', 4),
+  ];
+
+  it('맨 위에 이미지가 여러 장 있어도 요약이 들어간다', () => {
+    const description = [
+      ...leadingImages,
+      'AI 에이전트를 실무에 도입한 사례를 나누는 오프라인 밋업입니다.',
+      '## 이런 분께 추천해요\n- LLM 서비스를 운영하는 백엔드 개발자',
+    ].join('\n\n');
+
+    expect(detailsOf(description)).toBe(
+      'AI 에이전트를 실무에 도입한 사례를 나누는 오프라인 밋업입니다.\n\n' +
+        '## 이런 분께 추천해요\n- LLM 서비스를 운영하는 백엔드 개발자'
+    );
+  });
+
+  it('빈 줄 없이 한 줄에 하나씩 넣은 이미지도 지운다', () => {
+    // 어드민 에디터 형식: 이미지마다 줄바꿈 하나, 바로 다음 줄에 글이 이어진다
+    const description = [
+      detailImage('포스터.png', 1),
+      detailImage('타임테이블.png', 2),
+      '프론트엔드 개발자를 위한 네트워킹 밋업입니다.',
+      '저녁 식사가 제공됩니다.',
+    ].join('\n');
+
+    expect(detailsOf(description)).toBe(
+      '프론트엔드 개발자를 위한 네트워킹 밋업입니다.\n저녁 식사가 제공됩니다.'
+    );
+  });
+
+  it('글 사이에 섞인 이미지도 지운다', () => {
+    const badge = detailImage('무료 배지', 1);
+    const map = detailImage('약도.png', 2);
+    const description = [
+      `참가비는 무료입니다. ${badge} 선착순 100명까지 받습니다.`,
+      `오시는 길 ${map}`,
+      '주차는 지원하지 않습니다.',
+    ].join('\n');
+
+    expect(detailsOf(description)).toBe(
+      '참가비는 무료입니다. 선착순 100명까지 받습니다.\n' +
+        '오시는 길\n' +
+        '주차는 지원하지 않습니다.'
+    );
+  });
+
+  it('이미지를 지운 자리에 빈 줄을 남기지 않는다', () => {
+    const description = [
+      '첫 문단입니다.',
+      '',
+      detailImage('행사 사진', 1),
+      '',
+      '둘째 문단입니다.',
+      `${detailImage('구분선.png', 2)} ${detailImage('구분선.png', 3)}`,
+      '셋째 줄입니다.',
+    ].join('\n');
+
+    expect(detailsOf(description)).toBe(
+      '첫 문단입니다.\n\n둘째 문단입니다.\n셋째 줄입니다.'
+    );
+  });
+
+  it('설명에 대괄호나 역슬래시가 들어간 이미지도 지운다', () => {
+    const description = [
+      // 등록 스크립트는 설명 안의 [ ] \ 를 이스케이프한다
+      detailImage('세션 \\[1부\\] 시간표', 1),
+      detailImage('경로 C:\\\\', 2),
+      // 어드민 에디터는 파일명을 그대로 넣는다
+      detailImage('[포스터]행사 안내.png', 3),
+      '본문입니다.',
+    ].join('\n');
+
+    expect(detailsOf(description)).toBe('본문입니다.');
+  });
+
+  it('본문이 이미지뿐이면 자세히 보기 링크만 남는다', () => {
+    const description = leadingImages.join('\n\n');
+
+    expect(detailsOf(description, BASE_URL)).toBe(
+      '자세히 보기: https://dev-event.vercel.app/event/detail/123'
+    );
+  });
+
+  it('500자 제한은 이미지를 뺀 글에 적용한다', () => {
+    const description = [...leadingImages, '가'.repeat(600)].join('\n\n');
+
+    expect(detailsOf(description)).toBe('가'.repeat(500));
+  });
+
+  it('ICS DESCRIPTION에도 이미지를 뺀 설명이 들어간다', () => {
+    const event = makeEvent({
+      description: [...leadingImages, '요약입니다.'].join('\n\n'),
+    });
+    const descriptionLine = buildIcsForEvent(event, BASE_URL)
+      .split('\r\n')
+      .find((line) => line.startsWith('DESCRIPTION:'));
+
+    expect(descriptionLine).toBe(
+      'DESCRIPTION:요약입니다.\\n\\n자세히 보기: https://dev-event.vercel.app/event/detail/123'
+    );
+  });
+});
