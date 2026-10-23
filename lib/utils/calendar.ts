@@ -41,9 +41,32 @@ export const isAllDayEvent = (
 ): boolean =>
   event.use_start_date_time_yn === 'N' || event.use_end_date_time_yn === 'N';
 
+// ![설명](주소). 설명 안의 대괄호는 \[ \]로 이스케이프한 것(등록 스크립트)과
+// 짝이 맞는 한 겹(어드민 에디터가 그대로 넣는 파일명)까지 받는다.
+const MARKDOWN_IMAGE =
+  /!\[(?:[^[\]\\\n]|\\.|\[(?:[^[\]\\\n]|\\.)*\])*\]\([^)\n]*\)/;
+// 이미지만 있는 줄은 줄바꿈까지 지운다. 줄바꿈을 남기면 그 자리가 빈 줄이 된다.
+const IMAGE_ONLY_LINE = new RegExp(
+  `^[ \\t]*(?:${MARKDOWN_IMAGE.source}[ \\t]*)+\\n`,
+  'gm'
+);
+// 글 사이에 섞인 이미지는 앞 공백과 함께 지운다.
+const INLINE_IMAGE = new RegExp(`[ \\t]*${MARKDOWN_IMAGE.source}`, 'g');
+
+// 캘린더 설명란은 마크다운을 그리지 않는다. 이미지 문법과 S3 주소가 그대로 보이고
+// 500자 안에서 요약 자리를 차지하므로, 자르기 전에 지운다.
+const stripMarkdownImages = (markdown: string): string =>
+  markdown
+    .replace(IMAGE_ONLY_LINE, '')
+    .replace(INLINE_IMAGE, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+
 const buildDetails = (event: Event, baseUrl: string): string => {
   const link = baseUrl ? `${baseUrl}/event/detail/${event.id}` : '';
-  const desc = event.description ? event.description.slice(0, 500) : '';
+  const desc = event.description
+    ? stripMarkdownImages(event.description).slice(0, 500)
+    : '';
   return [desc, link ? `자세히 보기: ${link}` : ''].filter(Boolean).join('\n\n');
 };
 
