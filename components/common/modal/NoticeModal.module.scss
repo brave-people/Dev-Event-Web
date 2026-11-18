@@ -1,88 +1,79 @@
-@import '~styles/_mixin.scss';
 @import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
 
 .notice {
-  position: static;
-  height: 48px;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  animation: appearIn;
-  animation-duration: 0.5s;
-  animation-timing-function: linear;
+  position: relative;
+  z-index: 30;
+  background: var(--de-holo);
+  background-size: 200% 100%;
+  color: var(--de-holo-ink);
+  font-size: 14px;
+  animation: holo 9s linear infinite;
 
   &__inner {
-    width: $laptop_max_width;
-    margin: 0 auto;
+    position: static;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    max-width: 1120px;
+    height: 48px;
+    margin: 0 auto;
+    padding: 0 56px;
+  }
 
-    .notice__content {
-      display: flex;
-      align-items: center;
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  &__title {
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .icon {
+    position: absolute;
+    right: max(14px, calc(50% - 548px));
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: inherit;
+    opacity: 0.6;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 1;
+      background: rgba(127, 127, 127, 0.18);
+    }
+  }
+
+  @include de-mobile {
+    font-size: 13px;
+
+    &__inner {
+      padding: 0 44px 0 16px;
       justify-content: flex-start;
-
-      .notice__title {
-        font-size: 16px;
-        font-weight: 700;
-        letter-spacing: -0.012rem;
-        color: var(--ktb-tech-blue);
-        margin-right: 4px;
-      }
     }
 
     .icon {
-      width: 30px;
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-
-      &:hover {
-        background-color: var(--vapor-gray-100);
-        cursor: pointer;
-      }
-    }
-  }
-}
-
-@include tablet {
-  .notice {
-    &__inner {
-      padding: 0 $tablet_padding;
-      width: 100%;
-      .notice__content {
-        .notice__title {
-          font-size: 14px;
-        }
-      }
-    }
-  }
-}
-
-@include mobile {
-  .notice {
-    &__inner {
-      padding: 0 $mobile_padding;
-      width: 100%;
-      .notice__content {
-        .notice__title {
-          font-size: 12px;
-        }
-      }
+      right: 8px;
     }
   }
 
-  // 너무 작을 경우 텍스트가 3줄에 걸쳐서 나오므로 보이지 않도록 수정
-  @media (max-width: 195px) {
-    .notice {
-      display: none;
-    }
+  @include de-reduced-motion {
+    animation: none;
   }
 }
 
@@ -90,15 +81,13 @@
   display: none;
 }
 
-.notice--light {
-  background-color: var(--notice-bg);
+:global(html[data-notice='off']) .notice {
+  display: none;
 }
 
-@keyframes appearIn {
-  0% {
-    transform: translateY(-48px);
-  }
-  100% {
-    transform: translateY(0);
+// :global(de-holo)는 Sass가 거부해 같은 keyframes를 모듈 안에 다시 정의한다.
+@keyframes holo {
+  to {
+    background-position: -200% 0;
   }
 }

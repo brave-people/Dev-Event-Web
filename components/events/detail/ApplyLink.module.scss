@@ -1,0 +1,38 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.link {
+  @include de-press;
+  @include de-focus-ring;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  height: var(--de-apply-height, 54px);
+  border-radius: 14px;
+  background: var(--de-blue-fill);
+  color: #fff;
+  font-size: 16.5px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.off {
+  background: var(--de-line);
+  color: var(--de-hint);
+  cursor: default;
+
+  &:active {
+    transform: none;
+  }
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

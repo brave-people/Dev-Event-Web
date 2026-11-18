@@ -1,0 +1,389 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+// 달력 칸의 색 단계. HeatLegend 풍선도 이 변수를 쓴다(풍선이 .month 안에 그려진다)
+.month {
+  --heat-1: #e3ebff;
+  --heat-2: #b9ccff;
+  --heat-3: #7b9bff;
+  --heat-4: var(--de-blue);
+  --heat-num: #3f5fc4;
+  --heat-on: #fff;
+
+  :global(html[data-theme='dark']) & {
+    --heat-1: #1a2750;
+    --heat-2: #24388a;
+    --heat-3: #3558d6;
+    --heat-4: var(--de-blue);
+    --heat-num: #9db6ff;
+    --heat-on: #0b1020;
+  }
+}
+
+.head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  margin-bottom: 12px;
+
+  // MonthPicker.module.scss 의 top: 48px 보다 앞서게 클래스 둘로 적는다
+  .picker {
+    top: 44px;
+  }
+}
+
+.anchor {
+  display: contents;
+}
+
+.title {
+  @include de-button-reset;
+  @include de-focus-ring;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: -6px;
+  padding: 4px 4px 4px 6px;
+  border-radius: 10px;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+
+  &:hover,
+  &.is-open {
+    background: var(--de-hover);
+  }
+
+  svg {
+    transform: rotate(90deg);
+    color: var(--de-hint);
+  }
+
+  @include de-mobile {
+    font-size: 18px;
+  }
+
+  @include de-narrow {
+    font-size: 17px;
+  }
+}
+
+.info {
+  @include de-button-reset;
+  margin-left: -2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--de-hint);
+
+  &:hover,
+  &.is-open {
+    background: var(--de-surface);
+    color: var(--de-ink);
+  }
+
+  &:focus-visible {
+    outline: 2.5px solid var(--de-blue);
+    outline-offset: 2px;
+  }
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: 4px;
+}
+
+.arrow {
+  @include de-button-reset;
+  @include de-focus-ring;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--de-line);
+  display: grid;
+  place-items: center;
+  color: var(--de-sub);
+
+  &:hover {
+    background: var(--de-hover);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+    background: none;
+  }
+
+  @include de-narrow {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.today {
+  @include de-button-reset;
+  @include de-focus-ring;
+  @include de-press;
+  flex: none;
+  height: 32px;
+  padding: 0 11px;
+  border-radius: 999px;
+  border: 1px solid var(--de-line);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--de-sub);
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--de-hover);
+  }
+
+  @include de-narrow {
+    padding: 0 9px;
+  }
+}
+
+// 달력 격자. 표 요소의 display 를 바꾸므로 역할은 마크업에 모두 적어 두었다
+.grid {
+  display: block;
+  width: 100%;
+  border-collapse: separate;
+  transition: opacity 0.15s;
+
+  @include de-reduced-motion {
+    transition: none;
+  }
+
+  thead,
+  tbody {
+    display: block;
+  }
+
+  tr {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 4px;
+
+    @include de-mobile {
+      gap: 3px;
+    }
+  }
+
+  tbody tr + tr {
+    margin-top: 4px;
+
+    @include de-mobile {
+      margin-top: 3px;
+    }
+  }
+
+  th,
+  td {
+    display: block;
+    padding: 0;
+  }
+
+  th {
+    padding-bottom: 5px;
+    text-align: center;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--de-hint);
+
+    &.sun {
+      color: var(--de-sun);
+    }
+
+    &.sat {
+      color: var(--de-sat);
+    }
+  }
+
+  &.is-busy {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+}
+
+.cell {
+  @include de-button-reset;
+  position: relative;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 1px;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 11px;
+  transition: transform 0.12s;
+
+  @include de-mobile {
+    border-radius: 10px;
+  }
+
+  @media (max-width: 620px) {
+    aspect-ratio: 1 / 0.86;
+  }
+
+  @include de-reduced-motion {
+    transition: none;
+  }
+
+  b {
+    font-size: 14.5px;
+    font-weight: 700;
+    line-height: 1.15;
+
+    &.sun {
+      color: var(--de-sun);
+    }
+
+    &.sat {
+      color: var(--de-sat);
+    }
+  }
+
+  small {
+    height: 13px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 13px;
+    color: var(--heat-num);
+  }
+
+  &:focus-visible {
+    outline: 2.5px solid var(--de-blue);
+    outline-offset: 2px;
+    z-index: 3;
+  }
+
+  &.lv1 {
+    background: var(--heat-1);
+  }
+
+  &.lv2 {
+    background: var(--heat-2);
+  }
+
+  &.lv3 {
+    background: var(--heat-3);
+
+    b,
+    small {
+      color: #fff;
+    }
+  }
+
+  &.lv4 {
+    background: var(--heat-4);
+
+    b,
+    small {
+      color: var(--heat-on);
+    }
+  }
+
+  // 행사 없는 날(늘 disabled)
+  &.lv0 {
+    background: none;
+    cursor: default;
+
+    b {
+      font-weight: 500;
+      color: var(--de-hint);
+
+      &.sun,
+      &.sat {
+        color: var(--de-hint);
+        opacity: 0.7;
+      }
+    }
+  }
+
+  &.is-past {
+    opacity: 0.42;
+  }
+
+  &:not(:disabled):hover {
+    transform: scale(1.06);
+    z-index: 4;
+  }
+
+  &.is-past:not(:disabled):hover {
+    opacity: 1;
+  }
+
+  // 색 단계·요일 색보다 앞선다
+  &.is-today b,
+  &.is-today.lv0 b.sun,
+  &.is-today.lv0 b.sat {
+    padding: 1px 7px;
+    margin: -1px 0;
+    border-radius: 999px;
+    background: var(--de-ink);
+    color: var(--de-bg);
+    opacity: 1;
+  }
+
+  &.is-on {
+    box-shadow: 0 0 0 2px var(--de-bg), 0 0 0 4.5px var(--de-ink);
+    z-index: 2;
+    opacity: 1;
+  }
+
+  &.is-on:not(:disabled):hover {
+    z-index: 4;
+  }
+}
+
+// 칸에 올렸을 때의 한 줄 설명. 터치 기기에서는 뜨지 않는다(칸 안의 숫자가 같은 정보를 준다)
+@media (hover: hover) {
+  .cell[data-tip]:hover::after {
+    content: attr(data-tip);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 7px);
+    transform: translateX(-50%);
+    padding: 6px 9px;
+    border-radius: 8px;
+    background: var(--de-ink);
+    color: var(--de-bg);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  .cell[data-tip]:hover::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 2px);
+    width: 8px;
+    height: 8px;
+    margin-left: -4px;
+    background: var(--de-ink);
+    transform: rotate(45deg);
+    z-index: 5;
+  }
+
+  .grid td:nth-child(-n + 2) .cell[data-tip]:hover::after {
+    left: 0;
+    transform: none;
+  }
+
+  .grid td:nth-last-child(-n + 2) .cell[data-tip]:hover::after {
+    left: auto;
+    right: 0;
+    transform: none;
+  }
+}

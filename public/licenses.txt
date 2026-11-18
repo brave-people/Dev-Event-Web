@@ -1,0 +1,55 @@
+Dev Event 웹에 쓰인 로고와 출처
+================================
+
+홀로그램 스티커(배너, 로그인 창, 관심 행사, 내 정보)에 아래 로고가 쓰였습니다.
+로고는 각 권리자의 상표이며, Dev Event는 이 단체들과 제휴·후원 관계가 아닙니다.
+
+Tux (Linux 펭귄)
+  Larry Ewing 원작 (lewing@isc.tamu.edu, The GIMP).
+  벡터판은 Garrett LeSage가 다시 그리고 IFo Hancroft가 다듬었습니다.
+  https://isc.tamu.edu/~lewing/linux/  ·  https://github.com/garrett/Tux
+
+Android 로봇
+  The Android robot is reproduced or modified from work created and shared by Google
+  and used according to terms described in the Creative Commons 3.0 Attribution License.
+  https://developer.android.com/distribute/marketing-tools/brand-guidelines
+
+Git 로고
+  Git Logo by Jason Long is licensed under the Creative Commons Attribution 3.0 Unported License.
+  https://git-scm.com/community/logos
+
+Python 로고
+  "Python" and the Python logos are trademarks or registered trademarks of the
+  Python Software Foundation.
+  https://www.python.org/community/logos/
+
+TypeScript 로고
+  TypeScript 로고는 Microsoft의 상표입니다.
+  https://www.typescriptlang.org/branding/
+
+JavaScript 로고 (logo.js)
+  Copyright (c) 2011 Christopher Williams, Manuel Strehl. MIT License.
+  https://github.com/voodootikigod/logo.js
+
+--- logo.js LICENSE ---
+The MIT License (MIT)
+
+Copyright (c) 2011 Christopher Williams <chris@iterativedesigns.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.

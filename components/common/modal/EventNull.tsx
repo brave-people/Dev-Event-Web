@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext, useMemo } from 'react';
-import Image from 'next/image';
+import { useRouter } from 'next/router';
 import classNames from 'classnames/bind';
 import style from 'components/common/modal/EventNull.module.scss';
 import { Event } from 'model/event';
 import { TagResponse } from 'model/tag';
 import { getRandomTag, getRecommendableTags } from 'lib/utils/tagUtil';
 import { EventContext } from 'context/event';
-import JobGroupTag from 'components/common/tag/JobGroupTag';
+import TimelineIcon from 'components/events/timeline/TimelineIcon';
+import { parseUrl } from 'lib/utils/UrlUtil';
 
 const cn = classNames.bind(style);
 
@@ -18,6 +19,7 @@ function EventNull({ events }: Props) {
   const [randomTags, setRandomTags] = useState<TagResponse[] | undefined>(
     undefined
   );
+  const router = useRouter();
   const { jobGroupList, eventType, location, coast } = useContext(EventContext);
   const candidates = useMemo(
     () =>
@@ -40,35 +42,35 @@ function EventNull({ events }: Props) {
   }, [candidates]);
 
   return (
-    <section className={cn('section__list')}>
-      <section className={cn('container')}>
-        <div className={cn('title')}>찾으시는 행사정보가 없어요</div>
-        <Image
-          src={'/icon/none_event.svg'}
-          alt="no event"
-          priority={true}
-          width={58}
-          height={58}
-        />
-        {candidates.length !== 0 && (
-          <div className={cn('desc')}>추천태그로 검색해보세요</div>
-        )}
-        {randomTags && randomTags.length !== 0 && (
-          <div className={cn('tag__container')}>
-            {randomTags.map((tag) => {
-              return (
-                <JobGroupTag
-                  key={tag.id}
-                  tagName={tag.tag_name}
-                  type="recommand"
-                  parent={false}
-                />
-              );
-            })}
-          </div>
-        )}
-      </section>
-    </section>
+    <div className={cn('empty')} role="status">
+      <div className={cn('icon')}>
+        <TimelineIcon name="search" size={32} />
+      </div>
+      <b className={cn('title')}>찾으시는 행사정보가 없어요</b>
+      {candidates.length !== 0 && (
+        <p className={cn('desc')}>추천 태그로 검색해 보세요</p>
+      )}
+      {randomTags && randomTags.length !== 0 && (
+        <div className={cn('tags')}>
+          {randomTags.map((tag) => (
+            <button
+              key={tag.id}
+              type="button"
+              className={cn('tag')}
+              onClick={() => {
+                router.push(
+                  parseUrl(router.asPath, 'kwd', tag.tag_name, jobGroupList),
+                  undefined,
+                  { scroll: false }
+                );
+              }}
+            >
+              {tag.tag_name}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 

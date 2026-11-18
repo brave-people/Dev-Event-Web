@@ -1,16 +1,13 @@
 import Layout from 'components/layout';
-import MyEventBody from 'components/myEvent/MyEventBody';
+import SavedEvents from 'components/myEvent/SavedEvents';
 import { AuthContext } from 'context/auth';
 import cookie from 'cookie';
-import style from 'styles/MyEvent.module.scss';
 import React, { useEffect } from 'react';
 import type { ReactElement } from 'react';
-import classNames from 'classnames/bind';
 import { GetServerSideProps } from 'next';
+import { toKstNaive } from 'lib/utils/timeline/kst';
 
-const cn = classNames.bind(style);
-
-const MyEvent = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
+const MyEvent = ({ isLoggedIn, now }: { isLoggedIn: boolean; now: string }) => {
   const authContext = React.useContext(AuthContext);
 
   useEffect(() => {
@@ -21,18 +18,7 @@ const MyEvent = ({ isLoggedIn }: { isLoggedIn: boolean }) => {
     }
   }, [isLoggedIn]);
 
-  return (
-    <>
-      <header className={cn('sub-header')}>
-        <div className={cn('sub-header__inner')}>
-          <div className={cn('sub-header__content')}>
-            <h1>북마크</h1>
-          </div>
-        </div>
-      </header>
-      <MyEventBody />
-    </>
-  );
+  return <SavedEvents now={now} />;
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -44,6 +30,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       return {
         props: {
           isLoggedIn: true,
+          now: toKstNaive(Date.now()),
         },
       };
     }

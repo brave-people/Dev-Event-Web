@@ -2,15 +2,13 @@ import Banner from 'components/common/banner/banner';
 import FilterDateModal from 'components/common/modal/FilterDateModal';
 import FilterSearchModal from 'components/common/modal/FilterSearchModal';
 import FilterTagModal from 'components/common/modal/FilterTagModal';
-import LoginModal from 'components/common/modal/LoginModal';
-import ScheduledEventList from 'components/events/ScheduledEventList';
-import CalendarView from 'components/events/calendar/CalendarView';
-import Letter from 'components/features/letter/Letter';
+import EventCalendar from 'components/events/calendar/EventCalendar';
+import EventTimeline from 'components/events/timeline/EventTimeline';
 import Layout from 'components/layout';
 import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
-import dayjs from 'dayjs';
 import { useScheduledEvents, useMonthlyEvent } from 'lib/hooks/useSWR';
+import { fetchTopBannersOnServer } from 'lib/api/topBannerServer';
 import { blockMouseScroll, isModalOpen } from 'lib/utils/windowUtil';
 import {
   absoluteUrl,
@@ -23,13 +21,16 @@ import {
   serializeJsonLd,
   WEBSITE_JSON_LD,
 } from 'lib/seo/jsonLd';
+import { toKstNaive } from 'lib/utils/timeline/kst';
+import { TopBanner } from 'model/banner';
 import { Event, EventResponse } from 'model/event';
 import style from 'styles/Home.module.scss';
-import { useEffect, useContext, useState, useRef } from 'react';
+import { useEffect, useContext, useRef } from 'react';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
+import Router from 'next/router';
 
 const cn = classNames.bind(style);
 
@@ -41,6 +42,8 @@ const OG_IMAGE = absoluteUrl(DEFAULT_OG_IMAGE_PATH);
 type ListProps = {
   view: 'list';
   fallbackData: EventResponse[];
+  banners: TopBanner[];
+  now: string;
 };
 
 type CalendarProps = {
@@ -48,26 +51,61 @@ type CalendarProps = {
   year: number;
   month: number;
   fallbackData: Event[];
+  banners: TopBanner[];
+  now: string;
 };
 
 type Props = ListProps | CalendarProps;
 
 const Events = (props: Props) => {
-  const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
   const { modalState } = useContext(WindowContext);
   const { date } = useContext(EventContext);
   const bodyRef = useRef<HTMLDivElement>(null);
 
   const listSWR = useScheduledEvents(
-    props.view === 'list' ? props.fallbackData : undefined
+    props.view === 'list' ? props.fallbackData : undefined,
+    props.view === 'list'
   );
   const calendarSWR = useMonthlyEvent({
     param:
       props.view === 'calendar'
         ? { year: props.year, month: props.month }
-        : { year: 1970, month: 1 },
-    fallbackData: props.view === 'calendar' ? props.fallbackData : [],
+        : null,
+    fallbackData: props.view === 'calendar' ? props.fallbackData : undefined,
   });
+
+  // 지금 화면이 그리고 있는 보기·달 (뒤로 가기 콜백이 읽는다)
+  const shown = {
+    view: props.view,
+    year: props.view === 'calendar' ? props.year : 0,
+    month: props.view === 'calendar' ? props.month : 0,
+  };
+  const shownRef = useRef(shown);
+  shownRef.current = shown;
+
+  // shallow로 남겨진 기록으로 돌아갈 때, 주소의 보기·달이 지금 props와 다르면
+  // getServerSideProps를 다시 거친다 (Next는 shallow 기록이면 props를 그대로 쓴다)
+  useEffect(() => {
+    Router.beforePopState(({ as, options }) => {
+      if (!options.shallow) return true;
+      const [path, search = ''] = as.split('#')[0].split('?');
+      if (path !== '/events') return true;
+      const q = new URLSearchParams(search);
+      const view = q.get('view') === 'calendar' ? 'calendar' : 'list';
+      const cur = shownRef.current;
+      const same =
+        view === cur.view &&
+        (view === 'list' ||
+          (Number(q.get('year')) === cur.year &&
+            Number(q.get('month')) === cur.month));
+      if (same) return true;
+      Router.replace(as, undefined, { scroll: false }).catch(() => undefined);
+      return false;
+    });
+    return () => {
+      Router.beforePopState(() => true);
+    };
+  }, []);
 
   useEffect(() => {
     if (modalState.currentModal !== 0) {
@@ -79,7 +117,6 @@ const Events = (props: Props) => {
       document.body.style.position = 'relative';
       document.body.style.overflow = 'unset';
       bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
-      setLoginModalIsOpen(false);
     };
   }, [modalState, date]);
 
@@ -114,22 +151,23 @@ const Events = (props: Props) => {
       </Head>
       {modalState.currentModal === 0 && (
         <>
-          <Banner />
-          <section className={cn('section')}>
-            {props.view === 'list' ? (
-              <ScheduledEventList
-                events={listSWR.scheduledEvents}
-                isError={listSWR.isError}
-              />
-            ) : (
-              <CalendarView
-                year={props.year}
-                month={props.month}
-                events={calendarSWR.monthlyEvent ?? []}
-              />
-            )}
-          </section>
-          <Letter />
+          <Banner fallbackData={props.banners} />
+          {props.view === 'list' ? (
+            <EventTimeline
+              events={listSWR.scheduledEvents}
+              isError={Boolean(listSWR.isError)}
+              now={props.now}
+              mode="events"
+            />
+          ) : (
+            <EventCalendar
+              year={props.year}
+              month={props.month}
+              events={calendarSWR.monthlyEvent}
+              isError={Boolean(calendarSWR.isError)}
+              now={props.now}
+            />
+          )}
         </>
       )}
       {isModalOpen(modalState.currentModal, 1) && props.view === 'list' && (
@@ -140,10 +178,6 @@ const Events = (props: Props) => {
       )}
       {isModalOpen(modalState.currentModal, 2) && <FilterTagModal />}
       {isModalOpen(modalState.currentModal, 3) && <FilterDateModal />}
-      <LoginModal
-        isOpen={loginModalIsOpen}
-        onClose={() => setLoginModalIsOpen(false)}
-      />
     </main>
   );
 };
@@ -153,28 +187,34 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     'Cache-Control',
     'public, s-maxage=300, stale-while-revalidate=3600'
   );
+  const bannersPromise = fetchTopBannersOnServer();
   const view = context.query.view === 'calendar' ? 'calendar' : 'list';
 
   if (view === 'calendar') {
-    const now = dayjs();
+    const now = toKstNaive(Date.now());
     const yearParam = Number(context.query.year);
     const monthParam = Number(context.query.month);
     const year =
-      Number.isFinite(yearParam) && yearParam > 0 ? yearParam : now.year();
+      Number.isFinite(yearParam) && yearParam > 0
+        ? yearParam
+        : Number(now.slice(0, 4));
     const month =
       Number.isFinite(monthParam) && monthParam >= 1 && monthParam <= 12
         ? monthParam
-        : now.month() + 1;
+        : Number(now.slice(5, 7));
     const res = await fetch(
       `${process.env.BASE_SERVER_URL}/front/v2/events/${year}/${month}`
     );
     const events = await res.json();
+    const banners = await bannersPromise;
     return {
       props: {
         view: 'calendar' as const,
         year,
         month,
         fallbackData: events,
+        banners,
+        now,
       },
     };
   }
@@ -183,10 +223,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     `${process.env.BASE_SERVER_URL}/front/v2/events/current`
   );
   const events = await res.json();
+  const banners = await bannersPromise;
   return {
     props: {
       view: 'list' as const,
       fallbackData: events,
+      banners,
+      now: toKstNaive(Date.now()),
     },
   };
 };

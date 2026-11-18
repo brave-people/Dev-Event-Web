@@ -18,6 +18,13 @@ interface EventContext {
   handleSearch: (search: string | undefined) => void;
   url: string | undefined;
   handleUrl: (url: string | undefined) => void;
+  newOnly: boolean;
+  handleNewOnly: (value: boolean) => void;
+  showPast: boolean;
+  handleShowPast: (value: boolean) => void;
+  replaceJobGroupList: (list: string[]) => void;
+  focusDay: string | null;
+  handleFocusDay: (key: string | null) => void;
 }
 
 const defaultValue: EventContext = {
@@ -37,6 +44,13 @@ const defaultValue: EventContext = {
   handleSearch: () => {},
   url: '',
   handleUrl: () => {},
+  newOnly: false,
+  handleNewOnly: () => {},
+  showPast: false,
+  handleShowPast: () => {},
+  replaceJobGroupList: () => {},
+  focusDay: null,
+  handleFocusDay: () => {},
 };
 
 const EventContext = createContext(defaultValue);
@@ -51,6 +65,9 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
   const [date, setDate] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [url, setUrl] = useState<string | undefined>(undefined);
+  const [newOnly, setNewOnly] = useState<boolean>(false);
+  const [showPast, setShowPast] = useState<boolean>(false);
+  const [focusDay, setFocusDay] = useState<string | null>(null);
 
   const updateJobGroupList = (job: string | string[] | undefined) => {
     if (typeof job === 'undefined') return;
@@ -103,6 +120,22 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
     setUrl(url);
   };
 
+  const handleNewOnly = (value: boolean) => {
+    setNewOnly(value);
+  };
+
+  const handleShowPast = (value: boolean) => {
+    setShowPast(value);
+  };
+
+  const replaceJobGroupList = (list: string[]) => {
+    setJobGroupList(list);
+  };
+
+  const handleFocusDay = (key: string | null) => {
+    setFocusDay(key);
+  };
+
   const contextValue = {
     jobGroupList,
     updateJobGroupList,
@@ -120,6 +153,13 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
     handleSearch,
     url,
     handleUrl,
+    newOnly,
+    handleNewOnly,
+    showPast,
+    handleShowPast,
+    replaceJobGroupList,
+    focusDay,
+    handleFocusDay,
   };
   return (
     <>

@@ -1,0 +1,173 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.heading {
+  margin: 32px 0 16px;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+}
+
+.empty {
+  margin: 0;
+  padding: 22px;
+  border-radius: 16px;
+  background: var(--de-surface);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--de-sub);
+}
+
+.prose {
+  color: var(--de-prose-fg);
+  font-size: 16px;
+  line-height: 1.75;
+  // body의 anywhere는 min-content 폭에 반영돼 표 칸이 한 글자 폭으로 줄어든다. break-word로 덮어쓴다
+  overflow-wrap: break-word;
+
+  * {
+    margin: 0;
+  }
+
+  > * + * {
+    margin-top: 1em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 2em;
+    line-height: 1.4;
+    letter-spacing: -0.012em;
+    color: var(--de-ink);
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  h3 {
+    font-size: 18px;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: 16px;
+  }
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  ul,
+  ol {
+    padding-left: 1.3em;
+  }
+
+  ul {
+    list-style: disc;
+  }
+
+  ol {
+    list-style: decimal;
+  }
+
+  li + li,
+  li > ul,
+  li > ol {
+    margin-top: 0.4em;
+  }
+
+  a {
+    color: var(--de-prose-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+    display: table;
+
+    @include de-mobile {
+      display: block;
+      overflow-x: auto;
+    }
+  }
+
+  th,
+  td {
+    padding: 10px 14px;
+    border: 1px solid var(--de-prose-border);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th {
+    background: var(--de-prose-th);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    cursor: zoom-in;
+
+    &:focus-visible {
+      outline: 2px solid var(--de-blue);
+      outline-offset: 2px;
+    }
+  }
+
+  a img {
+    cursor: pointer;
+  }
+
+  iframe,
+  video {
+    max-width: 100%;
+  }
+
+  blockquote {
+    padding: 4px 0 4px 16px;
+    border-left: 3px solid var(--de-prose-border);
+    color: var(--de-prose-muted);
+  }
+
+  code {
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    font-size: 0.9em;
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: var(--de-prose-th);
+  }
+
+  pre {
+    padding: 16px;
+    border-radius: 12px;
+    background: var(--de-prose-th);
+    overflow-x: auto;
+
+    code {
+      padding: 0;
+      background: none;
+    }
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--de-prose-border);
+    margin: 2em 0;
+  }
+}

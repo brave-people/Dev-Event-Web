@@ -127,3 +127,109 @@ $maxlaptop: 2560px;
   background: rgba(0, 0, 0, 0.4);
   z-index: 99;
 }
+
+// ========================================
+// 리디자인 공통 틀
+// ========================================
+@mixin de-mobile {
+  @media (max-width: 860px) {
+    @content;
+  }
+}
+
+@mixin de-container {
+  max-width: $de-max-width;
+  margin: 0 auto;
+  padding-left: $de-gutter;
+  padding-right: $de-gutter;
+
+  @media (max-width: 360px) {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@mixin de-reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+@mixin de-button-reset {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@mixin de-focus-ring {
+  &:focus-visible {
+    outline: 2px solid var(--de-blue);
+    outline-offset: 2px;
+  }
+}
+
+@mixin de-press {
+  transition: transform 0.12s;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  @include de-reduced-motion {
+    transition: none;
+  }
+}
+
+@mixin de-chip {
+  @include de-button-reset;
+  @include de-focus-ring;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  height: 36px;
+  padding: 0 13px;
+  border-radius: 999px;
+  background: var(--de-surface);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--de-sub);
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--de-line);
+  }
+}
+
+// 날짜 띠 14일, 좁은 창
+@mixin de-tablet {
+  @media (min-width: 621px) and (max-width: 860px) {
+    @content;
+  }
+}
+
+// 날짜 띠 10일
+@mixin de-phone-wide {
+  @media (min-width: 481px) and (max-width: 620px) {
+    @content;
+  }
+}
+
+// 날짜 띠 7일
+@mixin de-phone {
+  @media (max-width: 480px) {
+    @content;
+  }
+}
+
+@mixin de-narrow {
+  @media (max-width: 360px) {
+    @content;
+  }
+}

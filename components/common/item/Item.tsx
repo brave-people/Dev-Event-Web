@@ -61,7 +61,7 @@ const Item = ({
       pushToast('링크가 복사되었어요');
     } catch (err) {
       console.error(err);
-      pushToast('링크 복사에 실패했어요');
+      pushToast('링크 복사에 실패했어요', 'plain');
     }
     ga.event({
       action: 'web_event_공유버튼클릭',

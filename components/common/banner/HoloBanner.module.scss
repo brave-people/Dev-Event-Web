@@ -1,0 +1,101 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.holo {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: #fff;
+  background: radial-gradient(
+    ellipse 50% 120% at 50% 50%,
+    #1a1d2b 0%,
+    #0b0d14 75%
+  );
+
+  @include de-mobile {
+    height: clamp(150px, 26vw, 200px);
+  }
+}
+
+.stickers {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: min(1320px, 100%);
+  transform: translateX(-50%);
+  z-index: 1;
+  pointer-events: none;
+  --stk-origin: 50% 50%;
+}
+
+.group {
+  position: absolute;
+  inset: 0;
+}
+
+.pc {
+  @include de-mobile {
+    display: none;
+  }
+}
+
+.wide {
+  @media (max-width: 1180px) {
+    display: none;
+  }
+}
+
+.tablet {
+  display: none;
+
+  @include de-tablet {
+    display: block;
+  }
+}
+
+.mobile {
+  display: none;
+
+  @media (max-width: 620px) {
+    display: block;
+  }
+}
+
+.copy {
+  position: relative;
+  z-index: 0;
+  padding: 0 20px;
+}
+
+.title {
+  margin: 0;
+  font-size: 33px;
+  line-height: 1.26;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+
+  @include de-mobile {
+    font-size: clamp(23px, 3.8vw, 33px);
+  }
+}
+
+.accent {
+  font-style: normal;
+  color: #a8c4ff;
+}
+
+.desc {
+  margin: 10px 0 0;
+  font-size: 15.5px;
+  font-weight: 500;
+  opacity: 0.82;
+
+  @include de-mobile {
+    margin-top: 7px;
+    font-size: clamp(13px, 2vw, 15.5px);
+  }
+}

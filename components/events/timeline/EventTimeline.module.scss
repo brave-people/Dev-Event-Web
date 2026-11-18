@@ -1,0 +1,48 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+// overflow를 걸지 않는다. 걸면 날짜 띠(sticky)가 붙지 않고 월 선택이 잘린다.
+.timeline {
+  @include de-container;
+  padding-bottom: 64px;
+}
+
+.list {
+  min-width: 0;
+}
+
+.search-head {
+  margin-top: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--de-line);
+
+  @include de-mobile {
+    margin-top: 20px;
+    padding-bottom: 16px;
+  }
+}
+
+.search-title {
+  margin: 0;
+  font-size: 28px;
+  line-height: 1.25;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+
+  @include de-mobile {
+    font-size: 23px;
+  }
+
+  em {
+    font-style: normal;
+    color: var(--de-blue);
+  }
+
+  i {
+    margin-left: 10px;
+    font-style: normal;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--de-hint);
+  }
+}

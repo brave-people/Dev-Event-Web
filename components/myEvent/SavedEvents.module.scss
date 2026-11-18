@@ -1,0 +1,26 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.page {
+  @include de-container;
+  padding-top: 24px;
+  padding-bottom: 76px;
+
+  @include de-mobile {
+    padding-top: 14px;
+    padding-bottom: 56px;
+  }
+}
+
+.title {
+  margin: 0 0 26px;
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+
+  @include de-mobile {
+    margin-bottom: 16px;
+    font-size: 25px;
+  }
+}

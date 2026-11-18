@@ -1,0 +1,98 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+// overflow를 걸지 않는다. 걸면 칸의 한 줄 설명과 월 선택 풍선이 잘린다.
+.calendar {
+  @include de-container;
+  padding-bottom: 64px;
+}
+
+.top {
+  position: relative;
+}
+
+.switch {
+  position: absolute;
+  right: 0;
+  top: 16px;
+  z-index: 1;
+
+  @media (max-width: 860px) {
+    top: 12px;
+  }
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 372px minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+  padding: 24px 0 8px;
+
+  @media (max-width: 1040px) {
+    grid-template-columns: 320px minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  @include de-tablet {
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 26px;
+    padding-top: 18px;
+  }
+
+  @media (max-width: 620px) {
+    display: block;
+    padding-top: 14px;
+  }
+}
+
+.aside {
+  position: sticky;
+  top: 20px;
+
+  @include de-tablet {
+    top: 14px;
+  }
+
+  @media (max-width: 620px) {
+    position: static;
+  }
+}
+
+// 화면 높이가 낮을 때만 달력 칸이 스크롤된다
+@media (min-width: 861px) and (max-height: 520px) {
+  .aside {
+    max-height: calc(100vh - 36px);
+    overflow-y: auto;
+    scrollbar-width: none;
+    padding: 3px;
+    margin: -3px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+.pane {
+  min-width: 0;
+  transition: opacity 0.15s;
+
+  &.is-busy {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  @include de-reduced-motion {
+    transition: none;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

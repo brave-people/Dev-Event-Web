@@ -2,18 +2,19 @@ import Banner from 'components/common/banner/banner';
 import FilterDateModal from 'components/common/modal/FilterDateModal';
 import FilterSearchModal from 'components/common/modal/FilterSearchModal';
 import FilterTagModal from 'components/common/modal/FilterTagModal';
-import LoginModal from 'components/common/modal/LoginModal';
-import FilteredEventList from 'components/events/FilteredEventList';
-import Letter from 'components/features/letter/Letter';
+import EventTimeline from 'components/events/timeline/EventTimeline';
 import Layout from 'components/layout';
 import { EventContext } from 'context/event';
 import { WindowContext } from 'context/window';
 import { useScheduledEvents } from 'lib/hooks/useSWR';
+import { fetchTopBannersOnServer } from 'lib/api/topBannerServer';
+import { toKstNaive } from 'lib/utils/timeline/kst';
 import { blockMouseScroll, isModalOpen } from 'lib/utils/windowUtil';
 import { absoluteUrl, DEFAULT_OG_IMAGE_PATH, SITE_URL } from 'lib/seo/site';
+import { TopBanner } from 'model/banner';
 import { EventResponse } from 'model/event';
 import style from 'styles/Home.module.scss';
-import { useEffect, useState, useContext, useRef } from 'react';
+import { useEffect, useContext, useRef } from 'react';
 import type { ReactElement } from 'react';
 import classNames from 'classnames/bind';
 import { GetServerSideProps } from 'next';
@@ -24,13 +25,14 @@ const cn = classNames.bind(style);
 
 type Props = {
   fallbackData: EventResponse[];
+  banners: TopBanner[];
+  now: string;
 };
 
 const toLabel = (v: string | string[] | undefined): string[] =>
   v === undefined ? [] : Array.isArray(v) ? v : [v];
 
-const Search = ({ fallbackData }: Props) => {
-  const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
+const Search = ({ fallbackData, banners, now }: Props) => {
   const { search, date } = useContext(EventContext);
   const { modalState } = useContext(WindowContext);
   const { scheduledEvents, isError } = useScheduledEvents(fallbackData);
@@ -61,7 +63,6 @@ const Search = ({ fallbackData }: Props) => {
       document.body.style.position = 'relative';
       document.body.style.overflow = 'unset';
       bodyRef.current?.removeEventListener('wheel', blockMouseScroll);
-      setLoginModalIsOpen(false);
     };
   }, [modalState, search, date]);
 
@@ -82,11 +83,13 @@ const Search = ({ fallbackData }: Props) => {
       </Head>
       {modalState.currentModal === 0 ? (
         <>
-          <Banner />
-          <section className={cn('section')}>
-            <FilteredEventList events={scheduledEvents} isError={isError} />
-          </section>
-          <Letter />
+          <Banner fallbackData={banners} />
+          <EventTimeline
+            events={scheduledEvents}
+            isError={Boolean(isError)}
+            now={now}
+            mode="search"
+          />
         </>
       ) : null}
       {isModalOpen(modalState.currentModal, 1) && (
@@ -94,10 +97,6 @@ const Search = ({ fallbackData }: Props) => {
       )}
       {isModalOpen(modalState.currentModal, 2) && <FilterTagModal />}
       {isModalOpen(modalState.currentModal, 3) && <FilterDateModal />}
-      <LoginModal
-        isOpen={loginModalIsOpen}
-        onClose={() => setLoginModalIsOpen(false)}
-      ></LoginModal>
     </main>
   );
 };
@@ -107,13 +106,17 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     'Cache-Control',
     'public, s-maxage=300, stale-while-revalidate=3600'
   );
+  const bannersPromise = fetchTopBannersOnServer();
   const res = await fetch(
     `${process.env.BASE_SERVER_URL}/front/v2/events/current`
   );
   const events = await res.json();
+  const banners = await bannersPromise;
   return {
     props: {
       fallbackData: events,
+      banners,
+      now: toKstNaive(Date.now()),
     },
   };
 };

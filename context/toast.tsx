@@ -5,10 +5,13 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import ToastStack, { ToastItem } from 'components/common/toast/ToastStack';
+import ToastStack, {
+  ToastItem,
+  ToastKind,
+} from 'components/common/toast/ToastStack';
 
 interface ToastContextValue {
-  pushToast: (message: string) => void;
+  pushToast: (message: string, kind?: ToastKind) => void;
 }
 
 const ToastContext = createContext<ToastContextValue>({
@@ -20,11 +23,8 @@ export const ToastProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [toasts, setToasts] = useState<ToastItem[]>([]);
 
-  const pushToast = useCallback((message: string) => {
-    setToasts((prev) => [
-      ...prev,
-      { id: Date.now() + Math.random(), message },
-    ]);
+  const pushToast = useCallback((message: string, kind: ToastKind = 'done') => {
+    setToasts([{ id: Date.now() + Math.random(), message, kind }]);
   }, []);
 
   const dismissToast = useCallback((id: number) => {

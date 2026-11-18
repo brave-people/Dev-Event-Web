@@ -1,7 +1,13 @@
 // ========================================
 // 레이아웃 변수
 // ========================================
-$header-height: 49px;
+
+// 리디자인 공통 틀
+$de-max-width: 1120px;
+$de-gutter: 20px;
+$de-header-height: 64px;
+$de-header-height-mobile: 56px;
+$de-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
 // 메인 여백
 $laptop-padding: 48px;

@@ -47,6 +47,35 @@ html[data-theme='light'] {
   --vapor-text-success: #{$vapor-text-success};
   --vapor-text-warning: #{$vapor-text-warning};
   --vapor-text-primary: #{$vapor-text-primary};
+
+  // Redesign tokens (docs/superpowers/plans/2026-11-17-redesign-roadmap.md)
+  --de-bg: #ffffff;
+  --de-surface: #f5f6f8;
+  --de-ink: #17191e;
+  --de-sub: #4e5564;
+  --de-hint: #8b91a0;
+  --de-faint: #c3c7d1;
+  --de-line: #e9ebf0;
+  --de-hover: #f4f6f9;
+  --de-blue: #0043ff;
+  --de-blue-fill: #0043ff;
+  --de-blue-soft: #eaf0ff;
+  --de-orange: #e8590c;
+  --de-orange-soft: #fff1e6;
+  --de-red: #f04452;
+  --de-navy: #000040;
+  --de-sun: #e5484d;
+  --de-sat: #2f6fed;
+  --de-thumb-bg: #eef0f5;
+  --de-thumb-fg: #b9bdcb;
+  --de-shadow: 0 8px 28px rgba(23, 25, 30, 0.12);
+  --de-holo: linear-gradient(100deg, #ffd6f0, #c9f3ff, #d9ffd9, #fff3b8, #ffd6f0);
+  --de-holo-ink: #15171c;
+  --de-prose-fg: #2b2d36;
+  --de-prose-border: #e1e1e8;
+  --de-prose-th: #f7f7fa;
+  --de-prose-accent: #0043ff;
+  --de-prose-muted: #6c6e7e;
 }
 
 // ============================================================
@@ -104,4 +133,33 @@ html[data-theme='dark'] {
   --vapor-text-success: #{$wanted-dark-status-positive};  // #1ED45A
   --vapor-text-warning: #{$wanted-dark-status-cautionary}; // #FFA938
   --vapor-text-primary: #{$wanted-dark-primary-normal};   // #3385FF
+
+  // Redesign tokens (docs/superpowers/plans/2026-11-17-redesign-roadmap.md)
+  --de-bg: #0f1115;
+  --de-surface: #171a20;
+  --de-ink: #f2f4f7;
+  --de-sub: #b7bdc9;
+  --de-hint: #7d8493;
+  --de-faint: #4a505c;
+  --de-line: #252932;
+  --de-hover: #181b22;
+  --de-blue: #5b86ff;
+  --de-blue-fill: #2f5fff;
+  --de-blue-soft: #16234a;
+  --de-orange: #ff8f52;
+  --de-orange-soft: #38220f;
+  --de-red: #ff6b76;
+  --de-navy: #000040;
+  --de-sun: #ff7a80;
+  --de-sat: #7aa2ff;
+  --de-thumb-bg: #1c2028;
+  --de-thumb-fg: #3a404c;
+  --de-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+  --de-holo: linear-gradient(100deg, #ffd6f0, #c9f3ff, #d9ffd9, #fff3b8, #ffd6f0);
+  --de-holo-ink: #15171c;
+  --de-prose-fg: #cfd4de;
+  --de-prose-border: #2b303a;
+  --de-prose-th: #171a20;
+  --de-prose-accent: #7aa2ff;
+  --de-prose-muted: #8d94a3;
 }

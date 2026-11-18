@@ -1,0 +1,166 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+@keyframes open {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.title {
+  margin: 0;
+  font-size: 25px;
+  line-height: 1.34;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+
+  @media (max-width: 520px) {
+    font-size: 22px;
+  }
+}
+
+.hint {
+  margin: 8px 0 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--de-sub);
+
+  @media (max-width: 520px) {
+    font-size: 14px;
+  }
+}
+
+.main .first {
+  margin-top: 26px;
+}
+
+.more {
+  animation: open 0.22s ease-out;
+
+  &[hidden] {
+    display: none;
+  }
+
+  @include de-reduced-motion {
+    animation: none;
+  }
+}
+
+.more .moreFirst {
+  margin-top: 4px;
+}
+
+.chev {
+  transform: rotate(90deg);
+  transition: transform 0.2s;
+
+  [aria-expanded='true'] > & {
+    transform: rotate(-90deg);
+  }
+
+  @include de-reduced-motion {
+    transition: none;
+  }
+}
+
+.foot {
+  margin: 22px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--de-hint);
+}
+
+.link {
+  @include de-button-reset;
+  @include de-focus-ring;
+  margin-left: 4px;
+  font-weight: 700;
+  color: var(--de-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--de-faint);
+}
+
+.pane {
+  animation: open 0.2s ease-out;
+
+  @include de-reduced-motion {
+    animation: none;
+  }
+}
+
+.pane .title {
+  padding-top: 6px;
+}
+
+.back {
+  @include de-button-reset;
+  @include de-focus-ring;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 40px;
+  margin: -12px 0 4px -12px;
+  padding: 0 12px 0 8px;
+  border-radius: 20px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--de-hint);
+
+  &:hover {
+    background: var(--de-surface);
+    color: var(--de-ink);
+  }
+}
+
+.form {
+  margin-top: 22px;
+  text-align: left;
+  display: grid;
+  gap: 12px;
+}
+
+.field {
+  display: block;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--de-sub);
+}
+
+.input {
+  width: 100%;
+  height: 50px;
+  padding: 0 15px;
+  border: 0;
+  border-radius: 13px;
+  outline: 0;
+  background: var(--de-surface);
+  box-shadow: inset 0 0 0 1.5px transparent;
+  font: inherit;
+  font-size: 15px;
+  color: var(--de-ink);
+  transition: box-shadow 0.12s;
+
+  &::placeholder {
+    color: var(--de-hint);
+  }
+
+  &:focus {
+    box-shadow: inset 0 0 0 2px var(--de-ink);
+    background: var(--de-bg);
+  }
+
+  @include de-mobile {
+    font-size: 16px;
+  }
+
+  @include de-reduced-motion {
+    transition: none;
+  }
+}

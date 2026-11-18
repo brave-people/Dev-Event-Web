@@ -1,0 +1,86 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.skeleton {
+  position: relative;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.day {
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr);
+
+  @include de-mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+.rail {
+  @include de-mobile {
+    display: none;
+  }
+}
+
+.items {
+  padding: 14px 0 8px;
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+
+  @include de-mobile {
+    padding-top: 10px;
+    gap: 14px;
+  }
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 24px;
+  padding: 12px;
+  align-items: center;
+
+  @include de-mobile {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 0 0 8px;
+  }
+}
+
+.thumb,
+.chip,
+.name,
+.host {
+  background: var(--de-surface);
+  border-radius: 8px;
+}
+
+.thumb {
+  aspect-ratio: 16 / 9;
+  border-radius: 14px;
+}
+
+.chip {
+  width: 64px;
+  height: 22px;
+}
+
+.name {
+  width: 70%;
+  height: 24px;
+  margin-top: 9px;
+}
+
+.host {
+  width: 40%;
+  height: 16px;
+  margin-top: 9px;
+}

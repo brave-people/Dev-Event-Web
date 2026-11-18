@@ -1,0 +1,43 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.band {
+  position: relative;
+  overflow: hidden;
+  min-height: 176px;
+  border-radius: 26px;
+  color: #fff;
+  background: radial-gradient(
+    ellipse 70% 150% at 72% 40%,
+    #1a1d2b 0%,
+    #0b0d14 78%
+  );
+
+  @include de-mobile {
+    border-radius: 22px;
+  }
+}
+
+.stickers {
+  position: absolute;
+  inset: 0;
+
+  @include de-mobile {
+    position: relative;
+    inset: auto;
+    height: 118px;
+    transform: scale(0.74);
+    transform-origin: 100% 0;
+  }
+}
+
+.inner {
+  position: relative;
+  max-width: 58%;
+  padding: 36px 36px 32px;
+
+  @include de-mobile {
+    max-width: none;
+    padding: 0 22px 22px;
+  }
+}

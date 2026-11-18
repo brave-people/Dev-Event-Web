@@ -25,8 +25,17 @@ class MyDocument extends Document {
           {/* FOUC prevention: resolve theme before React boots */}
           <script
             dangerouslySetInnerHTML={{
-              __html: `(function(){try{var s=localStorage.getItem('dev-event:theme');var t=s||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();`,
+              __html: `(function(){try{var s=localStorage.getItem('dev-event:theme');var t=s||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();try{if(/(?:^|; )dev-event-notice=true(?:;|$)/.test(document.cookie)){document.documentElement.setAttribute('data-notice','off');}}catch(e){}`,
             }}
+          />
+          <link
+            rel="preconnect"
+            href="https://cdn.jsdelivr.net"
+            crossOrigin="anonymous"
+          />
+          <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
           />
           <meta property="og:type" content="website" />
           <meta property="og:site_name" content="Dev Event" />

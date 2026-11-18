@@ -1,0 +1,33 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.poster {
+  position: relative;
+  --de-thumb-radius: 18px;
+}
+
+.zoom {
+  @include de-button-reset;
+  @include de-focus-ring;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  border-radius: 18px;
+  cursor: zoom-in;
+}
+
+.hint {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}

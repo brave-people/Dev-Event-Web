@@ -52,6 +52,8 @@ describe('eventMeta', () => {
     expect(s).toContain('오프라인 · 무료 · 세미나');
     expect(s).toContain('2026.08.19 (수) ~ 2026.09.04 (금)');
     expect(s).not.toContain('준비중');
+    expect(s).toContain("'신청하러 가기' 버튼");
+    expect(s).not.toContain('참여하기');
   });
 
   it('og 이미지는 항상 절대 URL', () => {

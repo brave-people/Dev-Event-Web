@@ -96,7 +96,7 @@ const List = ({ data, parentLast, eagerCount = 0 }: Props) => {
   };
 
   const handleFavorite = (isRemoving: boolean) => {
-    pushToast(isRemoving ? '북마크에서 제거되었어요' : '북마크에 추가되었어요');
+    pushToast(isRemoving ? '관심 행사에서 뺐어요' : '관심 행사에 담았어요');
   };
 
   const createMyEvent = async ({ eventId }: { eventId: string }) => {

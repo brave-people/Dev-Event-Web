@@ -1,0 +1,70 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.more {
+  margin-top: 48px;
+  padding-top: 8px;
+  border-top: 1px solid var(--de-line);
+}
+
+.heading {
+  margin: 32px 0 16px;
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  @include de-focus-ring;
+  display: grid;
+  grid-template-columns: 176px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  padding: 10px;
+  margin: 0 -10px;
+  border-radius: 16px;
+  color: inherit;
+
+  &:hover {
+    background: var(--de-hover);
+  }
+
+  @include de-mobile {
+    grid-template-columns: 128px minmax(0, 1fr);
+    gap: 12px;
+  }
+}
+
+.thumb {
+  display: block;
+  --de-thumb-radius: 10px;
+}
+
+.text {
+  display: block;
+  min-width: 0;
+
+  strong {
+    @include text-multiline-ellipsis(2);
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 700;
+
+    @include de-mobile {
+      font-size: 14.5px;
+    }
+  }
+
+  small {
+    display: block;
+    margin-top: 5px;
+    font-size: 13.5px;
+    color: var(--de-hint);
+  }
+}

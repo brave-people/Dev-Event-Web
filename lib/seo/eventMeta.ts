@@ -33,7 +33,7 @@ export const buildEventPlaceholderSummary = (e: Event): string => {
   return [
     `${e.organizer} 주최 '${e.title}'${tags ? ` (${tags})` : ''} 행사입니다.`,
     period ? `${label}: ${period}.` : '',
-    "자세한 프로그램과 참가 방법은 '참여하기' 버튼을 눌러 주최 측 페이지에서 확인해 주세요.",
+    "자세한 프로그램과 참가 방법은 '신청하러 가기' 버튼을 눌러 주최 측 페이지에서 확인해 주세요.",
   ]
     .filter(Boolean)
     .join(' ');

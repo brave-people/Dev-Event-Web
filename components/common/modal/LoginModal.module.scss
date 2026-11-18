@@ -1,342 +1,90 @@
-@import '~styles/_mixin.scss';
 @import '~styles/_variables.scss';
-@import '~styles/_common.scss';
+@import '~styles/_mixin.scss';
 
-.modal {
-  // 앱/모바일 호환 센터링 - transform 대신 margin auto 사용
-  position: relative;
-  width: 480px;
-  min-height: 580px;
-  max-width: calc(100vw - 40px);
-  margin: 0 auto;
-  z-index: 999;
-
-  // iOS Safari 호환 글래스 효과
-  background: rgba(143, 143, 143, 0.25);
-  background-color: rgba(143, 143, 143, 0.25); // iOS fallback
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.12),
-    0 2px 8px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-
-  // iOS Safari 최적화
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-
-  padding: 32px;
-  @include flex-center-column;
-
-  @include tablet {
-    width: calc(100vw - 40px);
-    max-width: 480px;
+@keyframes fade {
+  from {
+    opacity: 0;
   }
+}
 
-  @include mobile {
-    width: calc(100vw - 40px);
-    max-width: 360px;
-    padding: 24px;
-    margin: 0;
-  }
-
-  &__buttons {
-    width: 100%;
-    @include flex-between;
-    margin-bottom: 20px;
-
-    .button {
-      width: 40px;
-      height: 40px;
-      border: none;
-      background: rgba(143, 143, 143, 0.2);
-      background-color: rgba(255, 255, 255, 0.2); // iOS fallback
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-radius: 12px;
-      cursor: pointer;
-      @include flex-center;
-      color: rgba(255, 255, 255, 0.8);
-      transition: all 0.3s ease;
-      // iOS Safari 최적화
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-      will-change: background, color;
-
-      &:hover {
-        background: rgba(255, 255, 255, 0.3);
-        background-color: rgba(255, 255, 255, 0.3); // iOS fallback
-        color: rgba(255, 255, 255, 1);
-      }
-
-      &.hidden {
-        visibility: hidden;
-      }
-    }
-  }
-
-  &__title {
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 1.4;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.95);
-    margin-bottom: 32px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  &__inner {
-    width: 100%;
-    @include flex-center-column;
-
-    .login-form {
-      width: 100%;
-      @include flex-center-column;
-      gap: 16px;
-
-      &__item {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-
-        span {
-          color: rgba(255, 255, 255, 0.9);
-          font-weight: 500;
-          font-size: 14px;
-        }
-
-        .input {
-          width: 100%;
-          height: 48px;
-          padding: 0 16px;
-          border: 0.4px solid rgba(255, 255, 255, 0.3);
-          border-radius: 12px;
-          background: rgba(255, 255, 255, 0.2);
-          background-color: rgba(255, 255, 255, 0.2); // iOS fallback
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-          color: rgba(255, 255, 255, 0.9);
-          font-size: 16px;
-          transition: all 0.3s ease;
-          // iOS Safari 최적화
-          -webkit-transform: translateZ(0);
-          transform: translateZ(0);
-          -webkit-appearance: none;
-          appearance: none;
-          will-change: background, border-color;
-
-          &::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-            -webkit-text-fill-color: rgba(255, 255, 255, 0.5);
-          }
-
-          &:focus {
-            outline: none;
-            border-color: rgba(255, 255, 255, 0.5);
-            background: rgba(255, 255, 255, 0.25);
-            background-color: rgba(255, 255, 255, 0.25); // iOS fallback
-          }
-        }
-      }
-
-      &__button {
-        width: 100%;
-        height: 52px;
-        @include flex-center;
-        border: none;
-        border-radius: 16px;
-        font-weight: 600;
-        font-size: 16px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
-        // iOS Safari 최적화
-        -webkit-transform: translateZ(0);
-        transform: translateZ(0);
-        -webkit-backface-visibility: hidden;
-        backface-visibility: hidden;
-        will-change: transform, background;
-
-        // 공통 버튼 스타일
-        &::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: rgba(255, 255, 255, 0.08);
-          opacity: 0;
-          transition: opacity 0.3s ease;
-        }
-
-        &:hover::before {
-          opacity: 1;
-        }
-
-        span {
-          position: relative;
-          z-index: 1;
-          margin-left: 12px;
-        }
-
-        svg {
-          position: relative;
-          z-index: 1;
-          width: 20px;
-          height: 20px;
-        }
-
-        // 카카오 버튼
-        &.kakao {
-          background: #fee500;
-          color: #3c1e1e;
-          box-shadow: 0 4px 16px rgba(254, 229, 0, 0.3);
-
-          &:hover {
-            background: #ffd700;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(254, 229, 0, 0.4);
-          }
-        }
-
-        // 구글 버튼
-        &.google {
-          background: rgba(255, 255, 255, 0.9);
-          color: #333;
-          border: 1px solid rgba(255, 255, 255, 0.3);
-
-          &:hover {
-            background: rgba(255, 255, 255, 0.95);
-            transform: translateY(-2px);
-          }
-        }
-
-        // 네이버 버튼
-        &.naver {
-          background: #03c75a;
-          color: $white;
-          box-shadow: 0 4px 16px rgba(3, 199, 90, 0.3);
-
-          &:hover {
-            background: #00b051;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(3, 199, 90, 0.4);
-          }
-        }
-
-        // 깃허브 버튼
-        &.github {
-          background: #24292e;
-          color: $white;
-          box-shadow: 0 4px 16px rgba(36, 41, 46, 0.3);
-
-          &:hover {
-            background: #1a1e22;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(36, 41, 46, 0.4);
-          }
-        }
-
-        // 애플 버튼
-        &.apple {
-          background: #000;
-          color: $white;
-          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-
-          &:hover {
-            background: #333;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-          }
-        }
-
-        // 이메일 버튼
-        &.email {
-          background: rgba(255, 255, 255, 0.2);
-          background-color: rgba(255, 255, 255, 0.2); // iOS fallback
-          color: rgba(255, 255, 255, 0.9);
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-
-          &:hover {
-            background: rgba(255, 255, 255, 0.28);
-            background-color: rgba(255, 255, 255, 0.28); // iOS fallback
-            transform: translateY(-2px);
-            -webkit-transform: translateY(-2px);
-          }
-        }
-
-        // 로그인 버튼
-        &.login {
-          background: var(--primary);
-          color: $white;
-          box-shadow: 0 4px 16px rgba(44, 76, 239, 0.3);
-          margin-top: 16px;
-
-          &:hover {
-            background: #4f6cff;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(44, 76, 239, 0.4);
-          }
-
-          span {
-            margin: 0;
-          }
-        }
-
-        // 회원가입 버튼
-        &.signup {
-          background: transparent;
-          color: rgba(255, 255, 255, 0.8);
-          text-decoration: underline;
-          height: auto;
-          padding: 16px 0;
-
-          &:hover {
-            color: rgba(255, 255, 255, 1);
-            transform: none;
-          }
-
-          span {
-            margin: 0;
-          }
-        }
-      }
-    }
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
   }
 }
 
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100vh;
-  background: rgba(143, 143, 143, 0.6);
-  background-color: rgba(0, 0, 0, 0.6); // iOS fallback
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  z-index: 99;
-
-  // Flexbox 센터링 - 앱/모바일에서 안정적
+  inset: 0;
+  z-index: 1000;
   display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 20px;
-  box-sizing: border-box;
+  overflow-y: auto;
+  background: rgba(12, 14, 22, 0.56);
+  animation: fade 0.18s ease-out;
 
-  // iOS Safari 최적화
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
-  will-change: backdrop-filter;
+  @media (max-width: 520px) {
+    padding: 14px;
+  }
+
+  @include de-reduced-motion {
+    animation: none;
+  }
+}
+
+.card {
+  position: relative;
+  margin: auto;
+  width: 100%;
+  max-width: 440px;
+  border-radius: 26px;
+  overflow: hidden;
+  outline: 0;
+  background: var(--de-bg);
+  color: var(--de-ink);
+  box-shadow: 0 24px 70px rgba(8, 10, 20, 0.34);
+  text-align: center;
+  animation: rise 0.24s cubic-bezier(0.2, 0.8, 0.3, 1);
+
+  @media (max-width: 520px) {
+    border-radius: 22px;
+  }
+
+  @include de-reduced-motion {
+    animation: none;
+  }
+}
+
+.body {
+  padding: 0 40px 34px;
+
+  @media (max-width: 520px) {
+    padding: 0 22px 26px;
+  }
+}
+
+.close {
+  @include de-button-reset;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.1);
+
+  &:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
 }

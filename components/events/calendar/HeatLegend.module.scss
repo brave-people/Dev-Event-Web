@@ -1,0 +1,134 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+// 색 칸의 --heat-1 ~ --heat-4 는 HeatMonth.module.scss 의 .month 에서 내려온다
+// (이 풍선은 .month 안에 그려진다)
+
+@keyframes legendIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.legend {
+  position: absolute;
+  left: 0;
+  top: 44px;
+  z-index: 12;
+  width: 276px;
+  padding: 16px 18px 15px;
+  border-radius: 16px;
+  background: var(--de-bg);
+  border: 1px solid var(--de-line);
+  box-shadow: var(--de-shadow);
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--de-sub);
+  animation: legendIn 0.16s ease-out;
+
+  @include de-mobile {
+    width: min(276px, calc(100vw - 40px));
+  }
+
+  @include de-reduced-motion {
+    animation: none;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: var(--tail, 126px);
+    top: -6px;
+    width: 11px;
+    height: 11px;
+    background: var(--de-bg);
+    border-left: 1px solid var(--de-line);
+    border-top: 1px solid var(--de-line);
+    transform: rotate(45deg);
+  }
+
+  b {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14.5px;
+    color: var(--de-ink);
+  }
+
+  p {
+    margin: 0;
+  }
+
+  em {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--de-ink);
+  }
+}
+
+.scale {
+  display: grid;
+  grid-template-columns: auto repeat(4, 1fr) auto;
+  align-items: center;
+  gap: 4px;
+  margin: 11px 0 3px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--de-hint);
+
+  i {
+    height: 18px;
+    border-radius: 5px;
+  }
+
+  .lv1 {
+    background: var(--heat-1);
+  }
+
+  .lv2 {
+    background: var(--heat-2);
+  }
+
+  .lv3 {
+    background: var(--heat-3);
+  }
+
+  .lv4 {
+    background: var(--heat-4);
+  }
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin: 0 30px 11px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--de-hint);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.close {
+  @include de-button-reset;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--de-hint);
+
+  &:hover {
+    background: var(--de-surface);
+    color: var(--de-ink);
+  }
+
+  &:focus-visible {
+    outline: 2.5px solid var(--de-blue);
+    outline-offset: 2px;
+  }
+}
