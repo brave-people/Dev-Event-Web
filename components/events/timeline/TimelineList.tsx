@@ -47,6 +47,10 @@ function TimelineList({
             {showMonth && (
               <h2 className={cn('month')}>{`${monthOf(group.key)}월`}</h2>
             )}
+            {/* 첫 달의 제목은 화면에 보이지 않게 둔다. 날짜 제목(h3)이 늘 달 제목(h2) 아래에 오게 */}
+            {index === 0 && (
+              <h2 className={cn('sr-only')}>{`${monthOf(group.key)}월`}</h2>
+            )}
             <section
               id={dayElementId(group.key)}
               data-key={group.key}

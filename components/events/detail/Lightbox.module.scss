@@ -30,6 +30,30 @@
   cursor: zoom-out;
 }
 
+// 그림을 불러오지 못했을 때
+.broken {
+  display: grid;
+  gap: 8px;
+  max-width: min(420px, calc(100vw - 48px));
+  padding: 28px 32px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  text-align: center;
+  cursor: zoom-out;
+
+  strong {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  span {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.72);
+  }
+}
+
 .close {
   @include de-button-reset;
   @include de-focus-ring;

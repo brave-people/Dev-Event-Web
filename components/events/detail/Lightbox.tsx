@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import classNames from 'classnames/bind';
 import Modal from 'react-modal';
@@ -21,6 +21,9 @@ interface LightboxProps {
 
 function Lightbox({ image, onClose }: LightboxProps) {
   const isOpen = image !== null;
+  const [broken, setBroken] = useState(false);
+
+  useEffect(() => setBroken(false), [image]);
 
   useEffect(() => {
     if (!isOpen) return undefined;
@@ -40,13 +43,20 @@ function Lightbox({ image, onClose }: LightboxProps) {
       overlayClassName={cn('overlay')}
       contentLabel="그림 크게 보기"
     >
-      {image && (
+      {image && !broken && (
         <img
           className={cn('image')}
           src={image.src}
           alt={image.alt}
           onClick={onClose}
+          onError={() => setBroken(true)}
         />
+      )}
+      {image && broken && (
+        <div className={cn('broken')} role="status" onClick={onClose}>
+          <strong>그림을 불러오지 못했어요</strong>
+          {image.alt && <span>{image.alt}</span>}
+        </div>
       )}
       {image && (
         <button

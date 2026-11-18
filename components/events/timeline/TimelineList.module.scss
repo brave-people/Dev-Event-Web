@@ -1,6 +1,16 @@
 @import '~styles/_variables.scss';
 @import '~styles/_mixin.scss';
 
+// 화면에는 안 보이고 읽기 프로그램만 읽는 글자
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 .list {
   min-width: 0;
 }

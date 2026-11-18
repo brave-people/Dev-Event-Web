@@ -1,26 +1,8 @@
 @use '/styles/_color.scss' as *;
 
 html[data-theme='light'] {
-  --primary: #{$light-primary};
-  --background-1: #{$light-background-1};
-  --background-2: #{$light-background-2};
-  --gray-1: #{$light-gray-1};
-  --gray-2: #{$light-gray-2};
-  --gray-3: #{$light-gray-3};
-  --gray-4: #{$light-gray-4};
-  --gray-5: #{$light-gray-5};
-
-  // Translucent surfaces (sticky header / glass overlays).
-  // Pre-composed rgba so SCSS does not have to interpolate runtime variables.
-  --header-bg: hsla(0, 0%, 100%, 0.88);
-  --glass-overlay: rgba(255, 255, 255, 0.9);
-  --glass-overlay-strong: rgba(255, 255, 255, 1);
-  --notice-bg: rgba(0, 67, 255, 0.08);
-
-  // Segmented control / pill toggle (e.g. 리스트/캘린더).
-  // active needs to sit visibly above track in both themes.
-  --toggle-track-bg: #F0F0F5;
-  --toggle-active-bg: #ffffff;
+  // 스크롤바·select 목록 같은 브라우저 기본 부품도 테마를 따르게 한다
+  color-scheme: light;
 
   // KTB brand
   --ktb-tech-blue: #{$ktb-tech-blue};
@@ -86,24 +68,8 @@ html[data-theme='light'] {
 // and break components that expected a stable dark surface.
 // ============================================================
 html[data-theme='dark'] {
-  --primary: #{$wanted-dark-primary-normal};
-  --background-1: #{$wanted-dark-bg-base};
-  --background-2: #{$wanted-dark-bg-elevated};
-  --gray-1: #{$wanted-dark-label-strong};
-  --gray-2: #{$wanted-dark-label-alternative};
-  --gray-3: #{$wanted-dark-interaction-inactive};
-  --gray-4: #{$wanted-dark-line-solid};
-  --gray-5: #{$wanted-dark-line-alt};
-
-  // Translucent surfaces — rgba composed from Wanted background-normal/elevated
-  --header-bg: rgba(27, 28, 30, 0.86);              // #1B1C1E @ 86%
-  --glass-overlay: rgba(33, 34, 37, 0.72);          // #212225 @ 72%
-  --glass-overlay-strong: rgba(33, 34, 37, 0.94);   // #212225 @ 94%
-  --notice-bg: rgba(51, 133, 255, 0.12);            // #3385FF @ 12%
-
-  // Segmented control: track = elevated surface, active = one step brighter line.
-  --toggle-track-bg: #{$wanted-dark-bg-elevated};       // #212225
-  --toggle-active-bg: #{$wanted-dark-line-solid};       // #37383C
+  // 없으면 어두운 화면에서도 스크롤바가 흰색으로 그려진다
+  color-scheme: dark;
 
   // KTB brand — brand blue stays for light/dark identity, but the
   // dark variant uses the brighter Wanted primary-normal for legibility.

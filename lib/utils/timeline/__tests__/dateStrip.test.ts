@@ -174,6 +174,7 @@ describe('월 선택', () => {
     expect(readMonthParam({ year: '2026', month: '0' })).toBeNull();
     expect(readMonthParam({ year: '0', month: '10' })).toBeNull();
     expect(readMonthParam({ year: '2026', month: '10.5' })).toBeNull();
+    expect(readMonthParam({ year: '2026.5', month: '10' })).toBeNull();
     expect(readMonthParam({ year: ['2026', '2025'], month: '10' })).toBeNull();
   });
 });

@@ -173,6 +173,30 @@ A를 권합니다. 1단계(헤더·푸터·색)가 모든 화면에 걸쳐 있�
 - 6단계에서 미룬 것: 크게 보기의 그림이 깨졌을 때 처리, iOS 아래 안전 영역(`viewport-fit=cover` 메타가 없어 모바일 아래 고정 버튼의 안전 영역 처리가 효과 없음), 캘린더 메뉴의 Home·End 키, 걸러내기 브랜치(`claude/frosty-murdock-4b230c`)의 `lib/utils/renderDescription.ts`로 교체.
 - `.error { height: 100vh }`(`styles/globals.scss`)는 헤더가 흐름 안으로 들어온 뒤 늘 스크롤이 생깁니다. 오류 화면을 바꾸면서 함께 없앱니다.
 
+#### 처리 결과 (2026-11-19, 커밋 전)
+
+미룬 다듬기와 정리 항목을 지금 빌드에서 하나씩 재현해 보고 처리했다.
+
+| 항목 | 결과 |
+|---|---|
+| 안내(토스트)가 붙은 날짜 띠 위에 겹침 | 고침. `DateNav`가 띠 아랫선을 `<html>`의 `--de-stuck-bottom`으로 알리고, 안내는 `max(기본 위치, 아랫선 + 12px)`에 뜬다 |
+| 제목 단계 | 고침. 첫 달에도 화면에 안 보이는 달 제목(`h2`)을 두어 날짜 제목(`h3`)이 늘 달 제목 아래에 온다 |
+| 날짜 띠 칸이 모두 Tab 정지점 | 고침. roving tabindex(`role="toolbar"`, ←→·Home·End). 날짜 줄의 Tab 정지점 27 → 6 |
+| 행사 유형이 방향키만으로 이동 | 고침. `<select>`는 그대로, 키보드로 옮긴 값은 Enter나 다른 곳으로 나갈 때 적용. 마우스·터치는 고르자마자 적용 |
+| Safari 15 이하에서 날짜 띠가 안 붙음 | 고침. `@supports not (overflow-x: clip)`에서 body는 `visible`(가로 넘침은 html이 막음). 실제 Safari 15에서는 확인 못 함 |
+| 주소의 소수 연·월 | 고침. 서버도 `readMonthParam`(정수 2000~2100년, 1~12월)으로 읽는다 |
+| 달력 칸 설명을 키보드 포커스에서도 | 고침. `:focus-visible`에서도 같은 풍선 |
+| 취소된 보기 전환의 `focusDay` | 고침. `router.push`가 `false`로 끝나거나 실패하면 비운다 |
+| 색 단계 칸의 글자 대비 | 고침(사용자 결정). 칸 바탕은 목업 그대로, 글자색만 `--heat-num`·`--heat-3-on`·`--heat-sun`·`--heat-sat`로 바꿔 앞으로 올 날 글자가 모두 4.5:1 이상. 지난 날은 칸 전체 42% 흐림 대신 회색 단계(`--heat-past-*`) |
+| 크게 보기 그림이 깨졌을 때 | 고침. "그림을 불러오지 못했어요"와 그림 설명 |
+| iOS 아래 안전 영역 | 그대로 둠. `viewport-fit=cover`가 없어 Safari가 안전 영역 안에만 그리므로 화면 문제 없음(iOS 27 시뮬레이터 확인) |
+| 캘린더 메뉴의 Home·End | 고침 |
+| 걸러내기 브랜치로 교체 | 고침. `claude/frosty-murdock-4b230c`의 `renderDescription.ts`와 테스트를 합치고 `xss` 패키지 추가. 목업 API는 본문을 마크다운으로 내려 준다(`.claude/redesign-mock/html-to-md.js`) |
+| `.error { height: 100vh }` | 이미 없음 |
+| 옛 필터 모달 게이팅 | 걷어냄. `/events`·`/search`의 게이팅과 그 아래 파일 53개, `WindowContext`의 `isClient`·`windowX`·`modalState`, `EventContext`의 `updateJobGroupList`·`deleteJobGroupList`, `react-loader-spinner` 패키지를 지웠다 |
+
+남은 것: 0건이 된 `public/` 자산(`icon/toggle_active.svg`·`search.svg`와 정리 보고서 1-3절 목록)은 바깥에서 주소로 부를 수 있어 남겨 두었다. 공용 SCSS·유틸 안의 안 쓰는 항목(정리 보고서 4절)도 그대로다.
+
 ## 범위 밖
 
 - 소개 화면(`pages/about.tsx`, `styles/Brand.module.scss`)

@@ -123,6 +123,16 @@ function FilterBar({
     );
   };
 
+  // 키보드로 옮기는 중인 행사 유형. 방향키마다 주소가 바뀌지 않게 Enter나 다른 곳으로 옮겨 갈 때 적용한다
+  const [typeDraft, setTypeDraft] = useState<string | null>(null);
+  const typeByKeyRef = useRef(false);
+  useEffect(() => setTypeDraft(null), [type]);
+
+  const applyType = (value: string) => {
+    setTypeDraft(null);
+    if (value !== (type ?? '전체')) pickType(value);
+  };
+
   const pickType = (value: string) => {
     ga.event({
       action: 'web_event_행사유형',
@@ -243,8 +253,26 @@ function FilterBar({
         <span className={cn('select', { on: !!type })}>
           <select
             aria-label="행사 유형"
-            value={type ?? '전체'}
-            onChange={(event) => pickType(event.target.value)}
+            value={typeDraft ?? type ?? '전체'}
+            onPointerDown={() => {
+              typeByKeyRef.current = false;
+            }}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' && typeDraft !== null) {
+                event.preventDefault();
+                applyType(typeDraft);
+                return;
+              }
+              typeByKeyRef.current = true;
+            }}
+            onChange={(event) => {
+              // 마우스·터치로 고르면 바로, 키보드로 옮기면 값만 바꿔 둔다
+              if (typeByKeyRef.current) setTypeDraft(event.target.value);
+              else pickType(event.target.value);
+            }}
+            onBlur={() => {
+              if (typeDraft !== null) applyType(typeDraft);
+            }}
           >
             <option value="전체">행사 유형</option>
             {TYPE_OPTIONS.map((value) => (

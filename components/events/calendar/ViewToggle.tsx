@@ -28,7 +28,14 @@ const ViewToggle = ({ current, dayKey }: Props) => {
     const todayKey = toKstNaive(Date.now()).slice(0, 10);
     if (mode === 'list') {
       handleFocusDay(dayKey ?? null);
-      router.push(toTimelineHref({ query: router.query, todayKey }));
+      // 이동이 취소(false)되거나 실패하면 넘겨 둔 날짜를 비운다.
+      // 남겨 두면 나중에 다른 길로 타임라인에 왔을 때 그 날로 튄다
+      router.push(toTimelineHref({ query: router.query, todayKey })).then(
+        (moved) => {
+          if (!moved) handleFocusDay(null);
+        },
+        () => handleFocusDay(null)
+      );
     } else {
       router.push(toCalendarHref({ query: router.query, dayKey, todayKey }));
     }

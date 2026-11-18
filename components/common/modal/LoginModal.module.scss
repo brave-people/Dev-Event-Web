@@ -24,6 +24,11 @@
   background: rgba(12, 14, 22, 0.56);
   animation: fade 0.18s ease-out;
 
+  // 어두운 화면: 창 바탕이 페이지 바탕과 같은 색이라 뒤를 더 어둡게 해 창이 떠 보이게 한다
+  :global(html[data-theme='dark']) & {
+    background: rgba(4, 5, 8, 0.74);
+  }
+
   @media (max-width: 520px) {
     padding: 14px;
   }
@@ -46,6 +51,11 @@
   box-shadow: 0 24px 70px rgba(8, 10, 20, 0.34);
   text-align: center;
   animation: rise 0.24s cubic-bezier(0.2, 0.8, 0.3, 1);
+
+  // 어두운 화면: 가장자리가 뒤와 섞이지 않게 얇은 선을 두른다
+  :global(html[data-theme='dark']) & {
+    box-shadow: 0 0 0 1px var(--de-line), 0 24px 70px rgba(0, 0, 0, 0.5);
+  }
 
   @media (max-width: 520px) {
     border-radius: 22px;

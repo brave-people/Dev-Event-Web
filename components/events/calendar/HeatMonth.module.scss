@@ -7,8 +7,17 @@
   --heat-2: #b9ccff;
   --heat-3: #7b9bff;
   --heat-4: var(--de-blue);
-  --heat-num: #3f5fc4;
+  // 칸 안 글자색. 칸 바탕(--heat-*) 위에서 대비 4.5:1을 넘게 고른 값
+  --heat-num: #2d4aa6; // 1·2단계 칸의 건수
+  --heat-3-on: #0b1020; // 3단계 칸의 날짜·건수
+  --heat-sun: #a8202a; // 1·2단계 칸의 일요일 날짜
+  --heat-sat: #1d48b8; // 1·2단계 칸의 토요일 날짜
   --heat-on: #fff;
+  // 지난 날의 색 단계: 글자색(--de-ink)을 바탕(--de-bg)에 6·12·20·30% 섞은 회색
+  --heat-past-1: #f1f1f2;
+  --heat-past-2: #e3e3e4;
+  --heat-past-3: #d1d1d2;
+  --heat-past-4: #b9babc;
 
   :global(html[data-theme='dark']) & {
     --heat-1: #1a2750;
@@ -16,7 +25,14 @@
     --heat-3: #3558d6;
     --heat-4: var(--de-blue);
     --heat-num: #9db6ff;
+    --heat-3-on: #fff;
+    --heat-sun: #ff9499;
+    --heat-sat: #9dbbff;
     --heat-on: #0b1020;
+    --heat-past-1: #1d1f23;
+    --heat-past-2: #2a2c30;
+    --heat-past-3: #3c3e42;
+    --heat-past-4: #535559;
   }
 }
 
@@ -242,11 +258,11 @@
     line-height: 1.15;
 
     &.sun {
-      color: var(--de-sun);
+      color: var(--heat-sun);
     }
 
     &.sat {
-      color: var(--de-sat);
+      color: var(--heat-sat);
     }
   }
 
@@ -277,7 +293,7 @@
 
     b,
     small {
-      color: #fff;
+      color: var(--heat-3-on);
     }
   }
 
@@ -307,17 +323,34 @@
     }
   }
 
-  &.is-past {
-    opacity: 0.42;
+  // 지난 날: 칸 전체를 흐리게 하면 글자가 안 읽혀서, 바탕만 회색 단계로 바꾸고 글자는 또렷하게 둔다.
+  // 마우스를 올리거나 고른 날이면 원래 색으로 보인다
+  &.is-past:not(:disabled):not(:hover):not(.is-on) {
+    &.lv1 {
+      background: var(--heat-past-1);
+    }
+
+    &.lv2 {
+      background: var(--heat-past-2);
+    }
+
+    &.lv3 {
+      background: var(--heat-past-3);
+    }
+
+    &.lv4 {
+      background: var(--heat-past-4);
+    }
+
+    b,
+    small {
+      color: var(--de-ink);
+    }
   }
 
   &:not(:disabled):hover {
     transform: scale(1.06);
     z-index: 4;
-  }
-
-  &.is-past:not(:disabled):hover {
-    opacity: 1;
   }
 
   // 색 단계·요일 색보다 앞선다
@@ -343,9 +376,9 @@
   }
 }
 
-// 칸에 올렸을 때의 한 줄 설명. 터치 기기에서는 뜨지 않는다(칸 안의 숫자가 같은 정보를 준다)
-@media (hover: hover) {
-  .cell[data-tip]:hover::after {
+// 칸 설명(풍선과 꼬리). 마우스를 올렸을 때와 키보드로 왔을 때 같은 것을 보인다
+@mixin cell-tip {
+  &::after {
     content: attr(data-tip);
     position: absolute;
     left: 50%;
@@ -363,7 +396,7 @@
     z-index: 5;
   }
 
-  .cell[data-tip]:hover::before {
+  &::before {
     content: '';
     position: absolute;
     left: 50%;
@@ -375,15 +408,28 @@
     transform: rotate(45deg);
     z-index: 5;
   }
+}
 
-  .grid td:nth-child(-n + 2) .cell[data-tip]:hover::after {
-    left: 0;
-    transform: none;
+// 마우스를 올렸을 때. 터치 기기에서는 뜨지 않는다(칸 안의 숫자가 같은 정보를 준다)
+@media (hover: hover) {
+  .cell[data-tip]:hover {
+    @include cell-tip;
   }
+}
 
-  .grid td:nth-last-child(-n + 2) .cell[data-tip]:hover::after {
-    left: auto;
-    right: 0;
-    transform: none;
-  }
+// 키보드로 칸에 왔을 때는 기기와 상관없이 보인다
+.cell[data-tip]:focus-visible {
+  @include cell-tip;
+}
+
+// 양 끝 두 칸은 풍선이 달력 밖으로 나가지 않게 칸 가장자리에 맞춘다
+.grid td:nth-child(-n + 2) .cell[data-tip]::after {
+  left: 0;
+  transform: none;
+}
+
+.grid td:nth-last-child(-n + 2) .cell[data-tip]::after {
+  left: auto;
+  right: 0;
+  transform: none;
 }

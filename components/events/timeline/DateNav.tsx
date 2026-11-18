@@ -10,6 +10,11 @@ import style from './DateNav.module.scss';
 
 const cn = classNames.bind(style);
 
+// 안내(토스트)가 뜨는 자리의 아래 끝(위에서 168px, ToastStack.module.scss)에 여유를 더한 값.
+// 날짜 띠의 위쪽이 이보다 위에 있으면 안내와 겹칠 수 있다
+const TOAST_ZONE = 180;
+const STUCK_BOTTOM = '--de-stuck-bottom';
+
 interface DateNavProps {
   days: StripDay[];
   activeKey: string;
@@ -65,6 +70,42 @@ function DateNav({
     }
     window.addEventListener('resize', report);
     return () => window.removeEventListener('resize', report);
+  }, []);
+
+  // 날짜 띠가 화면 위쪽(안내가 뜨는 자리)에 걸쳐 있으면 그 아랫선을 <html>에 알린다.
+  // 안내는 이 값보다 아래에 뜬다(ToastStack.module.scss)
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return undefined;
+    const root = document.documentElement;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const rect = el.getBoundingClientRect();
+      if (rect.top < TOAST_ZONE && rect.bottom > 0) {
+        root.style.setProperty(STUCK_BOTTOM, `${Math.round(rect.bottom)}px`);
+      } else {
+        root.style.removeProperty(STUCK_BOTTOM);
+      }
+    };
+    const schedule = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    const observer =
+      typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(schedule)
+        : null;
+    observer?.observe(el);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      observer?.disconnect();
+      root.style.removeProperty(STUCK_BOTTOM);
+    };
   }, []);
 
   const pickerCallbackRef = useRef(onPickerOpenChange);

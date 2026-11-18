@@ -44,6 +44,17 @@ function DateStrip({ days, activeKey, onPickDay }: DateStripProps) {
   const [canPrev, setCanPrev] = useState(false);
   const [canNext, setCanNext] = useState(false);
   const [dragging, setDragging] = useState(false);
+  // 방향키로 옮겨 간 칸. 띠 밖으로 포커스가 나가면 비우고, 그때는 고른 날이 Tab 자리다
+  const [roveKey, setRoveKey] = useState<string | null>(null);
+
+  // 띠 안에서 Tab으로 들어가는 칸은 하나뿐이다(roving tabindex)
+  const enabledKeys = days.filter((day) => day.count > 0).map((day) => day.key);
+  const wantKey = roveKey ?? activeKey;
+  const tabKey = enabledKeys.includes(wantKey)
+    ? wantKey
+    : enabledKeys.find((key) => key >= wantKey) ??
+      enabledKeys[enabledKeys.length - 1] ??
+      null;
 
   const updateArrows = useCallback(() => {
     const strip = stripRef.current;
@@ -111,6 +122,47 @@ function DateStrip({ days, activeKey, onPickDay }: DateStripProps) {
     },
     []
   );
+
+  // 칸으로 포커스를 옮기고, 띠 밖이면 그 칸이 보이게 띠만 옮긴다(화면은 위아래로 움직이지 않는다)
+  const focusCell = (key: string) => {
+    const strip = stripRef.current;
+    const cell = strip?.querySelector<HTMLElement>(`[data-key="${key}"]`);
+    if (!strip || !cell) return;
+    setRoveKey(key);
+    cell.focus({ preventScroll: true });
+    const left = cell.offsetLeft;
+    const right = left + cell.offsetWidth;
+    if (left < strip.scrollLeft) {
+      strip.scrollTo({ left, behavior: behaviorOf() });
+    } else if (right > strip.scrollLeft + strip.clientWidth) {
+      strip.scrollTo({
+        left: right - strip.clientWidth,
+        behavior: behaviorOf(),
+      });
+    }
+  };
+
+  const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
+    const current = (event.target as HTMLElement).closest<HTMLElement>(
+      '[data-key]'
+    )?.dataset.key;
+    if (!current || enabledKeys.length === 0) return;
+    event.preventDefault();
+    const at = enabledKeys.indexOf(current);
+    let next = enabledKeys[0];
+    if (event.key === 'End') next = enabledKeys[enabledKeys.length - 1];
+    else if (event.key === 'ArrowRight')
+      next = enabledKeys[Math.min(enabledKeys.length - 1, at + 1)];
+    else if (event.key === 'ArrowLeft') next = enabledKeys[Math.max(0, at - 1)];
+    focusCell(next);
+  };
+
+  const onBlur = (event: React.FocusEvent<HTMLDivElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+      setRoveKey(null);
+    }
+  };
 
   const scrollByHalf = (direction: -1 | 1) => {
     const strip = stripRef.current;
@@ -223,8 +275,10 @@ function DateStrip({ days, activeKey, onPickDay }: DateStripProps) {
       <div
         ref={stripRef}
         className={cn('strip', { 'is-drag': dragging })}
-        role="group"
+        role="toolbar"
         aria-label="날짜 고르기"
+        onKeyDown={onKeyDown}
+        onBlur={onBlur}
         onPointerDown={onPointerDown}
         onClickCapture={onClickCapture}
         onDragStart={(event) => event.preventDefault()}
@@ -244,6 +298,7 @@ function DateStrip({ days, activeKey, onPickDay }: DateStripProps) {
               sat: day.weekday === 6,
             })}
             disabled={day.count === 0}
+            tabIndex={day.key === tabKey ? 0 : -1}
             aria-label={stripDayLabel(day)}
             aria-current={day.isToday ? 'date' : undefined}
             aria-pressed={day.key === activeKey ? 'true' : undefined}

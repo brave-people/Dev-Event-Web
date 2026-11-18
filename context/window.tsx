@@ -2,23 +2,11 @@ import React, { createContext, ReactNode, useEffect, useState } from 'react';
 
 const THEME_STORAGE_KEY = 'dev-event:theme';
 
-type ModalStateProps = {
-  currentModal: number;
-  prevModal: number;
-  type: boolean;
-};
-
 interface WindowContext {
-  isClient: boolean;
-  handleIsClient: (event: boolean) => void;
-  windowX: number;
-  handleWindowX: (event: number) => void;
   windowTheme: boolean;
   handleWindowTheme: (event: boolean) => void;
   isNotice: boolean;
   handleIsNotice: (event: boolean) => void;
-  modalState: ModalStateProps;
-  handleModalState: (event: ModalStateProps) => void;
 }
 
 // `windowTheme: true` = light, `false` = dark.
@@ -30,33 +18,21 @@ const readInitialTheme = (): boolean => {
   return document.documentElement.getAttribute('data-theme') !== 'dark';
 };
 
+// Provider 밖에서 부르면 아무것도 하지 않는다
+const noop = (): void => undefined;
+
 const defaultValue: WindowContext = {
-  isClient: false,
-  handleIsClient: () => {},
-  windowX: 0,
-  handleWindowX: () => {},
   windowTheme: true,
-  handleWindowTheme: () => {},
+  handleWindowTheme: noop,
   isNotice: true,
-  handleIsNotice: () => {},
-  modalState: {
-    currentModal: 0,
-    prevModal: 0,
-    type: false,
-  },
-  handleModalState: () => {},
+  handleIsNotice: noop,
 };
 
 const WindowContext = createContext(defaultValue);
 
 const WindowProvider = ({ children }: { children: ReactNode }) => {
-  const [isClient, setIsClient] = useState<boolean>(false);
-  const [windowX, setWindowX] = useState<number>(0);
   const [windowTheme, setWindowTheme] = useState<boolean>(true);
   const [isNotice, setIsNotice] = useState<boolean>(true);
-  const [modalState, setModalState] = useState<ModalStateProps>(
-    defaultValue.modalState
-  );
 
   useEffect(() => {
     setWindowTheme(readInitialTheme());
@@ -68,7 +44,9 @@ const WindowProvider = ({ children }: { children: ReactNode }) => {
       let stored: string | null = null;
       try {
         stored = localStorage.getItem(THEME_STORAGE_KEY);
-      } catch {}
+      } catch {
+        // 저장소를 못 읽으면(사생활 보호 모드 등) 고른 적 없는 것으로 보고 시스템 설정을 따른다
+      }
       if (stored) return;
       const next = e.matches ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', next);
@@ -78,13 +56,6 @@ const WindowProvider = ({ children }: { children: ReactNode }) => {
     return () => mq.removeEventListener?.('change', handleSystemChange);
   }, []);
 
-  const handleIsClient = (event: boolean) => {
-    setIsClient(event);
-  };
-  const handleWindowX = (event: number) => {
-    setWindowX(event);
-  };
-
   const handleWindowTheme = (event: boolean) => {
     // `event` carries the desired NEXT theme (true = light, false = dark).
     setWindowTheme(event);
@@ -93,7 +64,9 @@ const WindowProvider = ({ children }: { children: ReactNode }) => {
       document.documentElement.setAttribute('data-theme', themeName);
       try {
         localStorage.setItem(THEME_STORAGE_KEY, themeName);
-      } catch {}
+      } catch {
+        // 저장하지 못하면 이번 방문에만 적용된다
+      }
     }
   };
 
@@ -101,21 +74,11 @@ const WindowProvider = ({ children }: { children: ReactNode }) => {
     setIsNotice(event);
   };
 
-  const handleModalState = (event: ModalStateProps) => {
-    setModalState(event);
-  };
-
   const contextValue = {
-    isClient,
-    windowX,
     windowTheme,
     isNotice,
-    handleIsClient,
-    handleWindowX,
     handleWindowTheme,
     handleIsNotice,
-    modalState,
-    handleModalState,
   };
   return (
     <>

@@ -86,12 +86,16 @@ function CalendarAdd({ event, triggerClassName, children }: CalendarAddProps) {
   }, [open, close]);
 
   const handleMenuKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    if (!['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(e.key)) return;
     e.preventDefault();
     const items = Array.from(
       menuRef.current?.querySelectorAll<HTMLElement>('[role="menuitem"]') ?? []
     );
     if (!items.length) return;
+    if (e.key === 'Home' || e.key === 'End') {
+      items[e.key === 'Home' ? 0 : items.length - 1].focus();
+      return;
+    }
     const current = items.indexOf(document.activeElement as HTMLElement);
     const step = e.key === 'ArrowDown' ? 1 : -1;
     const next = (current + step + items.length) % items.length;
