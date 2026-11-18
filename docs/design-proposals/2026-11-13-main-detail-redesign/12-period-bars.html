@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>12 접수 기간 막대</title>
+<link rel="stylesheet" href="shared/base.css">
+<style>
+:root { --ink:#15171c; --sub:#515664; --hint:#8c91a0; --line:#e5e7ed; --soft:#f6f7f9; --blue:#0043ff; --bar:#cfdcff; --navy:#000040; --red:#e5484d; --thumb-radius:12px; }
+body { background:#fff; color:var(--ink); }
+.hd { border-bottom:1px solid var(--line); }
+.hd__in { max-width:1280px; margin:0 auto; height:60px; padding:0 20px; display:flex; align-items:center; gap:28px; }
+.logo { font-weight:800; font-size:18px; }
+.nav { display:flex; gap:22px; font-size:15px; font-weight:600; color:var(--hint); }
+.nav .is-on { color:var(--ink); }
+.hd__r { margin-left:auto; display:flex; gap:8px; font-size:14px; font-weight:600; }
+.hd__r button { height:36px; padding:0 14px; border-radius:8px; border:1px solid var(--line); }
+.wrap { max-width:1280px; margin:0 auto; padding:28px 20px 100px; }
+.top { display:flex; align-items:flex-end; gap:20px; flex-wrap:wrap; margin-bottom:16px; }
+.top h1 { font-size:26px; font-weight:800; letter-spacing:-.02em; }
+.top p { margin-top:6px; font-size:14.500px; color:var(--sub); }
+.lg { margin-left:auto; display:flex; gap:16px; font-size:13px; font-weight:600; color:var(--sub); align-items:center; }
+.lg i { display:inline-block; width:26px; height:10px; border-radius:99px; margin-right:6px; vertical-align:-1px; }
+.lg .l3 { width:2px; height:14px; background:var(--red); border-radius:0; }
+.chips { display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; margin-bottom:18px; }
+.chip { flex:none; padding:8px 13px; border-radius:8px; background:var(--soft); font-size:13.500px; font-weight:600; color:var(--sub); }
+.chip.is-on { background:var(--ink); color:#fff; }
+.gt { border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+.gt__h, .gr { display:grid; grid-template-columns:320px minmax(0,1fr); }
+.gt__h { position:sticky; top:0; z-index:6; background:#fff; border-bottom:1px solid var(--line); }
+.gt__h > span { padding:14px 18px; font-size:12.500px; font-weight:700; color:var(--hint); align-self:end; }
+.ax { display:grid; grid-template-columns:repeat(var(--n),1fr); }
+.ax div { padding:8px 0 7px; text-align:center; border-left:1px solid #f0f1f5; }
+.ax small { display:block; font-size:11px; font-weight:700; color:var(--hint); }
+.ax b { font-size:13px; font-weight:700; }
+.ax .is-we { background:var(--soft); }
+.ax .is-t { background:var(--ink); } .ax .is-t small, .ax .is-t b { color:#fff; }
+.body { position:relative; }
+.gr { border-bottom:1px solid #f0f1f5; min-height:54px; }
+.gr:last-child { border-bottom:0; }
+.gr:hover { background:#f8faff; }
+.gr__l { padding:9px 18px; min-width:0; border-right:1px solid var(--line); }
+.gr__l strong { font-size:14.500px; font-weight:700; letter-spacing:-.01em; }
+.gr__l small { display:block; margin-top:2px; font-size:12.500px; color:var(--hint); }
+.gr__r { position:relative; background-image:repeating-linear-gradient(90deg,transparent 0 calc(100% / var(--n) - 1px),#f0f1f5 calc(100% / var(--n) - 1px) calc(100% / var(--n))); }
+.b { position:absolute; top:50%; height:18px; transform:translateY(-50%); border-radius:99px; background:var(--bar); }
+.b.is-cut { border-radius:0 99px 99px 0; -webkit-mask-image:linear-gradient(90deg,transparent,#000 28px); mask-image:linear-gradient(90deg,transparent,#000 28px); }
+.b.is-date { background:var(--navy); }
+.b.is-hot { background:#ffc9cb; }
+.b::after { content:''; position:absolute; right:0; top:-3px; width:4px; height:24px; border-radius:2px; background:var(--blue); }
+.b.is-hot::after { background:var(--red); } .b.is-date::after { display:none; }
+.bl { position:absolute; top:50%; transform:translateY(-50%); padding-left:10px; font-size:12px; font-weight:700; color:var(--sub); white-space:nowrap; }
+.bl.is-hot { color:var(--red); }
+.bl.is-in { transform:translate(-100%,-50%); padding:0 12px 0 0; }
+.now { position:absolute; top:0; bottom:0; width:2px; background:var(--red); z-index:4; pointer-events:none; }
+.now::before { content:'지금'; position:absolute; top:4px; left:6px; font-size:10.500px; font-weight:800; color:var(--red); }
+.mlist { display:none; }
+/* detail */
+.dw { max-width:1120px; margin:0 auto; padding:28px 20px 100px; }
+.back { display:inline-flex; gap:4px; align-items:center; font-size:14px; font-weight:600; color:var(--hint); }
+.dw .org { margin-top:18px; font-size:14.500px; font-weight:700; color:var(--blue); }
+.dw h1 { margin-top:6px; font-size:30px; line-height:1.34; font-weight:800; letter-spacing:-.025em; max-width:860px; }
+.pr { margin-top:26px; padding:24px 26px 20px; border-radius:16px; background:var(--soft); }
+.pr__t { display:flex; justify-content:space-between; align-items:baseline; gap:12px; flex-wrap:wrap; }
+.pr__t b { font-size:17px; font-weight:800; } .pr__t b em { font-style:normal; color:var(--red); }
+.pr__t span { font-size:13.500px; color:var(--sub); font-weight:600; }
+.tr { position:relative; height:14px; margin:38px 0 10px; border-radius:99px; background:#dfe3ec; }
+.tr i { position:absolute; left:0; top:0; bottom:0; border-radius:99px; background:var(--blue); }
+.tr u { position:absolute; top:-7px; width:4px; height:28px; border-radius:2px; background:var(--red); transform:translateX(-50%); text-decoration:none; }
+.tr u::before { content:'지금'; position:absolute; bottom:32px; left:50%; transform:translateX(-50%); padding:3px 8px; border-radius:6px; background:var(--red); color:#fff; font-size:11.500px; font-weight:800; white-space:nowrap; }
+.pr__e { display:flex; justify-content:space-between; font-size:13px; font-weight:600; color:var(--sub); }
+.pr__e b { color:var(--ink); font-weight:800; display:block; font-size:14.500px; margin-top:2px; }
+.pr__e div:last-child { text-align:right; }
+.dg { display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:44px; margin-top:36px; align-items:start; }
+.sd { position:sticky; top:20px; }
+.go { display:flex; justify-content:center; align-items:center; gap:6px; margin-top:14px; height:52px; border-radius:12px; background:var(--blue); color:#fff; font-weight:800; font-size:16px; }
+.ac { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:8px; }
+.ac button { height:44px; border-radius:10px; border:1px solid var(--line); font-size:13px; font-weight:600; color:var(--sub); display:flex; align-items:center; justify-content:center; gap:5px; }
+.kv { margin-top:16px; }
+.kv li { display:flex; gap:12px; padding:11px 0; border-bottom:1px solid var(--line); font-size:14px; }
+.kv span { width:64px; flex:none; color:var(--hint); } .kv b { font-weight:700; }
+@media (max-width: 900px) {
+  .nav, .hd__r button:first-child, .lg, .gt { display:none; }
+  .top h1 { font-size:22px; }
+  .mlist { display:grid; gap:10px; }
+  .mc { display:block; padding:16px; border:1px solid var(--line); border-radius:14px; }
+  .mc strong { font-size:15.500px; font-weight:700; line-height:1.4; }
+  .mc small { display:block; margin-top:3px; font-size:12.500px; color:var(--hint); }
+  .mc .mb { position:relative; height:8px; margin:14px 0 8px; border-radius:99px; background:#e6e9f0; }
+  .mc .mb i { position:absolute; left:0; top:0; bottom:0; border-radius:99px; background:var(--blue); }
+  .mc.is-hot .mb i { background:var(--red); }
+  .mc p { display:flex; justify-content:space-between; font-size:12.500px; font-weight:700; color:var(--sub); }
+  .mc.is-hot p b { color:var(--red); }
+  .dw h1 { font-size:23px; } .pr { padding:18px; }
+  .dg { grid-template-columns:1fr; gap:24px; } .sd { position:static; order:-1; }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="shared/data.js"></script>
+<script src="shared/kit.js"></script>
+<script>
+const { esc, ic } = K;
+const N = 24;
+const A0 = new Date(K.day0(K.NOW).getTime() - 3 * 864e5);
+const A1 = new Date(A0.getTime() + N * 864e5);
+const pos = (t) => Math.max(0, Math.min(100, ((t - A0) / (A1 - A0)) * 100));
+const header = () => `
+<header class="hd"><div class="hd__in">
+  <a class="logo" href="#main">DEV.EVENT</a>
+  <nav class="nav"><a class="is-on" href="#main">접수 현황</a><a href="#main">캘린더</a><a href="#main">관심 행사</a></nav>
+  <div class="hd__r"><button data-toast="행사 등록 요청 화면으로 이동해요">행사 등록 요청</button><button>로그인</button></div>
+</div></header>`;
+
+const grow = (e) => {
+  const l = pos(e.s), r = pos(e.en), w = Math.max(r - l, 1.1);
+  const cut = e.s < A0, over = e.en > A1;
+  const txt = e.recruit ? `${e.days <= 0 ? '오늘 ' : K.fd(e.en) + ' '}${e.keyTime} 마감` : `${K.fd(e.s)} ${K.ft(e.s)}${e.sameDay ? ' 행사' : ' ~ ' + K.fd(e.en)}`;
+  const inside = l + w > 80;
+  return `
+<a class="gr" href="${e.href}">
+  <div class="gr__l"><strong class="clamp1">${esc(e.title)}</strong><small class="clamp1">${esc(e.organizer)} · ${e.mode.join('·')} · ${e.cost}</small></div>
+  <div class="gr__r"><span class="b${cut ? ' is-cut' : ''}${e.recruit ? '' : ' is-date'}${e.recruit && e.urgent ? ' is-hot' : ''}" style="left:${l}%;width:${w}%"></span><span class="bl${e.recruit && e.urgent ? ' is-hot' : ''}${inside ? ' is-in' : ''}" style="left:${inside ? l : l + w}%">${over ? '' : txt}</span></div>
+</a>`;
+};
+const mcard = (e) => `
+<a class="mc${e.recruit && e.urgent ? ' is-hot' : ''}" href="${e.href}"><strong class="clamp2">${esc(e.title)}</strong><small>${esc(e.organizer)} · ${e.mode.join('·')} · ${e.cost}</small>
+  <div class="mb"><i style="width:${Math.round(e.progress * 100)}%"></i></div><p><span>${K.fd(e.s)} 시작</span><b>${e.recruit ? `${K.fdw(e.en)} ${e.keyTime} · ${e.label}` : e.range}</b></p></a>`;
+
+function main() {
+  const L = K.list().slice().sort((a, b) => a.en - b.en);
+  const axis = K.days(N, A0).map(K.dayInfo);
+  return header() + `
+<div class="wrap">
+  <div class="top"><div><h1>지금 접수 중인 행사 ${L.length}건</h1><p>막대가 끝나는 곳이 마감이에요. 위에서부터 마감이 빠른 순서입니다.</p></div>
+    <div class="lg"><span><i style="background:var(--bar)"></i>접수 기간</span><span><i style="background:#ffc9cb"></i>내일까지 마감</span><span><i style="background:var(--navy)"></i>행사 진행</span><span><i class="l3"></i>지금</span></div></div>
+  <div class="chips">${K.chips('topic', K.TOPIC)}${K.KIND.slice(0, 3).map((v) => `<button class="chip${K.on('kind', v)}" data-set="kind:${K.state.kind === v ? '전체' : v}">${v}</button>`).join('')}<button class="chip${K.on('mode', '온라인')}" data-set="mode:${K.state.mode === '온라인' ? '전체' : '온라인'}">온라인</button><button class="chip${K.on('cost', '무료')}" data-set="cost:${K.state.cost === '무료' ? '전체' : '무료'}">무료만</button></div>
+  <div class="gt" style="--n:${N}">
+    <div class="gt__h"><span>행사 · 주최</span><div class="ax">${axis.map((d) => `<div class="${d.diff === 0 ? 'is-t' : d.wd === 0 || d.wd === 6 ? 'is-we' : ''}"><small class="${d.diff === 0 ? '' : d.cls}">${d.dow}</small><b>${d.d}</b></div>`).join('')}</div></div>
+    <div class="body">${L.map(grow).join('')}<i class="now" style="left:calc(320px + (100% - 320px) * ${pos(K.NOW) / 100})"></i></div>
+  </div>
+  <div class="mlist">${L.map(mcard).join('')}</div>
+</div>`;
+}
+
+function detail(e) {
+  const pct = Math.round(e.progress * 100);
+  return header() + `
+<div class="dw">
+  <a class="back" href="#main">${ic('back', 16)} 접수 현황</a>
+  <p class="org">${esc(e.organizer)}</p><h1>${esc(e.title)}</h1>
+  <div class="pr">
+    <div class="pr__t"><b>${e.recruit ? '접수 마감까지' : '행사 종료까지'} <em>${e.remain}</em></b><span>${e.recruit ? '접수' : '행사'} 기간의 ${pct}%가 지났어요</span></div>
+    <div class="tr"><i style="width:${pct}%"></i><u style="left:${pct}%"></u></div>
+    <div class="pr__e"><div>${e.recruit ? '접수 시작' : '행사 시작'}<b>${K.fdw(e.s)} ${K.ft(e.s)}</b></div><div>${e.recruit ? '접수 마감' : '행사 종료'}<b>${K.fdw(e.en)} ${K.ft(e.en)}</b></div></div>
+  </div>
+  <div class="dg">
+    <div class="k-prose">${e.descHtml}</div>
+    <aside class="sd">${K.thumb(e)}
+      <a class="go" href="${esc(e.link)}" target="_blank" rel="noopener">신청하러 가기 ${ic('out', 18)}</a>
+      <div class="ac"><button data-toast="관심 행사에 담았어요">${ic('bookmark', 16)}관심</button><button data-toast="캘린더에 추가했어요">${ic('calendar', 16)}캘린더</button><button data-toast="링크가 복사되었어요">${ic('share', 16)}공유</button></div>
+      <ul class="kv"><li><span>방식</span><b>${e.mode.join(' · ')}</b></li><li><span>참가비</span><b>${e.cost}</b></li><li><span>분류</span><b>${[e.kind, ...e.topics].join(' · ')}</b></li></ul>
+    </aside>
+  </div>
+</div>`;
+}
+K.mount({ main, detail });
+</script>
+</body>
+</html>

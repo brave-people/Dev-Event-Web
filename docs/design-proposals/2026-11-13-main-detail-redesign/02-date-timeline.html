@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>02 날짜 타임라인</title>
+<link rel="stylesheet" href="shared/base.css">
+<style>
+:root { --ink:#16181d; --sub:#4a4f5c; --hint:#8a8f9c; --line:#e6e8ee; --soft:#f5f6f9; --blue:#0043ff; --blue-soft:#eaf0ff; --orange:#e8590c; --orange-soft:#fff1e6; --thumb-radius:10px; }
+body { background:#fff; color:var(--ink); }
+.hd { border-bottom:1px solid var(--line); }
+.hd__in { max-width:1040px; margin:0 auto; height:64px; padding:0 20px; display:flex; align-items:center; gap:32px; }
+.logo { font-weight:800; font-size:19px; letter-spacing:.01em; }
+.nav { display:flex; gap:24px; font-size:15px; font-weight:600; color:var(--hint); }
+.nav .is-on { color:var(--ink); }
+.hd__r { margin-left:auto; display:flex; gap:10px; font-size:14px; font-weight:600; }
+.hd__r button { padding:9px 14px; border-radius:10px; border:1px solid var(--line); }
+.hd__r .pri { background:var(--ink); color:#fff; border-color:var(--ink); }
+.wrap { max-width:1040px; margin:0 auto; padding:0 20px 120px; }
+.top { padding:36px 0 18px; display:flex; align-items:flex-end; gap:16px; flex-wrap:wrap; }
+.top h1 { font-size:28px; font-weight:800; letter-spacing:-.02em; }
+.top p { font-size:15px; color:var(--hint); font-weight:500; padding-bottom:3px; }
+.legend { margin-left:auto; display:flex; gap:14px; font-size:13px; font-weight:600; color:var(--sub); }
+.legend i { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; }
+.strip { position:sticky; top:0; z-index:10; background:rgba(255,255,255,.94); backdrop-filter:blur(10px); display:grid; grid-template-columns:repeat(14,1fr); gap:4px; padding:10px 0; border-bottom:1px solid var(--line); }
+.sd { padding:8px 0 7px; border-radius:12px; text-align:center; transition:.12s; }
+.sd:hover { background:var(--soft); }
+.sd span { display:block; font-size:12px; font-weight:600; color:var(--hint); }
+.sd span.is-sun { color:#e5484d; } .sd span.is-sat { color:#2f6fed; }
+.sd b { display:grid; place-items:center; width:34px; height:34px; margin:3px auto; border-radius:50%; font-size:17px; font-weight:700; }
+.sd small { font-size:11.5px; font-weight:600; color:var(--blue); }
+.sd.is-empty small { color:#c6c9d2; }
+.sd.is-today b { background:var(--ink); color:#fff; }
+.chips { display:flex; gap:8px; padding:16px 0 4px; overflow-x:auto; scrollbar-width:none; }
+.chip { flex:none; padding:8px 14px; border-radius:999px; border:1px solid var(--line); font-size:14px; font-weight:600; color:var(--sub); }
+.chip.is-on { background:var(--blue-soft); border-color:transparent; color:var(--blue); }
+.sep { width:1px; background:var(--line); margin:6px 4px; flex:none; }
+.day { display:grid; grid-template-columns:132px minmax(0,1fr); scroll-margin-top:110px; }
+.day__rail { position:relative; padding:28px 0; }
+.day__rail::after { content:''; position:absolute; right:19px; top:0; bottom:0; border-right:2px dotted #d5d8e0; }
+.day__rail::before { content:''; position:absolute; right:14px; top:38px; width:12px; height:12px; border-radius:50%; background:#fff; border:3px solid var(--ink); z-index:1; }
+.day__stick { position:sticky; top:118px; }
+.day__stick b { display:block; font-size:26px; font-weight:800; letter-spacing:-.02em; line-height:1.1; }
+.day__stick span { font-size:14px; font-weight:600; color:var(--sub); }
+.day__stick em { font-style:normal; margin-left:6px; padding:2px 7px; border-radius:6px; background:var(--ink); color:#fff; font-size:11.5px; font-weight:700; }
+.day__stick small { display:block; margin-top:4px; font-size:12.5px; color:var(--hint); font-weight:500; }
+.day__list { padding:20px 0 12px; display:grid; gap:10px; }
+.ev { display:grid; grid-template-columns:92px minmax(0,1fr) 168px; gap:18px; align-items:center; padding:16px; border-radius:16px; border:1px solid var(--line); transition:.15s; }
+.ev:hover { border-color:#c9cdd8; box-shadow:0 6px 18px rgba(22,24,29,.06); transform:translateY(-1px); }
+.ev__t b { display:block; font-size:19px; font-weight:700; letter-spacing:-.01em; }
+.ev__t i { display:inline-block; margin-top:5px; padding:3px 7px; border-radius:6px; font-style:normal; font-size:11.5px; font-weight:700; }
+.m-dead { background:var(--orange-soft); color:var(--orange); }
+.m-open { background:var(--blue-soft); color:var(--blue); }
+.ev__b strong { font-size:17px; font-weight:700; line-height:1.4; letter-spacing:-.01em; }
+.ev__b p { margin-top:4px; font-size:14px; color:var(--sub); }
+.tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+.tags span { padding:3px 8px; border-radius:6px; background:var(--soft); font-size:12.5px; font-weight:500; color:var(--sub); }
+.tags .hot { background:#16181d; color:#fff; }
+/* detail */
+.d { display:grid; grid-template-columns:360px minmax(0,1fr); gap:44px; padding-top:36px; align-items:start; }
+.d__l { position:sticky; top:24px; }
+.d__l .k-thumb { --thumb-radius:18px; }
+.host { display:flex; gap:12px; align-items:center; margin-top:20px; padding:16px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.host i { width:40px; height:40px; flex:none; border-radius:50%; background:var(--ink); color:#fff; display:grid; place-items:center; font-style:normal; font-weight:700; }
+.host small { display:block; font-size:12.5px; color:var(--hint); font-weight:500; }
+.host b { font-size:15px; font-weight:600; }
+.d__l .tags { margin-top:16px; }
+.d__l .tags span { padding:6px 10px; font-size:13px; }
+.d__r h1 { font-size:34px; line-height:1.3; letter-spacing:-.025em; font-weight:800; }
+.blk { display:flex; gap:14px; align-items:center; margin-top:18px; }
+.leaf { width:48px; height:48px; flex:none; border-radius:12px; border:1px solid var(--line); overflow:hidden; text-align:center; }
+.leaf small { display:block; background:var(--soft); font-size:10.5px; font-weight:700; color:var(--sub); padding:2px 0; }
+.leaf b { display:block; font-size:19px; font-weight:800; line-height:28px; }
+.leaf.is-ic { display:grid; place-items:center; color:var(--sub); }
+.blk p b { display:block; font-size:16.5px; font-weight:700; }
+.blk p span { font-size:14px; color:var(--hint); font-weight:500; }
+.reg { margin-top:26px; border:1px solid var(--line); border-radius:18px; overflow:hidden; }
+.reg__h { padding:11px 18px; background:var(--soft); font-size:13.5px; font-weight:600; color:var(--sub); display:flex; justify-content:space-between; }
+.reg__h b { color:var(--orange); }
+.reg__b { padding:18px; }
+.reg__b p { font-size:15px; line-height:1.55; color:var(--sub); }
+.reg__btns { display:flex; gap:8px; margin-top:14px; }
+.go { flex:1; display:flex; justify-content:center; align-items:center; gap:6px; padding:15px; border-radius:12px; background:var(--ink); color:#fff; font-size:16px; font-weight:700; }
+.sq { width:52px; border-radius:12px; border:1px solid var(--line); display:grid; place-items:center; color:var(--sub); }
+.d__r h2 { margin:40px 0 14px; padding-bottom:12px; border-bottom:1px solid var(--line); font-size:15px; font-weight:700; color:var(--hint); }
+.back { display:inline-flex; align-items:center; gap:4px; margin-top:24px; font-size:14px; font-weight:600; color:var(--hint); }
+@media (max-width: 820px) {
+  .nav, .hd__r button:first-child, .legend { display:none; }
+  .top { padding-top:24px; } .top h1 { font-size:23px; }
+  .strip { grid-template-columns:repeat(14,52px); overflow-x:auto; scrollbar-width:none; margin:0 -20px; padding:8px 20px; }
+  .day { grid-template-columns:1fr; }
+  .day__rail { padding:22px 0 0; }
+  .day__rail::after, .day__rail::before { display:none; }
+  .day__stick { position:static; display:flex; align-items:baseline; gap:8px; }
+  .day__stick b { font-size:21px; } .day__stick small { margin:0 0 0 auto; }
+  .day__list { padding-top:12px; }
+  .ev { grid-template-columns:minmax(0,1fr) 104px; gap:12px; padding:14px; align-items:start; }
+  .ev__t { grid-column:1 / -1; display:flex; gap:8px; align-items:center; }
+  .ev__t b { font-size:15px; } .ev__t i { margin:0; }
+  .ev__b strong { font-size:15.5px; }
+  .d { grid-template-columns:1fr; gap:24px; padding-top:16px; }
+  .d__l { position:static; }
+  .d__r h1 { font-size:25px; }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="shared/data.js"></script>
+<script src="shared/kit.js"></script>
+<script>
+const { esc, ic } = K;
+const header = () => `
+<header class="hd"><div class="hd__in">
+  <a class="logo" href="#main">DEV.EVENT</a>
+  <nav class="nav"><a class="is-on" href="#main">일정</a><a href="#main">캘린더</a><a href="#main">관심 행사</a><a href="#main">소개</a></nav>
+  <div class="hd__r"><button data-toast="행사 등록 요청 화면으로 이동해요">행사 등록 요청</button><button class="pri">로그인</button></div>
+</div></header>`;
+
+const card = (e) => `
+<a class="ev" href="${e.href}">
+  <div class="ev__t"><b>${e.state === '진행 중' ? '진행 중' : e.keyTime || '종일'}</b><i class="${e.recruit ? 'm-dead' : 'm-open'}">${e.recruit ? '접수 마감' : e.state === '진행 중' ? '~ ' + K.fd(e.en) : '행사 시작'}</i></div>
+  <div class="ev__b"><strong class="clamp2">${esc(e.title)}</strong><p class="clamp1">${esc(e.organizer)}</p>
+    <div class="tags">${e.isNew ? '<span class="hot">NEW</span>' : ''}${[...e.mode, e.cost, e.kind, ...e.topics].map((t) => `<span>${t}</span>`).join('')}</div></div>
+  ${K.thumb(e)}
+</a>`;
+
+function main() {
+  const groups = K.groupByDay(K.list());
+  const cnt = Object.fromEntries(groups.map((g) => [g.key, g.items.length]));
+  const strip = K.days(14).map((d) => {
+    const i = K.dayInfo(d), n = cnt[i.key] || 0;
+    return `<button class="sd${i.diff === 0 ? ' is-today' : ''}${n ? '' : ' is-empty'}" data-go="d-${i.key}"><span class="${i.cls}">${i.dow}</span><b>${i.d}</b><small>${n ? n + '건' : '–'}</small></button>`;
+  }).join('');
+  return header() + `
+<div class="wrap">
+  <div class="top"><h1>11월 행사 일정</h1><p>${K.todayText} · 접수 중 ${K.ALL.length}건</p>
+    <div class="legend"><span><i style="background:var(--orange)"></i>접수 마감일</span><span><i style="background:var(--blue)"></i>행사 당일</span></div></div>
+  <div class="strip">${strip}</div>
+  <div class="chips">${K.chips('topic', K.TOPIC)}<i class="sep"></i>${['온라인', '오프라인'].map((v) => `<button class="chip${K.on('mode', v)}" data-set="mode:${K.state.mode === v ? '전체' : v}">${v}</button>`).join('')}<button class="chip${K.on('cost', '무료')}" data-set="cost:${K.state.cost === '무료' ? '전체' : '무료'}">무료만</button></div>
+  ${groups.map((g) => { const i = K.dayInfo(g.date); return `
+  <section class="day" id="d-${g.key}">
+    <div class="day__rail"><div class="day__stick"><b>${i.m}.${i.d}</b><span class="${i.cls}">${i.dow}요일</span>${i.rel ? `<em>${i.rel}</em>` : ''}<small>${g.items.length}건</small></div></div>
+    <div class="day__list">${g.items.map(card).join('')}</div>
+  </section>`; }).join('')}
+</div>`;
+}
+
+function detail(e) {
+  const i = K.dayInfo(e.recruit ? e.en : e.s);
+  return header() + `
+<div class="wrap">
+  <a class="back" href="#main">${ic('back', 16)} 일정으로 돌아가기</a>
+  <div class="d">
+    <div class="d__l">
+      ${K.thumb(e)}
+      <div class="host"><i>${esc(e.initial)}</i><p><small>주최</small><b>${esc(e.organizer)}</b></p></div>
+      <div class="tags">${[...e.mode, e.cost, e.kind, ...e.topics].map((t) => `<span>${t}</span>`).join('')}</div>
+    </div>
+    <div class="d__r">
+      <h1>${esc(e.title)}</h1>
+      <div class="blk"><div class="leaf"><small>${i.m}월</small><b>${i.d}</b></div><p><b>${e.recruit ? `${i.m}월 ${i.d}일 ${i.dow}요일${e.keyTime ? ' ' + e.keyTime : ''} 접수 마감` : `${i.m}월 ${i.d}일 ${i.dow}요일`}</b><span>${e.recruit ? '접수 기간 ' + e.range : e.range}</span></p></div>
+      <div class="blk"><div class="leaf is-ic">${ic(e.mode.includes('오프라인') ? 'pin' : 'globe', 22)}</div><p><b>${e.mode.join(' · ')} 진행</b><span>${e.mode.includes('오프라인') ? '장소는 아래 행사 소개에서 확인해 주세요' : '접속 방법은 신청 후 안내돼요'}</span></p></div>
+      <div class="reg">
+        <div class="reg__h"><span>${e.state} · ${e.cost}</span><b>${e.recruit ? '마감까지 ' + e.remain : e.label}</b></div>
+        <div class="reg__b"><p>신청은 주최 측 페이지에서 진행돼요. 버튼을 누르면 새 창으로 이동합니다.</p>
+          <div class="reg__btns"><a class="go" href="${esc(e.link)}" target="_blank" rel="noopener">신청하러 가기 ${ic('out', 18)}</a><button class="sq" data-toast="캘린더에 추가했어요">${ic('calendar')}</button><button class="sq" data-toast="관심 행사에 담았어요">${ic('bookmark')}</button><button class="sq" data-toast="링크가 복사되었어요">${ic('share')}</button></div></div>
+      </div>
+      <h2>행사 소개</h2>
+      <div class="k-prose">${e.descHtml}</div>
+    </div>
+  </div>
+</div>`;
+}
+
+K.mount({ main, detail, after() {
+  document.querySelectorAll('[data-go]').forEach((b) => b.addEventListener('click', () => {
+    const el = document.getElementById(b.dataset.go);
+    if (el) el.scrollIntoView({ behavior: 'smooth' }); else K.render && document.querySelector('.k-toast');
+  }));
+} });
+</script>
+</body>
+</html>

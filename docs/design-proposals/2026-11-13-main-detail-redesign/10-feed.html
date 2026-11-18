@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>10 소식 피드</title>
+<link rel="stylesheet" href="shared/base.css">
+<style>
+:root { --bg:#fafafa; --ink:#121212; --sub:#555; --hint:#8e8e8e; --line:#e6e6e6; --blue:#0043ff; --red:#ed4956; --ring:linear-gradient(135deg,#ff804e,#ff0073); --thumb-radius:0; }
+body { background:var(--bg); color:var(--ink); }
+.app { display:grid; grid-template-columns:232px minmax(0,580px) 300px; gap:36px; max-width:1220px; margin:0 auto; padding:0 20px; align-items:start; }
+.side { position:sticky; top:0; height:100vh; padding:28px 0; display:flex; flex-direction:column; gap:4px; border-right:1px solid var(--line); margin-right:-12px; }
+.side a.logo { font-weight:800; font-size:21px; padding:0 12px 22px; gap:0; }
+.side a { display:flex; align-items:center; gap:14px; padding:12px; border-radius:12px; font-size:16px; font-weight:500; }
+.side a:hover { background:#f0f0f0; }
+.side a.is-on { font-weight:800; }
+.side .req { margin-top:auto; justify-content:center; background:var(--ink); color:#fff; font-weight:700; font-size:15px; }
+.side .req:hover { background:#333; }
+.feed { padding:24px 0 120px; }
+.st { display:flex; gap:16px; overflow-x:auto; scrollbar-width:none; padding:4px 2px 18px; }
+.st a { flex:none; width:68px; text-align:center; }
+.st i { display:block; width:68px; height:68px; padding:3px; border-radius:50%; background:var(--ring); }
+.st i b { display:grid; place-items:center; width:100%; height:100%; border-radius:50%; background:#fff; border:2px solid #fff; overflow:hidden; font-style:normal; font-size:22px; font-weight:800; box-shadow:inset 0 0 0 1px var(--line); }
+.st span { display:block; margin-top:6px; font-size:12px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.st small { display:block; font-size:11px; font-weight:700; color:var(--red); }
+.tabs { display:flex; border-bottom:1px solid var(--line); margin-bottom:16px; }
+.tabs button { flex:1; padding:12px 0; font-size:15px; font-weight:700; color:var(--hint); border-bottom:2px solid transparent; }
+.tabs button.is-on { color:var(--ink); border-color:var(--ink); }
+.po { background:#fff; border:1px solid var(--line); border-radius:16px; overflow:hidden; margin-bottom:18px; }
+.po__h { display:flex; align-items:center; gap:10px; padding:12px 14px; }
+.av { width:36px; height:36px; flex:none; border-radius:50%; background:#f2f2f2; display:grid; place-items:center; font-weight:800; font-size:15px; }
+.po__h b { font-size:14.500px; font-weight:700; }
+.po__h small { display:block; font-size:12.500px; color:var(--hint); }
+.po__h em { margin-left:auto; font-style:normal; padding:5px 10px; border-radius:999px; background:#f2f2f2; font-size:12.500px; font-weight:800; }
+.po__h em.is-hot { background:#ffe9eb; color:var(--red); }
+.po__a { display:flex; align-items:center; gap:14px; padding:12px 14px 4px; }
+.po__a button { display:flex; align-items:center; gap:5px; font-size:13.500px; font-weight:600; color:var(--sub); }
+.po__a button:last-child { margin-left:auto; }
+.po__b { padding:6px 14px 14px; }
+.po__b strong { font-size:17px; line-height:1.4; font-weight:800; letter-spacing:-.015em; }
+.po__b p { margin-top:6px; font-size:14.500px; line-height:1.6; color:var(--sub); }
+.tg { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; font-size:13.500px; color:var(--blue); font-weight:500; }
+.po__f { display:flex; align-items:center; gap:10px; padding:12px 14px; border-top:1px solid var(--line); font-size:14px; font-weight:700; }
+.po__f span { margin-right:auto; }
+.po__f a { padding:9px 16px; border-radius:10px; background:var(--blue); color:#fff; font-size:13.500px; }
+.wd { position:sticky; top:0; padding:28px 0; }
+.wd h3 { font-size:14.500px; font-weight:800; color:var(--hint); margin-bottom:12px; }
+.wd a.mi { display:grid; grid-template-columns:40px minmax(0,1fr) auto; gap:10px; align-items:center; padding:8px 0; }
+.wd .mi strong { font-size:13.500px; font-weight:700; }
+.wd .mi small { display:block; font-size:12px; color:var(--hint); }
+.wd .mi em { font-style:normal; font-size:12px; font-weight:800; color:var(--red); }
+.nl { margin-top:24px; padding:18px; border-radius:16px; background:#fff; border:1px solid var(--line); }
+.nl b { font-size:15px; } .nl p { margin:6px 0 12px; font-size:13.500px; color:var(--sub); line-height:1.55; }
+.nl a { display:block; text-align:center; padding:11px; border-radius:10px; background:#f2f2f2; font-weight:700; font-size:14px; }
+.tb, .bt { display:none; }
+/* detail */
+.dp .k-thumb { border-radius:0; }
+.kv { margin-top:14px; border-top:1px solid var(--line); }
+.kv li { display:flex; gap:14px; padding:12px 0; border-bottom:1px solid var(--line); font-size:14.500px; }
+.kv span { width:72px; flex:none; color:var(--hint); }
+.kv b { font-weight:700; }
+.dp .k-prose { margin-top:22px; font-size:15.500px; }
+.stick { position:sticky; bottom:16px; z-index:10; margin:18px 14px 14px; display:flex; gap:8px; }
+.stick a { flex:1; display:flex; justify-content:center; align-items:center; gap:6px; height:52px; border-radius:14px; background:var(--blue); color:#fff; font-weight:800; font-size:16px; box-shadow:0 8px 20px rgba(0,67,255,.3); }
+.backrow { display:flex; align-items:center; gap:6px; padding:0 0 14px; font-size:15px; font-weight:800; }
+@media (max-width: 1100px) { .app { grid-template-columns:76px minmax(0,580px); justify-content:center; } .wd { display:none; } .side a span, .logo span { display:none; } .side { align-items:center; } .side .req { width:48px; height:48px; padding:0; } }
+@media (max-width: 720px) {
+  .app { display:block; padding:0; } .side { display:none; }
+  .tb { display:flex; align-items:center; position:sticky; top:0; z-index:20; height:52px; padding:0 16px; background:#fff; border-bottom:1px solid var(--line); }
+  .tb b { font-size:19px; font-weight:800; } .tb span { margin-left:auto; display:flex; gap:16px; }
+  .feed { padding:12px 0 90px; } .st { padding:4px 14px 14px; }
+  .po { border-radius:0; border-left:0; border-right:0; margin-bottom:10px; }
+  .backrow { padding:4px 14px 12px; }
+  .bt { display:grid; grid-template-columns:repeat(5,1fr); position:fixed; left:0; right:0; bottom:0; z-index:20; height:calc(56px + env(safe-area-inset-bottom)); padding-bottom:env(safe-area-inset-bottom); background:#fff; border-top:1px solid var(--line); }
+  .bt a { display:grid; place-items:center; color:var(--hint); } .bt a.is-on { color:var(--ink); }
+  .stick { bottom:70px; }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="shared/data.js"></script>
+<script src="shared/kit.js"></script>
+<script>
+const { esc, ic } = K;
+const ago = (e) => { const d = K.diffDays(K.NOW, new Date(e.created)); return d <= 0 ? '오늘 등록' : `${d}일 전 등록`; };
+const chrome = (inner) => `
+<div class="tb"><b>DEV.EVENT</b><span>${ic('search', 22)}${ic('mail', 22)}</span></div>
+<div class="app">
+  <nav class="side"><a class="logo" href="#main">DEV<span>.EVENT</span></a>
+    <a class="is-on" href="#main">${ic('home', 24)}<span>홈</span></a><a href="#main">${ic('search', 24)}<span>검색</span></a><a href="#main">${ic('calendar', 24)}<span>캘린더</span></a><a href="#main">${ic('bookmark', 24)}<span>관심 행사</span></a><a href="#main">${ic('user', 24)}<span>로그인</span></a>
+    <a class="req" href="#main" data-toast="행사 등록 요청 화면으로 이동해요">${ic('plus', 20)}<span>행사 등록 요청</span></a></nav>
+  <main class="feed">${inner}</main>
+  <aside class="wd"><h3>마감 임박</h3>
+    ${K.ALL.filter((e) => e.recruit).slice(0, 6).map((e) => `<a class="mi" href="${e.href}"><span class="av">${esc(e.initial)}</span><div><strong class="clamp1">${esc(e.title)}</strong><small class="clamp1">${esc(e.organizer)}</small></div><em>${e.days <= 0 ? e.keyTime : e.label.replace('마감 ', '')}</em></a>`).join('')}
+    <div class="nl"><b>일요일 저녁 8시 뉴스레터</b><p>피드를 못 챙긴 주에도 한 주의 행사를 메일로 받아 보세요.</p><a href="#main" data-toast="뉴스레터 구독 화면으로 이동해요">무료 구독하기</a></div></aside>
+</div>
+<nav class="bt"><a class="is-on" href="#main">${ic('home', 24)}</a><a href="#main">${ic('search', 24)}</a><a href="#main">${ic('calendar', 24)}</a><a href="#main">${ic('bookmark', 24)}</a><a href="#main">${ic('user', 24)}</a></nav>`;
+
+const post = (e) => `
+<article class="po">
+  <div class="po__h"><span class="av">${esc(e.initial)}</span><div><b class="clamp1">${esc(e.organizer)}</b><small>${ago(e)} · ${e.kind}</small></div><em class="${e.urgent ? 'is-hot' : ''}">${e.label}</em></div>
+  <a href="${e.href}">${K.thumb(e)}</a>
+  <div class="po__a"><button data-toast="관심 행사에 담았어요">${ic('heart', 22)} 관심</button><button data-toast="캘린더에 추가했어요">${ic('calendar', 22)} 캘린더</button><button data-toast="링크가 복사되었어요">${ic('share', 22)}</button></div>
+  <a class="po__b" href="${e.href}" style="display:block"><strong>${esc(e.title)}</strong><p class="clamp2">${esc(e.excerpt)}</p><div class="tg">${[...e.mode, e.cost, ...e.topics].map((t) => `<span>#${t}</span>`).join('')}</div></a>
+  <div class="po__f"><span>${e.when}</span><a href="${e.href}">자세히 보기</a></div>
+</article>`;
+
+function main() {
+  const L = K.list();
+  const today = K.ALL.filter((e) => e.days <= 0).slice(0, 8);
+  const sorted = K.state.sort === 'new' ? L.slice().sort((a, b) => new Date(b.created) - new Date(a.created)) : L;
+  return chrome(`
+  <div class="st">${today.map((e) => `<a href="${e.href}"><i><b>${esc(e.initial)}</b></i><span>${esc(e.organizer)}</span><small>${e.recruit ? e.keyTime + ' 마감' : '오늘 진행'}</small></a>`).join('')}</div>
+  <div class="tabs"><button class="${K.state.sort === 'deadline' ? 'is-on' : ''}" data-set="sort:deadline">마감 빠른 순</button><button class="${K.state.sort === 'new' ? 'is-on' : ''}" data-set="sort:new">새로 올라온 순</button></div>
+  ${sorted.slice(0, 14).map(post).join('')}`);
+}
+
+function detail(e) {
+  return chrome(`
+  <a class="backrow" href="#main">${ic('back', 20)} 행사</a>
+  <article class="po dp">
+    <div class="po__h"><span class="av">${esc(e.initial)}</span><div><b>${esc(e.organizer)}</b><small>${ago(e)} · ${e.kind}</small></div><em class="${e.urgent ? 'is-hot' : ''}">${e.label}</em></div>
+    ${K.thumb(e)}
+    <div class="po__a"><button data-toast="관심 행사에 담았어요">${ic('heart', 22)} 관심</button><button data-toast="캘린더에 추가했어요">${ic('calendar', 22)} 캘린더</button><button data-toast="링크가 복사되었어요">${ic('share', 22)}</button></div>
+    <div class="po__b"><strong style="font-size:21px">${esc(e.title)}</strong>
+      <ul class="kv"><li><span>${e.recruit ? '접수 기간' : '일시'}</span><b>${e.range}</b></li><li><span>남은 시간</span><b style="color:var(--red)">${e.recruit || e.state === '진행 중' ? e.remain : e.label}</b></li><li><span>방식 · 비용</span><b>${e.mode.join('·')} · ${e.cost}</b></li></ul>
+      <div class="k-prose">${e.descHtml}</div></div>
+    <div class="stick"><a href="${esc(e.link)}" target="_blank" rel="noopener">신청하러 가기 ${ic('out', 18)}</a></div>
+  </article>`);
+}
+K.mount({ main, detail });
+</script>
+</body>
+</html>

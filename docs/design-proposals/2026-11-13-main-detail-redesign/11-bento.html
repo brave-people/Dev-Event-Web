@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>11 벤토 홈</title>
+<link rel="stylesheet" href="shared/base.css">
+<style>
+:root { --bg:#f2f3f7; --ink:#12142b; --sub:#4b4e66; --hint:#8a8da3; --line:#e6e7ef; --blue:#0043ff; --navy:#000040; --sky:#78cdff; --thumb-radius:16px; }
+body { background:var(--bg); color:var(--ink); }
+.hd { max-width:1200px; margin:0 auto; height:76px; padding:0 20px; display:flex; align-items:center; gap:28px; }
+.logo { font-weight:800; font-size:20px; color:var(--navy); }
+.logo i { font-style:normal; color:var(--blue); }
+.nav { display:flex; gap:6px; padding:5px; border-radius:999px; background:#fff; font-size:14.500px; font-weight:700; color:var(--hint); }
+.nav a { padding:8px 16px; border-radius:999px; }
+.nav .is-on { background:var(--navy); color:#fff; }
+.hd__r { margin-left:auto; display:flex; gap:8px; font-size:14px; font-weight:700; }
+.hd__r button { height:42px; padding:0 18px; border-radius:999px; background:#fff; }
+.hd__r .pri { background:var(--blue); color:#fff; }
+.wrap { max-width:1200px; margin:0 auto; padding:4px 20px 120px; }
+.bento { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); grid-auto-rows:188px; gap:16px; }
+.t { position:relative; display:block; border-radius:28px; background:#fff; padding:22px; overflow:hidden; transition:transform .2s, box-shadow .2s; }
+a.t:hover, button.t:hover { transform:translateY(-3px); box-shadow:0 14px 30px rgba(18,20,43,.1); }
+.t small { font-size:13.500px; font-weight:700; opacity:.72; }
+.t-feat { grid-column:span 2; grid-row:span 2; padding:0; color:#fff; background:var(--navy); }
+.t-feat .k-thumb { position:absolute; inset:0; aspect-ratio:auto; border-radius:0; }
+.t-feat::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,40,.05) 30%,rgba(0,0,40,.92) 100%); }
+.t-feat div { position:absolute; left:26px; right:26px; bottom:24px; z-index:1; }
+.t-feat em { font-style:normal; display:inline-block; padding:6px 12px; border-radius:999px; background:#fff; color:var(--navy); font-size:12.500px; font-weight:800; }
+.t-feat strong { display:block; margin:12px 0 8px; font-size:26px; line-height:1.34; font-weight:800; letter-spacing:-.02em; }
+.t-feat p { font-size:14.500px; font-weight:600; opacity:.85; }
+.t-num { text-align:left; display:flex; flex-direction:column; }
+.t-num b { margin-top:auto; font-size:64px; line-height:1; font-weight:800; letter-spacing:-.04em; }
+.t-num b u { text-decoration:none; font-size:20px; letter-spacing:0; margin-left:4px; }
+.t-num .ar { position:absolute; right:20px; top:20px; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.2); display:grid; place-items:center; }
+.c-blue { background:var(--blue); color:#fff; } .c-navy { background:var(--navy); color:#fff; }
+.c-yel { background:linear-gradient(180deg,#ffe600 10%,#ffb900 100%); color:var(--navy); } .c-yel .ar, .c-sky .ar { background:rgba(0,0,64,.1); }
+.c-sky { background:linear-gradient(180deg,#34b7f9 10%,#87e8df 100%); color:var(--navy); }
+.t-list { grid-column:span 2; }
+.t-list h3, .t-week h3, .t-tags h3 { font-size:15px; font-weight:800; margin-bottom:8px; }
+.t-list a { display:flex; align-items:center; gap:12px; padding:8px 0; border-top:1px solid var(--line); font-size:14.500px; font-weight:600; }
+.t-list a:first-of-type { border-top:0; }
+.t-list a span { flex:1; min-width:0; }
+.t-list a b { color:#e5484d; font-size:13.500px; font-weight:800; white-space:nowrap; }
+.wkb { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; height:96px; align-items:end; margin-top:14px; }
+.wkb div { display:grid; justify-items:center; gap:5px; align-content:end; height:100%; font-size:11.500px; font-weight:700; color:var(--hint); }
+.wkb i { width:100%; border-radius:6px; background:#dfe6ff; min-height:4px; }
+.wkb .is-t i { background:var(--blue); } .wkb .is-t { color:var(--blue); }
+.t-tags div { display:flex; flex-wrap:wrap; gap:6px; }
+.chip { padding:7px 12px; border-radius:999px; background:var(--bg); font-size:13.500px; font-weight:700; color:var(--sub); }
+.chip.is-on { background:var(--navy); color:#fff; }
+.sec { display:flex; align-items:baseline; gap:10px; margin:44px 4px 16px; }
+.sec h2 { font-size:22px; font-weight:800; letter-spacing:-.02em; }
+.sec span { font-size:14.500px; color:var(--hint); font-weight:600; }
+.grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.cd { display:block; background:#fff; border-radius:28px; padding:14px 14px 20px; transition:.2s; }
+.cd:hover { transform:translateY(-3px); box-shadow:0 14px 30px rgba(18,20,43,.1); }
+.cd__m { display:flex; align-items:center; gap:8px; margin:14px 6px 8px; font-size:13px; font-weight:700; color:var(--hint); }
+.cd__m em { font-style:normal; margin-left:auto; padding:4px 10px; border-radius:999px; background:#eaf0ff; color:var(--blue); font-weight:800; font-size:12.500px; }
+.cd__m em.is-hot { background:#ffeaea; color:#e5484d; }
+.cd strong { margin:0 6px; font-size:17px; line-height:1.42; font-weight:800; letter-spacing:-.015em; min-height:48px; }
+.cd p { margin:10px 6px 0; font-size:13.500px; color:var(--sub); font-weight:500; }
+/* detail */
+.back { display:inline-flex; gap:4px; align-items:center; margin:0 4px 14px; font-size:14px; font-weight:700; color:var(--hint); }
+.db { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+.d-img { grid-column:span 2; grid-row:span 2; padding:0; }
+.d-img .k-thumb { height:100%; aspect-ratio:auto; border-radius:0; min-height:300px; }
+.d-ttl { grid-column:span 2; padding:28px; }
+.d-ttl small { color:var(--blue); opacity:1; font-size:14.500px; }
+.d-ttl h1 { margin-top:8px; font-size:26px; line-height:1.36; font-weight:800; letter-spacing:-.02em; }
+.d-dd b { font-size:46px; }
+.d-dd p { margin-top:6px; font-size:13.500px; font-weight:700; opacity:.85; }
+.d-go { display:flex; flex-direction:column; }
+.d-go strong { margin-top:auto; font-size:22px; line-height:1.3; font-weight:800; }
+.d-go .ic { position:absolute; right:22px; top:22px; }
+.d-sm { padding:20px 22px; }
+.d-sm b { display:block; margin-top:8px; font-size:17px; font-weight:800; line-height:1.4; }
+.d-acts { display:flex; gap:8px; align-items:center; justify-content:space-between; }
+.d-acts button { flex:1; height:100%; min-height:56px; border-radius:18px; background:var(--bg); display:grid; place-items:center; gap:2px; font-size:12px; font-weight:700; color:var(--sub); }
+.d-body { grid-column:1 / -1; padding:40px; }
+.d-body h2 { font-size:20px; font-weight:800; margin-bottom:20px; }
+@media (max-width: 900px) {
+  .nav, .hd__r button:first-child { display:none; } .hd { height:64px; }
+  .bento { grid-template-columns:repeat(2,minmax(0,1fr)); grid-auto-rows:150px; gap:10px; }
+  .t { border-radius:22px; padding:16px; } .t-num b { font-size:44px; } .t-feat strong { font-size:19px; } .t-feat div { left:18px; right:18px; bottom:18px; }
+  .t-list { grid-row:span 2; } .t-week, .t-tags { grid-column:span 2; }
+  .grid { grid-template-columns:1fr; gap:10px; } .cd { border-radius:22px; } .cd strong { min-height:0; }
+  .db { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+  .d-ttl { padding:20px; } .d-ttl h1 { font-size:21px; } .d-body { padding:22px; } .d-dd b { font-size:34px; } .d-go strong { font-size:18px; }
+  .d-acts { grid-column:span 2; }
+  .d-img { grid-row:auto; } .d-img .k-thumb { aspect-ratio:16 / 9; height:auto; min-height:0; }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="shared/data.js"></script>
+<script src="shared/kit.js"></script>
+<script>
+const { esc, ic } = K;
+const header = () => `
+<header class="hd">
+  <a class="logo" href="#main">DEV<i>.</i>EVENT</a>
+  <nav class="nav"><a class="is-on" href="#main">홈</a><a href="#main">전체 행사</a><a href="#main">캘린더</a><a href="#main">관심 행사</a></nav>
+  <div class="hd__r"><button data-toast="행사 등록 요청 화면으로 이동해요">행사 등록 요청</button><button class="pri">로그인</button></div>
+</header>`;
+
+const card = (e) => `
+<a class="cd" href="${e.href}">${K.thumb(e)}
+  <div class="cd__m"><span>${e.kind} · ${e.mode.join('·')} · ${e.cost}</span><em class="${e.urgent ? 'is-hot' : ''}">${e.label}</em></div>
+  <strong class="clamp2">${esc(e.title)}</strong><p class="clamp1">${esc(e.organizer)} · ${e.when}</p>
+</a>`;
+
+function main() {
+  const f = K.featured, L = K.list();
+  const cnt = {}; K.ALL.forEach((e) => { const k = K.key(e.keyDate); cnt[k] = (cnt[k] || 0) + 1; });
+  const week = K.days(7).map(K.dayInfo); const mx = Math.max(...week.map((d) => cnt[d.key] || 0), 1);
+  const dead = K.ALL.filter((e) => e.recruit).slice(0, 3);
+  return header() + `
+<div class="wrap">
+  <div class="bento">
+    <a class="t t-feat" href="${f.href}">${K.thumb(f)}<div><em>이번 주 추천</em><strong class="clamp2">${esc(f.title)}</strong><p>${esc(f.organizer)} · ${f.when}</p></div></a>
+    <button class="t t-num c-blue" data-toast="오늘 마감 행사만 모아 봐요"><small>오늘 마감</small><span class="ar">${ic('out', 18)}</span><b>${K.count((e) => e.recruit && e.days <= 0)}<u>건</u></b></button>
+    <button class="t t-num c-navy" data-toast="이번 주에 열리는 행사만 모아 봐요"><small>이번 주에 열려요</small><span class="ar">${ic('out', 18)}</span><b>${K.count((e) => !e.recruit && e.days <= 7)}<u>건</u></b></button>
+    <div class="t t-list"><h3>지금 신청하지 않으면 늦어요</h3>${dead.map((e) => `<a href="${e.href}"><span class="clamp1">${esc(e.title)}</span><b>${e.days <= 0 ? e.keyTime + ' 마감' : e.label}</b></a>`).join('')}</div>
+    <button class="t t-num c-yel" data-set="cost:무료"><small>무료 행사</small><span class="ar">${ic('out', 18)}</span><b>${K.count((e) => e.cost === '무료')}<u>건</u></b></button>
+    <div class="t t-week"><h3>이번 주 마감·행사</h3><div class="wkb">${week.map((d) => `<div class="${d.diff === 0 ? 'is-t' : ''}"><i style="height:${Math.round(((cnt[d.key] || 0) / mx) * 62)}px"></i>${d.dow}</div>`).join('')}</div></div>
+    <button class="t t-num c-sky" data-set="mode:온라인"><small>온라인으로 참여</small><span class="ar">${ic('out', 18)}</span><b>${K.count((e) => e.mode.includes('온라인'))}<u>건</u></b></button>
+    <div class="t t-tags"><h3>분야로 좁히기</h3><div>${K.chips('topic', K.TOPIC)}</div></div>
+  </div>
+  <div class="sec"><h2>${K.state.topic === '전체' ? '전체 행사' : K.state.topic + ' 행사'}</h2><span>${L.length}건 · 마감 빠른 순</span></div>
+  <div class="grid">${L.slice(0, 18).map(card).join('')}</div>
+</div>`;
+}
+
+function detail(e) {
+  return header() + `
+<div class="wrap">
+  <a class="back" href="#main">${ic('back', 16)} 홈으로</a>
+  <div class="db">
+    <div class="t d-img">${K.thumb(e)}</div>
+    <div class="t d-ttl"><small>${esc(e.organizer)}</small><h1>${esc(e.title)}</h1></div>
+    <div class="t t-num d-dd ${e.urgent ? 'c-blue' : 'c-navy'}"><small>${e.recruit ? '접수 마감까지' : e.state === '진행 중' ? '행사 종료까지' : '행사 시작까지'}</small><b>${e.recruit || e.state === '진행 중' ? e.remain.split(' ')[0] : e.days + '일'}</b><p>${e.recruit ? `${K.fdw(e.en)} ${K.ft(e.en)}` : `${K.fdw(e.keyDate)} ${e.keyTime}`}</p></div>
+    <a class="t d-go c-blue" href="${esc(e.link)}" target="_blank" rel="noopener"><small>주최 측 페이지로 이동</small>${ic('out', 26)}<strong>신청하러<br>가기</strong></a>
+    <div class="t d-sm"><small>${e.recruit ? '접수 기간' : '일시'}</small><b>${e.range}</b></div>
+    <div class="t d-sm"><small>진행 방식 · 참가비</small><b>${e.mode.join(' · ')}<br>${e.cost}</b></div>
+    <div class="t d-sm"><small>분류</small><b>${e.kind}<br>${e.topics.join(' · ')}</b></div>
+    <div class="t d-sm d-acts"><button data-toast="관심 행사에 담았어요">${ic('bookmark')}관심</button><button data-toast="캘린더에 추가했어요">${ic('calendar')}캘린더</button><button data-toast="링크가 복사되었어요">${ic('share')}공유</button></div>
+    <div class="t d-body"><h2>행사 소개</h2><div class="k-prose">${e.descHtml}</div></div>
+  </div>
+</div>`;
+}
+K.mount({ main, detail });
+</script>
+</body>
+</html>

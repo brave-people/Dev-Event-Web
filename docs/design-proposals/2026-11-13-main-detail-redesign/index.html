@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dev Event 메인·상세 리디자인</title>
+<link rel="stylesheet" href="shared/base.css">
+<style>
+:root { --ink:#15171c; --sub:#525866; --hint:#8b90a0; --line:#e6e8ee; --soft:#f5f6f9; --blue:#0043ff; --navy:#000040; }
+body { background:#fff; color:var(--ink); }
+.top { position:relative; overflow:hidden; color:#fff; background:linear-gradient(120deg,#000040 0%,#0030c8 60%,#0a5bff 100%); }
+.top svg { position:absolute; inset:0; width:100%; height:100%; }
+.top svg g { animation:wv var(--d) linear infinite; } .top svg g.rev { animation-direction:reverse; }
+@keyframes wv { to { transform:translateX(-400px); } }
+@media (prefers-reduced-motion: reduce) { .top svg g { animation:none; } }
+.top__in { position:relative; max-width:1120px; margin:0 auto; padding:64px 24px 72px; }
+.top small { font-size:14px; font-weight:700; letter-spacing:.04em; opacity:.8; }
+.top h1 { margin-top:12px; font-size:44px; line-height:1.24; letter-spacing:-.03em; font-weight:800; }
+.top p { margin-top:16px; max-width:640px; font-size:17px; line-height:1.7; opacity:.88; }
+.wrap { max-width:1120px; margin:0 auto; padding:0 24px 100px; }
+.steps { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:24px; margin-top:-36px; position:relative; }
+.st { display:flex; flex-direction:column; border-radius:24px; background:#fff; border:1px solid var(--line); box-shadow:0 12px 36px rgba(21,23,28,.08); overflow:hidden; transition:.2s; }
+.st:hover { transform:translateY(-4px); box-shadow:0 20px 48px rgba(21,23,28,.14); }
+.pv { position:relative; aspect-ratio:16 / 10; overflow:hidden; background:var(--soft); border-bottom:1px solid var(--line); }
+.pv iframe { position:absolute; left:0; top:0; width:1280px; height:800px; border:0; transform-origin:0 0; pointer-events:none; }
+.st__b { padding:26px 28px 28px; display:flex; flex-direction:column; flex:1; }
+.st__k { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:800; color:var(--blue); letter-spacing:.02em; }
+.st__k em { font-style:normal; padding:3px 9px; border-radius:999px; background:#e7f8ef; color:#0a7a45; font-size:12px; }
+.st__k em.now { background:#eaf0ff; color:var(--blue); }
+.st h2 { margin-top:10px; font-size:26px; line-height:1.3; letter-spacing:-.02em; font-weight:800; }
+.st p { margin-top:10px; font-size:15px; line-height:1.7; color:var(--sub); flex:1; }
+.btns { display:flex; gap:8px; margin-top:22px; flex-wrap:wrap; }
+.btn { display:inline-flex; align-items:center; gap:6px; height:50px; padding:0 22px; border-radius:14px; background:var(--blue); color:#fff; font-size:15.5px; font-weight:700; transition:transform .12s; }
+.btn:active { transform:scale(.97); }
+.btn--line { background:#fff; color:var(--ink); border:1px solid var(--line); }
+h3 { margin:64px 0 18px; font-size:22px; font-weight:800; letter-spacing:-.02em; }
+.log { border-left:2px solid var(--line); margin-left:8px; }
+.log li { position:relative; padding:0 0 26px 26px; }
+.log li::before { content:''; position:absolute; left:-7px; top:5px; width:12px; height:12px; border-radius:50%; background:#fff; border:3px solid var(--ink); }
+.log li.is-now::before { border-color:var(--blue); }
+.log time { font-size:13px; font-weight:700; color:var(--hint); }
+.log b { display:block; margin-top:2px; font-size:17px; font-weight:700; }
+.log p { margin-top:6px; font-size:14.5px; line-height:1.7; color:var(--sub); max-width:760px; }
+.req { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:14px; max-width:860px; }
+.req div { display:grid; grid-template-columns:22px minmax(0,1fr); gap:10px; padding:14px 16px; border-radius:14px; background:var(--soft); font-size:14px; line-height:1.55; color:var(--sub); }
+.req div i { width:22px; height:22px; border-radius:50%; background:var(--blue); color:#fff; display:grid; place-items:center; font-style:normal; font-size:12px; font-weight:800; }
+.req b { display:block; color:var(--ink); font-size:14.5px; }
+.foot { margin-top:56px; padding-top:20px; border-top:1px solid var(--line); font-size:13px; color:var(--hint); line-height:1.7; }
+@media (max-width: 820px) {
+  .top__in { padding:44px 20px 60px; } .top h1 { font-size:31px; } .top p { font-size:15.5px; }
+  .wrap { padding:0 16px 80px; } .steps { grid-template-columns:1fr; gap:16px; } .st__b { padding:22px; } .st h2 { font-size:22px; }
+  .req { grid-template-columns:1fr; } .btn { flex:1; justify-content:center; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <svg viewBox="0 0 1600 200" preserveAspectRatio="none" aria-hidden="true" id="wv"></svg>
+  <div class="top__in">
+    <small>DEV.EVENT · 2026.11</small>
+    <h1>메인·상세 페이지 리디자인</h1>
+    <p>시안을 넓게 펼쳐 본 기록과, 그중 하나를 골라 다듬은 상세 설계를 한곳에 모았습니다. 아래 두 단계 중 보고 싶은 쪽으로 들어가세요.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="steps">
+    <a class="st" href="proposals.html">
+      <div class="pv"><iframe src="proposals.html#02" title="시안 12가지 미리보기" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="st__b">
+        <span class="st__k">1단계 · 방향 탐색 <em>결정 완료</em></span>
+        <h2>시안 12가지</h2>
+        <p>국내외 행사·큐레이션 서비스 13곳을 살펴보고 서로 다른 12가지 방향을 운영 데이터로 그렸습니다. 이 가운데 <b>02 날짜 타임라인</b>으로 결정했습니다.</p>
+        <div class="btns"><span class="btn btn--line">시안 12개 보기 →</span></div>
+      </div>
+    </a>
+    <a class="st" href="detail-design/index.html">
+      <div class="pv"><iframe src="detail-design/app.html" title="상세 설계 목업 미리보기" loading="lazy" tabindex="-1"></iframe></div>
+      <div class="st__b">
+        <span class="st__k">2단계 · 상세 설계 <em class="now">진행 중</em></span>
+        <h2>02 날짜 타임라인 상세 설계</h2>
+        <p>수정 요청을 반영한 메인·상세 목업과 설계 근거입니다. 날짜 이동, 썸네일 크기, NEW 표시, 배너 열여섯 가지 안, 소식 받기·푸터 열 가지 안을 어떤 서비스를 참고해 그렸는지 함께 적었습니다.</p>
+        <div class="btns"><span class="btn">상세 설계 보기 →</span></div>
+      </div>
+    </a>
+  </div>
+
+  <h3>의사결정 기록</h3>
+  <ol class="log">
+    <li><time>2026.11.13</time><b>시안 12가지 제안</b><p>현재 화면을 재 보니 첫 화면에 행사가 0건이었고, 예정 행사 68건 중 58건의 뱃지가 똑같이 Today였습니다. 이를 바탕으로 12가지 방향을 그려 비교했습니다. 당시 제 추천은 01 마감 보드였습니다.</p></li>
+    <li><time>2026.11.14</time><b>02 날짜 타임라인으로 결정</b><p>날짜를 따라 내려가며 보는 구조로 가기로 했고, 아래 수정 요청을 함께 받았습니다.</p>
+      <div class="req">
+        <div><i>1</i><span><b>오늘·내일·모레 표시 빼기</b>날짜 옆 검은 뱃지를 없앴습니다.</span></div>
+        <div><i>2</i><span><b>푸터 되살리기</b>지금 서비스의 푸터 구성을 그대로 넣었습니다.</span></div>
+        <div><i>3</i><span><b>이메일 구독 영역 되살리기</b>푸터 위에 되살렸습니다.</span></div>
+        <div><i>4</i><span><b>다른 날짜로 이동할 방법</b>한 달이 한 줄에 보이는 날짜 띠, 이전·다음 달, 월 선택, 오늘 버튼을 넣었습니다.</span></div>
+        <div><i>5</i><span><b>썸네일 키우기</b>폭 168px에서 320px로 키워 포스터 속 글자가 읽히게 했습니다.</span></div>
+        <div><i>6</i><span><b>NEW 표시 잘 보이게</b>세 가지 안을 그려 하나를 추천했고, 새 행사만 모아 보는 칩을 더했습니다.</span></div>
+        <div><i>7</i><span><b>배너를 둘지 말지</b>여섯 가지 안을 그리고 첫 화면에 보이는 행사 수를 재서 비교했습니다.</span></div>
+        <div><i>8</i><span><b>관심 행사 메뉴</b>그대로 두었습니다.</span></div>
+      </div></li>
+    <li><time>2026.11.14 · 두 번째 의견</time><b>배너와 소식 받기 영역을 다시</b><p>"배너가 지금의 파란 물결 스타일에 갇혀 있다", "이메일과 SNS가 좌우로 나뉘어 혼란스럽고 틀에 박혀 보인다"는 의견을 받았습니다. 맨 위 영역은 국내외 61곳, 맨 아래 영역은 57곳의 실제 화면을 다시 살펴보고 새로 그렸습니다.</p>
+      <div class="req">
+        <div><i>9</i><span><b>배너 열 안 추가</b>큰 글자 한 문장, 검색, 형광 공지 띠, 남은 시간, 스펙 시트, 낱말 색 블록, 바로가기 타일, 포스터 띠, 행사 잔디, 쪽지.</span></div>
+        <div><i>10</i><span><b>소식 받기·푸터 열 안</b>메일과 SNS를 한 덩어리로 보여 주는 열 가지 방식. SNS를 카드로 만들지 않았습니다.</span></div>
+      </div></li>
+    <li><time>2026.11.14</time><b>소식 받기: 셋을 같은 무게로</b><p>뉴스레터, Threads, Instagram 가운데 어느 하나를 앞세우지 않기로 했습니다. 소식 받기·푸터는 2번(받는 방법 고르기)을 기본으로 잡았습니다.</p></li>
+    <li><time>2026.11.14</time><b>배너: J. 큰 글자 한 문장</b><p>열여섯 안 가운데 그림 없이 글자만 쓰는 J로 결정했습니다. 높이 118px(모바일 145px)이고, 첫 화면에 행사가 3건(모바일 2건) 보입니다.</p></li>
+    <li><time>2026.11.14</time><b>NEW 표시: 제목 앞 파란 NEW, 등록 후 3일</b><p>포스터를 가리지 않고 제목과 함께 읽히는 B안으로 결정했습니다. 행사가 3~5일에 한 번씩 묶음으로 올라오므로 3일 동안 붙입니다.</p></li>
+    <li><time>2026.11.14</time><b>썸네일: PC 320px</b><p>노트북 화면(1280×900)에서는 240px까지 줄여도 첫 화면에 보이는 행사 수가 같아서, 포스터 글자가 읽히는 320px를 유지합니다.</p></li>
+    <li><time>2026.11.16</time><b>문구 다듬기, 그리고 배너를 활용하기로</b><p>소식 받기·푸터는 2번으로 진행하면서 문구를 고쳤고, 배너는 11.14의 J안에서 방향을 바꿨습니다.</p>
+      <div class="req">
+        <div><i>11</i><span><b>"팔로우" → "보러 가기"</b>누르면 바로 팔로우되는 것처럼 보이지 않게 했습니다.</span></div>
+        <div><i>12</i><span><b>목록 끝 뉴스레터 문구 빼기</b>"여기까지가 지금 등록된 행사예요."만 남겼습니다.</span></div>
+        <div><i>13</i><span><b>"다양한 곳에서 확인해 보세요"</b>소식 받기 제목을 바꿨습니다.</span></div>
+        <div><i>14</i><span><b>저작권 연도 2022 유지</b>처음 공개한 해를 적는 것이라 그대로 둡니다.</span></div>
+        <div><i>15</i><span><b>같은 날 다른 행사</b>새 API 없이 기존 예정 행사 목록으로 만듭니다.</span></div>
+        <div><i>16</i><span><b>등록 배너</b>서버에 등록된 배너가 있으면 글 왼쪽·이미지 오른쪽으로 보여 주고, 배경은 배너 API의 배경색을 씁니다.</span></div>
+        <div><i>17</i><span><b>배너 없을 때는 홀로그램 스티커</b>스티커 일곱 안 가운데 스5로 정했습니다. 안에 넣을 스티커는 기술 로고 쪽으로 다시 그립니다.</span></div>
+        <div><i>18</i><span><b>홀1. 로고 섞기로 결정</b>홀로그램 여섯 안 가운데 홀1로 정했습니다. 마이크는 개발자 행사와 맞지 않아 빼고, 그 자리는 후보 열 가지 가운데 프롬프트로 정했습니다(.kt 딱지와 LGTM은 거절).</span></div>
+        <div><i>19</i><span><b>캘린더 보기 다시 만들기</b>08 캘린더 3분할을 바탕으로, 행사를 누르면 상세 화면으로 가는 두 칸 구성으로 만들고 범례는 (i) 버튼 안에 넣었습니다.</span></div>
+        <div><i>20</i><span><b>날짜 띠는 오늘부터 2주</b>한 달 전체를 보여 주던 띠를 오늘부터 2주(모바일 7일)로 줄였습니다. 지난 날짜는 "지난 행사 보기"를 눌렀을 때만 나옵니다.</span></div>
+        <div><i>21</i><span><b>로그인 창 다시 만들기</b>카카오·이메일이 먼저 보이고 "다른 방법으로 로그인"을 누르면 구글·네이버·깃허브가 펼쳐지는 구조로 열 가지를 그렸습니다.</span></div>
+        <div><i>22</i><span><b>로그인 창은 2. 홀로그램 머리띠</b>(11.17) 간편 로그인은 처음 누르면 바로 가입되므로 제목을 "로그인 · 회원가입"으로, 가입 링크를 "이메일로 가입"으로 바꿨습니다. Google 버튼은 테두리 없는 회색 판으로 바꿨습니다.</span></div>
+        <div><i>23</i><span><b>관심 행사 · 내 정보 다시 만들기</b>(11.17) 기능은 지금과 같게 두고 관심 행사(북마크) 열 가지, 내 정보(마이 페이지) 열 가지를 그렸습니다. 관심 행사는 <b>6. 홀로그램 머리띠</b>, 내 정보는 <b>2. 홀로그램 머리띠</b>로 정했습니다.</span></div>
+        <div><i>24</i><span><b>소개 · 검색 결과 · 오류 화면 · 공지 띠 · 공유 안내</b>(11.17) 내용과 기능은 지금과 같게 두고 각각 열 가지를 그렸습니다. 검색 결과 1. 날짜 타임라인, 오류 화면 9. 큰 숫자, 공지 띠 2. 홀로그램 띠, 공유 안내 4. 위에서 내려옴으로 정했고, 소개 화면은 지금 디자인을 유지합니다.</span></div>
+        <div><i>25</i><span><b>상세 화면 본문 넓히기</b>(11.17) 오른쪽 본문이 좁아 보인다는 의견에 따라 왼쪽 칸을 400px에서 320px로 줄이고 본문을 628px에서 712px로 넓혔습니다. 표는 본문 칸을 다 채우고, 본문 그림은 누르면 크게 보입니다.</span></div>
+      </div></li>
+    <li class="is-now"><time>지금</time><b>화면 시안을 모두 정했습니다</b><p>배너(홀로그램 스티커 · 홀1), 캘린더 보기, 날짜 띠(오늘부터 2주)를 차례로 고쳤고(11.16), 로그인 창은 <b>2. 홀로그램 머리띠</b>로 정했습니다(11.17). Google·네이버를 "다른 방법" 안에 두는 구조도 그대로 가기로 했습니다(11.17). 로그인·가입의 입력란은 지금 서비스와 같게 두었습니다. 이어서 <b>관심 행사(북마크)</b>는 6. 홀로그램 머리띠, <b>내 정보(마이 페이지)</b>는 2. 홀로그램 머리띠로 정했습니다(11.17). <b>검색 결과, 오류 화면, 공지 띠, 공유 안내</b>도 정했고 <b>소개 화면</b>은 지금 디자인을 유지합니다(11.17). 다음은 실제 코드로 옮기는 순서를 정하는 일입니다.</p></li>
+  </ol>
+
+  <p class="foot">목업의 날짜는 2026년 11월 13일 오전 10시로 고정되어 있어 언제 열어도 같은 화면이 나옵니다. 행사 데이터는 그날의 운영 사이트 공개 정보를 옮긴 것입니다.</p>
+</main>
+<script>
+// 표지 배경 물결: 상세 설계의 배너와 같은 방식(SVG 경로를 한 주기만큼 옆으로 밀어 반복)
+const mk = (amp, y) => { let d = `M-400 ${y}`; for (let x = -400; x < 2400; x += 400) d += ` Q${x + 100} ${y - amp} ${x + 200} ${y} T${x + 400} ${y}`; return d + ' V240 H-400 Z'; };
+document.getElementById('wv').innerHTML = `<g style="--d:24s"><path d="${mk(28, 104)}" fill="rgba(120,205,255,.2)"/></g><g class="rev" style="--d:32s"><path d="${mk(20, 138)}" fill="rgba(79,134,255,.42)"/></g><g style="--d:14s"><path d="${mk(12, 172)}" fill="rgba(255,255,255,.12)"/></g>`;
+function fit() { document.querySelectorAll('.pv').forEach((p) => { p.querySelector('iframe').style.transform = `scale(${p.clientWidth / 1280})`; }); }
+window.addEventListener('resize', fit); fit();
+</script>
+</body>
+</html>

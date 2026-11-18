@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dev Event 리디자인 — 시안 12가지</title>
+<link rel="stylesheet" href="shared/base.css">
+<style>
+:root { --ink:#15171c; --sub:#525866; --hint:#8b90a0; --line:#e4e6ec; --soft:#f5f6f9; --blue:#0043ff; --blue-soft:#ecf1ff; }
+html, body { height:100%; }
+body { color:var(--ink); background:#fff; display:grid; grid-template-columns:288px minmax(0,1fr); }
+.sb { height:100vh; overflow-y:auto; border-right:1px solid var(--line); padding:22px 14px 30px; }
+.sb h1 { padding:0 8px; font-size:17px; font-weight:800; letter-spacing:-.01em; line-height:1.4; }
+.sb > p { padding:6px 8px 16px; font-size:12.500px; color:var(--hint); line-height:1.55; }
+.it { width:100%; display:grid; grid-template-columns:30px minmax(0,1fr); gap:2px 8px; padding:10px 8px; border-radius:10px; text-align:left; }
+.it:hover { background:var(--soft); }
+.it.is-on { background:var(--blue-soft); }
+.it i { grid-row:1 / 3; font-style:normal; font-size:13px; font-weight:800; color:var(--hint); padding-top:1px; }
+.it.is-on i, .it.is-on b { color:var(--blue); }
+.it b { font-size:14.500px; font-weight:700; }
+.it span { font-size:12.500px; color:var(--hint); line-height:1.45; }
+.it.ov { grid-template-columns:1fr; margin-bottom:8px; border:1px solid var(--line); }
+.home { display:inline-block; margin:0 8px 12px; font-size:13px; font-weight:700; color:var(--blue); }
+.chosen { font-style:normal; margin-left:6px; padding:2px 7px; border-radius:6px; background:var(--blue); color:#fff; font-size:11px; font-weight:800; vertical-align:1px; }
+.it.is-on .chosen { color:#fff; }
+.decided { display:grid; gap:4px; margin-bottom:32px; padding:20px 22px; border-radius:16px; background:var(--blue); color:#fff; }
+.decided small { font-size:12.5px; font-weight:700; opacity:.8; } .ovw .decided b { font-size:20px; font-weight:800; color:#fff; letter-spacing:-.015em; } .decided span { font-size:14px; font-weight:600; opacity:.9; }
+.mn { height:100vh; display:grid; grid-template-rows:auto auto minmax(0,1fr); min-width:0; }
+.tb { display:flex; align-items:center; gap:12px; padding:12px 20px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+.tb h2 { font-size:18px; font-weight:800; letter-spacing:-.015em; margin-right:auto; }
+.tb h2 small { margin-left:8px; font-size:13px; font-weight:600; color:var(--hint); }
+.seg { display:flex; padding:3px; border-radius:10px; background:var(--soft); font-size:13.500px; font-weight:700; }
+.seg button { padding:7px 14px; border-radius:8px; color:var(--hint); }
+.seg button.is-on { background:#fff; color:var(--ink); box-shadow:0 1px 3px rgba(21,23,28,.12); }
+.lk { padding:8px 12px; border-radius:10px; border:1px solid var(--line); font-size:13.500px; font-weight:700; }
+.nt { display:grid; grid-template-columns:1.25fr 1fr 1fr .9fr; gap:0; border-bottom:1px solid var(--line); background:#fbfbfd; }
+.nt > div { padding:14px 20px 16px; border-left:1px solid var(--line); min-width:0; }
+.nt > div:first-child { border-left:0; }
+.nt h3 { font-size:11.500px; font-weight:800; color:var(--hint); letter-spacing:.04em; margin-bottom:6px; }
+.nt p, .nt li { font-size:13px; line-height:1.6; color:var(--sub); }
+.nt li { padding-left:12px; position:relative; }
+.nt li::before { content:''; position:absolute; left:0; top:9px; width:4px; height:4px; border-radius:50%; background:#b6bac6; }
+.nt .rf { margin-top:6px; font-size:12px; color:var(--hint); }
+.nt dl { display:grid; grid-template-columns:auto 1fr; gap:3px 12px; font-size:13px; margin:0; }
+.nt dt { color:var(--hint); } .nt dd { margin:0; font-weight:700; }
+body.is-fold .nt { display:none; }
+.st { position:relative; overflow:hidden; background:#e9ebf0; }
+.st iframe { position:absolute; left:0; top:0; border:0; background:#fff; transform-origin:0 0; }
+.st.is-mo { display:grid; place-items:center; }
+.st.is-mo iframe { position:static; transform:none !important; border-radius:28px; box-shadow:0 0 0 10px #15171c, 0 24px 60px rgba(21,23,28,.3); }
+/* overview */
+.ovw { overflow-y:auto; padding:36px 44px 100px; grid-row:1 / -1; }
+.ovw__in { max-width:920px; }
+.ovw h2 { font-size:28px; font-weight:800; letter-spacing:-.025em; line-height:1.35; }
+.ovw .lead { margin-top:12px; font-size:16px; line-height:1.75; color:var(--sub); }
+.ovw h3 { margin:44px 0 14px; font-size:19px; font-weight:800; letter-spacing:-.015em; }
+.ovw p, .ovw li { font-size:15px; line-height:1.75; color:var(--sub); }
+.ovw ul { padding-left:1.2em; list-style:disc; } .ovw li + li { margin-top:6px; }
+.ovw b { color:var(--ink); }
+.facts { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.fact { padding:18px; border-radius:14px; background:var(--soft); }
+.fact b { display:block; font-size:30px; font-weight:800; letter-spacing:-.03em; color:var(--blue); }
+.fact span { display:block; margin-top:6px; font-size:13.500px; line-height:1.55; color:var(--sub); }
+.pick { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.pk { padding:18px; border-radius:14px; border:1px solid var(--line); text-align:left; transition:.15s; }
+.pk:hover { border-color:var(--blue); box-shadow:0 6px 16px rgba(0,67,255,.1); }
+.pk small { font-size:12px; font-weight:800; color:var(--blue); }
+.pk strong { display:block; margin:6px 0 6px; font-size:16.500px; font-weight:800; }
+.pk p { font-size:13.500px; line-height:1.6; }
+table { width:100%; border-collapse:collapse; font-size:13.500px; }
+th, td { padding:10px 10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+th { font-size:12px; color:var(--hint); font-weight:800; white-space:nowrap; background:#fff; position:sticky; top:-36px; }
+td:first-child { font-weight:700; white-space:nowrap; }
+td button { color:var(--blue); font-weight:700; text-align:left; }
+td.n { font-variant-numeric:tabular-nums; font-weight:700; white-space:nowrap; }
+.note { margin-top:10px; font-size:12.500px; color:var(--hint); line-height:1.6; }
+[hidden] { display:none !important; }
+@media (max-width: 980px) {
+  body { grid-template-columns:1fr; } .sb { height:auto; border-right:0; border-bottom:1px solid var(--line); display:flex; gap:6px; overflow-x:auto; padding:10px; }
+  .sb h1, .sb > p { display:none; } .it { flex:none; width:auto; grid-template-columns:auto auto; } .it span { display:none; } .it.ov { margin:0; }
+  .mn { height:calc(100vh - 62px); } .nt { grid-template-columns:1fr 1fr; } .nt > div:nth-child(n+3) { border-top:1px solid var(--line); }
+  .ovw { padding:24px 18px 80px; } .facts, .pick { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+<aside class="sb" id="sb"></aside>
+<main class="mn" id="mn">
+  <div class="tb" id="tb">
+    <h2 id="ttl"></h2>
+    <div class="seg" id="segView"><button data-v="main">메인</button><button data-v="detail">상세</button></div>
+    <div class="seg" id="segDev"><button data-d="pc">PC</button><button data-d="mo">모바일</button></div>
+    <button class="lk" id="fold">설명 접기</button>
+    <a class="lk" id="open" target="_blank" rel="noopener">새 탭에서 크게 보기 ↗</a>
+  </div>
+  <div class="nt" id="nt"></div>
+  <div class="st" id="st"><iframe id="fr" title="시안 미리보기"></iframe></div>
+  <article class="ovw" id="ovw" hidden></article>
+</main>
+<script>
+const D = [
+  { id: '01-deadline-board', name: '마감 보드', tag: '오늘 마감부터 보여주는 홈', pc: 11, mo: 4, fam: '높음', cost: '중', srv: '없음',
+    concept: '오늘 마감 → 이번 주 마감 → 곧 열리는 행사 순으로, "지금 해야 할 것"부터 보여 줍니다. 상세는 남은 시간과 접수 진행 막대를 맨 위에 둡니다.',
+    ref: '토스 홈(요약 숫자 + 흰 카드 목록), 링커리어·온오프믹스(D-day, 마감임박순)',
+    good: ['첫 화면에서 오늘 마감 건수와 목록이 바로 보입니다', '지금 있는 데이터만으로 만들 수 있습니다', '국내 금융·생활 앱에서 익숙한 구조입니다'],
+    bad: ['마감 위주라 "언제 열리는 행사인지"는 약합니다', '썸네일이 작아져 포스터의 매력이 줄어듭니다'] },
+  { id: '02-date-timeline', name: '날짜 타임라인', tag: '날짜 레일을 따라 내려가며 보기', pc: 4, mo: 3, fam: '높음', cost: '중', srv: '없음 (행사 일시 필드가 생기면 더 좋아짐)',
+    concept: '왼쪽 날짜 레일을 따라 하루씩 내려갑니다. 접수 마감일은 주황, 행사 당일은 파랑으로 구분하고, 위쪽 14일 띠로 원하는 날짜로 바로 이동합니다.',
+    ref: 'Luma 도시 페이지(날짜 레일), Resident Advisor(날짜 헤더), 이벤터스(신청기간과 행사일 분리)',
+    good: ['"이번 주 목요일에 뭐 있지"에 바로 답합니다', '마감일과 행사일의 혼동을 색으로 풉니다', '상세의 달력 한 장 + 신청 카드 구성이 깔끔합니다'],
+    bad: ['한 화면에 보이는 건수가 적습니다', '접수형 행사는 실제 행사일이 데이터에 없어 마감일에만 놓입니다'] },
+  { id: '03-weekly-lineup', name: '주간 편성표', tag: '오늘부터 7일을 요일 열로', pc: 17, mo: 6, fam: '높음', cost: '중', srv: '없음',
+    concept: '오늘부터 7일을 열로 펼쳐 요일별로 봅니다. 오늘 열은 색으로 강조하고, 모바일에서는 요일 탭으로 바뀝니다. 상세는 작품 소개 화면처럼 위에 요약, 아래에 탭을 둡니다.',
+    ref: '네이버 웹툰 요일별 편성, TV 편성표',
+    good: ['설명이 필요 없는 구조입니다', '썸네일을 유지하면서도 한 화면 건수가 가장 많습니다', '요일 단위로 다시 찾아오는 습관을 만들기 좋습니다'],
+    bad: ['접수형 행사는 "마감 요일"에 놓이는데, 그 요일에 열리는 행사로 오해할 수 있습니다', '열이 좁아 긴 제목이 잘립니다', '일주일 뒤 행사는 아래로 밀립니다'] },
+  { id: '04-ticket', name: '티켓', tag: '날짜가 크게 찍힌 티켓 한 장', pc: 8, mo: 4, fam: '보통', cost: '중', srv: '없음',
+    concept: '행사 하나를 티켓 한 장으로 표현합니다. 왼쪽에 날짜, 가운데 제목, 오른쪽 절취선 너머에 참가비와 남은 기간이 고정 위치에 놓이고 유형별로 색이 다릅니다.',
+    ref: '인터파크·멜론티켓의 장르 탭, 실물 입장권',
+    good: ['날짜·유형·참가비가 늘 같은 자리에 있어 훑기 쉽습니다', '형태가 기억에 남습니다', '관심 행사를 "내 티켓함"으로 연결할 수 있습니다'],
+    bad: ['목록에서 썸네일을 뺐습니다', '절취선·바코드 장식은 취향을 탑니다', '신청은 외부에서 하므로 "티켓"이라는 말이 오해를 줄 수 있습니다'] },
+  { id: '05-compact-board', name: '고밀도 보드', tag: '썸네일 없이 표로 촘촘하게', pc: 15, mo: 8, fam: '보통 (개발자에겐 높음)', cost: '하~중', srv: '없음',
+    concept: '썸네일을 빼고 표로 보여 줍니다. 왼쪽 필터에는 건수가 붙고, 마감순·등록순으로 바꿔 볼 수 있습니다. 상세는 본문 옆에 정보 패널을 고정합니다.',
+    ref: 'dev.events·confs.tech(텍스트 행, 건수 붙은 필터), GitHub 이슈 목록',
+    good: ['한 화면에 15건이 보여 비교가 빠릅니다', '필터 건수로 "유료 8건" 같은 분포가 보입니다', '모바일에서도 8건으로 가장 많이 보입니다'],
+    bad: ['포스터가 안 보여 행사 분위기가 전달되지 않습니다', '비개발 직군에게는 딱딱합니다'] },
+  { id: '06-magazine', name: '매거진 큐레이션', tag: '에디터가 고른 행사 중심', pc: 4, mo: 1, fam: '보통', cost: '상 (운영 포함)', srv: '추천 행사 지정 필요',
+    concept: '이번 주 한 건을 크게 소개하고, 마감 임박 다섯 가지와 주제별 선반(퇴근길 밋업, 무료 웨비나, 주말 해커톤)을 이어 붙입니다. 상세는 긴 글처럼 읽히고 신청 버튼은 아래에 떠 있습니다.',
+    ref: 'toss.tech, 29CM, 원티드 콘텐츠',
+    good: ['고르는 수고를 덜어 줍니다', '뉴스레터와 같은 말투로 브랜드가 이어집니다', '썸네일이 크게 살아납니다'],
+    bad: ['전체를 훑으려면 별도 목록이 필요합니다', '매주 추천과 문구를 누군가 써야 합니다 (선반은 태그 규칙으로 자동화 가능)', '명조 제목은 호불호가 있습니다'] },
+  { id: '07-thumbnail-grid', name: '썸네일 그리드', tag: '영상 서비스처럼 4열 썸네일', pc: 12, mo: 3, fam: '매우 높음', cost: '하', srv: '없음',
+    concept: '4열 썸네일 그리드입니다. 남은 기간은 영상 길이 자리(썸네일 오른쪽 아래)에 둡니다. 상세도 시청 화면 구조라 왼쪽에 본문, 오른쪽에 이어서 볼 행사가 놓입니다.',
+    ref: '유튜브 홈·시청 화면, 인프런 강의 목록, 이벤터스 3열 카드',
+    good: ['누구나 아는 구조라 배울 것이 없습니다', '포스터가 주인공입니다', '작업량이 가장 적습니다'],
+    bad: ['썸네일 없는 행사(샘플 44건 중 6건)가 비어 보입니다', '날짜 정보가 작아집니다', '무난한 만큼 새로움은 약합니다'] },
+  { id: '08-calendar-split', name: '캘린더 3분할', tag: '달력 · 그날 목록 · 상세를 한 화면에', pc: 6, mo: 4, fam: '보통', cost: '상', srv: '없음',
+    concept: '왼쪽 달력은 행사가 많은 날일수록 진하게 칠해지고, 날짜를 누르면 가운데에 그날 목록, 오른쪽에 상세가 열립니다. 페이지를 옮기지 않고 여러 행사를 넘겨 봅니다.',
+    ref: '네이버 메일·캘린더의 3분할, GitHub 잔디, 이벤터스 행사 캘린더',
+    good: ['페이지 이동 없이 여러 행사를 비교합니다', '붐비는 날이 색으로 보입니다', '지금의 목록 보기와 캘린더 보기를 하나로 합칩니다'],
+    bad: ['모바일에서는 3분할이 안 돼 다른 화면이 됩니다', '검색 노출용 상세 주소는 따로 유지해야 합니다', '날짜를 눌러야 목록이 나옵니다'] },
+  { id: '09-dev-editor', name: '개발자 에디터', tag: '코드 에디터처럼 보이는 다크 화면', pc: 15, mo: 7, fam: '낮음', cost: '중', srv: '없음',
+    concept: '탐색기가 필터, 한 줄이 한 행사, 상세는 문서 미리보기입니다. 날짜·상태·태그를 코드 색으로 구분합니다.',
+    ref: 'VS Code, GitHub 다크 테마, 당근 SEED의 코드 하이라이트 포인트 색',
+    good: ['개발자 서비스라는 정체성이 가장 강합니다', '한 화면 15건으로 촘촘합니다', '다크 모드를 쓰는 사용자에게 맞습니다'],
+    bad: ['취향이 크게 갈리고 주최 담당자·비개발 직군에게 낯섭니다', '목록에 썸네일이 없습니다', '기본 화면보다는 선택형 테마로 두는 편이 안전합니다'] },
+  { id: '10-feed', name: '소식 피드', tag: 'SNS처럼 한 줄로 내려가는 피드', pc: 8, mo: 5, fam: '높음 (반발 위험 있음)', cost: '중', srv: '없음 (주최 로고가 있으면 좋음)',
+    concept: '가운데 한 줄 피드입니다. 맨 위에는 오늘 마감하는 주최가 동그라미로 놓이고, 카드마다 본문 미리보기와 관심·캘린더 버튼이 붙습니다. 모바일에는 하단 탭이 생깁니다.',
+    ref: '인스타그램·스레드(서비스가 이미 운영 중인 채널), 당근 동네생활',
+    good: ['모바일에서 가장 자연스럽습니다', '기존 SNS 채널과 한 덩어리로 보입니다', '본문 미리보기로 내용을 바로 파악합니다'],
+    bad: ['카카오톡이 2025년 친구 탭을 피드로 바꿨다가 되돌린 것처럼, 목록을 피드로 바꾸는 개편은 반발 위험이 큽니다', 'PC에서는 가운데 한 줄만 쓰여 공간이 남습니다', '날짜순 탐색에 약합니다'] },
+  { id: '11-bento', name: '벤토 홈', tag: '숫자·추천·주간 그래프를 타일로', pc: 5, mo: 4, fam: '보통', cost: '중~상', srv: '추천 행사 지정 필요',
+    concept: '추천 행사, 오늘 마감 건수, 무료·온라인 건수, 주간 막대 그래프를 타일로 모은 홈입니다. 숫자 타일을 누르면 곧 필터가 됩니다. 상세도 핵심 정보를 타일로 나눕니다.',
+    ref: '애플·토스식 벤토 그리드, 현재 DESIGN.md의 KTB 블루·네이비·그라디언트',
+    good: ['지금의 브랜드 색을 그대로 쓰면서 가장 새로워 보입니다', '타일이 곧 바로가기입니다', '상세에서 핵심 정보가 한눈에 들어옵니다'],
+    bad: ['실제 목록은 스크롤해야 나옵니다', '숫자가 흥미를 끌지 못하면 장식이 됩니다', '포스터 위에 제목을 얹으면 포스터 글자와 겹칩니다'] },
+  { id: '12-period-bars', name: '접수 기간 막대', tag: '접수 기간을 막대로 비교', pc: 11, mo: 5, fam: '낮음', cost: '상', srv: '없음',
+    concept: '행사마다 접수 기간을 가로 막대로 그립니다. 막대가 끝나는 곳이 마감, 빨간 세로선이 지금입니다. 상세는 맨 위에 접수 진행 막대를 크게 둡니다.',
+    ref: '간트 차트, 숙박·항공 일정 막대, Linear 타임라인',
+    good: ['"언제까지 받는지"를 글자 없이 비교합니다', '접수 기간 데이터를 가장 잘 씁니다', '다른 행사 서비스에 없는 화면입니다'],
+    bad: ['처음에는 읽는 법을 익혀야 합니다', '모바일은 차트가 안 돼 진행률 카드로 바뀝니다', '썸네일이 없습니다'] },
+];
+
+const $ = (s) => document.querySelector(s);
+const S = { sel: 'ov', view: 'main', dev: 'pc' };
+
+function sidebar() {
+  $('#sb').innerHTML = `<a class="home" href="index.html">← 표지로</a><h1>Dev Event<br>메인·상세 리디자인 시안 12</h1><p>2026.11.13 · 운영 데이터 44건으로 그린 목업</p>
+    <button class="it ov${S.sel === 'ov' ? ' is-on' : ''}" data-sel="ov"><b>개요 · 추천</b><span>조사 요약, 비교표, 추천안</span></button>
+    ${D.map((d, i) => `<button class="it${S.sel === d.id ? ' is-on' : ''}" data-sel="${d.id}"><i>${String(i + 1).padStart(2, '0')}</i><b>${d.name}${d.id === '02-date-timeline' ? '<em class="chosen">선택</em>' : ''}</b><span>${d.tag}</span></button>`).join('')}`;
+}
+
+function overview() {
+  return `<div class="ovw__in">
+  <a class="decided" href="detail-design/index.html"><small>2026.11.14 결정</small><b>02 날짜 타임라인으로 진행합니다</b><span>수정 요청을 반영한 상세 설계 보기 →</span></a>
+  <h2>메인·상세 페이지 리디자인 시안 12가지</h2>
+  <p class="lead">국내외 행사·큐레이션 서비스 13곳의 목록·상세 화면을 살펴보고, 서로 다른 12가지 방향을 실제 운영 데이터(행사 44건)로 그렸습니다. 왼쪽에서 시안을 고르고, 위쪽에서 메인/상세와 PC/모바일을 바꿔 가며 보세요. 카드를 누르면 그 행사의 상세로 넘어갑니다.</p>
+
+  <h3>제안 당시의 추천 <span style="font-size:13px;font-weight:600;color:#8b90a0">(이후 02번으로 결정)</span></h3>
+  <div class="pick">
+    <button class="pk" data-sel="01-deadline-board"><small>1순위</small><strong>01 마감 보드</strong><p>행사의 80% 이상이 "접수 기간"만 가진 데이터라, 마감 중심 화면이 데이터와 가장 잘 맞습니다. 익숙하고, 서버 변경 없이 만들 수 있습니다.</p></button>
+    <button class="pk" data-sel="02-date-timeline"><small>함께 쓰기 좋은 보기</small><strong>02 날짜 타임라인</strong><p>지금의 "리스트 / 캘린더" 전환 자리에 "일정" 보기로 넣기 좋습니다. 날짜로 찾는 사람을 맡습니다.</p></button>
+    <button class="pk" data-sel="03-weekly-lineup"><small>새로움을 더 원한다면</small><strong>03 주간 편성표</strong><p>가장 새로우면서도 설명이 필요 없습니다. 다만 "마감 요일"을 "열리는 요일"로 오해하지 않게 표시를 다듬어야 합니다.</p></button>
+  </div>
+  <p class="note">판단 기준은 네 가지였습니다. ① 첫 화면에 행사가 몇 건 보이는가 ② 마감·날짜를 얼마나 빨리 읽는가 ③ 지금 데이터로 되는가 ④ 설명 없이 통하는가. 10 소식 피드, 09 개발자 에디터, 06 매거진은 각각 반발 위험, 취향 편차, 운영 부담 때문에 기본 화면으로는 권하지 않습니다.</p>
+
+  <h3>지금 화면에서 확인한 것</h3>
+  <div class="facts">
+    <div class="fact"><b>0건</b><span>첫 화면에 보이는 행사 수. PC(1280×900)와 모바일(390×844) 모두 배너 아래로 내려가야 첫 행사가 나옵니다.</span></div>
+    <div class="fact"><b>58 / 68</b><span>예정 행사 68건 중 58건의 뱃지가 똑같이 "Today"입니다. 접수 기간 내내 Today로 표시되기 때문입니다.</span></div>
+    <div class="fact"><b>84%</b><span>전체 112건 중 94건이 접수형이라, 실제 행사 날짜는 본문에만 있고 목록에서는 알 수 없습니다.</span></div>
+  </div>
+
+  <h3>어느 시안을 고르든 함께 권하는 것</h3>
+  <ul>
+    <li><b>"Today" 뱃지를 "오늘 마감 / 마감 D-3"으로 바꾸기.</b> 12개 시안 모두 이 표기를 썼습니다.</li>
+    <li><b>첫 화면에 행사가 보이게 하기.</b> 히어로와 SNS 배너 두 장을 줄이거나 목록 아래로 옮깁니다.</li>
+    <li><b>날짜 표기 줄이기.</b> "26.11.07 (토) 00:00 ~ 26.11.13 (금) 17:00" 대신 "11.13(금) 17:00까지 접수".</li>
+    <li><b>상세의 신청 버튼 고정하기.</b> 지금은 본문을 읽으며 내려가면 버튼이 화면에서 사라집니다.</li>
+    <li><b>서버에 "행사 일시" 필드 추가 검토.</b> 접수 기간과 행사일이 분리되면 02·03·08번 같은 날짜 중심 화면이 제대로 힘을 냅니다.</li>
+  </ul>
+
+  <h3>12가지 비교</h3>
+  <table><thead><tr><th>시안</th><th>첫 화면 행사 수<br>PC / 모바일</th><th>익숙함</th><th>작업량</th><th>서버·운영 변경</th></tr></thead><tbody>
+    <tr><td>현재 화면</td><td class="n">0 / 0</td><td>—</td><td>—</td><td>—</td></tr>
+    ${D.map((d, i) => `<tr><td><button data-sel="${d.id}">${String(i + 1).padStart(2, '0')} ${d.name}</button></td><td class="n">${d.pc} / ${d.mo}</td><td>${d.fam}</td><td>${d.cost}</td><td>${d.srv}</td></tr>`).join('')}
+  </tbody></table>
+  <p class="note">첫 화면 행사 수는 목업을 1280×900, 390×844 크기로 띄워 실제로 센 값입니다(요약 영역에 보이는 행사 포함). 익숙함과 작업량은 측정값이 아니라 제 판단입니다.</p>
+
+  <h3>조사에서 가져온 것</h3>
+  <ul>
+    <li><b>Luma</b> — 날짜 레일 타임라인, 상세의 달력 아이콘 블록과 신청 카드 → 02</li>
+    <li><b>이벤터스</b> — 신청 기간과 행사일을 나눈 표, "이번 주 / 무료 / 온라인" 바로가기 → 01, 11</li>
+    <li><b>링커리어·온오프믹스</b> — D-day를 가장 먼저 보여 주는 마감 문법 → 01, 05</li>
+    <li><b>dev.events·confs.tech</b> — 썸네일 없는 텍스트 행, 건수 붙은 필터 → 05, 09</li>
+    <li><b>toss.tech·원티드</b> — 추천 한 건과 순위 목록, 조용한 카드 → 06</li>
+    <li><b>국내 사례의 교훈</b> — 카카오톡의 피드 개편 철회(목록의 본래 쓰임을 흐리면 위험), 무신사의 PC 전용 화면 부활(PC 화면도 따로 설계할 가치) → 10의 주의점, 모든 시안의 PC 레이아웃</li>
+  </ul>
+  <p class="note">한국 사용자가 정보량 많은 화면을 선호한다는 근거는 동아시아 전반을 다룬 자료였고, 한국만 따로 본 연구는 찾지 못했습니다. 그래서 시안마다 밀도를 다르게 잡아 직접 비교할 수 있게 했습니다.</p>
+
+  <h3>목업을 볼 때 알아 둘 점</h3>
+  <ul>
+    <li>날짜는 2026년 11월 13일 오전 10시로 고정했습니다. 언제 열어도 같은 화면이 나옵니다.</li>
+    <li>필터 칩, 정렬, 날짜 선택, 카드 → 상세 이동은 동작합니다. 검색, 로그인, 관심 저장은 모양만 있습니다.</li>
+    <li>다크 모드는 09번 외에는 그리지 않았습니다. 방향이 정해지면 그 시안에 맞춰 따로 잡아야 합니다.</li>
+    <li>06번(명조 제목, 주홍 포인트)과 09번(고정폭 글꼴, 다크)을 빼면 모두 Pretendard 한 가지 글꼴에 현재 DESIGN.md의 KTB 블루(#0043FF)를 포인트 색으로 썼습니다.</li>
+  </ul>
+  </div>`;
+}
+
+function fit() {
+  const st = $('#st'), fr = $('#fr');
+  if (S.dev === 'mo') {
+    st.classList.add('is-mo');
+    fr.style.width = '390px'; fr.style.height = Math.min(st.clientHeight - 44, 844) + 'px'; fr.style.transform = 'none';
+  } else {
+    st.classList.remove('is-mo');
+    const vw = Math.max(1360, st.clientWidth), s = st.clientWidth / vw;
+    fr.style.width = vw + 'px'; fr.style.height = st.clientHeight / s + 'px'; fr.style.transform = `scale(${s})`;
+  }
+}
+
+function render() {
+  sidebar();
+  const ov = S.sel === 'ov';
+  $('#ovw').hidden = !ov; $('#tb').hidden = ov; $('#nt').hidden = ov; $('#st').hidden = ov;
+  if (ov) { $('#ovw').innerHTML = overview(); history.replaceState(null, '', '#'); return; }
+  const i = D.findIndex((d) => d.id === S.sel), d = D[i];
+  $('#ttl').innerHTML = `${String(i + 1).padStart(2, '0')} ${d.name}<small>${d.tag}</small>`;
+  document.querySelectorAll('#segView button').forEach((b) => b.classList.toggle('is-on', b.dataset.v === S.view));
+  document.querySelectorAll('#segDev button').forEach((b) => b.classList.toggle('is-on', b.dataset.d === S.dev));
+  $('#nt').innerHTML = `
+    <div><h3>컨셉</h3><p>${d.concept}</p><p class="rf">참고: ${d.ref}</p></div>
+    <div><h3>좋은 점</h3><ul>${d.good.map((x) => `<li>${x}</li>`).join('')}</ul></div>
+    <div><h3>주의할 점</h3><ul>${d.bad.map((x) => `<li>${x}</li>`).join('')}</ul></div>
+    <div><h3>한눈에</h3><dl><dt>첫 화면 행사 수</dt><dd>PC ${d.pc} · 모바일 ${d.mo}</dd><dt>익숙함</dt><dd>${d.fam}</dd><dt>작업량</dt><dd>${d.cost}</dd><dt>서버·운영</dt><dd>${d.srv}</dd></dl></div>`;
+  const url = `${d.id}.html#${S.view === 'detail' ? 'detail/3489' : 'main'}`;
+  const fr = $('#fr');
+  if (fr.dataset.url !== url) { fr.dataset.url = url; fr.src = url; }
+  $('#open').href = url;
+  history.replaceState(null, '', '#' + d.id.slice(0, 2));
+  fit();
+}
+
+document.addEventListener('click', (e) => {
+  const s = e.target.closest('[data-sel]');
+  if (s) { S.sel = s.dataset.sel; S.view = 'main'; $('#fr').dataset.url = ''; render(); $('#ovw').scrollTop = 0; return; }
+  const v = e.target.closest('[data-v]'); if (v) { S.view = v.dataset.v; render(); return; }
+  const dv = e.target.closest('[data-d]'); if (dv) { S.dev = dv.dataset.d; render(); return; }
+  if (e.target.id === 'fold') { document.body.classList.toggle('is-fold'); e.target.textContent = document.body.classList.contains('is-fold') ? '설명 펼치기' : '설명 접기'; fit(); }
+});
+window.addEventListener('message', (e) => {
+  if (!e.data || !e.data.mock || S.sel === 'ov' || e.data.view === S.view) return;
+  S.view = e.data.view;
+  document.querySelectorAll('#segView button').forEach((b) => b.classList.toggle('is-on', b.dataset.v === S.view));
+  $('#fr').dataset.url = '';
+});
+window.addEventListener('resize', fit);
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+  const ids = ['ov', ...D.map((d) => d.id)], n = ids.indexOf(S.sel) + (e.key === 'ArrowDown' ? 1 : -1);
+  if (n < 0 || n >= ids.length) return;
+  e.preventDefault(); S.sel = ids[n]; S.view = 'main'; $('#fr').dataset.url = ''; render();
+});
+const h = location.hash.slice(1); const init = D.find((d) => d.id.startsWith(h + '-')); if (h && init) S.sel = init.id;
+render();
+</script>
+</body>
+</html>

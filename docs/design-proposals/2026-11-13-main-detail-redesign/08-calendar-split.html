@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>08 캘린더 3분할</title>
+<link rel="stylesheet" href="shared/base.css">
+<style>
+:root { --ink:#17191f; --sub:#4f5562; --hint:#8b91a0; --line:#e4e7ee; --soft:#f6f7fa; --blue:#0043ff; --b1:#e3ebff; --b2:#b9ccff; --b3:#7b9bff; --b4:#0043ff; --red:#e5484d; --thumb-radius:12px; }
+html, body { height:100%; }
+body { background:#fff; color:var(--ink); }
+#app { height:100%; display:grid; grid-template-rows:56px minmax(0,1fr); }
+.hd { display:flex; align-items:center; gap:24px; padding:0 20px; border-bottom:1px solid var(--line); }
+.logo { font-weight:800; font-size:18px; }
+.nav { display:flex; gap:4px; font-size:14px; font-weight:600; color:var(--sub); }
+.nav a { padding:7px 12px; border-radius:8px; }
+.nav .is-on { background:var(--soft); color:var(--ink); }
+.hd__r { margin-left:auto; display:flex; gap:8px; font-size:13.500px; font-weight:600; }
+.hd__r button { height:34px; padding:0 12px; border-radius:8px; border:1px solid var(--line); }
+.panes { display:grid; grid-template-columns:336px 400px minmax(0,1fr); min-height:0; }
+.p { min-height:0; overflow-y:auto; border-right:1px solid var(--line); }
+.p:last-child { border-right:0; }
+/* left */
+.p1 { background:var(--soft); padding:20px 18px 40px; }
+.mo + .mo { margin-top:24px; }
+.mo h3 { font-size:16px; font-weight:800; margin-bottom:10px; display:flex; align-items:baseline; gap:6px; }
+.mo h3 small { font-size:12.500px; font-weight:600; color:var(--hint); }
+.wk, .cal { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+.wk span { text-align:center; font-size:11.500px; font-weight:700; color:var(--hint); padding-bottom:4px; }
+.c { position:relative; aspect-ratio:1; border-radius:9px; background:#fff; display:grid; align-content:center; justify-items:center; gap:1px; transition:.12s; }
+.c b { font-size:13.500px; font-weight:700; line-height:1.1; }
+.c small { font-size:10.500px; font-weight:700; color:var(--hint); }
+.c.lv1 { background:var(--b1); } .c.lv2 { background:var(--b2); } .c.lv3 { background:var(--b3); } .c.lv4 { background:var(--b4); }
+.c.lv3 b, .c.lv3 small, .c.lv4 b, .c.lv4 small { color:#fff !important; }
+.c.lv1 small, .c.lv2 small { color:#3f5fc4; }
+.c.is-past { opacity:.38; }
+.c.is-today::after { content:''; position:absolute; top:4px; right:4px; width:5px; height:5px; border-radius:50%; background:var(--red); }
+.c:hover { transform:scale(1.07); }
+.c.is-sel { outline:2.500px solid var(--ink); outline-offset:1px; }
+.lg { display:flex; align-items:center; gap:4px; margin-top:14px; font-size:11.500px; font-weight:600; color:var(--hint); }
+.lg i { width:14px; height:14px; border-radius:4px; }
+.fl { margin-top:26px; }
+.fl h4 { font-size:12px; font-weight:800; color:var(--hint); margin-bottom:8px; }
+.fl div { display:flex; flex-wrap:wrap; gap:6px; }
+.chip { padding:6px 11px; border-radius:8px; background:#fff; font-size:13px; font-weight:600; color:var(--sub); }
+.chip.is-on { background:var(--ink); color:#fff; }
+/* middle */
+.p2__h { position:sticky; top:0; z-index:2; background:#fff; padding:20px 20px 14px; border-bottom:1px solid var(--line); }
+.p2__h h2 { font-size:20px; font-weight:800; letter-spacing:-.015em; }
+.p2__h h2 em { font-style:normal; margin-left:6px; padding:2px 7px; border-radius:6px; background:var(--red); color:#fff; font-size:11.500px; vertical-align:3px; }
+.p2__h p { margin-top:4px; font-size:13.500px; color:var(--hint); font-weight:500; }
+.gh { padding:14px 20px 6px; font-size:12px; font-weight:800; color:var(--hint); }
+.r { display:grid; grid-template-columns:52px minmax(0,1fr); gap:10px; padding:12px 20px; border-left:3px solid transparent; }
+.r:hover { background:var(--soft); }
+.r.is-sel { background:#f0f4ff; border-left-color:var(--blue); }
+.r__t { font-size:14px; font-weight:800; padding-top:1px; }
+.r__t.is-dead { color:var(--red); } .r__t.is-open { color:var(--blue); }
+.r strong { font-size:15px; font-weight:700; line-height:1.4; letter-spacing:-.01em; }
+.r small { display:block; margin-top:4px; font-size:12.500px; color:var(--hint); }
+.none { padding:60px 20px; text-align:center; color:var(--hint); font-size:14px; line-height:1.7; }
+/* right */
+.p3 { padding:28px 36px 60px; }
+.p3__in { max-width:760px; margin:0 auto; }
+.bk { display:none; }
+.p3 .k-thumb { max-width:520px; }
+.p3 .org { margin-top:20px; font-size:14px; font-weight:700; color:var(--blue); }
+.p3 h1 { margin-top:6px; font-size:26px; line-height:1.36; font-weight:800; letter-spacing:-.02em; }
+.tl { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin-top:20px; }
+.tl li { padding:13px 14px; border-radius:12px; background:var(--soft); }
+.tl small { font-size:11.500px; font-weight:700; color:var(--hint); }
+.tl b { display:block; margin-top:4px; font-size:14.500px; font-weight:700; line-height:1.4; }
+.tl b.is-red { color:var(--red); }
+.cta { display:flex; gap:8px; margin-top:14px; }
+.go { flex:1; display:flex; justify-content:center; align-items:center; gap:6px; height:50px; border-radius:12px; background:var(--blue); color:#fff; font-weight:800; font-size:15.500px; }
+.sq { width:50px; height:50px; border-radius:12px; border:1px solid var(--line); display:grid; place-items:center; color:var(--sub); }
+.p3 hr { border:0; border-top:1px solid var(--line); margin:28px 0; }
+@media (max-width: 1180px) {
+  .panes { grid-template-columns:320px minmax(0,1fr); }
+  html[data-view="main"] .p3 { display:none; }
+  html[data-view="detail"] .p1, html[data-view="detail"] .p2 { display:none; }
+  html[data-view="detail"] .panes { grid-template-columns:1fr; }
+  .bk { display:inline-flex; align-items:center; gap:4px; margin-bottom:16px; font-size:14px; font-weight:600; color:var(--hint); }
+}
+@media (max-width: 760px) {
+  html, body, #app { height:auto; } #app { display:block; }
+  .hd { height:56px; } .nav, .hd__r button:first-child { display:none; }
+  .panes { display:block; } .p { overflow:visible; border:0; }
+  .p1 { padding:16px 16px 20px; } .mo + .mo, .fl { display:none; }
+  .p2__h { top:0; padding:16px 16px 12px; } .r, .gh { padding-left:16px; padding-right:16px; }
+  .p3 { padding:18px 16px 60px; } .p3 h1 { font-size:21px; }
+  .tl { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="shared/data.js"></script>
+<script src="shared/kit.js"></script>
+<script>
+const { esc, ic } = K;
+const header = () => `
+<header class="hd">
+  <a class="logo" href="#main">DEV.EVENT</a>
+  <nav class="nav"><a class="is-on" href="#main">캘린더</a><a href="#main">전체 목록</a><a href="#main">관심 행사</a></nav>
+  <div class="hd__r"><button data-toast="행사 등록 요청 화면으로 이동해요">행사 등록 요청</button><button>로그인</button></div>
+</header>`;
+
+function month(y, m, cnt, sel) {
+  const first = new Date(y, m, 1).getDay(), n = new Date(y, m + 1, 0).getDate();
+  let cells = '<i></i>'.repeat(first), total = 0;
+  for (let d = 1; d <= n; d++) {
+    const i = K.dayInfo(new Date(y, m, d)), c = cnt[i.key] || 0;
+    total += c;
+    const lv = c === 0 ? 0 : c <= 2 ? 1 : c <= 4 ? 2 : c <= 7 ? 3 : 4;
+    cells += `<a href="#main" data-set="day:${i.key}" class="c lv${lv}${i.diff < 0 ? ' is-past' : ''}${i.diff === 0 ? ' is-today' : ''}${i.key === sel ? ' is-sel' : ''}" aria-label="${m + 1}월 ${d}일 ${c}건"><b class="${i.cls}">${d}</b>${c ? `<small>${c}</small>` : ''}</a>`;
+  }
+  return `<div class="mo"><h3>${y}년 ${m + 1}월<small>${total}건</small></h3><div class="wk">${K.DOW.map((w, i) => `<span class="${i === 0 ? 'is-sun' : i === 6 ? 'is-sat' : ''}">${w}</span>`).join('')}</div><div class="cal">${cells}</div></div>`;
+}
+
+const row = (e, sel) => `
+<a class="r${sel && sel.id === e.id ? ' is-sel' : ''}" href="${e.href}">
+  <span class="r__t ${e.recruit ? 'is-dead' : 'is-open'}">${e.state === '진행 중' ? '진행' : e.keyTime || '종일'}</span>
+  <div><strong class="clamp2">${esc(e.title)}</strong><small class="clamp1">${esc(e.organizer)} · ${e.mode.join('·')} · ${e.cost}</small></div>
+</a>`;
+
+function right(e) {
+  if (!e) return `<div class="none">왼쪽 달력에서 날짜를 고르면<br>그날의 행사가 여기에 열려요.</div>`;
+  return `<div class="p3__in">
+    <a class="bk" href="#main">${ic('back', 16)} 캘린더로</a>
+    ${K.thumb(e)}
+    <p class="org">${esc(e.organizer)}</p><h1>${esc(e.title)}</h1>
+    <ul class="tl">
+      <li><small>${e.recruit ? '접수 마감' : '행사 일시'}</small><b class="${e.urgent ? 'is-red' : ''}">${e.recruit ? `${K.fdw(e.en)} ${K.ft(e.en)}` : `${K.fdw(e.keyDate)} ${e.keyTime}`}</b></li>
+      <li><small>남은 시간</small><b>${e.recruit || e.state === '진행 중' ? e.remain : e.label}</b></li>
+      <li><small>진행 방식</small><b>${e.mode.join(' · ')}</b></li>
+      <li><small>참가비 · 유형</small><b>${e.cost} · ${e.kind}</b></li>
+    </ul>
+    <div class="cta"><a class="go" href="${esc(e.link)}" target="_blank" rel="noopener">신청하러 가기 ${ic('out', 18)}</a><button class="sq" data-toast="내 캘린더에 추가했어요">${ic('calendar')}</button><button class="sq" data-toast="관심 행사에 담았어요">${ic('bookmark')}</button><button class="sq" data-toast="링크가 복사되었어요">${ic('share')}</button></div>
+    <hr><div class="k-prose">${e.descHtml}</div></div>`;
+}
+
+function panes(dayKey, picked) {
+  const L = K.list();
+  const cnt = {};
+  L.forEach((e) => { const k = K.key(e.keyDate); cnt[k] = (cnt[k] || 0) + 1; });
+  const items = L.filter((e) => K.key(e.keyDate) === dayKey).sort((a, b) => a.en - b.en);
+  const sel = picked || items[0];
+  const [y, m, d] = dayKey.split('-').map(Number);
+  const info = K.dayInfo(new Date(y, m - 1, d));
+  const dead = items.filter((e) => e.recruit), open = items.filter((e) => !e.recruit);
+  return header() + `
+<div class="panes">
+  <aside class="p p1">
+    ${month(2026, 10, cnt, dayKey)}${month(2026, 11, cnt, dayKey)}
+    <div class="lg">적음 <i style="background:var(--b1)"></i><i style="background:var(--b2)"></i><i style="background:var(--b3)"></i><i style="background:var(--b4)"></i> 많음 &nbsp;·&nbsp; 숫자는 그날 마감·시작하는 행사 수</div>
+    <div class="fl"><h4>분야</h4><div>${K.chips('topic', K.TOPIC)}</div></div>
+    <div class="fl"><h4>방식 · 참가비</h4><div>${['온라인', '오프라인'].map((v) => `<button class="chip${K.on('mode', v)}" data-set="mode:${K.state.mode === v ? '전체' : v}">${v}</button>`).join('')}<button class="chip${K.on('cost', '무료')}" data-set="cost:${K.state.cost === '무료' ? '전체' : '무료'}">무료만</button></div></div>
+  </aside>
+  <section class="p p2">
+    <div class="p2__h"><h2>${info.m}월 ${info.d}일 ${info.dow}요일${info.rel ? `<em>${info.rel}</em>` : ''}</h2><p>접수 마감 ${dead.length}건 · 열리는 행사 ${open.length}건</p></div>
+    ${items.length ? `${dead.length ? `<p class="gh">이날 접수를 마감해요</p>${dead.map((e) => row(e, sel)).join('')}` : ''}${open.length ? `<p class="gh">이날 열려요</p>${open.map((e) => row(e, sel)).join('')}` : ''}` : '<div class="none">이날은 등록된 행사가 없어요.<br>색이 진한 날짜를 눌러 보세요.</div>'}
+  </section>
+  <section class="p p3">${right(sel)}</section>
+</div>`;
+}
+
+K.mount({ main: () => panes(K.state.day), detail: (e) => panes(K.key(e.keyDate), e) });
+</script>
+</body>
+</html>

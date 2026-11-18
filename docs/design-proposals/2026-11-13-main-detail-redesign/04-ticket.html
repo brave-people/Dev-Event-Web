@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>04 티켓</title>
+<link rel="stylesheet" href="shared/base.css">
+<style>
+:root { --bg:#eceef4; --navy:#0b1437; --ink:#131722; --sub:#4d5364; --hint:#8d93a3; --line:#dfe2ea; --blue:#0043ff; --thumb-radius:10px;
+  --k-세미나:#0043ff; --k-모임:#0a8f6c; --k-대회:#f0620e; --k-교육:#7b3ff2; --k-커뮤니티:#d6336c; --k-행사:#0043ff; }
+body { background:var(--bg); color:var(--ink); }
+.top { background:var(--navy); color:#fff; }
+.hd { max-width:1120px; margin:0 auto; height:64px; padding:0 20px; display:flex; align-items:center; gap:28px; }
+.logo { font-weight:800; font-size:19px; letter-spacing:.02em; }
+.nav { display:flex; gap:22px; font-size:15px; font-weight:600; color:rgba(255,255,255,.55); }
+.nav .is-on { color:#fff; }
+.hd__r { margin-left:auto; display:flex; gap:8px; font-size:14px; font-weight:600; }
+.hd__r button { padding:8px 14px; border-radius:999px; border:1px solid rgba(255,255,255,.25); }
+.hero { max-width:1120px; margin:0 auto; padding:36px 20px 0; }
+.hero small { font-size:14px; font-weight:700; color:#8fb0ff; letter-spacing:.02em; }
+.hero h1 { margin-top:8px; font-size:34px; line-height:1.3; letter-spacing:-.025em; font-weight:800; }
+.hero h1 em { font-style:normal; color:#ffd43b; }
+.genre { display:flex; gap:4px; margin-top:28px; overflow-x:auto; scrollbar-width:none; }
+.genre button { flex:none; padding:14px 20px 13px; font-size:16px; font-weight:700; color:rgba(255,255,255,.55); border-bottom:3px solid transparent; }
+.genre button.is-on { color:#fff; border-color:#ffd43b; }
+.genre button span { margin-left:5px; font-size:13px; font-weight:600; opacity:.7; }
+.wrap { max-width:1120px; margin:0 auto; padding:24px 20px 120px; }
+.sub { display:flex; align-items:center; gap:8px; margin-bottom:18px; flex-wrap:wrap; }
+.sub p { font-size:15px; font-weight:700; margin-right:auto; }
+.sub p b { color:var(--blue); }
+.chip { padding:8px 13px; border-radius:999px; background:#fff; font-size:13.500px; font-weight:600; color:var(--sub); }
+.chip.is-on { background:var(--ink); color:#fff; }
+.grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.tk { position:relative; display:grid; grid-template-columns:104px minmax(0,1fr) 84px; background:#fff; border-radius:16px; min-height:148px; filter:drop-shadow(0 2px 6px rgba(19,23,34,.06)); transition:.18s; }
+.tk:hover { transform:translateY(-3px) rotate(-.3deg); filter:drop-shadow(0 12px 20px rgba(19,23,34,.14)); }
+.tk__d { border-radius:16px 0 0 16px; background:var(--kc); color:#fff; padding:16px 0; display:grid; align-content:center; justify-items:center; text-align:center; }
+.tk__d small { font-size:11.500px; font-weight:700; opacity:.85; letter-spacing:.02em; }
+.tk__d b { font-size:40px; font-weight:800; line-height:1.05; letter-spacing:-.03em; }
+.tk__d span { font-size:13px; font-weight:700; }
+.tk__d i { margin-top:6px; padding:2px 8px; border-radius:999px; background:rgba(255,255,255,.22); font-style:normal; font-size:11.500px; font-weight:700; }
+.tk__b { padding:16px 18px; min-width:0; display:flex; flex-direction:column; }
+.tk__k { font-size:12.500px; font-weight:700; color:var(--kc); }
+.tk__k span { color:var(--hint); font-weight:600; }
+.tk__b strong { margin-top:5px; font-size:17px; font-weight:700; line-height:1.4; letter-spacing:-.015em; }
+.tk__b p { margin-top:auto; padding-top:10px; font-size:13.500px; color:var(--sub); }
+.tk__s { position:relative; border-left:2px dashed var(--line); display:grid; align-content:center; justify-items:center; gap:8px; padding:12px 6px; }
+.tk__s::before, .tk__s::after { content:''; position:absolute; left:-9px; width:16px; height:16px; border-radius:50%; background:var(--bg); }
+.tk__s::before { top:-8px; } .tk__s::after { bottom:-8px; }
+.tk__s b { font-size:17px; font-weight:800; }
+.tk__s b.is-free { color:var(--blue); }
+.bc { width:52px; height:26px; background:repeating-linear-gradient(90deg,#131722 0 2px,transparent 2px 4px,#131722 4px 5px,transparent 5px 8px,#131722 8px 11px,transparent 11px 13px); opacity:.75; }
+.tk__s small { font-size:11px; font-weight:700; color:var(--hint); }
+.tk.is-hot .tk__s small { color:#e03131; }
+/* detail */
+.dwrap { max-width:960px; margin:0 auto; padding:28px 20px 120px; }
+.back { display:inline-flex; gap:4px; align-items:center; font-size:14px; font-weight:600; color:var(--hint); margin-bottom:14px; }
+.big { background:#fff; border-radius:24px; filter:drop-shadow(0 6px 20px rgba(19,23,34,.08)); }
+.big__t { display:grid; grid-template-columns:400px minmax(0,1fr); gap:28px; padding:28px; align-items:center; }
+.big__t .k-thumb { --thumb-radius:14px; }
+.big .tk__k { font-size:14px; }
+.big h1 { margin-top:8px; font-size:27px; line-height:1.36; letter-spacing:-.02em; font-weight:800; }
+.big .org { margin-top:8px; font-size:15px; color:var(--sub); font-weight:600; }
+.big__p { position:relative; border-top:2px dashed var(--line); display:grid; grid-template-columns:repeat(4,minmax(0,1fr)) 220px; gap:0; padding:22px 28px; align-items:center; }
+.big__p::before, .big__p::after { content:''; position:absolute; top:-12px; width:22px; height:22px; border-radius:50%; background:var(--bg); }
+.big__p::before { left:-11px; } .big__p::after { right:-11px; }
+.f small { display:block; font-size:12px; font-weight:700; color:var(--hint); letter-spacing:.02em; }
+.f b { display:block; margin-top:4px; font-size:16.500px; font-weight:700; letter-spacing:-.01em; }
+.f b.is-red { color:#e03131; }
+.go { display:flex; justify-content:center; align-items:center; gap:6px; padding:16px; border-radius:14px; background:var(--kc); color:#fff; font-size:16px; font-weight:800; }
+.acts { display:flex; gap:8px; margin-top:16px; }
+.acts button { display:flex; gap:6px; align-items:center; padding:9px 13px; border-radius:999px; border:1px solid var(--line); font-size:13.500px; font-weight:600; color:var(--sub); }
+.body { margin-top:16px; background:#fff; border-radius:24px; padding:36px; }
+.body h2 { font-size:19px; font-weight:800; margin-bottom:18px; }
+@media (max-width: 860px) {
+  .nav, .hd__r button:first-child { display:none; }
+  .hero { padding-top:20px; } .hero h1 { font-size:25px; }
+  .genre button { padding:12px 13px 11px; font-size:15px; }
+  .grid { grid-template-columns:1fr; gap:12px; }
+  .tk { grid-template-columns:82px minmax(0,1fr) 64px; min-height:128px; }
+  .tk__d b { font-size:32px; }
+  .tk__b { padding:14px; } .tk__b strong { font-size:15.500px; }
+  .bc { width:40px; }
+  .big__t { grid-template-columns:1fr; padding:18px; gap:18px; } .big h1 { font-size:22px; }
+  .big__p { grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; padding:18px; }
+  .big__p .go { grid-column:1 / -1; }
+  .body { padding:22px; }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="shared/data.js"></script>
+<script src="shared/kit.js"></script>
+<script>
+const { esc, ic } = K;
+const nav = () => `
+<div class="hd">
+  <a class="logo" href="#main">DEV.EVENT</a>
+  <nav class="nav"><a class="is-on" href="#main">티켓</a><a href="#main">캘린더</a><a href="#main">내 티켓함</a></nav>
+  <div class="hd__r"><button data-toast="행사 등록 요청 화면으로 이동해요">행사 등록 요청</button><button>로그인</button></div>
+</div>`;
+
+const ticket = (e) => { const i = K.dayInfo(e.keyDate); return `
+<a class="tk${e.urgent ? ' is-hot' : ''}" href="${e.href}" style="--kc:var(--k-${e.kind})">
+  <div class="tk__d"><small>${i.m}월</small><b>${i.d}</b><span>${i.dow}요일 ${e.keyTime}</span><i>${e.recruit ? '접수 마감' : e.state === '진행 중' ? '진행 중' : '행사일'}</i></div>
+  <div class="tk__b"><span class="tk__k">${e.kind} <span>· ${e.mode.join('·')} · ${e.topics.join('·')}</span></span><strong class="clamp2">${esc(e.title)}</strong><p class="clamp1">${esc(e.organizer)}</p></div>
+  <div class="tk__s"><b class="${e.cost === '무료' ? 'is-free' : ''}">${e.cost}</b><i class="bc"></i><small>${e.label}</small></div>
+</a>`; };
+
+function main() {
+  const L = K.list();
+  const kinds = ['세미나', '모임', '대회', '교육', '커뮤니티'];
+  return `<div class="top">${nav()}
+  <div class="hero"><small>${K.todayText}</small><h1>오늘 접수를 마감하는 티켓이 <em>${K.count((e) => e.recruit && e.days <= 0)}장</em>,<br>이번 주에 열리는 행사가 <em>${K.count((e) => !e.recruit && e.days <= 7)}개</em> 있어요</h1>
+    <div class="genre">${['전체', ...kinds].map((k) => `<button class="${K.state.kind === k ? 'is-on' : ''}" data-set="kind:${k}">${k}<span>${k === '전체' ? K.ALL.length : K.count((e) => e.kind === k)}</span></button>`).join('')}</div></div></div>
+<div class="wrap">
+  <div class="sub"><p>마감이 빠른 순으로 <b>${L.length}장</b></p>${['온라인', '오프라인'].map((v) => `<button class="chip${K.on('mode', v)}" data-set="mode:${K.state.mode === v ? '전체' : v}">${v}</button>`).join('')}<button class="chip${K.on('cost', '무료')}" data-set="cost:${K.state.cost === '무료' ? '전체' : '무료'}">무료만</button></div>
+  <div class="grid">${L.map(ticket).join('')}</div>
+</div>`;
+}
+
+function detail(e) {
+  const i = K.dayInfo(e.keyDate);
+  return `<div class="top">${nav()}</div>
+<div class="dwrap" style="--kc:var(--k-${e.kind})">
+  <a class="back" href="#main">${ic('back', 16)} 티켓 목록</a>
+  <article class="big">
+    <div class="big__t">${K.thumb(e)}
+      <div><span class="tk__k">${e.kind} <span>· ${e.topics.join('·')}</span></span><h1>${esc(e.title)}</h1><p class="org">${esc(e.organizer)}</p>
+        <div class="acts"><button data-toast="내 티켓함에 담았어요">${ic('bookmark', 16)} 담기</button><button data-toast="캘린더에 추가했어요">${ic('calendar', 16)} 캘린더</button><button data-toast="링크가 복사되었어요">${ic('share', 16)} 공유</button></div></div></div>
+    <div class="big__p">
+      <div class="f"><small>${e.recruit ? '접수 마감' : '행사일'}</small><b class="${e.urgent ? 'is-red' : ''}">${i.m}.${i.d} (${i.dow}) ${e.keyTime}</b></div>
+      <div class="f"><small>남은 시간</small><b>${e.recruit || e.state === '진행 중' ? e.remain : e.label}</b></div>
+      <div class="f"><small>진행 방식</small><b>${e.mode.join('·')}</b></div>
+      <div class="f"><small>참가비</small><b>${e.cost}</b></div>
+      <a class="go" href="${esc(e.link)}" target="_blank" rel="noopener">신청하러 가기 ${ic('out', 18)}</a>
+    </div>
+  </article>
+  <article class="body"><h2>행사 소개</h2><div class="k-prose">${e.descHtml}</div></article>
+</div>`;
+}
+K.mount({ main, detail });
+</script>
+</body>
+</html>
