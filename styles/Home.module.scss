@@ -1,14 +1,8 @@
 @import '~styles/_mixin.scss';
 @import '~styles/_variables.scss';
-@import '~styles/_common.scss';
 
 .main {
   margin: 0 auto;
   width: 100%;
-  overflow-y: scroll;
-  padding-top: 13px;
-}
-
-.section {
-  @extend %section-container;
+  padding-top: 0;
 }

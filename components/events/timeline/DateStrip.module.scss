@@ -1,0 +1,222 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0 8px;
+
+  @include de-mobile {
+    padding: 8px 0 6px;
+  }
+}
+
+.arrow {
+  @include de-button-reset;
+  @include de-focus-ring;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--de-line);
+  display: grid;
+  place-items: center;
+  color: var(--de-sub);
+  transition: opacity 0.15s;
+
+  &:hover {
+    background: var(--de-hover);
+  }
+
+  &:disabled {
+    opacity: 0.28;
+    cursor: default;
+    background: none;
+  }
+
+  @include de-mobile {
+    display: none;
+  }
+
+  @include de-reduced-motion {
+    transition: none;
+  }
+}
+
+.strip {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  cursor: grab;
+  user-select: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &.is-drag {
+    cursor: grabbing;
+    scroll-snap-type: none;
+
+    .cell {
+      pointer-events: none;
+    }
+  }
+}
+
+.cell {
+  @include de-button-reset;
+  @include de-focus-ring;
+  flex: 0 0 calc(100% / 14);
+  scroll-snap-align: start;
+  padding: 4px 0 3px;
+  border-radius: 10px;
+  text-align: center;
+
+  &:focus-visible {
+    outline-offset: -2px;
+  }
+
+  @include de-phone-wide {
+    flex-basis: calc(100% / 10);
+  }
+
+  @include de-phone {
+    flex-basis: calc(100% / 7);
+  }
+}
+
+.dow {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--de-hint);
+
+  .sun & {
+    color: var(--de-sun);
+  }
+
+  .sat & {
+    color: var(--de-sat);
+  }
+
+  .is-first & {
+    color: var(--de-ink);
+    font-weight: 800;
+  }
+
+  @include de-tablet {
+    font-size: 12px;
+  }
+
+  @media (max-width: 620px) {
+    font-size: 12.5px;
+  }
+
+  @include de-narrow {
+    font-size: 12px;
+  }
+}
+
+.num {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: 5px auto;
+  border-radius: 50%;
+  font-size: 20px;
+  font-weight: 700;
+  transition: 0.12s;
+
+  .cell:not(:disabled):hover & {
+    background: var(--de-hover);
+  }
+
+  .is-empty & {
+    color: var(--de-faint);
+    font-weight: 500;
+  }
+
+  .is-past & {
+    color: var(--de-hint);
+  }
+
+  .is-on & {
+    box-shadow: inset 0 0 0 2px var(--de-ink);
+  }
+
+  .is-today & {
+    background: var(--de-ink);
+    color: var(--de-bg);
+    box-shadow: none;
+  }
+
+  .is-today:not(:disabled):hover & {
+    background: var(--de-ink);
+    opacity: 0.86;
+  }
+
+  .is-today.is-on & {
+    box-shadow: 0 0 0 2px var(--de-bg), 0 0 0 4px var(--de-ink);
+  }
+
+  @include de-tablet {
+    width: 38px;
+    height: 38px;
+    margin: 4px auto;
+    font-size: 17.5px;
+  }
+
+  @media (max-width: 620px) {
+    width: 40px;
+    height: 40px;
+    margin: 4px auto;
+    font-size: 18.5px;
+  }
+
+  @include de-narrow {
+    width: 36px;
+    height: 36px;
+    font-size: 17px;
+  }
+
+  @include de-reduced-motion {
+    transition: none;
+  }
+}
+
+.cnt {
+  display: block;
+  height: 17px;
+  line-height: 17px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--de-blue);
+
+  .is-past & {
+    color: var(--de-hint);
+  }
+
+  @include de-tablet {
+    font-size: 12px;
+  }
+
+  @media (max-width: 620px) {
+    font-size: 12px;
+  }
+
+  @include de-narrow {
+    font-size: 11.5px;
+  }
+}
+
+.is-empty {
+  cursor: default;
+}

@@ -40,32 +40,45 @@ export const regenerateAccessToken = async (
   }
 };
 
+// 로그인·가입의 실패(틀린 비밀번호, 이미 있는 아이디 등)는 로그인 창이 창 안에 보여 준다.
+// 그래서 validateStatus로 4xx·5xx도 받아 axiosInstance 인터셉터의 알림·로그아웃·/ 이동을 타지 않게 하고,
+// 2xx가 아니면 응답을 그대로 던진다(받는 쪽: components/common/modal/login/loginFlow.ts의 authFailure).
+const acceptAll = { validateStatus: () => true };
+const isSuccess = (response: AxiosResponse) =>
+  response.status >= 200 && response.status < 300;
+
 export const loginByEmail = async (
   url: string,
   data: AuthProp
 ): Promise<TokenResponse> => {
+  let response: AxiosResponse;
   try {
-    const response: AxiosResponse = await axiosInstance.post(
+    response = await axiosInstance.post(
       `${process.env.BASE_SERVER_URL}${url}`,
-      data
+      data,
+      acceptAll
     );
-    return response.data;
   } catch (error: any) {
-    throw error.response;
+    throw error?.response; // 응답이 없으면(네트워크 오류) undefined
   }
+  if (!isSuccess(response)) throw response;
+  return response.data;
 };
 
 export const signUpByEmail = async (
   url: string,
   data: SignUpProps
 ): Promise<SignUpResponse> => {
+  let response: AxiosResponse;
   try {
-    const response: AxiosResponse = await axiosInstance.post(
+    response = await axiosInstance.post(
       `${process.env.BASE_SERVER_URL}${url}`,
-      data
+      data,
+      acceptAll
     );
-    return response.data;
   } catch (error: any) {
-    throw error.response;
+    throw error?.response; // 응답이 없으면(네트워크 오류) undefined
   }
+  if (!isSuccess(response)) throw response;
+  return response.data;
 };

@@ -1,34 +1,4 @@
 // ========================================
-// Legacy theme vars (5-gray scale).
-// Dark values mapped to Wanted Design System semantic tokens (extracted from
-// figma.com/design/qQPdpnglONbuWul4cvodyj — node 15625:32983 Color/Semantic/Dark).
-// ========================================
-
-$light-primary: rgba(44, 76, 239, 1);
-$dark-primary: #3385FF;                  // Wanted: color-semantic-primary-normal (dark)
-
-$light-background-1: rgba(255, 255, 255, 1);
-$dark-background-1: #1B1C1E;             // Wanted: background-normal-normal
-
-$light-background-2: rgba(242, 242, 242, 1);
-$dark-background-2: #212225;             // Wanted: background-elevated-normal
-
-$light-gray-1: rgba(49, 50, 52, 1);
-$dark-gray-1: #FFFFFF;                   // Wanted: label-strong
-
-$light-gray-2: rgba(116, 117, 121, 1);
-$dark-gray-2: #AEB0B6;                   // Wanted: label-alternative (base)
-
-$light-gray-3: rgba(171, 172, 178, 1);
-$dark-gray-3: #5A5C63;                   // Wanted: interaction-inactive
-
-$light-gray-4: rgba(211, 212, 216, 1);
-$dark-gray-4: #37383C;                   // Wanted: line-solid-normal
-
-$light-gray-5: rgba(231, 232, 236, 1);
-$dark-gray-5: #2E2F33;                   // Wanted: line-solid-alternative
-
-// ========================================
 // KTB / Vapor design tokens (DESIGN.md — light theme)
 // ========================================
 

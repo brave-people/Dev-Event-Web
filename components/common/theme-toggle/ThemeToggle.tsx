@@ -5,10 +5,24 @@ import style from './ThemeToggle.module.scss';
 
 const cn = classNames.bind(style);
 
-// Inline glyphs — kept local so we control viewBox + size precisely and avoid
-// the clipping we got when the shared 24x24 MoonIcon was rendered at 18px.
+const MoonGlyph = () => (
+  <svg
+    className={cn('toggle__moon')}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth={2}
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden
+  >
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+  </svg>
+);
+
 const SunGlyph = () => (
   <svg
+    className={cn('toggle__sun')}
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -22,30 +36,20 @@ const SunGlyph = () => (
   </svg>
 );
 
-const MoonGlyph = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-  </svg>
-);
-
+// 어느 아이콘을 보일지는 상태가 아니라 html[data-theme]로 CSS가 정한다.
+// (SSR 직후 상태와 실제 테마가 달라 아이콘이 바뀌어 보이는 것을 막는다.)
 const ThemeToggle: React.FC = () => {
   const { windowTheme, handleWindowTheme } = useContext(WindowContext);
-  const isLight = windowTheme;
 
   return (
     <button
       type="button"
-      className={cn('toggle', { 'is-dark': !isLight })}
-      onClick={() => handleWindowTheme(!isLight)}
-      aria-label={isLight ? '다크 모드로 전환' : '라이트 모드로 전환'}
-      title={isLight ? '다크 모드로 전환' : '라이트 모드로 전환'}
+      className={cn('toggle')}
+      onClick={() => handleWindowTheme(!windowTheme)}
+      aria-label="밝은 화면, 어두운 화면 바꾸기"
     >
-      <span className={cn('toggle__icon', 'toggle__icon--sun')} aria-hidden>
-        <SunGlyph />
-      </span>
-      <span className={cn('toggle__icon', 'toggle__icon--moon')} aria-hidden>
-        <MoonGlyph />
-      </span>
+      <MoonGlyph />
+      <SunGlyph />
     </button>
   );
 };

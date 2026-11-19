@@ -1,0 +1,143 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.card {
+  overflow: hidden;
+  border-radius: 26px;
+  background: var(--de-bg);
+  box-shadow: var(--de-shadow), 0 0 0 1px var(--de-line);
+}
+
+.band {
+  position: relative;
+  height: 150px;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse 70% 140% at 50% 40%,
+    #1a1d2b 0%,
+    #0b0d14 78%
+  );
+
+  @include de-mobile {
+    height: 128px;
+  }
+
+  @media (max-width: 520px) {
+    > :nth-child(2),
+    > :nth-child(4) {
+      display: none;
+    }
+  }
+}
+
+.body {
+  padding: 0 36px 28px;
+
+  @include de-mobile {
+    padding: 0 22px 24px;
+  }
+}
+
+.avatar {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 96px;
+  height: 96px;
+  margin-top: -48px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 0 5px var(--de-bg);
+  color: #fff;
+  font-size: 38.4px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #0043ff, #6a8dff);
+}
+
+.name {
+  margin: 14px 0 0;
+  min-height: 32px;
+  font-size: 26px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+
+.since {
+  margin: 4px 0 0;
+  font-size: 14.5px;
+  color: var(--de-hint);
+}
+
+.rows {
+  margin: 20px 0 0;
+  border-top: 1px solid var(--de-line);
+  border-bottom: 1px solid var(--de-line);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 54px;
+  font-size: 15px;
+
+  dt {
+    flex: none;
+    font-weight: 600;
+    color: var(--de-hint);
+  }
+
+  dd {
+    margin: 0;
+    min-width: 0;
+    font-weight: 600;
+    text-align: right;
+    overflow-wrap: anywhere;
+  }
+}
+
+.mail {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  svg {
+    flex: none;
+    color: var(--de-hint);
+  }
+}
+
+.danger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 18px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--de-hint);
+
+  @include de-mobile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
+
+.withdraw {
+  @include de-button-reset;
+  @include de-focus-ring;
+  flex: none;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--de-hint);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: var(--de-red);
+  }
+}

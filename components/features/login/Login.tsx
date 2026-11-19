@@ -1,6 +1,9 @@
-import TextButton from 'components/common/buttons/TextButton';
 import * as ga from 'lib/utils/gTag';
 import React, { Dispatch, SetStateAction } from 'react';
+import classNames from 'classnames/bind';
+import style from 'components/layout/header/Header.module.scss';
+
+const cn = classNames.bind(style);
 
 type Props = {
   setLoginModalIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -8,8 +11,9 @@ type Props = {
 
 function Login({ setLoginModalIsOpen }: Props) {
   return (
-    <TextButton
-      label="로그인"
+    <button
+      type="button"
+      className={cn('login-button')}
       onClick={() => {
         setLoginModalIsOpen(true);
         ga.event({
@@ -18,7 +22,9 @@ function Login({ setLoginModalIsOpen }: Props) {
           event_label: '로그인',
         });
       }}
-    ></TextButton>
+    >
+      로그인
+    </button>
   );
 }
 

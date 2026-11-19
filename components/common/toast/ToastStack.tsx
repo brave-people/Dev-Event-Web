@@ -4,9 +4,12 @@ import style from './ToastStack.module.scss';
 
 const cx = classNames.bind(style);
 
+export type ToastKind = 'done' | 'plain';
+
 export interface ToastItem {
   id: number;
   message: string;
+  kind: ToastKind;
 }
 
 interface ToastStackProps {
@@ -31,6 +34,22 @@ function ToastRow({
 
   return (
     <div className={cx('toast')}>
+      {toast.kind === 'done' && (
+        <svg
+          className={cx('toast__icon')}
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth={2.4}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          aria-hidden
+        >
+          <path d="M5 12.5l4.5 4.5L19 7.5" />
+        </svg>
+      )}
       <span className={cx('toast__text')}>{toast.message}</span>
     </div>
   );

@@ -1,0 +1,115 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.panel {
+  min-width: 0;
+  --de-empty-pad: 70px 0 60px;
+
+  @media (max-width: 620px) {
+    margin-top: 22px;
+  }
+
+  @include de-mobile {
+    --de-empty-pad: 44px 0 36px;
+  }
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--de-line);
+
+  @include de-mobile {
+    padding-bottom: 14px;
+  }
+}
+
+.heading {
+  min-width: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+
+  @include de-mobile {
+    font-size: 22px;
+  }
+
+  @media (max-width: 620px) {
+    font-size: 21px;
+  }
+}
+
+.dow {
+  font-weight: 700;
+}
+
+.sun {
+  color: var(--de-sun);
+}
+
+.sat {
+  color: var(--de-sat);
+}
+
+.nav {
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+  flex: none;
+}
+
+.arrow {
+  @include de-button-reset;
+  @include de-focus-ring;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--de-line);
+  display: grid;
+  place-items: center;
+  color: var(--de-sub);
+
+  &:hover:not(:disabled) {
+    background: var(--de-hover);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: default;
+    background: none;
+  }
+}
+
+.group {
+  margin: 22px 0 0;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--de-hint);
+}
+
+.list {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  padding: 8px 0 0;
+  --de-card-thumb: 264px;
+  --de-card-gap: 20px;
+  --de-card-title: 18.5px;
+
+  @media (max-width: 1040px) {
+    --de-card-thumb: 200px;
+    --de-card-gap: 16px;
+  }
+
+  @include de-mobile {
+    padding-top: 12px;
+    gap: 14px;
+  }
+}

@@ -10,13 +10,34 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: Pretendard Variable, -apple-system, BlinkMacSystemFont, Segoe UI,
-    Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+  font-family: 'Pretendard Variable', Pretendard, -apple-system,
+    BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
     sans-serif;
   font-size: 14px;
-  min-width: 350px;
+  // 350px이던 값. 330px 창(좁은 미리보기)에서 오른쪽 20px이 잘려 보여 320px로 낮췄다.
+  min-width: 320px;
+  background-color: var(--de-bg);
+  color: var(--de-ink);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  -webkit-font-smoothing: antialiased;
+}
+
+// html의 값은 뷰포트로 넘어간다. body까지 hidden이면 body가 스크롤 영역이 되어
+// position: sticky(날짜 띠)가 화면에 붙지 않는다. clip은 넘치는 것만 자르고 스크롤 영역을 만들지 않는다.
+html {
   overflow-x: hidden;
-  background-color: var(--background-1);
+}
+body {
+  overflow-x: hidden; // clip을 모르는 브라우저용
+  overflow-x: clip;
+}
+// clip을 모르는 브라우저(Safari 15 이하)에서는 위의 hidden 때문에 body가 스크롤 영역이 되어
+// 날짜 띠(sticky)가 붙지 않는다. 가로 넘침은 html의 hidden이 막으므로 body는 건드리지 않는다
+@supports not (overflow-x: clip) {
+  body {
+    overflow-x: visible;
+  }
 }
 
 a {
@@ -26,42 +47,6 @@ a {
 
 * {
   box-sizing: border-box;
-}
-
-// ========================================
-// 공통 유틸리티 클래스
-// ========================================
-.flex-center {
-  @include flex-center;
-}
-
-.flex-center-column {
-  @include flex-center-column;
-}
-
-.flex-between {
-  @include flex-between;
-}
-
-.flex-start {
-  @include flex-start;
-}
-
-.text-ellipsis {
-  @include text-ellipsis;
-}
-
-// ========================================
-// 에러 페이지 스타일
-// ========================================
-.error {
-  height: 100vh;
-  width: 100%;
-  @include flex-center-column;
-  font-weight: 400;
-  font-size: 1.5rem;
-  line-height: 1.8rem;
-  color: $text-gray;
 }
 
 // ========================================

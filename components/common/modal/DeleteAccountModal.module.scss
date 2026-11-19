@@ -1,90 +1,93 @@
+@import '~styles/_variables.scss';
 @import '~styles/_mixin.scss';
 
-.modal {
-  position: absolute;
-  width: 22.5rem; // 360px
-  height: 13.3125rem; // 213px
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  border-radius: 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  &__title {
-    font-weight: 700;
-    font-size: 1.5rem; // 16
-    line-height: 2.688rem;
-    text-align: center;
-    color: #171717;
-  }
-
-  &__desc {
-    font-weight: 400;
-    font-size: 0.875rem; // 14px
-    line-height: 1.438rem;
-    text-align: center;
-    color: #747579;
-  }
-
-  &__buttons {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1rem;
-    padding-top: 1.225rem;
+@keyframes fade {
+  from {
+    opacity: 0;
   }
 }
 
-@include mobile {
-  .modal {
-    position: absolute;
-    width: 20rem;
-    height: 12.25rem;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    &__title {
-      font-weight: 700;
-      font-size: 1.125rem; // 18px
-      line-height: 2.688rem;
-      text-align: center;
-      color: #171717;
-    }
-
-    &__desc {
-      font-weight: 400;
-      font-size: 0.857rem;
-      line-height: 1rem;
-      text-align: center;
-      color: #747579;
-    }
-
-    &__buttons {
-      font-size: 1.875rem;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    }
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
   }
 }
 
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 100;
-  background: rgba(0, 0, 0, 0.32);
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  padding: 20px;
+  overflow-y: auto;
+  background: rgba(12, 14, 22, 0.56);
+  animation: fade 0.18s ease-out;
+
+  // 어두운 화면: 창 바탕이 페이지 바탕과 같은 색이라 뒤를 더 어둡게 해 창이 떠 보이게 한다
+  :global(html[data-theme='dark']) & {
+    background: rgba(4, 5, 8, 0.74);
+  }
+
+  @include de-reduced-motion {
+    animation: none;
+  }
+}
+
+.card {
+  margin: auto;
+  width: 100%;
+  max-width: 400px;
+  padding: 32px 28px 24px;
+  border-radius: 24px;
+  outline: 0;
+  background: var(--de-bg);
+  color: var(--de-ink);
+  text-align: center;
+  box-shadow: 0 24px 70px rgba(8, 10, 20, 0.34);
+  animation: rise 0.24s cubic-bezier(0.2, 0.8, 0.3, 1);
+
+  // 어두운 화면: 가장자리가 뒤와 섞이지 않게 얇은 선을 두른다
+  :global(html[data-theme='dark']) & {
+    box-shadow: 0 0 0 1px var(--de-line), 0 24px 70px rgba(0, 0, 0, 0.5);
+  }
+
+  @include de-reduced-motion {
+    animation: none;
+  }
+}
+
+.title {
+  display: block;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.desc {
+  margin: 10px 0 24px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--de-sub);
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.button {
+  @include de-button-reset;
+  @include de-focus-ring;
+  @include de-press;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--de-surface);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.button.ok {
+  background: var(--de-red);
+  color: #fff;
 }

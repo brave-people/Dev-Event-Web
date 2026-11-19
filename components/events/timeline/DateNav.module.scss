@@ -1,0 +1,121 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  background: var(--de-bg);
+  padding-top: 16px;
+  border-bottom: 1px solid var(--de-line);
+
+  @include de-mobile {
+    padding-top: 10px;
+  }
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+.monthBtn {
+  @include de-button-reset;
+  @include de-focus-ring;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px 4px 4px;
+  border-radius: 12px;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--de-hover);
+  }
+
+  @include de-mobile {
+    font-size: 20px;
+  }
+}
+
+.year {
+  @include de-narrow {
+    display: none;
+  }
+}
+
+.caret {
+  transform: rotate(90deg);
+  color: var(--de-hint);
+}
+
+.right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+
+  @include de-mobile {
+    gap: 6px;
+  }
+
+  @include de-narrow {
+    gap: 4px;
+  }
+}
+
+.searchBtn {
+  @include de-button-reset;
+  @include de-focus-ring;
+  display: none;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  color: var(--de-sub);
+
+  &:hover {
+    background: var(--de-hover);
+  }
+
+  @include de-mobile {
+    display: grid;
+  }
+}
+
+.today {
+  @include de-button-reset;
+  @include de-focus-ring;
+  @include de-press;
+  flex: none;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--de-line);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--de-sub);
+  white-space: nowrap;
+
+  &:hover {
+    background: var(--de-hover);
+  }
+
+  @include de-mobile {
+    padding: 0 12px;
+  }
+
+  @include de-narrow {
+    padding: 0 10px;
+  }
+}
+
+.anchor {
+  display: contents;
+}

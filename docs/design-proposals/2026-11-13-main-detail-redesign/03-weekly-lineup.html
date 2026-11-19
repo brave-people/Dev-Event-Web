@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>03 주간 편성표</title>
+<link rel="stylesheet" href="shared/base.css">
+<style>
+:root { --ink:#111; --sub:#4b4f58; --hint:#8f939c; --line:#e5e7eb; --soft:#f6f7f9; --blue:#0043ff; --blue-soft:#edf2ff; --thumb-radius:6px; }
+body { background:#fff; color:var(--ink); }
+.hd__in { max-width:1200px; margin:0 auto; height:60px; padding:0 20px; display:flex; align-items:center; gap:20px; }
+.logo { font-weight:800; font-size:20px; }
+.logo i { font-style:normal; color:var(--blue); }
+.srch { flex:1; max-width:340px; margin-left:8px; display:flex; align-items:center; gap:8px; height:38px; padding:0 14px; border-radius:999px; background:var(--soft); color:var(--hint); font-size:14px; }
+.hd__r { margin-left:auto; display:flex; gap:16px; font-size:14px; font-weight:600; color:var(--sub); }
+.gnb { border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.gnb__in { max-width:1200px; margin:0 auto; padding:0 20px; display:flex; gap:26px; font-size:16px; font-weight:700; color:var(--hint); }
+.gnb a { padding:14px 0 12px; border-bottom:3px solid transparent; }
+.gnb .is-on { color:var(--ink); border-color:var(--ink); }
+.wrap { max-width:1200px; margin:0 auto; padding:0 20px 100px; }
+.bar { display:flex; align-items:center; gap:12px; padding:24px 0 16px; flex-wrap:wrap; }
+.bar h1 { font-size:22px; font-weight:800; letter-spacing:-.02em; }
+.bar .wk { display:flex; align-items:center; gap:4px; font-size:14px; font-weight:600; color:var(--sub); }
+.bar .wk button { width:28px; height:28px; border-radius:50%; border:1px solid var(--line); display:grid; place-items:center; color:var(--hint); }
+.chips { margin-left:auto; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
+.chip { flex:none; padding:7px 12px; border-radius:6px; font-size:13.5px; font-weight:600; color:var(--sub); background:var(--soft); }
+.chip.is-on { background:var(--ink); color:#fff; }
+.tabs { display:none; }
+.board { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+.col { border-left:1px solid var(--line); min-width:0; }
+.col:first-child { border-left:0; }
+.col__h { padding:12px 8px 10px; text-align:center; border-bottom:1px solid var(--line); background:var(--soft); }
+.col__h b { font-size:17px; font-weight:800; }
+.col__h span { display:block; margin-top:1px; font-size:12px; font-weight:600; color:var(--hint); }
+.col.is-today { background:var(--blue-soft); }
+.col.is-today .col__h { background:var(--blue); color:#fff; }
+.col.is-today .col__h b, .col.is-today .col__h span { color:#fff; }
+.col__b { padding:10px 8px 14px; display:grid; gap:14px; align-content:start; }
+.it { display:block; }
+.it .k-thumb { transition:.15s; }
+.it:hover .k-thumb { transform:scale(1.03); box-shadow:0 4px 12px rgba(0,0,0,.14); }
+.it strong { margin-top:7px; font-size:13.5px; font-weight:600; line-height:1.4; letter-spacing:-.01em; }
+.it p { margin-top:2px; font-size:12px; color:var(--hint); }
+.it em { font-style:normal; display:inline-block; margin-top:5px; font-size:11.5px; font-weight:700; }
+.e-dead { color:#e03131; } .e-open { color:var(--blue); }
+.empty { padding:24px 0; text-align:center; font-size:12.5px; color:#b8bcc4; }
+.more { margin-top:36px; }
+.more h2 { font-size:18px; font-weight:800; margin-bottom:14px; }
+.more h2 span { font-size:14px; font-weight:600; color:var(--hint); margin-left:6px; }
+.grid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:20px 14px; }
+/* detail */
+.dh { background:var(--soft); border-bottom:1px solid var(--line); }
+.dh__in { max-width:1040px; margin:0 auto; padding:32px 20px; display:grid; grid-template-columns:360px minmax(0,1fr); gap:32px; align-items:center; }
+.dh .k-thumb { --thumb-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,.12); }
+.kd { display:inline-block; padding:4px 9px; border-radius:5px; background:var(--ink); color:#fff; font-size:12px; font-weight:700; }
+.kd.is-dead { background:#e03131; }
+.dh h1 { margin-top:12px; font-size:26px; line-height:1.35; letter-spacing:-.02em; font-weight:800; }
+.dh .org { margin-top:6px; font-size:14.5px; color:var(--sub); font-weight:600; }
+.dh .ex { margin-top:12px; font-size:14.500px; line-height:1.6; color:var(--sub); }
+.dh .mt { margin-top:12px; font-size:13.500px; color:var(--hint); font-weight:500; }
+.dh .mt b { color:var(--ink); font-weight:700; }
+.dh__btns { display:flex; gap:8px; margin-top:18px; }
+.b1 { flex:1; max-width:260px; display:flex; justify-content:center; align-items:center; gap:6px; padding:13px; border-radius:8px; background:var(--blue); color:#fff; font-weight:700; font-size:15px; }
+.b2 { padding:13px 16px; border-radius:8px; background:#fff; border:1px solid var(--line); font-weight:700; font-size:14.500px; display:flex; gap:6px; align-items:center; }
+.dt { max-width:1040px; margin:0 auto; padding:0 20px; display:flex; gap:28px; border-bottom:1px solid var(--line); font-size:15.500px; font-weight:700; color:var(--hint); }
+.dt a { padding:16px 0 13px; border-bottom:3px solid transparent; }
+.dt .is-on { color:var(--ink); border-color:var(--ink); }
+.db { max-width:1040px; margin:0 auto; padding:32px 20px 100px; display:grid; grid-template-columns:minmax(0,1fr) 280px; gap:48px; align-items:start; }
+.same h3 { font-size:15px; font-weight:800; margin-bottom:12px; }
+.same a { display:grid; grid-template-columns:96px minmax(0,1fr); gap:10px; padding:8px 0; }
+.same strong { font-size:13.500px; line-height:1.4; font-weight:600; }
+.same small { display:block; margin-top:3px; font-size:12px; color:var(--hint); }
+@media (max-width: 900px) {
+  .srch, .hd__r a:first-child { display:none; }
+  .gnb__in { gap:20px; font-size:15px; }
+  .bar { padding:18px 0 10px; } .chips { margin-left:0; width:100%; }
+  .tabs { position:sticky; top:0; z-index:10; display:grid; grid-template-columns:repeat(7,1fr); background:#fff; border-bottom:1px solid var(--line); margin:0 -20px 12px; padding:0 12px; }
+  .tabs button { padding:10px 0 9px; text-align:center; font-size:15px; font-weight:700; color:var(--hint); border-bottom:3px solid transparent; }
+  .tabs button small { display:block; font-size:11px; font-weight:600; }
+  .tabs button.is-on { color:var(--blue); border-color:var(--blue); }
+  .board { display:block; border:0; border-radius:0; }
+  .col { display:none; border:0; background:none !important; }
+  .col.is-sel { display:block; }
+  .col__h { display:none; }
+  .col__b { grid-template-columns:repeat(2,minmax(0,1fr)); padding:0; gap:18px 12px; }
+  .grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .dh__in { grid-template-columns:1fr; gap:18px; padding:20px; }
+  .dh h1 { font-size:21px; }
+  .db { grid-template-columns:1fr; gap:32px; padding-top:24px; }
+  .dt { gap:20px; overflow-x:auto; white-space:nowrap; }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="shared/data.js"></script>
+<script src="shared/kit.js"></script>
+<script>
+const { esc, ic } = K;
+const header = (tab) => `
+<header><div class="hd__in">
+  <a class="logo" href="#main">DEV<i>.</i>EVENT</a>
+  <div class="srch">${ic('search', 18)} 행사·주최 검색</div>
+  <div class="hd__r"><a href="#main" data-toast="행사 등록 요청 화면으로 이동해요">행사 등록 요청</a><a href="#main">로그인</a></div>
+</div>
+<nav class="gnb"><div class="gnb__in"><a class="${tab === 0 ? 'is-on' : ''}" href="#main">요일별</a><a href="#main">마감 임박</a><a href="#main">새로 등록</a><a href="#main">캘린더</a><a href="#main">관심 행사</a></div></nav></header>`;
+
+const item = (e) => `
+<a class="it" href="${e.href}">
+  ${K.thumb(e)}
+  <strong class="clamp2">${esc(e.title)}</strong>
+  <p class="clamp1">${esc(e.organizer)}</p>
+  <em class="${e.recruit ? 'e-dead' : 'e-open'}">${e.recruit ? `${e.keyTime} 접수 마감` : e.state === '진행 중' ? '진행 중' : `${e.keyTime} 시작`} · ${e.cost}</em>
+</a>`;
+
+function main() {
+  const L = K.list();
+  const groups = Object.fromEntries(K.groupByDay(L).map((g) => [g.key, g.items]));
+  const week = K.days(7).map(K.dayInfo);
+  const weekKeys = new Set(week.map((d) => d.key));
+  const rest = L.filter((e) => !weekKeys.has(K.key(e.keyDate)));
+  return header(0) + `
+<div class="wrap">
+  <div class="bar"><h1>이번 주 편성표</h1>
+    <div class="wk"><button aria-label="이전 주">${ic('back', 14)}</button>${week[0].m}.${week[0].d} ~ ${week[6].m}.${week[6].d}<button aria-label="다음 주">${ic('chevron', 14)}</button></div>
+    <div class="chips">${K.chips('topic', K.TOPIC)}</div></div>
+  <div class="tabs">${week.map((d) => `<button class="${K.state.day === d.key ? 'is-on' : ''}" data-set="day:${d.key}">${d.dow}<small>${d.diff === 0 ? '오늘' : d.d + '일'}</small></button>`).join('')}</div>
+  <div class="board">${week.map((d) => { const items = groups[d.key] || []; return `
+    <div class="col${d.diff === 0 ? ' is-today' : ''}${K.state.day === d.key ? ' is-sel' : ''}">
+      <div class="col__h"><b class="${d.diff === 0 ? '' : d.cls}">${d.dow}</b><span>${d.diff === 0 ? '오늘' : `${d.m}.${d.d}`} · ${items.length}건</span></div>
+      <div class="col__b">${items.length ? items.map(item).join('') : '<p class="empty">등록된 행사가 없어요</p>'}</div>
+    </div>`; }).join('')}</div>
+  <section class="more"><h2>다음 주 이후<span>${rest.length}건</span></h2><div class="grid">${rest.slice(0, 15).map(item).join('')}</div></section>
+</div>`;
+}
+
+function detail(e) {
+  const same = K.ALL.filter((x) => x.id !== e.id && K.key(x.keyDate) === K.key(e.keyDate)).slice(0, 5);
+  const others = same.length ? same : K.related(e, 5);
+  return header(-1) + `
+<section class="dh"><div class="dh__in">
+  ${K.thumb(e)}
+  <div>
+    <span class="kd${e.urgent ? ' is-dead' : ''}">${e.label}</span> <span class="kd" style="background:#fff;color:#111;border:1px solid #e5e7eb">${e.kind}</span>
+    <h1>${esc(e.title)}</h1>
+    <p class="org">${esc(e.organizer)}</p>
+    <p class="ex clamp2">${esc(e.excerpt)}</p>
+    <p class="mt"><b>${e.timeLabel}</b> ${e.range} &nbsp;·&nbsp; <b>${e.mode.join('·')}</b> &nbsp;·&nbsp; <b>${e.cost}</b></p>
+    <div class="dh__btns"><a class="b1" href="${esc(e.link)}" target="_blank" rel="noopener">신청하러 가기 ${ic('out', 17)}</a><button class="b2" data-toast="관심 행사에 담았어요">${ic('plus', 17)} 관심</button><button class="b2" data-toast="캘린더에 추가했어요">${ic('calendar', 17)}</button><button class="b2" data-toast="링크가 복사되었어요">${ic('share', 17)}</button></div>
+  </div>
+</div></section>
+<nav class="dt"><a class="is-on" href="${e.href}">행사 소개</a><a href="${e.href}" data-toast="일정 탭으로 이동해요">일정</a><a href="${e.href}" data-toast="주최의 다른 행사를 보여줘요">주최의 다른 행사</a></nav>
+<div class="db">
+  <div class="k-prose">${e.descHtml}</div>
+  <aside class="same"><h3>${same.length ? `${K.fdw(e.keyDate)} 다른 행사` : '비슷한 행사'}</h3>
+    ${others.map((x) => `<a href="${x.href}">${K.thumb(x)}<div><strong class="clamp2">${esc(x.title)}</strong><small>${esc(x.organizer)}</small></div></a>`).join('')}
+  </aside>
+</div>`;
+}
+K.mount({ main, detail });
+</script>
+</body>
+</html>

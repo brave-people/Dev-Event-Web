@@ -1,0 +1,49 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.toggle {
+  display: flex;
+  flex: none;
+  padding: 3px;
+  border-radius: 12px;
+  background: var(--de-surface);
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+.toggle__btn {
+  @include de-button-reset;
+  @include de-focus-ring;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 9px;
+  color: var(--de-hint);
+  white-space: nowrap;
+
+  svg {
+    display: none;
+  }
+
+  &.is-on {
+    background: var(--de-bg);
+    color: var(--de-ink);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  @include de-mobile {
+    width: 32px;
+    padding: 0;
+    justify-content: center;
+
+    svg {
+      display: block;
+    }
+
+    span {
+      display: none;
+    }
+  }
+}

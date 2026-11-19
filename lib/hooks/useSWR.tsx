@@ -2,15 +2,18 @@ import {
   getEventsApi,
   getMyEventApi,
   getMonthlyEventApi,
+  getTopBannersApi,
   getUserApi,
 } from 'lib/api/handler';
+import { TopBanner } from 'model/banner';
+import { TOP_BANNER_PATH } from 'lib/utils/banner/topBanner';
 import { Calender } from 'model/calender';
 import { EventResponse, MyEventGetProps, Event } from 'model/event';
 import useSWR from 'swr';
 
-const useScheduledEvents = (fallbackData?: EventResponse[]) => {
+const useScheduledEvents = (fallbackData?: EventResponse[], enabled = true) => {
   const { data: events, error } = useSWR(
-    `/front/v2/events/current`,
+    enabled ? `/front/v2/events/current` : null,
     getEventsApi,
     {
       fallbackData: fallbackData ?? fallbackData,
@@ -23,7 +26,7 @@ const useScheduledEvents = (fallbackData?: EventResponse[]) => {
 
   return {
     scheduledEvents: events,
-    isLoading: !error && !events,
+    isLoading: enabled && !error && !events,
     isError: error,
   };
 };
@@ -32,14 +35,14 @@ const useMonthlyEvent = ({
   param,
   fallbackData,
 }: {
-  param: Calender;
-  fallbackData: Event[];
+  param: Calender | null;
+  fallbackData?: Event[];
 }) => {
   const { data: events, error } = useSWR(
-    `/front/v2/events/${param.year}/${param.month}`,
+    param ? `/front/v2/events/${param.year}/${param.month}` : null,
     getMonthlyEventApi,
     {
-      fallbackData: fallbackData ?? fallbackData,
+      fallbackData,
       shouldRetryOnError: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: true,
@@ -48,7 +51,7 @@ const useMonthlyEvent = ({
   );
   return {
     monthlyEvent: events,
-    isLoading: !error && !events,
+    isLoading: !!param && !error && !events,
     isError: error,
   };
 };
@@ -85,4 +88,25 @@ const useUser = () => {
   };
 };
 
-export { useScheduledEvents, useMonthlyEvent, useUser, useMyEvent };
+const useTopBanners = (fallbackData?: TopBanner[]) => {
+  const { data, error } = useSWR(TOP_BANNER_PATH, getTopBannersApi, {
+    fallbackData,
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: true,
+    revalidateIfStale: false,
+  });
+  return {
+    topBanners: data ?? [],
+    isLoading: !error && !data,
+    isError: error,
+  };
+};
+
+export {
+  useScheduledEvents,
+  useMonthlyEvent,
+  useUser,
+  useMyEvent,
+  useTopBanners,
+};

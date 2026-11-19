@@ -1,0 +1,56 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.bar {
+  display: none;
+
+  @include de-mobile {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+    display: flex;
+    gap: 8px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    background: var(--de-bg);
+    border-top: 1px solid var(--de-line);
+    --de-apply-height: 52px;
+    --de-menu-inset: 16px;
+  }
+}
+
+.icon {
+  @include de-button-reset;
+  @include de-focus-ring;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--de-surface);
+  display: grid;
+  place-items: center;
+  color: var(--de-sub);
+
+  &[aria-pressed='true'] {
+    color: var(--de-blue);
+
+    svg {
+      fill: currentColor;
+    }
+  }
+}
+
+.cta {
+  flex: 1;
+  min-width: 0;
+}
+
+.space {
+  display: none;
+
+  @include de-mobile {
+    display: block;
+    height: calc(76px + env(safe-area-inset-bottom));
+  }
+}

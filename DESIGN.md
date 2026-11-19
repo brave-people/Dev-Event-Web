@@ -92,34 +92,34 @@ The overall aesthetic is **flat-but-confident**: 그림자 거의 없음, 미디
 
 | Wanted 토큰 | hex | 우리 매핑 | Use |
 |---|---|---|---|
-| `background-normal-normal` | `#1B1C1E` | `--vapor-gray-000`, `--background-1` | 페이지 베이스 캔버스 |
+| `background-normal-normal` | `#1B1C1E` | `--vapor-gray-000` | 페이지 베이스 캔버스 |
 | `background-normal-alternative` | `#0F0F10` | (예약) | 가장 깊은 알트 (필요 시) |
-| `background-elevated-normal` | `#212225` | `--vapor-gray-050`, `--background-2`, `--toggle-track-bg` | 카드, 모달, alt 표면 |
+| `background-elevated-normal` | `#212225` | `--vapor-gray-050` | 카드, 모달, alt 표면 |
 | `background-elevated-alternative` | `#141415` | (예약) | 깊은 alt elevated |
 
 #### Line — borders + dividers
 
 | Wanted 토큰 | hex | 우리 매핑 | Use |
 |---|---|---|---|
-| `line-solid-normal` | `#37383C` | `--vapor-gray-300`, `--gray-4`, `--toggle-active-bg` | 표준 1px 보더, 토글 active 표면 |
+| `line-solid-normal` | `#37383C` | `--vapor-gray-300` | 표준 1px 보더 |
 | `line-solid-neutral` | `#333438` | `--vapor-gray-200` | subtle 구분선 |
-| `line-solid-alternative` | `#2E2F33` | `--vapor-gray-100`, `--gray-5` | placeholder bg, search field bg |
+| `line-solid-alternative` | `#2E2F33` | `--vapor-gray-100` | placeholder bg, search field bg |
 
 #### Interaction
 
 | Wanted 토큰 | hex | 우리 매핑 |
 |---|---|---|
-| `interaction-inactive` | `#5A5C63` | `--vapor-gray-400`, `--gray-3` |
+| `interaction-inactive` | `#5A5C63` | `--vapor-gray-400` |
 | `interaction-disable` | `#2E2F33` | (line-solid-alt와 동일) |
 
 #### Label — text scale
 
 | Wanted 토큰 | hex | 우리 매핑 | Use |
 |---|---|---|---|
-| `label-strong` | `#FFFFFF` | `--vapor-gray-900`, `--vapor-gray-950`, `--gray-1` | body, heading, 최강 강조 |
+| `label-strong` | `#FFFFFF` | `--vapor-gray-900`, `--vapor-gray-950` | body, heading, 최강 강조 |
 | `label-normal` | `#F7F7F8` | `--vapor-gray-800` | secondary 텍스트 |
 | `label-neutral` | `#C2C4C8` | `--vapor-gray-700` | 대체 표면 위의 보조 텍스트 |
-| `label-alternative` | `#AEB0B6` | `--vapor-gray-600`, `--gray-2` | hint, meta |
+| `label-alternative` | `#AEB0B6` | `--vapor-gray-600` | hint, meta |
 | `label-disable` | `#989BA2` | `--vapor-gray-500` | placeholder, icon default |
 
 #### Primary — brand blue (dark variant)
@@ -128,7 +128,7 @@ The overall aesthetic is **flat-but-confident**: 그림자 거의 없음, 미디
 
 | Wanted 토큰 | hex | 우리 매핑 |
 |---|---|---|
-| `primary-normal` | `#3385FF` | `--ktb-tech-blue` (dark only), `--primary`, `--vapor-text-primary` |
+| `primary-normal` | `#3385FF` | `--ktb-tech-blue` (dark only), `--vapor-text-primary` |
 | `primary-strong` | `#1A75FF` | `--ktb-tech-navy-hover` (dark only) |
 | `primary-heavy` | `#0066FF` | (예약) |
 
@@ -142,22 +142,15 @@ The overall aesthetic is **flat-but-confident**: 그림자 거의 없음, 미디
 | `status-cautionary` | `#FFA938` | `--vapor-text-warning` (dark) |
 | `status-negative` | `#FF6363` | `--vapor-text-danger` (dark) |
 
-#### Translucent — sticky header + glass overlays
+#### Translucent
 
-다크 전용 반투명 토큰 (light에선 별도 white 알파 값 사용):
-
-| 토큰 | dark 값 | Use |
-|---|---|---|
-| `--header-bg` | `rgba(27, 28, 30, 0.86)` | sticky 헤더 |
-| `--glass-overlay` | `rgba(33, 34, 37, 0.72)` | 모바일 카드 아이콘 글래스 |
-| `--glass-overlay-strong` | `rgba(33, 34, 37, 0.94)` | 글래스 hover |
-| `--notice-bg` | `rgba(51, 133, 255, 0.12)` | 상단 공지 배너 틴트 |
+반투명 토큰(`--header-bg`, `--glass-overlay`, `--glass-overlay-strong`, `--notice-bg`)과 옛 테마 변수(`--primary`, `--background-1·2`, `--gray-1~5`, `--toggle-*`)는 쓰는 곳이 없어져 2026-11-19에 지웠다. 리디자인 화면은 `--de-*` 토큰을 쓴다.
 
 ### Dark Mode Iteration Notes
 - 다크 모드 토큰은 `styles/_color.scss`의 `$wanted-dark-*` 변수에 한 곳에 모아두고, `styles/Theme.scss`의 `html[data-theme='dark']` 블록에서 시맨틱 토큰에 매핑한다.
 - 새 컴포넌트가 다크 변종이 필요하면 **반드시 시맨틱 토큰**(`var(--vapor-gray-*)`, `var(--ktb-tech-blue)` 등)을 통해 접근. 하드코딩한 흰색(`#fff`, `rgba(255,255,255,...)`)이 다크에 떨어지면 시각적 부조화 발생.
 - 예외 1 (어두운 brand surface 위 텍스트): light/dark 무관하게 항상 어두운 SNS 배너의 흰 pill 같은 surface는 그 위 텍스트도 하드코딩된 다크 값(`#2B2D36`)을 써야 함. 토큰 inversion이 텍스트를 흰색으로 뒤집어 invisible 화하는 사고 방지.
-- 예외 2 (KTB Blue surface 위 텍스트): KTB Tech Blue 배경(`--ktb-tech-blue` / `--primary`) 위 텍스트는 **반드시 하드코딩된 `#ffffff`** 를 쓴다. `var(--vapor-gray-000)` 이나 `var(--background-1)` 을 쓰면 다크에서 페이지 bg(`#1B1C1E`)로 뒤집혀 검정 글씨가 파란 버튼 위에 나타나는 사고가 발생. 이 패턴이 적용된 곳: `FillButton.color--primary`, `EmailSubscribeButton`.
+- 예외 2 (KTB Blue surface 위 텍스트): KTB Tech Blue 배경(`--ktb-tech-blue`) 위 텍스트는 **반드시 하드코딩된 `#ffffff`** 를 쓴다. `var(--vapor-gray-000)` 을 쓰면 다크에서 페이지 bg(`#1B1C1E`)로 뒤집혀 검정 글씨가 파란 버튼 위에 나타나는 사고가 발생. 이 패턴이 적용된 곳: `FillButton.color--primary`, `EmailSubscribeButton`.
 - 예외 3 (인라인 동적 색상): 캘린더 chip(`CalendarGrid.tsx`)처럼 인라인 `style={{ color: tagHex, background: rgba(tagHex, 0.08) }}` 으로 카테고리 색을 칠하는 케이스는 라이트 bg 가정으로 튜닝됨. 다크에선 dark-on-dark 가독성 붕괴 → SCSS 모듈에서 `:global(html[data-theme='dark']) &` 셀렉터로 `color`/`background`를 `!important` override하여 대비를 회복하고, 카테고리 색은 `border-left` 만 유지하여 시각적 큐로 남긴다.
 
 ## 3. Typography Rules

@@ -1,24 +1,12 @@
-import React, { useState, useContext, useMemo } from 'react';
-import Image from 'next/image';
+import React from 'react';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next';
-import { marked } from 'marked';
 import Layout from 'components/layout';
-import ShareIcon from 'components/icons/ShareIcon';
-import BookmarkIcon from 'components/icons/BookmarkIcon';
-import CalendarExportButton from 'components/common/calendar-export/CalendarExportButton';
-import DdayTag from 'components/common/tag/DdayTag';
-import FilterTag from 'components/common/tag/FilterTag';
-import LoginModal from 'components/common/modal/LoginModal';
-import { useToast } from 'context/toast';
+import EventDetailView from 'components/events/detail/EventDetailView';
+import { MobileApplyBarSpace } from 'components/events/detail/MobileApplyBar';
 import { Event } from 'model/event';
-import { AuthContext } from 'context/auth';
-import { createMyEventApi } from 'lib/api/post';
-import { deleteMyEventApi } from 'lib/api/delete';
-import { useMyEvent } from 'lib/hooks/useSWR';
 import {
   buildEventMetaDescription,
-  buildEventPlaceholderSummary,
   getEventOgImage,
   getEventPageTitle,
 } from 'lib/seo/eventMeta';
@@ -28,14 +16,9 @@ import {
   serializeJsonLd,
 } from 'lib/seo/jsonLd';
 import { eventDetailUrl } from 'lib/seo/site';
-import { formatEventPeriod, getEventTimeLabel } from 'lib/utils/eventDate';
-import * as ga from 'lib/utils/gTag';
-import { mutate } from 'swr';
-import style from 'styles/EventDetail.module.scss';
-import classNames from 'classnames/bind';
-import Letter from '../../../components/features/letter/Letter';
-
-const cx = classNames.bind(style);
+import { pickRelated, RelatedPick } from 'lib/utils/detail/related';
+import { flattenEvents } from 'lib/utils/timeline/groupByDay';
+import { toKstNaive } from 'lib/utils/timeline/kst';
 
 const CACHE_CONTROL_DETAIL =
   'public, s-maxage=3600, stale-while-revalidate=86400';
@@ -44,118 +27,42 @@ const CACHE_CONTROL_NOT_FOUND =
 
 interface EventDetailProps {
   eventData: Event;
+  related: RelatedPick | null;
+  now: string;
 }
 
-const isEventDone = (endDate: string): boolean => {
-  return new Date(endDate).getTime() < Date.now();
+const RELATED_TIMEOUT_MS = 3000;
+
+// 같은 날 다른 행사를 고를 목록. 실패하거나 늦으면 빈 목록(상세는 영향 없음)
+const fetchCandidates = async (): Promise<Event[]> => {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), RELATED_TIMEOUT_MS);
+  try {
+    const res = await fetch(
+      `${process.env.BASE_SERVER_URL}/front/v2/events/current`,
+      { signal: controller.signal }
+    );
+    if (!res.ok) return [];
+    return flattenEvents(await res.json());
+  } catch (error) {
+    console.error('같은 날 행사 목록 조회 오류:', error);
+    return [];
+  } finally {
+    clearTimeout(timer);
+  }
 };
 
-const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
-  const { isLoggedIn } = useContext(AuthContext);
-  const [loginModalIsOpen, setLoginModalIsOpen] = useState(false);
-  const { pushToast } = useToast();
-
-  const eventDone = isEventDone(eventData.end_date_time);
-
-  const param = { filter: '' };
-  const { myEvent } = useMyEvent(param, isLoggedIn);
-
-  // 마크다운을 HTML로 변환
-  const descriptionHtml = useMemo(() => {
-    if (!eventData.description) return '';
-    return marked(eventData.description, {
-      breaks: true, // 줄바꿈을 <br>로 변환
-      gfm: true, // GitHub Flavored Markdown 지원
-    });
-  }, [eventData.description]);
-
-  // 북마크 상태 확인
-  const getFavoriteId = (id: string) => {
-    const favoriteEvent = myEvent?.find((item) => item.dev_event.id === id);
-    return favoriteEvent?.favorite_id || 0;
-  };
-
-  const isBookmarked = eventData ? getFavoriteId(eventData.id) !== 0 : false;
-
+const EventDetail: React.FC<EventDetailProps> = ({
+  eventData,
+  related,
+  now,
+}) => {
   const pageTitle = getEventPageTitle(eventData);
   const description = buildEventMetaDescription(eventData);
   const ogImage = getEventOgImage(eventData);
   const canonical = eventDetailUrl(eventData.id);
   const eventJsonLd = buildEventJsonLd(eventData);
   const breadcrumbJsonLd = buildBreadcrumbJsonLd(eventData);
-
-  const handleShare = async () => {
-    if (!eventData) return;
-
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      pushToast('링크가 복사되었어요');
-    } catch (err) {
-      console.error(err);
-      pushToast('링크 복사에 실패했어요');
-    }
-  };
-
-  const handleBookmark = async () => {
-    if (!eventData) return;
-
-    // 로그인하지 않은 경우 로그인 모달 표시
-    if (!isLoggedIn) {
-      setLoginModalIsOpen(true);
-      return;
-    }
-
-    if (!myEvent) return;
-
-    try {
-      const favoriteId = getFavoriteId(eventData.id);
-
-      if (favoriteId === 0) {
-        // 북마크 추가
-        const filteredEvent = myEvent.concat({
-          favorite_id: 0,
-          dev_event: eventData,
-        });
-        mutate([`/front/v1/favorite/events`, param], filteredEvent, false);
-
-        await createMyEventApi(`/front/v1/favorite/events/${eventData.id}`, {
-          eventId: Number(eventData.id),
-        });
-
-        ga.event({
-          action: 'web_event_관심행사추가버튼클릭',
-          event_category: 'web_event',
-          event_label: '관심행사',
-        });
-
-        pushToast('북마크에 추가되었어요');
-      } else {
-        // 북마크 삭제
-        const filteredEvent = myEvent.filter(
-          (event) => event.favorite_id !== favoriteId
-        );
-        mutate([`/front/v1/favorite/events`, param], [...filteredEvent], false);
-
-        await deleteMyEventApi(`/front/v1/favorite/events/${favoriteId}`, {
-          favoriteId: favoriteId,
-        });
-
-        ga.event({
-          action: 'web_event_관심행사삭제버튼클릭',
-          event_category: 'web_event',
-          event_label: '관심행사',
-        });
-
-        pushToast('북마크에서 제거되었어요');
-      }
-
-      // SWR 캐시 갱신
-      mutate([`/front/v1/favorite/events`, param]);
-    } catch (error) {
-      console.error('북마크 처리 오류:', error);
-      pushToast('처리 중 오류가 발생했어요');
-    }
-  };
 
   return (
     <>
@@ -187,121 +94,14 @@ const EventDetail: React.FC<EventDetailProps> = ({ eventData }) => {
       </Head>
 
       <Layout>
-        <div className={cx('event-detail')}>
-          {/* 이벤트 헤더 영역 */}
-          <div className={cx('event-detail__header')}>
-            <div className={cx('event-detail__image-section')}>
-              <div className={cx('event-detail__image')}>
-                <Image
-                  src={
-                    eventData.cover_image_link ||
-                    '/default/event-thumbnail-light.png'
-                  }
-                  alt={eventData.title}
-                  layout="fill"
-                  objectFit="cover"
-                  unoptimized
-                />
-                {eventDone && (
-                  <div className={cx('event-detail__image__done')} />
-                )}
-                {!eventDone && (
-                  <div className={cx('event-detail__image__badge')}>
-                    <DdayTag
-                      startDateTime={eventData.start_date_time}
-                      endDateTime={eventData.end_date_time}
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className={cx('event-detail__info-section')}>
-              {/* 공유/캘린더/북마크 아이콘 */}
-              <div className={cx('event-detail__header-actions')}>
-                <button className={cx('icon-btn')} onClick={handleShare}>
-                  <ShareIcon color="var(--vapor-gray-500)" />
-                </button>
-                <CalendarExportButton event={eventData} />
-                <button className={cx('icon-btn')} onClick={handleBookmark}>
-                  <BookmarkIcon
-                    color={
-                      isBookmarked
-                        ? 'var(--ktb-tech-blue)'
-                        : 'var(--vapor-gray-500)'
-                    }
-                    isFavorite={isBookmarked}
-                  />
-                </button>
-              </div>
-
-              <div className={cx('event-detail__organizer')}>
-                {/* 주최 뱃지 비활성화 */}
-                {/*<div className={cx('organizer-badge')}></div>*/}
-                <span className={cx('organizer-text')}>
-                  {eventData.organizer}
-                </span>
-              </div>
-
-              <h1 className={cx('event-detail__title')}>{eventData.title}</h1>
-
-              <div className={cx('event-detail__meta')}>
-                <div className={cx('meta-item')}>
-                  <span className={cx('meta-label')}>
-                    {getEventTimeLabel(eventData.event_time_type)}
-                  </span>
-                  <span className={cx('meta-value')}>
-                    {formatEventPeriod(eventData)}
-                  </span>
-                </div>
-              </div>
-
-              <div className={cx('event-detail__tags')}>
-                {eventData.tags?.map((tag, index) => (
-                  <FilterTag
-                    key={index}
-                    label={tag.tag_name}
-                    size="regular"
-                    type="location"
-                  />
-                ))}
-              </div>
-
-              <div className={cx('event-detail__actions')}>
-                <a
-                  href={eventData.event_link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cx('apply-btn')}
-                >
-                  참여하기
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* 행사 상세 내용 */}
-          <div className={cx('event-detail__content')}>
-            {eventData.description && eventData.description.trim() !== '' ? (
-              <div
-                className={cx('content-description')}
-                dangerouslySetInnerHTML={{ __html: descriptionHtml }}
-              />
-            ) : (
-              <div className={cx('content-placeholder')}>
-                <div className={cx('placeholder-message')}>
-                  <p>{buildEventPlaceholderSummary(eventData)}</p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-        <Letter />
-        <LoginModal
-          isOpen={loginModalIsOpen}
-          onClose={() => setLoginModalIsOpen(false)}
+        <EventDetailView
+          key={eventData.id}
+          event={eventData}
+          related={related}
+          now={now}
         />
       </Layout>
+      <MobileApplyBarSpace />
     </>
   );
 };
@@ -320,7 +120,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     context.res.setHeader('Cache-Control', CACHE_CONTROL_DETAIL);
 
-    // 서버에서 API 호출
+    // 서버에서 API 호출 (행사 한 건과 같은 날 후보 목록을 함께).
+    // 목록 조회는 reject하지 않으므로, 404·오류로 기다리지 않고 버려도 안전하다
+    const candidatesPromise = fetchCandidates();
     const response = await fetch(
       `${process.env.BASE_SERVER_URL}/front/v1/events/${eventId}`
     );
@@ -344,9 +146,20 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       };
     }
 
+    const candidates = await candidatesPromise;
+    const now = toKstNaive(Date.now());
+    let related: RelatedPick | null = null;
+    try {
+      related = pickRelated(eventData, candidates, now);
+    } catch (error) {
+      console.error('같은 날 행사 선별 오류:', error);
+    }
+
     return {
       props: {
         eventData,
+        related,
+        now,
       },
     };
   } catch (error) {

@@ -1,0 +1,18 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+// 스티커 한 장. 부모가 position: relative(또는 다른 위치 지정)여야 한다.
+// --stk-origin: 돌리고 줄이는 기준점. 감싸는 요소에 주면 그 안의 스티커가 모두 따른다.
+//   주지 않으면 붙는 쪽의 위 모서리(왼쪽 0 0, 오른쪽 100% 0). 배너는 50% 50%를 준다.
+.sticker {
+  position: absolute;
+  line-height: 0;
+  user-select: none;
+  filter: url(#stk-diecut);
+  transform: rotate(var(--r)) scale(var(--s));
+  transform-origin: var(--stk-origin, 0 0);
+}
+
+.right {
+  transform-origin: var(--stk-origin, 100% 0);
+}

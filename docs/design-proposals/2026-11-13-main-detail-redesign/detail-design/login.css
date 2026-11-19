@@ -1,0 +1,162 @@
+/* 로그인 창 시안 열 가지의 스타일. 색은 app.css 의 변수를 써서 밝은·어두운 화면을 함께 그린다. */
+
+/* ---------- 공통 ---------- */
+html[data-lg="1"] body { overflow:hidden; }
+.lgo { position:fixed; inset:0; z-index:100; display:flex; padding:20px; background:rgba(12,14,22,.56); overflow-y:auto; animation:lg-fade .18s ease-out; }
+@keyframes lg-fade { from { opacity:0; } }
+@keyframes lg-rise { from { opacity:0; transform:translateY(14px) scale(.985); } }
+.lgc { position:relative; margin:auto; width:min(440px, 100%); padding:44px 40px 34px; border-radius:26px; background:var(--bg); color:var(--ink); box-shadow:0 24px 70px rgba(8,10,20,.34); text-align:center; animation:lg-rise .24s cubic-bezier(.2,.8,.3,1); }
+.lgc:focus { outline:0; }
+.lg-x { position:absolute; right:14px; top:14px; z-index:3; width:40px; height:40px; border-radius:50%; display:grid; place-items:center; color:var(--hint); }
+.lg-x:hover { background:var(--surface); color:var(--ink); }
+.lg-logo { display:block; font-size:17px; font-weight:800; letter-spacing:.01em; }
+.lg-h { margin-top:14px; font-size:25px; line-height:1.34; font-weight:800; letter-spacing:-.025em; }
+.lg-p { margin-top:8px; font-size:14.5px; line-height:1.55; color:var(--sub); }
+.lg-main > .lgb:first-of-type, .lg-opts { margin-top:26px; }
+
+/* 버튼 */
+.lgb { position:relative; width:100%; height:52px; margin-top:10px; padding:0 18px; border-radius:12px; display:flex; align-items:center; justify-content:center; gap:9px; font-size:15.5px; font-weight:700; letter-spacing:-.01em; transition:transform .12s, filter .12s, background .12s; }
+.lgb:active { transform:scale(.985); }
+.lgb svg { flex:none; }
+.lgb--kakao { background:#fee500; color:rgba(0,0,0,.85); } .lgb--kakao:hover { filter:brightness(.96); }
+.lgb--email { background:var(--bg); color:var(--ink); box-shadow:inset 0 0 0 1.5px var(--line); } .lgb--email:hover { background:var(--hover); }
+/* "다른 방법으로 로그인"은 상자 없이 글자만. 바로 아래 펼쳐지는 Google 버튼이 회색 판이라, 회색 상자 두 개가 겹쳐 보이지 않게 낮췄다 */
+.lgb--more { height:44px; margin-top:12px; background:none; color:var(--hint); font-size:14.5px; font-weight:600; } .lgb--more:hover { color:var(--ink); }
+.lg-more > .lgb:first-child { margin-top:4px; }
+.lgb--more .lg-chev { transition:transform .2s; } .lgb--more[aria-expanded="true"] .lg-chev { transform:rotate(180deg); }
+/* Google: 공식 지침의 세 가지 판 가운데 Neutral(#F2F2F2 바탕, 테두리 없음, 글자 #1F1F1F). 흰 바탕 판은 #747775 테두리가 필수라 다른 버튼보다 선이 도드라졌다 */
+.lgb--google { background:#f2f2f2; color:#1f1f1f; } .lgb--google:hover { background:#e9e9e9; }
+.lgb--naver { background:#03c75a; color:#fff; } .lgb--naver:hover { filter:brightness(.96); }
+.lgb--github { background:#24292f; color:#fff; } .lgb--github:hover { filter:brightness(1.18); }
+html[data-theme="dark"] .lgb--github { box-shadow:inset 0 0 0 1.5px #3a404c; }
+.lgb--go { background:var(--ink); color:var(--bg); margin-top:18px; } .lgb--go:hover { opacity:.9; }
+.lgb:focus-visible, .lg-x:focus-visible, .lg-back:focus-visible, .lg-foot button:focus-visible, .lg-ic:focus-visible { outline:2.5px solid var(--blue); outline-offset:2px; }
+/* 펼쳐지는 묶음 */
+.lg-more { animation:lg-open .22s ease-out; } .lg-more[hidden] { display:none; }
+@keyframes lg-open { from { opacity:0; transform:translateY(-6px); } }
+.lg-foot { margin-top:22px; font-size:14px; line-height:1.6; color:var(--hint); }
+.lg-foot span { display:block; }
+.lg-foot button { margin-left:4px; font-weight:700; color:var(--ink); text-decoration:underline; text-underline-offset:3px; text-decoration-color:var(--faint); }
+/* 처음 화면과 이메일 입력 화면 */
+.lg-email { display:none; } [data-view="email"] .lg-email[data-pane="email"], [data-view="join"] .lg-email[data-pane="join"] { display:block; animation:lg-open .2s ease-out; } [data-view="email"] .lg-main, [data-view="join"] .lg-main { display:none; }
+.lg-back { position:absolute; left:14px; top:14px; height:40px; padding:0 12px 0 8px; border-radius:20px; display:flex; align-items:center; gap:2px; font-size:13.5px; font-weight:600; color:var(--hint); }
+.lg-back:hover { background:var(--surface); color:var(--ink); }
+.lg-email .lg-h { margin-top:20px; }
+.lg-form { margin-top:22px; text-align:left; display:grid; gap:12px; }
+.lg-form label span { display:block; margin-bottom:6px; font-size:13px; font-weight:700; color:var(--sub); }
+.lg-form input { width:100%; height:50px; padding:0 15px; border-radius:13px; border:0; outline:0; background:var(--surface); box-shadow:inset 0 0 0 1.5px transparent; font:inherit; font-size:15px; color:var(--ink); transition:box-shadow .12s; }
+.lg-form input::placeholder { color:var(--hint); } .lg-form input:focus { box-shadow:inset 0 0 0 2px var(--ink); background:var(--bg); }
+.lg-stk { position:absolute; line-height:0; filter:url(#diecut); transform:rotate(var(--r)) scale(var(--s)); transform-origin:0 0; }
+.lgo[style*="right"] { }
+
+/* ---------- 2. 홀로그램 머리띠 ---------- */
+.lgc--l2 { padding-top:0; overflow:hidden; }
+.lg-band { position:relative; height:138px; margin:0 -40px 26px; overflow:hidden; background:radial-gradient(ellipse 70% 140% at 50% 40%, #1a1d2b 0%, #0b0d14 78%); }
+.lg-band .lg-stk[style*="right"] { transform-origin:100% 0; }
+.lgc--l2 .lg-x { color:rgba(255,255,255,.75); background:rgba(255,255,255,.1); } .lgc--l2 .lg-x:hover { background:rgba(255,255,255,.2); color:#fff; }
+.lgc--l2 .lg-h { margin-top:0; }
+.lgc--l2 .lg-back { position:static; margin:-12px 0 4px -12px; } .lgc--l2 .lg-email { text-align:center; } .lgc--l2 .lg-email .lg-back { display:inline-flex; float:left; } .lgc--l2 .lg-email .lg-h { clear:both; margin-top:0; padding-top:6px; }
+
+/* ---------- 3. 검정 카드에 홀로그램 테 ---------- */
+.lgo--l3 { background:rgba(12,14,22,.66); }
+.lgc--l3 { color:#f4f5f8; border:2.5px solid transparent; background:linear-gradient(#0e1016, #0e1016) padding-box, linear-gradient(115deg, #ffb3d9, #ffe9a8, #b8ffd9, #a8e1ff, #d4b8ff, #ffb3d9, #ffe9a8, #b8ffd9) border-box; background-size:auto, 300% 100%; animation:lg-rise .24s cubic-bezier(.2,.8,.3,1), lg-holo 7s linear infinite; box-shadow:0 24px 80px rgba(0,0,0,.5), 0 0 40px rgba(168,196,255,.14); }
+@keyframes lg-holo { to { background-position:0 0, -150% 0; } }
+.lgc--l3 .lg-logo { background:linear-gradient(100deg, #ffb3d9, #ffe9a8, #b8ffd9, #a8e1ff, #d4b8ff); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.lgc--l3 .lg-p, .lgc--l3 .lg-foot { color:#9aa1b2; } .lgc--l3 .lg-foot button { color:#fff; text-decoration-color:#4a505c; }
+.lgc--l3 .lgb--email { background:#fff; color:#15171c; box-shadow:none; } .lgc--l3 .lgb--email:hover { background:#e9ebf0; }
+.lgc--l3 .lgb--more { background:#1b1e27; color:#c5cad6; } .lgc--l3 .lgb--more:hover { color:#fff; }
+.lgc--l3 .lgb--github { box-shadow:inset 0 0 0 1.5px #3a404c; } .lgc--l3 .lgb--go { background:#fff; color:#15171c; }
+.lgc--l3 .lg-x, .lgc--l3 .lg-back { color:#8b91a0; } .lgc--l3 .lg-x:hover, .lgc--l3 .lg-back:hover { background:#1b1e27; color:#fff; }
+.lgc--l3 .lg-form label span { color:#b7bdc9; } .lgc--l3 .lg-form input { background:#1b1e27; color:#fff; } .lgc--l3 .lg-form input:focus { background:#0e1016; box-shadow:inset 0 0 0 2px #a8c4ff; }
+
+/* ---------- 4. 포스터 벽 ---------- */
+.lgo--l4 { background:#06070c; }
+.lg-wall { position:absolute; inset:-4% -2%; display:grid; grid-template-columns:repeat(8, 1fr); gap:10px; opacity:.34; transform:rotate(-4deg) scale(1.12); pointer-events:none; }
+.lg-wall i { aspect-ratio:16/9; border-radius:10px; background:#1c2028 center/cover no-repeat; }
+.lgo--l4::after { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 60% at 50% 50%, rgba(6,7,12,.1) 0%, rgba(6,7,12,.78) 100%); pointer-events:none; }
+.lgc--l4 { z-index:1; }
+
+/* ---------- 5. 터미널 창 ---------- */
+.lgc--l5 { padding:0 0 28px; overflow:hidden; text-align:left; background:#0d1117; color:#e6edf3; border-radius:18px; font-family:var(--mono, 'JetBrains Mono', ui-monospace, Menlo, monospace); box-shadow:0 24px 70px rgba(0,0,0,.5), 0 0 0 1px #262c36; }
+.lg-bar { height:42px; padding:0 16px; display:flex; align-items:center; gap:8px; background:#161b22; border-bottom:1px solid #262c36; }
+.lg-bar i { width:12px; height:12px; border-radius:50%; background:#ff5f57; } .lg-bar i:nth-child(2) { background:#febc2e; } .lg-bar i:nth-child(3) { background:#28c840; }
+.lg-bar span { margin:0 auto; padding-right:52px; font-size:12.5px; color:#8b949e; }
+.lgc--l5 .lg-x { top:1px; right:6px; color:#8b949e; } .lgc--l5 .lg-x:hover { background:#262c36; color:#fff; }
+.lgc--l5 .lg-main, .lgc--l5 .lg-email { padding:22px 26px 0; }
+.lg-term p { font-size:14.5px; line-height:1.9; } .lg-term i { font-style:normal; color:#3fd97c; margin-right:8px; } .lg-term .ask { color:#fff; font-weight:700; } .lg-term .ask i { color:#58a6ff; }
+.lgc--l5 .lg-opts { margin-top:14px; } .lgc--l5 .lgb { height:50px; margin-top:8px; border-radius:10px; justify-content:flex-start; padding-left:16px; font-family:'Pretendard Variable', Pretendard, sans-serif; }
+.lgc--l5 .lgb::after { content:'↵'; margin-left:auto; font-family:var(--mono, ui-monospace, monospace); font-size:14px; opacity:0; transition:opacity .12s; } .lgc--l5 .lgb:hover::after, .lgc--l5 .lgb:focus-visible::after { opacity:.7; }
+.lgc--l5 .lgb--email { background:#21262d; color:#e6edf3; box-shadow:inset 0 0 0 1px #30363d; } .lgc--l5 .lgb--email:hover { background:#2a3038; }
+.lgc--l5 .lgb--more { background:none; color:#8b949e; box-shadow:inset 0 0 0 1px #30363d; } .lgc--l5 .lgb--more:hover { color:#e6edf3; } .lgc--l5 .lgb--more::after { display:none; } .lgc--l5 .lgb--more .lg-chev { margin-left:auto; }
+.lgc--l5 .lgb--github { box-shadow:inset 0 0 0 1px #30363d; }
+.lgc--l5 .lg-foot { color:#8b949e; font-size:13px; } .lgc--l5 .lg-foot button { color:#58a6ff; text-decoration:none; }
+.lgc--l5 .lg-back { position:static; margin-left:-8px; color:#8b949e; } .lgc--l5 .lg-back:hover { background:#21262d; color:#fff; }
+.lgc--l5 .lg-h { margin-top:8px; font-size:16px; font-weight:700; color:#3fd97c; letter-spacing:0; }
+.lgc--l5 .lg-form label span { color:#8b949e; } .lgc--l5 .lg-form input { background:#161b22; color:#e6edf3; box-shadow:inset 0 0 0 1px #30363d; border-radius:10px; } .lgc--l5 .lg-form input:focus { background:#0d1117; box-shadow:inset 0 0 0 2px #58a6ff; }
+.lgc--l5 .lgb--go { background:#3fd97c; color:#06260f; justify-content:center; padding-left:18px; } .lgc--l5 .lgb--go::after { display:none; }
+
+/* ---------- 6. 작은 창: 로그인 버튼 아래 ---------- */
+html[data-lg="1"][data-lgv="l6"] body { overflow:auto; }
+.lgo--l6 { position:fixed; inset:0; background:none; display:block; padding:0; pointer-events:none; overflow:visible; }
+.lgc--l6 { margin:0; pointer-events:auto; position:absolute; top:60px; right:max(20px, calc((100vw - 1120px) / 2 + 20px)); width:340px; padding:22px 20px 20px; border-radius:20px; text-align:left; box-shadow:0 16px 48px rgba(8,10,20,.2), 0 0 0 1px var(--line); transform-origin:92% 0; animation:lg-pop .18s cubic-bezier(.2,.9,.3,1.2); }
+@keyframes lg-pop { from { opacity:0; transform:scale(.94) translateY(-6px); } }
+.lgc--l6::before { content:''; position:absolute; right:30px; top:-7px; width:13px; height:13px; background:var(--bg); border-left:1px solid var(--line); border-top:1px solid var(--line); transform:rotate(45deg); }
+.lgc--l6 .lg-h { margin-top:0; font-size:19px; } .lgc--l6 .lg-main > .lgb:first-of-type { margin-top:16px; }
+.lgc--l6 .lgb { height:48px; margin-top:8px; font-size:14.5px; } .lgc--l6 .lg-foot { margin-top:16px; font-size:13px; text-align:center; }
+.lgc--l6 .lg-x { right:8px; top:8px; width:36px; height:36px; } .lgc--l6 .lg-back { position:static; margin:-6px 0 6px -8px; height:34px; }
+.lgc--l6 .lg-email .lg-h { margin-top:0; } .lgc--l6 .lg-form { margin-top:14px; gap:10px; } .lgc--l6 .lg-form input { height:46px; }
+
+/* ---------- 7. 옆 패널(PC) / 아래 시트(휴대폰) ---------- */
+.lgo--l7 { justify-content:flex-end; align-items:stretch; padding:0; }
+.lgc--l7 { margin:0; width:min(440px, 100%); min-height:100%; border-radius:26px 0 0 26px; padding:86px 40px 40px; text-align:left; display:flex; flex-direction:column; justify-content:center; animation:lg-slide .3s cubic-bezier(.2,.8,.3,1); }
+@keyframes lg-slide { from { transform:translateX(100%); } }
+.lgc--l7 .lg-logo { position:absolute; left:40px; top:36px; } .lgc--l7 .lg-h { margin-top:0; font-size:27px; } .lgc--l7 .lg-foot { text-align:center; }
+.lgc--l7 .lg-x { top:26px; right:26px; } .lg-grip { display:none; }
+.lgc--l7 .lg-back { left:auto; right:76px; top:26px; }
+
+/* ---------- 8. 전체 화면 ---------- */
+.lgo--l8 { padding:0; background:var(--bg); align-items:stretch; animation:lg-fade .2s ease-out; }
+.lgc--l8 { margin:0; width:100%; max-width:none; min-height:100%; border-radius:0; box-shadow:none; padding:0 20px 60px; text-align:left; animation:none; }
+.lgc--l8 .lg-logo { max-width:1120px; margin:0 auto; height:64px; line-height:64px; font-size:19px; }
+.lgc--l8 .lg-x { top:12px; right:max(14px, calc((100vw - 1120px) / 2 + 10px)); width:44px; height:44px; background:var(--surface); color:var(--ink); }
+.lg-in { position:relative; max-width:440px; margin:clamp(30px, 11vh, 110px) auto 0; }
+.lgc--l8 .lg-h { margin-top:0; font-size:clamp(28px, 4.4vw, 38px); line-height:1.28; } .lgc--l8 .lg-p { font-size:16px; margin-top:12px; }
+.lgc--l8 .lg-main > .lgb:first-of-type { margin-top:34px; } .lgc--l8 .lgb { height:56px; font-size:16px; } .lgc--l8 .lg-foot { text-align:center; }
+.lgc--l8 .lg-back { position:static; margin:0 0 14px -10px; } .lgc--l8 .lg-email .lg-h { margin-top:0; }
+
+.lg-deco { position:absolute; inset:64px 0 0; max-width:1240px; margin:0 auto; pointer-events:none; } .lg-deco .lg-stk[style*="right"] { transform-origin:100% 0; }
+@media (max-width: 1040px) { .lg-deco { display:none; } }
+
+/* ---------- 9. 아이콘 줄 ---------- */
+.lg-ics { display:flex; justify-content:center; gap:22px; padding:18px 0 2px; }
+.lg-ic { display:grid; justify-items:center; gap:7px; font-size:12.5px; font-weight:600; color:var(--sub); }
+.lg-ic svg { box-sizing:content-box; width:22px; height:22px; padding:16px; border-radius:50%; transition:transform .14s; } .lg-ic:hover svg { transform:translateY(-2px); }
+.lg-ic--google svg { background:#fff; box-shadow:inset 0 0 0 1px #747775; } .lg-ic--naver svg { background:#03c75a; color:#fff; padding:19px; width:16px; height:16px; } .lg-ic--github svg { background:#24292f; color:#fff; }
+.lgc--l9 .lgb--more { background:none; height:44px; font-size:14.5px; margin-top:14px; color:var(--hint); } .lgc--l9 .lgb--more:hover { color:var(--ink); }
+
+/* ---------- 10. 바로 입력 ---------- */
+.lg-or { display:flex; align-items:center; gap:12px; margin:22px 0 0; font-size:13px; font-weight:600; color:var(--hint); } .lg-or::before, .lg-or::after { content:''; flex:1; height:1px; background:var(--line); }
+.lgc--l10 .lg-form { margin-top:16px; } .lgc--l10 .lgb--go { margin-top:6px; }
+.lgc--l10 .lgb--more { background:none; height:44px; font-size:14.5px; margin-top:12px; color:var(--hint); } .lgc--l10 .lgb--more:hover { color:var(--ink); }
+
+@media (prefers-reduced-motion: reduce) { .lgo, .lgc, .lg-more, .lg-email { animation:none !important; } }
+
+/* ---------- 좁은 화면 ---------- */
+@media (max-width: 520px) {
+  .lgo { padding:14px; }
+  .lgc { padding:42px 22px 26px; border-radius:22px; }
+  .lg-h { font-size:22px; } .lg-p { font-size:14px; } .lgb { height:50px; font-size:15px; }
+  .lgc--l2 { padding-top:0; } .lg-band { margin:0 -22px 22px; height:118px; }
+  .lgc--l5 { padding:0 0 22px; }
+  .lgc--l5 .lg-main, .lgc--l5 .lg-email { padding:18px 18px 0; }
+  /* 6. 작은 창은 화면 폭에 맞춘다 */
+  .lgc--l6 { top:56px; left:12px; right:12px; width:auto; } .lgc--l6::before { right:34px; }
+  /* 7. 옆 패널은 아래에서 올라오는 시트가 된다 */
+  .lgo--l7 { align-items:flex-end; }
+  .lgc--l7 { width:100%; min-height:0; border-radius:24px 24px 0 0; padding:44px 22px 28px; display:block; animation:lg-up .3s cubic-bezier(.2,.8,.3,1); }
+  @keyframes lg-up { from { transform:translateY(100%); } }
+  .lgc--l7 .lg-logo { display:none; } .lgc--l7 .lg-h { font-size:21px; } .lgc--l7 .lg-x { top:12px; right:12px; } .lgc--l7 .lg-back { right:auto; left:10px; top:12px; }
+  .lg-grip { display:block; position:absolute; left:50%; top:9px; width:40px; height:4px; margin-left:-20px; border-radius:2px; background:var(--faint); }
+  .lgc--l8 { padding:0 20px 40px; } .lgc--l8 .lg-logo { height:56px; line-height:56px; } .lgc--l8 .lg-x { top:6px; } .lgc--l8 .lgb { height:54px; }
+  .lg-ics { gap:16px; }
+}

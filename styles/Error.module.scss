@@ -1,0 +1,100 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+// 오류 화면 (시안 er9: 큰 숫자). 숫자는 바탕 장식이고, 읽히는 글은 가운데 한 줄과 버튼이다.
+.error {
+  @include de-container;
+  position: relative;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  min-height: clamp(500px, 58vw, 760px);
+  overflow: hidden;
+  text-align: center;
+  color: var(--de-ink);
+
+  @include de-mobile {
+    min-height: 440px;
+  }
+}
+
+.code {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: clamp(190px, 38vw, 480px);
+  line-height: 0.8;
+  font-weight: 800;
+  letter-spacing: -0.07em;
+  white-space: nowrap;
+  // 가변 글꼴은 획이 겹친 자리의 윤곽선까지 그려진다(4의 안쪽 선). 선을 먼저 긋고 바탕색으로 채워
+  // 안쪽 선과 선의 안쪽 절반을 덮는다. 그래서 선 굵기는 보이는 굵기(2px)의 두 배다.
+  color: var(--de-bg);
+  -webkit-text-stroke: 4px var(--de-line);
+  paint-order: stroke fill;
+  pointer-events: none;
+  user-select: none;
+  transform: translate(-50%, -52%);
+}
+
+.body {
+  position: relative;
+}
+
+.title {
+  font-size: 26px;
+  line-height: 1.35;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+
+  @include de-mobile {
+    font-size: 21px;
+  }
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.button {
+  @include de-button-reset;
+  @include de-focus-ring;
+  @include de-press;
+  display: inline-flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 18px;
+  border-radius: 12px;
+  background: var(--de-surface);
+  color: var(--de-ink);
+  font-size: 14.5px;
+  font-weight: 700;
+  text-decoration: none;
+
+  &:hover {
+    background: var(--de-line);
+  }
+}
+
+.is-ink {
+  background: var(--de-ink);
+  color: var(--de-bg);
+
+  &:hover {
+    background: var(--de-ink);
+    opacity: 0.9;
+  }
+}

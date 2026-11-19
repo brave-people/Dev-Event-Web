@@ -6,6 +6,7 @@ import Document, {
   Main,
   NextScript,
 } from 'next/document';
+import { LOCAL_HOST_PATTERN } from 'lib/utils/localHost';
 
 // import Script from 'next/script';
 
@@ -25,8 +26,17 @@ class MyDocument extends Document {
           {/* FOUC prevention: resolve theme before React boots */}
           <script
             dangerouslySetInnerHTML={{
-              __html: `(function(){try{var s=localStorage.getItem('dev-event:theme');var t=s||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();`,
+              __html: `(function(){try{var s=localStorage.getItem('dev-event:theme');var t=s||(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();try{if(/(?:^|; )dev-event-notice=true(?:;|$)/.test(document.cookie)){document.documentElement.setAttribute('data-notice','off');}}catch(e){}`,
             }}
+          />
+          <link
+            rel="preconnect"
+            href="https://cdn.jsdelivr.net"
+            crossOrigin="anonymous"
+          />
+          <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
           />
           <meta property="og:type" content="website" />
           <meta property="og:site_name" content="Dev Event" />
@@ -59,6 +69,10 @@ class MyDocument extends Document {
               __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            // 개발 PC·같은 망에서 연 페이지는 운영 GA에 보내지 않는다(GA 공식 끄기 표시, config 보다 먼저)
+            if (/${LOCAL_HOST_PATTERN.source}/i.test(window.location.hostname)) {
+              window['ga-disable-${process.env.GA_TRACKING_ID}'] = true;
+            }
             gtag('js', new Date());
 
             gtag('config', '${process.env.GA_TRACKING_ID}', {

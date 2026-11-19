@@ -1,0 +1,99 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.thumb {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: var(--de-thumb-bg);
+  border-radius: var(--de-thumb-radius, 12px);
+
+  // 흰 포스터가 바탕에 묻히지 않게 옅은 테두리
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.07);
+    pointer-events: none;
+  }
+
+  :global(html[data-theme='dark']) &::after {
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+}
+
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  font-size: clamp(10px, 1.6vw, 15px);
+  color: var(--de-thumb-fg);
+}
+
+.auto {
+  container-type: inline-size;
+  --c1: #000040;
+  --c2: #0043ff;
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  color: #fff;
+}
+
+.auto-1 {
+  --c1: #06493c;
+  --c2: #12a47f;
+}
+
+.auto-2 {
+  --c1: #8a2c08;
+  --c2: #f08c00;
+}
+
+.auto-3 {
+  --c1: #3b1a8f;
+  --c2: #845ef7;
+}
+
+.auto-4 {
+  --c1: #7d1238;
+  --c2: #e64980;
+}
+
+.auto-body {
+  position: absolute;
+  inset: 0;
+  padding: 21px 22px;
+  padding: 6.5cqw 7cqw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  em {
+    font-style: normal;
+    font-size: 12px;
+    font-size: max(9px, 3.7cqw);
+    font-weight: 700;
+    opacity: 0.85;
+  }
+
+  b {
+    @include text-multiline-ellipsis(3);
+    font-size: 20px;
+    font-size: max(11px, 6.3cqw);
+    line-height: 1.34;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  small {
+    @include text-ellipsis;
+    font-size: 12px;
+    font-size: max(9px, 3.7cqw);
+    font-weight: 600;
+    opacity: 0.8;
+  }
+}

@@ -1,0 +1,76 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.wrap {
+  min-width: 0;
+}
+
+.menu {
+  position: absolute;
+  left: var(--de-menu-inset, 0);
+  right: var(--de-menu-inset, 0);
+  bottom: calc(100% + 8px);
+  z-index: 5;
+  max-width: 320px;
+  padding: 6px;
+  border-radius: 14px;
+  background: var(--de-bg);
+  border: 1px solid var(--de-line);
+  box-shadow: var(--de-shadow);
+  text-align: left;
+}
+
+.head {
+  padding: 8px 10px 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--de-hint);
+}
+
+.item {
+  @include de-button-reset;
+  @include de-focus-ring;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--de-ink);
+  text-align: left;
+
+  &:hover,
+  &:focus-visible {
+    background: var(--de-hover);
+  }
+
+  &:focus-visible {
+    outline-offset: -2px;
+  }
+}
+
+.swatch {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--de-line);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+}
+
+.hint {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--de-hint);
+}

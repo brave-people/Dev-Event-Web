@@ -1,0 +1,25 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.band {
+  position: relative;
+  height: 138px;
+  margin-bottom: 26px;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse 70% 140% at 50% 40%,
+    #1a1d2b 0%,
+    #0b0d14 78%
+  );
+
+  @media (max-width: 520px) {
+    height: 118px;
+    margin-bottom: 22px;
+  }
+}
+
+.hideNarrow {
+  @include de-narrow {
+    display: none;
+  }
+}

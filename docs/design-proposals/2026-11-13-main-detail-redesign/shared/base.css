@@ -1,0 +1,67 @@
+/* 목업 공용 기본값 — 리셋, 한글 줄바꿈, 썸네일, 본문(마크다운) 스타일 */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'tnum';
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+h1, h2, h3, h4, p, ul, ol, figure { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+img { max-width: 100%; }
+:focus-visible { outline: 2px solid #0043ff; outline-offset: 2px; }
+
+/* 썸네일 (운영 이미지 16:9) */
+.k-thumb {
+  position: relative; display: block; overflow: hidden; aspect-ratio: 16 / 9;
+  background: var(--thumb-bg, #eef0f5); border-radius: var(--thumb-radius, 12px);
+}
+.k-thumb__ph {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-weight: 800; letter-spacing: 0.04em; font-size: clamp(10px, 1.6vw, 15px);
+  color: var(--thumb-fg, #b9bdcb);
+}
+.k-thumb > i { position: absolute; inset: 0; background-size: cover; background-position: center; }
+
+.clamp1, .clamp2, .clamp3 { display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+.clamp1 { -webkit-line-clamp: 1; }
+.clamp2 { -webkit-line-clamp: 2; }
+.clamp3 { -webkit-line-clamp: 3; }
+
+/* 행사 본문 (마크다운 렌더 결과) — 시안마다 변수만 바꿔 쓴다 */
+.k-prose { color: var(--prose-fg, #2b2d36); font-size: 16px; line-height: 1.75; }
+.k-prose > * + * { margin-top: 1em; }
+.k-prose h1, .k-prose h2, .k-prose h3, .k-prose h4 {
+  margin-top: 2em; line-height: 1.4; letter-spacing: -0.012em; color: var(--prose-head, #1b1d24);
+}
+.k-prose h1 { font-size: 22px; } .k-prose h2 { font-size: 20px; } .k-prose h3 { font-size: 18px; } .k-prose h4 { font-size: 16px; }
+.k-prose ul, .k-prose ol { padding-left: 1.3em; }
+.k-prose ul { list-style: disc; } .k-prose ol { list-style: decimal; }
+.k-prose li + li { margin-top: 0.4em; }
+.k-prose a { color: var(--prose-accent, #0043ff); text-decoration: underline; text-underline-offset: 3px; }
+.k-prose table { width: 100%; border-collapse: collapse; font-size: 14.5px; display: block; overflow-x: auto; }
+.k-prose th, .k-prose td { padding: 10px 14px; border: 1px solid var(--prose-border, #e1e1e8); text-align: left; vertical-align: top; }
+.k-prose th { background: var(--prose-th, #f7f7fa); font-weight: 600; white-space: nowrap; }
+.k-prose img { border-radius: 12px; }
+.k-prose blockquote { margin: 0; padding: 4px 0 4px 16px; border-left: 3px solid var(--prose-border, #e1e1e8); color: var(--prose-muted, #6c6e7e); }
+.k-prose code { font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace; font-size: 0.9em; padding: 2px 6px; border-radius: 6px; background: var(--prose-th, #f0f0f5); }
+.k-prose hr { border: 0; border-top: 1px solid var(--prose-border, #e1e1e8); margin: 2em 0; }
+
+.k-toast {
+  position: fixed; left: 50%; bottom: 96px; transform: translate(-50%, 12px); z-index: 99;
+  padding: 12px 18px; border-radius: 12px; background: rgba(25, 27, 35, 0.92); color: #fff; font-size: 14px; font-weight: 500;
+  opacity: 0; pointer-events: none; transition: 0.2s;
+}
+.k-toast.is-show { opacity: 1; transform: translate(-50%, 0); }
+
+.is-sun { color: #e5484d; }
+.is-sat { color: #2f6fed; }

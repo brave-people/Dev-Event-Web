@@ -1,0 +1,121 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.button {
+  @include de-button-reset;
+  @include de-focus-ring;
+  position: relative;
+  width: 100%;
+  height: 52px;
+  margin-top: 10px;
+  padding: 0 18px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-size: 15.5px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  transition: transform 0.12s, filter 0.12s, background 0.12s;
+
+  svg {
+    flex: none;
+  }
+
+  &:active {
+    transform: scale(0.985);
+  }
+
+  @media (max-width: 520px) {
+    height: 50px;
+    font-size: 15px;
+  }
+
+  @include de-reduced-motion {
+    transition: none;
+
+    &:active {
+      transform: none;
+    }
+  }
+}
+
+.kakao {
+  background: #fee500;
+  color: rgba(0, 0, 0, 0.85);
+
+  &:hover {
+    filter: brightness(0.96);
+  }
+}
+
+.google {
+  background: #f2f2f2;
+  color: #1f1f1f;
+
+  &:hover {
+    background: #e9e9e9;
+  }
+}
+
+.naver {
+  background: #03c75a;
+  color: #fff;
+
+  &:hover {
+    filter: brightness(0.96);
+  }
+}
+
+.github {
+  background: #24292f;
+  color: #fff;
+
+  &:hover {
+    filter: brightness(1.18);
+  }
+
+  :global(html[data-theme='dark']) & {
+    box-shadow: inset 0 0 0 1.5px #3a404c;
+  }
+}
+
+.email {
+  background: var(--de-bg);
+  color: var(--de-ink);
+  box-shadow: inset 0 0 0 1.5px var(--de-line);
+
+  &:hover {
+    background: var(--de-hover);
+  }
+}
+
+.more {
+  height: 44px;
+  margin-top: 12px;
+  background: none;
+  color: var(--de-hint);
+  font-size: 14.5px;
+  font-weight: 600;
+
+  &:hover {
+    color: var(--de-ink);
+  }
+
+  @media (max-width: 520px) {
+    height: 50px;
+    font-size: 15px;
+  }
+}
+
+.go {
+  margin-top: 18px;
+  background: var(--de-ink);
+  color: var(--de-bg);
+
+  &:hover {
+    opacity: 0.9;
+  }
+}

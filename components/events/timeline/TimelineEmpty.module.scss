@@ -1,0 +1,29 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.empty {
+  padding: var(--de-empty-pad, 80px 0);
+  text-align: center;
+}
+
+.title {
+  font-size: 18px;
+}
+
+.desc {
+  margin: 8px 0 18px;
+  font-size: 14.5px;
+  color: var(--de-hint);
+}
+
+.action {
+  @include de-button-reset;
+  @include de-focus-ring;
+  @include de-press;
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 12px;
+  background: var(--de-surface);
+  font-weight: 700;
+  font-size: 14.5px;
+}

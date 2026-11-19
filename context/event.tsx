@@ -1,10 +1,7 @@
-import { jobGroups } from 'components/features/filters/jobGroup';
 import React, { createContext, ReactNode, useState } from 'react';
 
 interface EventContext {
   jobGroupList: string[] | undefined;
-  updateJobGroupList: (job: string | string[] | undefined) => void;
-  deleteJobGroupList: (nJob: string) => void;
   initJobGroupList: () => void;
   eventType: string | undefined;
   handleEventType: (event: string | undefined) => void;
@@ -18,25 +15,40 @@ interface EventContext {
   handleSearch: (search: string | undefined) => void;
   url: string | undefined;
   handleUrl: (url: string | undefined) => void;
+  newOnly: boolean;
+  handleNewOnly: (value: boolean) => void;
+  showPast: boolean;
+  handleShowPast: (value: boolean) => void;
+  replaceJobGroupList: (list: string[]) => void;
+  focusDay: string | null;
+  handleFocusDay: (key: string | null) => void;
 }
+
+// Provider 밖에서 부르면 아무것도 하지 않는다
+const noop = (): void => undefined;
 
 const defaultValue: EventContext = {
   jobGroupList: undefined,
-  updateJobGroupList: () => {},
-  deleteJobGroupList: () => {},
-  initJobGroupList: () => {},
+  initJobGroupList: noop,
   eventType: undefined,
-  handleEventType: () => {},
+  handleEventType: noop,
   location: undefined,
-  handleLocation: () => {},
+  handleLocation: noop,
   coast: undefined,
-  handleCoast: () => {},
+  handleCoast: noop,
   date: undefined,
-  handleDate: () => {},
+  handleDate: noop,
   search: undefined,
-  handleSearch: () => {},
+  handleSearch: noop,
   url: '',
-  handleUrl: () => {},
+  handleUrl: noop,
+  newOnly: false,
+  handleNewOnly: noop,
+  showPast: false,
+  handleShowPast: noop,
+  replaceJobGroupList: noop,
+  focusDay: null,
+  handleFocusDay: noop,
 };
 
 const EventContext = createContext(defaultValue);
@@ -51,32 +63,12 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
   const [date, setDate] = useState<string | undefined>(undefined);
   const [search, setSearch] = useState<string | undefined>(undefined);
   const [url, setUrl] = useState<string | undefined>(undefined);
-
-  const updateJobGroupList = (job: string | string[] | undefined) => {
-    if (typeof job === 'undefined') return;
-    if (typeof job === 'string') {
-      if (jobGroupList === undefined) setJobGroupList([job]);
-      else {
-        if (jobGroupList.includes(job) === false)
-          setJobGroupList(jobGroupList?.concat(job));
-      }
-    } else {
-      if (jobGroupList === undefined) setJobGroupList(job);
-      else {
-        for (let i = 0; i < job.length; i++) {
-          if (jobGroupList.includes(job[i]) === false)
-            setJobGroupList(jobGroupList?.concat(job[i]));
-        }
-      }
-    }
-  };
+  const [newOnly, setNewOnly] = useState<boolean>(false);
+  const [showPast, setShowPast] = useState<boolean>(false);
+  const [focusDay, setFocusDay] = useState<string | null>(null);
 
   const initJobGroupList = () => {
     setJobGroupList([]);
-  };
-
-  const deleteJobGroupList = (nJob: string) => {
-    setJobGroupList(jobGroupList?.filter((job) => job !== nJob));
   };
 
   const handleEventType = (event: string | undefined) => {
@@ -103,10 +95,24 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
     setUrl(url);
   };
 
+  const handleNewOnly = (value: boolean) => {
+    setNewOnly(value);
+  };
+
+  const handleShowPast = (value: boolean) => {
+    setShowPast(value);
+  };
+
+  const replaceJobGroupList = (list: string[]) => {
+    setJobGroupList(list);
+  };
+
+  const handleFocusDay = (key: string | null) => {
+    setFocusDay(key);
+  };
+
   const contextValue = {
     jobGroupList,
-    updateJobGroupList,
-    deleteJobGroupList,
     initJobGroupList,
     eventType,
     handleEventType,
@@ -120,6 +126,13 @@ const EventProvider = ({ children }: { children: ReactNode }) => {
     handleSearch,
     url,
     handleUrl,
+    newOnly,
+    handleNewOnly,
+    showPast,
+    handleShowPast,
+    replaceJobGroupList,
+    focusDay,
+    handleFocusDay,
   };
   return (
     <>

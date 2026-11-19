@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>05 고밀도 보드</title>
+<link rel="stylesheet" href="shared/base.css">
+<style>
+:root { --ink:#1f2328; --sub:#59636e; --hint:#818b98; --line:#d9dee4; --soft:#f6f8fa; --blue:#0043ff; --blue-soft:#eef3ff; --red:#cf222e; --green:#1a7f37; }
+body { background:#fff; color:var(--ink); font-size:14px; }
+.hd { border-bottom:1px solid var(--line); background:var(--soft); }
+.hd__in { max-width:1280px; margin:0 auto; height:52px; padding:0 20px; display:flex; align-items:center; gap:20px; }
+.logo { font-weight:800; font-size:16px; letter-spacing:.02em; }
+.nav { display:flex; gap:4px; font-weight:600; color:var(--sub); }
+.nav a { padding:6px 10px; border-radius:6px; }
+.nav .is-on { background:#fff; border:1px solid var(--line); color:var(--ink); }
+.q { flex:1; max-width:420px; margin-left:auto; display:flex; align-items:center; gap:8px; height:32px; padding:0 10px; border-radius:6px; border:1px solid var(--line); background:#fff; color:var(--hint); font-size:13px; }
+.q kbd { margin-left:auto; padding:1px 5px; border-radius:4px; border:1px solid var(--line); font:600 11px ui-monospace,Menlo,monospace; }
+.hd__r { display:flex; gap:8px; font-weight:600; font-size:13px; }
+.hd__r button { height:32px; padding:0 12px; border-radius:6px; border:1px solid var(--line); background:#fff; }
+.hd__r .pri { background:var(--blue); border-color:var(--blue); color:#fff; }
+.wrap { max-width:1280px; margin:0 auto; padding:20px 20px 80px; display:grid; grid-template-columns:216px minmax(0,1fr); gap:24px; align-items:start; }
+.fs { position:sticky; top:16px; }
+.fs h3 { margin:18px 0 6px; padding:0 8px; font-size:12px; font-weight:700; color:var(--hint); }
+.fs h3:first-child { margin-top:0; }
+.fo { width:100%; display:flex; align-items:center; gap:8px; padding:6px 8px; border-radius:6px; font-weight:500; text-align:left; }
+.fo:hover { background:var(--soft); }
+.fo.is-on { background:var(--blue-soft); color:var(--blue); font-weight:700; }
+.fo span { margin-left:auto; font-size:12px; color:var(--hint); font-weight:600; }
+.tb { display:flex; align-items:center; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
+.tb h1 { font-size:18px; font-weight:700; }
+.tb h1 span { color:var(--hint); font-weight:600; font-size:14px; margin-left:4px; }
+.seg { margin-left:auto; display:flex; border:1px solid var(--line); border-radius:6px; overflow:hidden; font-size:13px; font-weight:600; }
+.seg button { padding:6px 11px; color:var(--sub); border-left:1px solid var(--line); }
+.seg button:first-child { border-left:0; }
+.seg .is-on { background:var(--ink); color:#fff; }
+.tbl { border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+.th, .tr { display:grid; grid-template-columns:86px minmax(0,1fr) 190px 62px 76px 52px 132px 34px; align-items:center; gap:12px; padding:0 14px; }
+.th { height:36px; background:var(--soft); border-bottom:1px solid var(--line); font-size:12px; font-weight:700; color:var(--sub); position:sticky; top:0; z-index:5; }
+.gr { padding:8px 14px; background:#fbfcfd; border-bottom:1px solid var(--line); border-top:1px solid var(--line); font-size:12.500px; font-weight:700; color:var(--sub); }
+.gr:first-of-type { border-top:0; }
+.gr span { color:var(--hint); font-weight:600; margin-left:6px; }
+.tr { min-height:42px; border-bottom:1px solid #edf0f3; font-size:13.500px; }
+.tr:last-child { border-bottom:0; }
+.tr:hover { background:#f3f7ff; }
+.dd { justify-self:start; padding:2px 8px; border-radius:999px; font-size:12px; font-weight:700; border:1px solid var(--line); color:var(--sub); white-space:nowrap; }
+.dd.is-0 { background:var(--red); border-color:var(--red); color:#fff; }
+.dd.is-3 { color:var(--red); border-color:#f3b7bb; background:#fff5f5; }
+.dd.is-open { color:var(--blue); border-color:#b9cbff; background:var(--blue-soft); }
+.ti { min-width:0; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ti i { font-style:normal; margin-left:6px; font-size:10.500px; font-weight:800; color:var(--green); }
+.c-org { color:var(--sub); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.c-s { color:var(--sub); white-space:nowrap; }
+.c-free { color:var(--green); font-weight:600; } .c-paid { color:var(--sub); }
+.c-when { font-variant-numeric:tabular-nums; color:var(--sub); white-space:nowrap; }
+.c-when b { color:var(--ink); font-weight:600; }
+.star { color:#b4bcc6; display:grid; place-items:center; }
+.m-only { display:none; }
+/* detail */
+.dw { max-width:1120px; margin:0 auto; padding:24px 20px 100px; }
+.crumb { font-size:13px; color:var(--hint); font-weight:500; }
+.crumb a { color:var(--blue); }
+.dw h1 { margin-top:10px; font-size:26px; line-height:1.35; font-weight:700; letter-spacing:-.015em; }
+.st { display:flex; align-items:center; gap:10px; margin-top:12px; padding-bottom:18px; border-bottom:1px solid var(--line); color:var(--sub); font-size:13.500px; flex-wrap:wrap; }
+.pill { padding:5px 12px; border-radius:999px; background:var(--green); color:#fff; font-weight:700; font-size:13px; }
+.pill.is-red { background:var(--red); }
+.dg { display:grid; grid-template-columns:minmax(0,1fr) 296px; gap:32px; margin-top:24px; align-items:start; }
+.doc { border:1px solid var(--line); border-radius:8px; }
+.doc__h { padding:10px 16px; background:var(--soft); border-bottom:1px solid var(--line); border-radius:8px 8px 0 0; font-size:13px; font-weight:600; color:var(--sub); }
+.doc .k-prose { padding:24px; font-size:15px; }
+.sb { position:sticky; top:16px; }
+.sb .k-thumb { --thumb-radius:8px; border:1px solid var(--line); }
+.go { display:flex; justify-content:center; align-items:center; gap:6px; margin-top:12px; height:40px; border-radius:6px; background:var(--blue); color:#fff; font-weight:700; }
+.sb__a { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-top:6px; }
+.sb__a button { height:32px; border-radius:6px; border:1px solid var(--line); font-size:12.500px; font-weight:600; color:var(--sub); display:flex; align-items:center; justify-content:center; gap:4px; }
+.sk { padding:14px 0; border-bottom:1px solid var(--line); }
+.sk small { display:block; font-size:12px; font-weight:700; color:var(--hint); margin-bottom:5px; }
+.sk b { font-weight:600; font-size:13.500px; line-height:1.5; }
+.sk .lb { display:inline-block; margin:0 4px 4px 0; padding:2px 8px; border-radius:999px; background:var(--blue-soft); color:var(--blue); font-size:12px; font-weight:600; }
+.pg { margin-top:6px; height:6px; border-radius:99px; background:#e6ebf1; overflow:hidden; }
+.pg i { display:block; height:100%; background:var(--red); }
+@media (max-width: 960px) {
+  .nav, .q kbd, .hd__r button:first-child { display:none; }
+  .wrap { grid-template-columns:1fr; padding:14px 14px 80px; gap:12px; }
+  .fs { position:static; display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
+  .fs h3 { display:none; }
+  .fo { width:auto; flex:none; border:1px solid var(--line); border-radius:999px; padding:6px 11px; }
+  .fo span { margin-left:2px; }
+  .th { display:none; }
+  .tr { grid-template-columns:auto minmax(0,1fr) 30px; gap:4px 10px; padding:10px 12px; }
+  .tr > .c-org, .tr > .c-s, .tr > .c-when { display:none; }
+  .ti { white-space:normal; display:block; }
+  .m-only { display:block; grid-column:2 / 3; font-size:12.500px; color:var(--hint); }
+  .star { grid-row:1 / 3; grid-column:3; }
+  .dd { grid-row:1 / 3; align-self:start; margin-top:1px; }
+  .dg { grid-template-columns:1fr; }
+  .sb { position:static; order:-1; }
+  .dw h1 { font-size:21px; }
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="shared/data.js"></script>
+<script src="shared/kit.js"></script>
+<script>
+const { esc, ic } = K;
+const header = () => `
+<header class="hd"><div class="hd__in">
+  <a class="logo" href="#main">DEV.EVENT</a>
+  <nav class="nav"><a class="is-on" href="#main">전체 행사</a><a href="#main">캘린더</a><a href="#main">관심 행사</a></nav>
+  <div class="q">${ic('search', 15)} 행사명, 주최로 검색 <kbd>/</kbd></div>
+  <div class="hd__r"><button data-toast="행사 등록 요청 화면으로 이동해요">행사 등록 요청</button><button class="pri">로그인</button></div>
+</div></header>`;
+
+const fopt = (k, v, n) => `<button class="fo${K.on(k, v)}" data-set="${k}:${v}">${v}<span>${n}</span></button>`;
+const ddCls = (e) => (!e.recruit ? 'is-open' : e.days <= 0 ? 'is-0' : e.days <= 3 ? 'is-3' : '');
+const tr = (e) => `
+<a class="tr" href="${e.href}">
+  <span class="dd ${ddCls(e)}">${e.label}</span>
+  <span class="ti">${esc(e.title)}${e.isNew ? '<i>NEW</i>' : ''}</span>
+  <span class="c-org">${esc(e.organizer)}</span>
+  <span class="c-s">${e.kind}</span>
+  <span class="c-s">${e.mode.join('·')}</span>
+  <span class="c-s ${e.cost === '무료' ? 'c-free' : 'c-paid'}">${e.cost}</span>
+  <span class="c-when"><b>${K.fdw(e.keyDate)}</b> ${e.keyTime}</span>
+  <span class="m-only">${esc(e.organizer)} · ${e.kind} · ${e.mode.join('·')} · ${e.cost} · ${K.fdw(e.keyDate)} ${e.keyTime}</span>
+  <span class="star">${ic('bookmark', 17)}</span>
+</a>`;
+
+function main() {
+  const L = K.list().slice().sort((a, b) => (K.state.sort === 'new' ? new Date(b.created) - new Date(a.created) : a.keyDate - b.keyDate || a.en - b.en));
+  const buckets = [['오늘', (e) => e.days <= 0], ['이번 주말까지', (e) => e.days >= 1 && e.days <= 2], ['다음 주', (e) => e.days >= 3 && e.days <= 9], ['그 이후', (e) => e.days > 9]];
+  const body = K.state.sort === 'new' ? L.map(tr).join('') : buckets.map(([name, fn]) => { const it = L.filter(fn); return it.length ? `<div class="gr">${name}<span>${it.length}건</span></div>${it.map(tr).join('')}` : ''; }).join('');
+  const c = (fn) => K.count(fn);
+  return header() + `
+<div class="wrap">
+  <aside class="fs">
+    <h3>분야</h3>${fopt('topic', '전체', K.ALL.length)}${K.TOPIC.map((t) => fopt('topic', t, c((e) => e.topics.includes(t)))).join('')}
+    <h3>유형</h3>${fopt('kind', '전체', K.ALL.length)}${K.KIND.map((t) => fopt('kind', t, c((e) => e.kind === t))).join('')}
+    <h3>방식</h3>${fopt('mode', '전체', K.ALL.length)}${K.MODE.map((t) => fopt('mode', t, c((e) => e.mode.includes(t)))).join('')}
+    <h3>참가비</h3>${fopt('cost', '전체', K.ALL.length)}${K.COST.map((t) => fopt('cost', t, c((e) => e.cost === t))).join('')}
+  </aside>
+  <main>
+    <div class="tb"><h1>접수 중인 행사<span>${L.length}건</span></h1>
+      <div class="seg"><button class="${K.state.sort === 'deadline' ? 'is-on' : ''}" data-set="sort:deadline">마감 빠른 순</button><button class="${K.state.sort === 'new' ? 'is-on' : ''}" data-set="sort:new">최근 등록 순</button></div></div>
+    <div class="tbl">
+      <div class="th"><span>남은 기간</span><span>행사명</span><span>주최</span><span>유형</span><span>방식</span><span>참가비</span><span>마감 / 시작</span><span></span></div>
+      ${body || '<div class="tr" style="justify-content:center;color:#818b98">조건에 맞는 행사가 없어요</div>'}
+    </div>
+  </main>
+</div>`;
+}
+
+function detail(e) {
+  return header() + `
+<div class="dw">
+  <p class="crumb"><a href="#main">전체 행사</a> / ${e.kind} / #${e.id}</p>
+  <h1>${esc(e.title)}</h1>
+  <div class="st"><span class="pill${e.urgent ? ' is-red' : ''}">${e.state} · ${e.label}</span><b style="color:#1f2328">${esc(e.organizer)}</b><span>${e.when}</span></div>
+  <div class="dg">
+    <div class="doc"><div class="doc__h">행사 소개</div><div class="k-prose">${e.descHtml}</div></div>
+    <aside class="sb">
+      ${K.thumb(e)}
+      <a class="go" href="${esc(e.link)}" target="_blank" rel="noopener">신청하러 가기 ${ic('out', 16)}</a>
+      <div class="sb__a"><button data-toast="관심 행사에 담았어요">${ic('bookmark', 14)}관심</button><button data-toast="캘린더에 추가했어요">${ic('calendar', 14)}캘린더</button><button data-toast="링크가 복사되었어요">${ic('share', 14)}공유</button></div>
+      <div class="sk"><small>${e.recruit ? '접수 기간' : '일시'}</small><b>${e.range}</b>${e.recruit ? `<div class="pg"><i style="width:${Math.round(e.progress * 100)}%"></i></div><b style="font-size:12.5px;color:#cf222e">마감까지 ${e.remain}</b>` : ''}</div>
+      <div class="sk"><small>진행 방식</small><b>${e.mode.join(' · ')}</b></div>
+      <div class="sk"><small>참가비</small><b>${e.cost}</b></div>
+      <div class="sk"><small>분류</small>${[e.kind, ...e.topics].map((t) => `<span class="lb">${t}</span>`).join('')}</div>
+      <div class="sk"><small>주최</small><b>${esc(e.organizer)}</b></div>
+      <div class="sk" style="border:0"><small>등록일</small><b>${K.fdw(new Date(e.created))}</b></div>
+    </aside>
+  </div>
+</div>`;
+}
+K.mount({ main, detail });
+</script>
+</body>
+</html>

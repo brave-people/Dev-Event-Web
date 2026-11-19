@@ -1,0 +1,113 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.card {
+  margin-top: 16px;
+  padding: 18px;
+  border-radius: 18px;
+  background: var(--de-surface);
+}
+
+.status {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--de-sub);
+
+  b {
+    font-size: 15px;
+    font-weight: 800;
+  }
+}
+
+.orange {
+  color: var(--de-orange);
+}
+
+.blue {
+  color: var(--de-blue);
+}
+
+.gray {
+  color: var(--de-hint);
+}
+
+.bar {
+  margin-top: 10px;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--de-line);
+  overflow: hidden;
+
+  i {
+    display: block;
+    height: 100%;
+    border-radius: 99px;
+    background: var(--de-orange);
+  }
+}
+
+.barcap {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--de-hint);
+}
+
+.cta {
+  margin-top: 14px;
+
+  @include de-mobile {
+    display: none;
+  }
+}
+
+.actions {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.action {
+  @include de-button-reset;
+  @include de-focus-ring;
+  width: 100%;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--de-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--de-sub);
+
+  &[aria-pressed='true'] {
+    color: var(--de-blue);
+
+    svg {
+      fill: currentColor;
+    }
+  }
+}
+
+.note {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--de-hint);
+
+  @include de-mobile {
+    display: none;
+  }
+}

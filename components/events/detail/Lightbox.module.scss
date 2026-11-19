@@ -1,0 +1,70 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.86);
+  cursor: zoom-out;
+}
+
+.content {
+  position: relative;
+  display: grid;
+  place-items: center;
+  max-width: 100%;
+  max-height: 100%;
+  outline: 0;
+}
+
+.image {
+  display: block;
+  max-width: min(1200px, calc(100vw - 48px));
+  max-height: calc(100vh - 48px);
+  max-height: calc(100dvh - 48px);
+  border-radius: 12px;
+  cursor: zoom-out;
+}
+
+// 그림을 불러오지 못했을 때
+.broken {
+  display: grid;
+  gap: 8px;
+  max-width: min(420px, calc(100vw - 48px));
+  padding: 28px 32px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  text-align: center;
+  cursor: zoom-out;
+
+  strong {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  span {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.72);
+  }
+}
+
+.close {
+  @include de-button-reset;
+  @include de-focus-ring;
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+}

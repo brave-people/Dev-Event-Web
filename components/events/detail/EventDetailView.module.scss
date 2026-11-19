@@ -1,0 +1,49 @@
+@import '~styles/_variables.scss';
+@import '~styles/_mixin.scss';
+
+.wrap {
+  @include de-container;
+}
+
+.back {
+  @include de-focus-ring;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--de-hint);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 48px;
+  padding-top: 24px;
+  align-items: start;
+
+  @include de-mobile {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    padding-top: 14px;
+  }
+}
+
+.side {
+  position: sticky;
+  top: 24px;
+  min-width: 0;
+
+  @media (min-width: 861px) and (max-height: 560px) {
+    position: static;
+  }
+
+  @include de-mobile {
+    position: static;
+  }
+}
+
+.main {
+  min-width: 0;
+}
