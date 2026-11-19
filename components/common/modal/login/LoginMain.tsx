@@ -65,8 +65,8 @@ function LoginMain({
         <span>{SOCIAL_LABEL[SOCIAL_PRIMARY]}</span>
       </LoginButton>
       <LoginButton variant="email" ref={emailButtonRef} onClick={onEmail}>
-        <TimelineIcon name="mail" size={20} />
-        <span>이메일로 로그인</span>
+        <TimelineIcon name="user" size={20} />
+        <span>아이디로 로그인</span>
       </LoginButton>
       <LoginButton
         variant="more"
@@ -92,9 +92,9 @@ function LoginMain({
         ))}
       </div>
       <p className={cn('foot')}>
-        이메일 계정이 필요하면{' '}
+        아이디 계정이 필요하면{' '}
         <button type="button" className={cn('link')} onClick={onJoin}>
-          이메일로 가입
+          아이디로 가입
         </button>
       </p>
     </div>

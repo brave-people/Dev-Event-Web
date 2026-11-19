@@ -27,6 +27,7 @@ const EXPECTED = [
   '--de-orange',
   '--de-orange-soft',
   '--de-red',
+  '--de-red-text',
   '--de-navy',
   '--de-sun',
   '--de-sat',

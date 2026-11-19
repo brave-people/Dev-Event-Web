@@ -45,6 +45,7 @@ html[data-theme='light'] {
   --de-orange: #e8590c;
   --de-orange-soft: #fff1e6;
   --de-red: #f04452;
+  --de-red-text: #d92d3b; // 작은 글자용 빨강(흰 바탕 4.78:1). --de-red는 3.71:1이라 글자에 쓰지 않는다
   --de-navy: #000040;
   --de-sun: #e5484d;
   --de-sat: #2f6fed;
@@ -115,6 +116,7 @@ html[data-theme='dark'] {
   --de-orange: #ff8f52;
   --de-orange-soft: #38220f;
   --de-red: #ff6b76;
+  --de-red-text: #ff6b76; // 어두운 바탕 6.85:1
   --de-navy: #000040;
   --de-sun: #ff7a80;
   --de-sat: #7aa2ff;

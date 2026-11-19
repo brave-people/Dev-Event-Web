@@ -2,15 +2,22 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import router from 'next/router';
 
 import {
+  authFailure,
+  clearFieldError,
+  failureErrors,
   finishEmailLogin,
   focusAfter,
+  FormErrors,
+  FormFieldName,
+  hasFormErrors,
   INITIAL_LOGIN_STATE,
+  joinFieldErrors,
   LoginAction,
   LoginFocus,
-  loginError,
+  loginFieldErrors,
   LoginState,
   nextLoginState,
-  signUpError,
+  NO_FORM_ERRORS,
   SocialType,
   socialLoginUrl,
 } from 'components/common/modal/login/loginFlow';
@@ -31,6 +38,8 @@ interface LoginPanelProps {
 function LoginPanel({ onClose }: LoginPanelProps) {
   const { login } = useContext(AuthContext);
   const [state, setState] = useState<LoginState>(INITIAL_LOGIN_STATE);
+  // 입력 확인(빈칸·비밀번호 길이)과 서버 거절. 칸 아래나 제출 버튼 위에 보여 준다(화면을 바꾸면 지우고, 칸을 고치면 그 칸 것을 지운다)
+  const [errors, setErrors] = useState<FormErrors>(NO_FORM_ERRORS);
   const mounted = useRef(true);
   const pendingFocus = useRef<LoginFocus>(null);
   const emailButtonRef = useRef<HTMLButtonElement>(null);
@@ -48,6 +57,7 @@ function LoginPanel({ onClose }: LoginPanelProps) {
   const act = (action: LoginAction) => {
     const next = nextLoginState(state, action);
     pendingFocus.current = focusAfter(action, next);
+    setErrors(NO_FORM_ERRORS);
     setState(next);
   };
 
@@ -80,11 +90,13 @@ function LoginPanel({ onClose }: LoginPanelProps) {
       event_category: 'web_event',
       event_label: '로그인',
     });
-    const message = loginError(user);
-    if (message) {
-      alert(message);
+    const invalid = loginFieldErrors(user);
+    if (hasFormErrors(invalid)) {
+      setErrors(invalid);
       return;
     }
+    // 같은 이유로 다시 실패해도 화면 읽기 프로그램이 다시 읽도록 먼저 비운다
+    setErrors(NO_FORM_ERRORS);
     try {
       const tokens = await loginByEmail('/front/v1/users/login', user);
       if (tokens) {
@@ -95,7 +107,7 @@ function LoginPanel({ onClose }: LoginPanelProps) {
         });
       }
     } catch (e) {
-      // 알림·로그아웃·이동은 lib/api의 인터셉터가 한다
+      if (mounted.current) setErrors(failureErrors(authFailure('login', e)));
     }
   };
 
@@ -105,11 +117,12 @@ function LoginPanel({ onClose }: LoginPanelProps) {
       event_category: 'web_event',
       event_label: '회원가입',
     });
-    const message = signUpError(user);
-    if (message) {
-      alert(message);
+    const invalid = joinFieldErrors(user);
+    if (hasFormErrors(invalid)) {
+      setErrors(invalid);
       return;
     }
+    setErrors(NO_FORM_ERRORS);
     try {
       const result = await signUpByEmail('/front/v1/users/register', user);
       if (result.status_code === 200) {
@@ -117,9 +130,12 @@ function LoginPanel({ onClose }: LoginPanelProps) {
         if (mounted.current) act('joined');
       }
     } catch (e) {
-      // 알림·로그아웃·이동은 lib/api의 인터셉터가 한다
+      if (mounted.current) setErrors(failureErrors(authFailure('join', e)));
     }
   };
+
+  const clearError = (name: FormFieldName) =>
+    setErrors((prev) => clearFieldError(prev, name));
 
   if (state.view === 'email') {
     return (
@@ -128,6 +144,8 @@ function LoginPanel({ onClose }: LoginPanelProps) {
         onBack={() => act('back')}
         onJoin={() => act('openJoin')}
         firstInputRef={emailInputRef}
+        errors={errors}
+        onEdit={clearError}
       />
     );
   }
@@ -137,6 +155,8 @@ function LoginPanel({ onClose }: LoginPanelProps) {
         onSubmit={requestSignUpByEmail}
         onBack={() => act('back')}
         firstInputRef={joinInputRef}
+        errors={errors}
+        onEdit={clearError}
       />
     );
   }

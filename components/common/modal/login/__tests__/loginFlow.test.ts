@@ -1,11 +1,16 @@
 import {
+  authFailure,
+  clearFieldError,
+  failureErrors,
   finishEmailLogin,
   focusAfter,
+  hasFormErrors,
   INITIAL_LOGIN_STATE,
-  loginError,
+  joinFieldErrors,
+  loginFieldErrors,
   LoginState,
   nextLoginState,
-  signUpError,
+  NO_FORM_ERRORS,
   SOCIAL_LABEL,
   SOCIAL_MORE,
   SOCIAL_PRIMARY,
@@ -17,11 +22,12 @@ const MAIN_OPEN: LoginState = { view: 'main', moreOpen: true };
 const EMAIL: LoginState = { view: 'email', moreOpen: false };
 const JOIN: LoginState = { view: 'join', moreOpen: false };
 
-// 지금 코드(LoginModal.tsx)의 알림 문구 그대로
-const NO_ID = '아이디를 입력해주세요!';
-const NO_PW = '비밀번호를 입력해주세요!';
-const NOT_ALL = '모두 입력해주세요!';
-const PW_LENGTH = '비밀번호는 6에서 15자로 입력해주세요!';
+// 지금 코드(LoginModal.tsx)의 알림 문구에서 "!"를 뺐고, "모두 입력해주세요!"는 칸마다 나눴다
+const NO_NAME = '이름을 입력해주세요.';
+const NO_ID = '아이디를 입력해주세요.';
+const NO_EMAIL = '이메일을 입력해주세요.';
+const NO_PW = '비밀번호를 입력해주세요.';
+const PW_LENGTH = '비밀번호는 6에서 15자로 입력해주세요.';
 
 describe('화면 전환', () => {
   it('처음에는 처음 화면이고 다른 방법은 접혀 있다', () => {
@@ -87,54 +93,128 @@ describe('화면이 바뀐 뒤 포커스가 갈 곳', () => {
   });
 });
 
-describe('이메일 로그인 검사', () => {
-  it('아이디가 비면 아이디 문구가 먼저다', () => {
-    expect(loginError({ user_id: '', password: '' })).toBe(NO_ID);
-    expect(loginError({ user_id: '', password: 'abcdef' })).toBe(NO_ID);
+describe('아이디 로그인 입력 확인', () => {
+  it('비어 있는 칸마다 칸 아래 문구를 두고, 첫 빈칸으로 포커스를 보낸다', () => {
+    expect(loginFieldErrors({ user_id: '', password: '' })).toEqual({
+      fields: { user_id: NO_ID, password: NO_PW },
+      form: null,
+      focus: 'user_id',
+    });
+    expect(loginFieldErrors({ user_id: 'dev', password: '' })).toEqual({
+      fields: { password: NO_PW },
+      form: null,
+      focus: 'password',
+    });
   });
 
-  it('비밀번호가 비면 비밀번호 문구', () => {
-    expect(loginError({ user_id: 'dev', password: '' })).toBe(NO_PW);
-  });
-
-  it('둘 다 있으면 통과한다 (길이와 공백은 보지 않는다)', () => {
-    expect(loginError({ user_id: 'dev', password: '1' })).toBeNull();
-    expect(loginError({ user_id: ' ', password: ' ' })).toBeNull();
+  it('둘 다 있으면 문제 없음 (지금 코드처럼 공백·길이는 보지 않는다)', () => {
+    expect(
+      hasFormErrors(loginFieldErrors({ user_id: 'dev', password: '1' }))
+    ).toBe(false);
+    expect(
+      hasFormErrors(loginFieldErrors({ user_id: ' ', password: ' ' }))
+    ).toBe(false);
   });
 });
 
-describe('이메일 가입 검사', () => {
+describe('아이디 가입 입력 확인', () => {
   const ok = {
-    name: '홍길동',
+    name: '개발자',
     user_id: 'dev',
     email: 'dev@example.com',
     password: 'abcdef',
   };
 
-  it('네 칸이 다 차고 비밀번호가 6~15자면 통과한다', () => {
-    expect(signUpError(ok)).toBeNull();
-    expect(signUpError({ ...ok, password: 'a'.repeat(15) })).toBeNull();
+  it('모두 채우고 비밀번호가 6~15자면 문제 없음', () => {
+    expect(joinFieldErrors(ok)).toEqual(NO_FORM_ERRORS);
+    expect(
+      hasFormErrors(joinFieldErrors({ ...ok, password: 'a'.repeat(15) }))
+    ).toBe(false);
   });
 
-  it('하나라도 비면 "모두 입력해주세요!"', () => {
-    expect(signUpError({ ...ok, name: '' })).toBe(NOT_ALL);
-    expect(signUpError({ ...ok, user_id: '' })).toBe(NOT_ALL);
-    expect(signUpError({ ...ok, email: '' })).toBe(NOT_ALL);
-    expect(signUpError({ ...ok, password: '' })).toBe(NOT_ALL);
+  it('빈칸은 칸마다 문구, 포커스는 화면 순서(이름→아이디→이메일→비밀번호)의 첫 칸', () => {
+    expect(
+      joinFieldErrors({ name: '', user_id: '', email: '', password: '' })
+    ).toEqual({
+      fields: {
+        name: NO_NAME,
+        user_id: NO_ID,
+        email: NO_EMAIL,
+        password: NO_PW,
+      },
+      form: null,
+      focus: 'name',
+    });
+    expect(joinFieldErrors({ ...ok, email: '', password: '' })).toEqual({
+      fields: { email: NO_EMAIL, password: NO_PW },
+      form: null,
+      focus: 'email',
+    });
   });
 
-  it('빈 칸 문구가 길이 문구보다 먼저다', () => {
-    expect(signUpError({ ...ok, name: '', password: 'abc' })).toBe(NOT_ALL);
+  it('비밀번호 길이는 빈칸이 있어도 함께 알려 준다', () => {
+    expect(joinFieldErrors({ ...ok, name: '', password: 'abc' })).toEqual({
+      fields: { name: NO_NAME, password: PW_LENGTH },
+      form: null,
+      focus: 'name',
+    });
+    expect(joinFieldErrors({ ...ok, password: 'a'.repeat(16) }).fields).toEqual(
+      { password: PW_LENGTH }
+    );
   });
 
-  it('비밀번호가 5자 이하이거나 16자 이상이면 길이 문구', () => {
-    expect(signUpError({ ...ok, password: 'abcde' })).toBe(PW_LENGTH);
-    expect(signUpError({ ...ok, password: 'a'.repeat(16) })).toBe(PW_LENGTH);
+  it('이메일 형식과 공백은 지금처럼 서버가 본다', () => {
+    expect(
+      hasFormErrors(joinFieldErrors({ ...ok, email: 'not-an-email' }))
+    ).toBe(false);
+    expect(hasFormErrors(joinFieldErrors({ ...ok, name: ' ' }))).toBe(false);
+  });
+});
+
+describe('서버 거절을 칸·창 문구로', () => {
+  it('가리키는 칸이 있으면 그 칸 아래에 두고 그 칸으로 포커스', () => {
+    expect(
+      failureErrors({
+        message: '이미 존재하는 아이디입니다.',
+        field: 'user_id',
+      })
+    ).toEqual({
+      fields: { user_id: '이미 존재하는 아이디입니다.' },
+      form: null,
+      focus: 'user_id',
+    });
   });
 
-  it('이메일 형식과 공백은 보지 않는다', () => {
-    expect(signUpError({ ...ok, email: 'not-an-email' })).toBeNull();
-    expect(signUpError({ ...ok, name: ' ' })).toBeNull();
+  it('가리키는 칸이 없으면 제출 버튼 위에 두고 포커스는 그대로', () => {
+    expect(
+      failureErrors({
+        message: '아이디 혹은 비밀번호가 잘못되었습니다.',
+        field: null,
+      })
+    ).toEqual({
+      fields: {},
+      form: '아이디 혹은 비밀번호가 잘못되었습니다.',
+      focus: null,
+    });
+  });
+});
+
+describe('칸을 고치면', () => {
+  it('그 칸의 문구와 창 문구만 지우고 다른 칸 문구는 남긴다, 포커스는 옮기지 않는다', () => {
+    const before = {
+      fields: { name: NO_NAME, email: NO_EMAIL },
+      form: '가입 중 문제가 발생했습니다.',
+      focus: 'name' as const,
+    };
+    expect(clearFieldError(before, 'email')).toEqual({
+      fields: { name: NO_NAME },
+      form: null,
+      focus: null,
+    });
+  });
+
+  it('지울 것이 없으면 같은 값을 돌려준다 (다시 그리지 않게)', () => {
+    expect(clearFieldError(NO_FORM_ERRORS, 'name')).toBe(NO_FORM_ERRORS);
   });
 });
 
@@ -194,5 +274,96 @@ describe('finishEmailLogin', () => {
       close: jest.fn(),
     });
     expect(login).not.toHaveBeenCalled();
+  });
+});
+
+describe('authFailure', () => {
+  // post.tsx는 실패하면 axios 응답(또는 응답이 없을 때 undefined)을 던진다
+  const rejected = (data: unknown) => ({ status: 400, data });
+
+  it('틀린 아이디·비밀번호는 지금 알림 문구에서 "다시 로그인 해주세요!"만 뺀다', () => {
+    expect(
+      authFailure(
+        'login',
+        rejected({ status_code: 400, status: 'AUTH_400_01', message: 'x' })
+      )
+    ).toEqual({
+      message: '아이디 혹은 비밀번호가 잘못되었습니다.',
+      field: null,
+    });
+  });
+
+  it('없는 아이디(AUTH_400_02)도 같은 문구로, 아이디가 있는지 알려 주지 않는다', () => {
+    expect(
+      authFailure('login', rejected({ status: 'AUTH_400_02' })).message
+    ).toBe('아이디 혹은 비밀번호가 잘못되었습니다.');
+  });
+
+  it('그 밖의 로그인 실패·응답 없음은 다시 시도하라는 문구', () => {
+    const retry = {
+      message: '로그인에 문제가 발생했습니다. 잠시 뒤 다시 시도해 주세요.',
+      field: null,
+    };
+    expect(
+      authFailure(
+        'login',
+        rejected({ status_code: 500, status: 'AUTH_500_03' })
+      )
+    ).toEqual(retry);
+    expect(authFailure('login', undefined)).toEqual(retry);
+    expect(authFailure('login', new Error('Network Error'))).toEqual(retry);
+    expect(authFailure('login', { status: 502, data: '<html>' })).toEqual(
+      retry
+    );
+  });
+
+  it('가입: 이미 있는 아이디·이메일은 지금 알림 문구 그대로, 해당 입력란을 가리킨다', () => {
+    expect(authFailure('join', rejected({ status: 'AUTH_400_05' }))).toEqual({
+      message: '이미 존재하는 아이디입니다.',
+      field: 'user_id',
+    });
+    expect(authFailure('join', rejected({ status: 'AUTH_400_04' }))).toEqual({
+      message: '이미 존재하는 이메일입니다.',
+      field: 'email',
+    });
+  });
+
+  it('가입: 이메일 형식 오류는 서버의 두 가지 응답 모두 이메일 입력란을 가리킨다', () => {
+    const format = { message: '이메일 형식이 아닙니다.', field: 'email' };
+    expect(authFailure('join', rejected({ status: 'AUTH_400_03' }))).toEqual(
+      format
+    );
+    expect(
+      authFailure(
+        'join',
+        rejected({
+          status: 'COMMON_REQUEST_BODY_MISSING_400_02',
+          errors: ['email: must be a well-formed email address'],
+        })
+      )
+    ).toEqual(format);
+  });
+
+  it('가입: 그 밖의 실패는 다시 시도하라는 문구', () => {
+    const retry = {
+      message: '가입 중 문제가 발생했습니다. 잠시 뒤 다시 시도해 주세요.',
+      field: null,
+    };
+    expect(
+      authFailure(
+        'join',
+        rejected({
+          status: 'COMMON_REQUEST_BODY_MISSING_400_02',
+          errors: ['password: size must be between 6 and 15'],
+        })
+      )
+    ).toEqual(retry);
+    expect(authFailure('join', undefined)).toEqual(retry);
+  });
+
+  it('로그인 화면에서는 가입 코드가 와도 로그인 문구를 쓴다', () => {
+    expect(
+      authFailure('login', rejected({ status: 'AUTH_400_05' })).message
+    ).toBe('로그인에 문제가 발생했습니다. 잠시 뒤 다시 시도해 주세요.');
   });
 });

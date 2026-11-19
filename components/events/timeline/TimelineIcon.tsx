@@ -12,7 +12,8 @@ type IconName =
   | 'pin'
   | 'globe'
   | 'info'
-  | 'mail';
+  | 'mail'
+  | 'user';
 
 interface TimelineIconProps {
   name: IconName;
@@ -91,6 +92,13 @@ const renderShape = (name: IconName) => {
         <>
           <rect x="3.5" y="5.5" width="17" height="13" rx="3" />
           <path d="M4.5 8l7.5 5 7.5-5" />
+        </>
+      );
+    case 'user':
+      return (
+        <>
+          <circle cx="12" cy="8.5" r="3.6" />
+          <path d="M5 19.5c.9-3.4 3.7-5.6 7-5.6s6.1 2.2 7 5.6" />
         </>
       );
     default:
