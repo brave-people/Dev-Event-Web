@@ -70,7 +70,8 @@ export const focusAfter = (
 // 입력 확인과 서버 거절을 창 안에 보여 줄 모양.
 // fields: 칸 아래 문구, form: 제출 버튼 위 문구(칸을 가리키지 않는 거절), focus: 제출 뒤 포커스를 보낼 칸.
 export type LoginFieldName = 'user_id' | 'password';
-export type JoinFieldName = 'name' | 'user_id' | 'email' | 'password';
+// agree: 가입 동의 칸(만 14세 이상 확인 + 이용약관 동의)
+export type JoinFieldName = 'name' | 'user_id' | 'email' | 'password' | 'agree';
 export type FormFieldName = LoginFieldName | JoinFieldName;
 
 export interface FormErrors {
@@ -116,12 +117,17 @@ const passwordProblem = (password: string): string | null => {
   return null;
 };
 
-export const joinFieldErrors = (fields: SignUpProps): FormErrors =>
+// agreed는 서버로 보내지 않는다(가입 API에 동의 칸이 없음). 동의하지 않으면 가입 요청을 보내지 않는다.
+export const joinFieldErrors = (
+  fields: SignUpProps,
+  agreed: boolean
+): FormErrors =>
   collect([
     ['name', fields.name ? null : '이름을 입력해주세요.'],
     ['user_id', fields.user_id ? null : '아이디를 입력해주세요.'],
     ['email', fields.email ? null : '이메일을 입력해주세요.'],
     ['password', passwordProblem(fields.password)],
+    ['agree', agreed ? null : '만 14세 이상인지 확인하고 약관에 동의해주세요.'],
   ]);
 
 // 칸을 고치면 그 칸의 문구와 창 문구를 지운다. 다른 칸 문구는 남기고 포커스는 옮기지 않는다.

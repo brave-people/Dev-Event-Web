@@ -28,6 +28,7 @@ const NO_ID = '아이디를 입력해주세요.';
 const NO_EMAIL = '이메일을 입력해주세요.';
 const NO_PW = '비밀번호를 입력해주세요.';
 const PW_LENGTH = '비밀번호는 6에서 15자로 입력해주세요.';
+const NO_AGREE = '만 14세 이상인지 확인하고 약관에 동의해주세요.';
 
 describe('화면 전환', () => {
   it('처음에는 처음 화면이고 다른 방법은 접혀 있다', () => {
@@ -126,15 +127,15 @@ describe('아이디 가입 입력 확인', () => {
   };
 
   it('모두 채우고 비밀번호가 6~15자면 문제 없음', () => {
-    expect(joinFieldErrors(ok)).toEqual(NO_FORM_ERRORS);
+    expect(joinFieldErrors(ok, true)).toEqual(NO_FORM_ERRORS);
     expect(
-      hasFormErrors(joinFieldErrors({ ...ok, password: 'a'.repeat(15) }))
+      hasFormErrors(joinFieldErrors({ ...ok, password: 'a'.repeat(15) }, true))
     ).toBe(false);
   });
 
   it('빈칸은 칸마다 문구, 포커스는 화면 순서(이름→아이디→이메일→비밀번호)의 첫 칸', () => {
     expect(
-      joinFieldErrors({ name: '', user_id: '', email: '', password: '' })
+      joinFieldErrors({ name: '', user_id: '', email: '', password: '' }, true)
     ).toEqual({
       fields: {
         name: NO_NAME,
@@ -145,7 +146,7 @@ describe('아이디 가입 입력 확인', () => {
       form: null,
       focus: 'name',
     });
-    expect(joinFieldErrors({ ...ok, email: '', password: '' })).toEqual({
+    expect(joinFieldErrors({ ...ok, email: '', password: '' }, true)).toEqual({
       fields: { email: NO_EMAIL, password: NO_PW },
       form: null,
       focus: 'email',
@@ -153,21 +154,47 @@ describe('아이디 가입 입력 확인', () => {
   });
 
   it('비밀번호 길이는 빈칸이 있어도 함께 알려 준다', () => {
-    expect(joinFieldErrors({ ...ok, name: '', password: 'abc' })).toEqual({
-      fields: { name: NO_NAME, password: PW_LENGTH },
-      form: null,
-      focus: 'name',
-    });
-    expect(joinFieldErrors({ ...ok, password: 'a'.repeat(16) }).fields).toEqual(
-      { password: PW_LENGTH }
+    expect(joinFieldErrors({ ...ok, name: '', password: 'abc' }, true)).toEqual(
+      {
+        fields: { name: NO_NAME, password: PW_LENGTH },
+        form: null,
+        focus: 'name',
+      }
     );
+    expect(
+      joinFieldErrors({ ...ok, password: 'a'.repeat(16) }, true).fields
+    ).toEqual({ password: PW_LENGTH });
+  });
+
+  it('동의하지 않으면 동의 칸 문구, 다른 칸이 비어 있으면 포커스는 그 칸이 먼저', () => {
+    expect(joinFieldErrors(ok, false)).toEqual({
+      fields: { agree: NO_AGREE },
+      form: null,
+      focus: 'agree',
+    });
+    expect(joinFieldErrors({ ...ok, password: '' }, false)).toEqual({
+      fields: { password: NO_PW, agree: NO_AGREE },
+      form: null,
+      focus: 'password',
+    });
+  });
+
+  it('동의 칸을 바꾸면 그 칸 문구만 지운다', () => {
+    const errors = joinFieldErrors({ ...ok, name: '' }, false);
+    expect(clearFieldError(errors, 'agree')).toEqual({
+      fields: { name: NO_NAME },
+      form: null,
+      focus: null,
+    });
   });
 
   it('이메일 형식과 공백은 지금처럼 서버가 본다', () => {
     expect(
-      hasFormErrors(joinFieldErrors({ ...ok, email: 'not-an-email' }))
+      hasFormErrors(joinFieldErrors({ ...ok, email: 'not-an-email' }, true))
     ).toBe(false);
-    expect(hasFormErrors(joinFieldErrors({ ...ok, name: ' ' }))).toBe(false);
+    expect(hasFormErrors(joinFieldErrors({ ...ok, name: ' ' }, true))).toBe(
+      false
+    );
   });
 });
 

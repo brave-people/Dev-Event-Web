@@ -111,13 +111,13 @@ function LoginPanel({ onClose }: LoginPanelProps) {
     }
   };
 
-  const requestSignUpByEmail = async (user: SignUpProps) => {
+  const requestSignUpByEmail = async (user: SignUpProps, agreed: boolean) => {
     ga.event({
       action: 'web_event_회원가입버튼클릭',
       event_category: 'web_event',
       event_label: '회원가입',
     });
-    const invalid = joinFieldErrors(user);
+    const invalid = joinFieldErrors(user, agreed);
     if (hasFormErrors(invalid)) {
       setErrors(invalid);
       return;
