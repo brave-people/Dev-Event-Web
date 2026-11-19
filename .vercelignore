@@ -1,0 +1,18 @@
+# Vercel CLI(vercel deploy)는 .gitignore를 보지 않고 폴더를 통째로 올린다.
+# 빌드에 쓰지 않는 로컬 전용 파일을 뺀다. (.git, node_modules, .next, .vercel, .env.local 등은 CLI가 원래 뺀다)
+
+# 에이전트·편집기 로컬 상태 (화면 점검 캡처, 워크트리, MCP 설정 등)
+/.claude
+/.omc
+/.omx
+/.superpowers
+/.idea
+/.vscode
+/.openidea
+/.mcp.json
+.DS_Store
+
+# 빌드에 쓰지 않는 문서·로그·캐시
+/docs
+*.log
+/tsconfig.tsbuildinfo
