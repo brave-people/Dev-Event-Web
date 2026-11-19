@@ -1,4 +1,4 @@
-import { AuthProp, SignUpProps } from 'model/auth';
+import { AuthProp, SignUpProps, TokenResponse } from 'model/auth';
 
 export type LoginView = 'main' | 'email' | 'join';
 
@@ -101,3 +101,21 @@ export const socialLoginUrl = (
   baseUrl: string | undefined,
   type: SocialType
 ): string => `${baseUrl}/auth/login/${type}`;
+
+// 이메일 로그인이 성공한 뒤: 창을 닫고, 토큰을 쿠키로 바꾸는 / 를 거쳐 /events 로 옮겨 간다.
+// 새로고침 없이 옮겨 가서 처음 열 때 한 번 하는 로그인 확인(AuthContext)이 다시 돌지 않으므로
+// 로그인 상태는 여기서 바꾼다. 쿠키가 심긴 뒤여야 하므로 옮겨 가기가 끝난 다음에 바꾼다.
+export const finishEmailLogin = async (
+  tokens: Pick<TokenResponse, 'access_token' | 'refresh_token'>,
+  deps: {
+    push: (url: string) => Promise<boolean>;
+    login: () => void;
+    close: () => void;
+  }
+): Promise<void> => {
+  deps.close();
+  const moved = await deps.push(
+    `/?accessToken=${tokens.access_token}&refreshToken=${tokens.refresh_token}`
+  );
+  if (moved) deps.login();
+};

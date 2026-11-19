@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import router from 'next/router';
 
 import {
+  finishEmailLogin,
   focusAfter,
   INITIAL_LOGIN_STATE,
   LoginAction,
@@ -18,6 +19,7 @@ import {
   LoginJoinForm,
 } from 'components/common/modal/login/LoginForms';
 import LoginMain from 'components/common/modal/login/LoginMain';
+import { AuthContext } from 'context/auth';
 import { loginByEmail, signUpByEmail } from 'lib/api/post';
 import * as ga from 'lib/utils/gTag';
 import { AuthProp, SignUpProps } from 'model/auth';
@@ -27,6 +29,7 @@ interface LoginPanelProps {
 }
 
 function LoginPanel({ onClose }: LoginPanelProps) {
+  const { login } = useContext(AuthContext);
   const [state, setState] = useState<LoginState>(INITIAL_LOGIN_STATE);
   const mounted = useRef(true);
   const pendingFocus = useRef<LoginFocus>(null);
@@ -85,10 +88,11 @@ function LoginPanel({ onClose }: LoginPanelProps) {
     try {
       const tokens = await loginByEmail('/front/v1/users/login', user);
       if (tokens) {
-        router.push(
-          `/?accessToken=${tokens.access_token}&refreshToken=${tokens.refresh_token}`
-        );
-        onClose();
+        await finishEmailLogin(tokens, {
+          push: (url) => router.push(url),
+          login,
+          close: onClose,
+        });
       }
     } catch (e) {
       // 알림·로그아웃·이동은 lib/api의 인터셉터가 한다

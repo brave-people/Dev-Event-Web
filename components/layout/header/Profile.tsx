@@ -1,6 +1,8 @@
 import { AuthContext } from 'context/auth';
 import { useOnClickOutside } from 'lib/hooks/useOnClickOutside';
+import { useUser } from 'lib/hooks/useSWR';
 import * as ga from 'lib/utils/gTag';
+import { headerName } from 'lib/utils/mypage/profile';
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import Link from 'next/link';
@@ -10,6 +12,8 @@ import style from './Header.module.scss';
 const cn = classNames.bind(style);
 
 const Profile = () => {
+  const { user } = useUser();
+  const name = headerName(user?.username);
   const [profileMenuIsOpen, setProfileMenuIsOpen] = useState(false);
   const router = useRouter();
   const authContext = React.useContext(AuthContext);
@@ -51,21 +55,23 @@ const Profile = () => {
         onClick={() => setProfileMenuIsOpen((open) => !open)}
         aria-haspopup="menu"
         aria-expanded={profileMenuIsOpen}
-        aria-label="프로필 메뉴 열기"
+        aria-label={`${name} 프로필 메뉴 열기`}
+        title={name}
       >
+        <span className={cn('profile-button__name')}>{name}</span>
         <svg
+          className={cn('profile-button__chevron')}
           viewBox="0 0 24 24"
-          width={20}
-          height={20}
+          width={14}
+          height={14}
           fill="none"
           stroke="currentColor"
-          strokeWidth={2}
+          strokeWidth={2.2}
           strokeLinecap="round"
           strokeLinejoin="round"
           aria-hidden
         >
-          <circle cx="12" cy="8" r="4" />
-          <path d="M4 20c0-4 3.6-6 8-6s8 2 8 6" />
+          <path d="M6 9l6 6 6-6" />
         </svg>
       </button>
       {profileMenuIsOpen ? (

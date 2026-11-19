@@ -1,15 +1,14 @@
 import type { GetServerSideProps } from 'next';
-import { buildSitemapXml, flattenEvents } from 'lib/seo/feeds';
+import { buildSitemapXml } from 'lib/seo/feeds';
+import { fetchFeedEvents, sendFeedUnavailable } from 'lib/seo/feedSource';
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  let events: ReturnType<typeof flattenEvents> = [];
-  try {
-    const r = await fetch(
-      `${process.env.BASE_SERVER_URL}/front/v2/events/current`
-    );
-    if (r.ok) events = flattenEvents(await r.json());
-  } catch (e) {
-    console.error('sitemap: 행사 조회 실패', e);
+  const events = await fetchFeedEvents();
+  if (!events) {
+    // 빈 sitemap 을 캐시하면 검색 로봇이 한동안 행사 주소를 못 받는다
+    console.error('sitemap: 행사 조회 실패');
+    sendFeedUnavailable(res);
+    return { props: {} };
   }
   res.setHeader('Content-Type', 'application/xml; charset=utf-8');
   res.setHeader(

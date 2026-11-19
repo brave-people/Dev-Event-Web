@@ -1,4 +1,5 @@
 import {
+  finishEmailLogin,
   focusAfter,
   INITIAL_LOGIN_STATE,
   loginError,
@@ -158,5 +159,40 @@ describe('간편 로그인', () => {
     expect(socialLoginUrl(base, 'google')).toBe(`${base}/auth/login/google`);
     expect(socialLoginUrl(base, 'naver')).toBe(`${base}/auth/login/naver`);
     expect(socialLoginUrl(base, 'github')).toBe(`${base}/auth/login/github`);
+  });
+});
+
+describe('finishEmailLogin', () => {
+  const tokens = { access_token: 'AAA', refresh_token: 'RRR' };
+
+  it('창을 닫고 토큰을 쿠키로 바꾸는 주소로 옮겨 간다', async () => {
+    const close = jest.fn();
+    const push = jest.fn().mockResolvedValue(true);
+    await finishEmailLogin(tokens, { push, login: jest.fn(), close });
+    expect(close).toHaveBeenCalledTimes(1);
+    expect(push).toHaveBeenCalledWith('/?accessToken=AAA&refreshToken=RRR');
+  });
+
+  it('옮겨 가기가 끝난 뒤(쿠키가 심긴 뒤)에 로그인 상태를 바꾼다', async () => {
+    let finish: (moved: boolean) => void = () => undefined;
+    const push = jest.fn(
+      () => new Promise<boolean>((resolve) => (finish = resolve))
+    );
+    const login = jest.fn();
+    const done = finishEmailLogin(tokens, { push, login, close: jest.fn() });
+    expect(login).not.toHaveBeenCalled();
+    finish(true);
+    await done;
+    expect(login).toHaveBeenCalledTimes(1);
+  });
+
+  it('옮겨 가기가 취소되면 로그인 상태를 바꾸지 않는다', async () => {
+    const login = jest.fn();
+    await finishEmailLogin(tokens, {
+      push: jest.fn().mockResolvedValue(false),
+      login,
+      close: jest.fn(),
+    });
+    expect(login).not.toHaveBeenCalled();
   });
 });

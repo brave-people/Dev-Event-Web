@@ -6,6 +6,7 @@ import Document, {
   Main,
   NextScript,
 } from 'next/document';
+import { LOCAL_HOST_PATTERN } from 'lib/utils/localHost';
 
 // import Script from 'next/script';
 
@@ -68,6 +69,10 @@ class MyDocument extends Document {
               __html: `
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
+            // 개발 PC·같은 망에서 연 페이지는 운영 GA에 보내지 않는다(GA 공식 끄기 표시, config 보다 먼저)
+            if (/${LOCAL_HOST_PATTERN.source}/i.test(window.location.hostname)) {
+              window['ga-disable-${process.env.GA_TRACKING_ID}'] = true;
+            }
             gtag('js', new Date());
 
             gtag('config', '${process.env.GA_TRACKING_ID}', {

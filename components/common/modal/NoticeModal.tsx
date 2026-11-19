@@ -1,5 +1,4 @@
 import style from 'components/common/modal/NoticeModal.module.scss';
-import { CalenderLogo } from 'components/icons';
 import { WindowContext } from 'context/window';
 import Cookie from 'js-cookie';
 import React, { useContext, useEffect } from 'react';
@@ -32,7 +31,6 @@ function NoticeModal() {
           <span className={cn('notice__title')}>
             개발자를 위한 행사 정보, 데브이벤트
           </span>
-          <CalenderLogo />
         </div>
         <button
           type="button"

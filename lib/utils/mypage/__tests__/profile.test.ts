@@ -1,4 +1,8 @@
-import { avatarInitial, joinedText } from 'lib/utils/mypage/profile';
+import {
+  avatarInitial,
+  headerName,
+  joinedText,
+} from 'lib/utils/mypage/profile';
 
 describe('avatarInitial', () => {
   it('첫 글자', () => {
@@ -24,5 +28,24 @@ describe('joinedText', () => {
     expect(joinedText(null)).toBe('');
     expect(joinedText(undefined)).toBe('');
     expect(joinedText('abc')).toBe('');
+  });
+});
+
+describe('headerName', () => {
+  it('이름의 앞뒤 공백을 지운다', () => {
+    expect(headerName('  김데브 ')).toBe('김데브');
+  });
+
+  it('이름이 없거나 공백뿐이면 "내 정보"', () => {
+    expect(headerName(undefined)).toBe('내 정보');
+    expect(headerName(null)).toBe('내 정보');
+    expect(headerName('')).toBe('내 정보');
+    expect(headerName('   ')).toBe('내 정보');
+  });
+
+  it('긴 이름은 자르지 않는다 (화면에서 줄임표로 줄인다)', () => {
+    expect(headerName('아주아주긴닉네임을쓰는개발자')).toBe(
+      '아주아주긴닉네임을쓰는개발자'
+    );
   });
 });
