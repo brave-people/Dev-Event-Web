@@ -98,7 +98,7 @@ function LoginPanel({ onClose }: LoginPanelProps) {
     // 같은 이유로 다시 실패해도 화면 읽기 프로그램이 다시 읽도록 먼저 비운다
     setErrors(NO_FORM_ERRORS);
     try {
-      await loginByEmail(user);
+      await loginByEmail('/front/v1/users/login', user);
       await finishEmailLogin({
         push: (url) => router.push(url),
         login,

@@ -1,12 +1,10 @@
 import { LoginTokens } from 'lib/auth/tokenCookies';
-import { AuthProp } from 'model/auth';
 
-// 로그인 토큰을 주소(쿼리)에 싣지 않으려고 웹 서버가 API 서버를 대신 부른다 (#377).
-// 브라우저가 아니라 웹 서버(getServerSideProps, Next API 라우트)에서만 부른다.
+// 간편 로그인 토큰을 주소(쿼리)에 싣지 않으려고 웹 서버가 API 서버를 대신 부른다 (#377).
+// 브라우저가 아니라 웹 서버(getServerSideProps)에서만 부른다.
 
 export const LOGIN_SERVER_TIMEOUT_MS = 5000;
 export const LOGIN_CODE_PATH = '/front/v1/auth/token';
-export const EMAIL_LOGIN_PATH = '/front/v1/users/login';
 
 export interface ServerReply {
   status: number;
@@ -54,14 +52,3 @@ export const exchangeLoginCodeOnServer = async (
     ? reply.body
     : null;
 };
-
-// 이메일 로그인: 서버 응답(상태 코드와 본문)을 그대로 돌려준다. 서버가 응답하지 않으면 null.
-export const loginByEmailOnServer = (
-  user: AuthProp,
-  timeoutMs: number = LOGIN_SERVER_TIMEOUT_MS
-): Promise<ServerReply | null> =>
-  postJson(
-    EMAIL_LOGIN_PATH,
-    { user_id: user.user_id, password: user.password },
-    timeoutMs
-  );

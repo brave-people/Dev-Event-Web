@@ -1,28 +1,37 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { hasTokens, loginByEmailOnServer } from 'lib/api/loginServer';
+import { hasTokens } from 'lib/api/loginServer';
 import { tokenCookies } from 'lib/auth/tokenCookies';
 
-// 이메일 로그인 (#377). API 서버에 로그인을 대신 요청하고, 받은 토큰은 브라우저로 넘기지 않고 바로 httpOnly 쿠키로 심는다.
-// 실패하면 서버 응답(상태 코드와 본문)을 그대로 돌려준다. 로그인 창이 본문의 status로 문구를 고른다(loginFlow.ts의 authFailure).
-export default async function login(req: NextApiRequest, res: NextApiResponse) {
+// 아이디 로그인 (#377). 브라우저가 API 서버에서 받은 토큰을 주소 대신 요청 본문으로 받아 httpOnly 쿠키로 심는다.
+// 아이디·비밀번호는 브라우저가 API 서버로 바로 보내고 이 라우트(Vercel)를 거치지 않는다
+// (개인정보 처리방침의 국외 이전 항목: Vercel에는 접속 기록과 로그인 유지 쿠키만 감).
+// JSON 요청만 받는다. 다른 사이트의 폼이 남의 토큰을 심는 것(로그인 CSRF)을 막기 위해서다:
+// 다른 출처의 JSON 요청은 브라우저가 사전 요청(preflight)에서 막는다.
+export default function login(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({});
   }
-
-  const { user_id, password } = req.body ?? {};
-  const reply = await loginByEmailOnServer({
-    user_id: String(user_id ?? ''),
-    password: String(password ?? ''),
-  });
-
-  // 서버가 응답하지 않았거나, 성공인데 토큰이 없으면 502(로그인 창은 "잠시 뒤 다시 시도" 문구)
-  if (!reply) return res.status(502).json({});
-  if (reply.status < 200 || reply.status >= 300) {
-    return res.status(reply.status).json(reply.body);
+  if (
+    !String(req.headers['content-type'] ?? '').startsWith('application/json')
+  ) {
+    return res.status(415).json({});
   }
-  if (!hasTokens(reply.body)) return res.status(502).json({});
 
-  res.setHeader('Set-Cookie', tokenCookies(reply.body));
+  const body: unknown = req.body;
+  if (!hasTokens(body)) return res.status(400).json({});
+
+  let cookies: string[];
+  try {
+    cookies = tokenCookies({
+      access_token: body.access_token,
+      refresh_token: body.refresh_token,
+    });
+  } catch {
+    // JWT가 아니거나 exp가 없으면 쿠키 만료 시각을 정할 수 없다
+    return res.status(400).json({});
+  }
+
+  res.setHeader('Set-Cookie', cookies);
   return res.status(200).json({ status_code: 200 });
 }
