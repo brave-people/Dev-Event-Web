@@ -69,17 +69,17 @@ describe('/ (간편 로그인 성공 주소)', () => {
     expect(setCookieOf(setHeader)).toBeUndefined();
   });
 
-  it('예전 방식(accessToken·refreshToken 쿼리)도 전환 기간 동안 받는다', async () => {
+  it('토큰을 주소에 싣던 예전 방식(accessToken·refreshToken 쿼리)은 받지 않는다', async () => {
     const { setHeader, result } = visit({
       accessToken: ACCESS,
       refreshToken: REFRESH,
     });
 
     expect(await result).toEqual({
-      redirect: { destination: '/events', permanent: false },
+      redirect: { destination: '/events', permanent: true },
     });
     expect(mockFetch).not.toHaveBeenCalled();
-    expect(setCookieOf(setHeader)?.[0]).toContain(`access_token=${ACCESS};`);
+    expect(setCookieOf(setHeader)).toBeUndefined();
   });
 
   it('로그인 쿼리가 없으면 쿠키 없이 영구 이동한다', async () => {
