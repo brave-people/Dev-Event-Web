@@ -32,10 +32,9 @@ export interface LegalDocument {
   sections: LegalSection[];
 }
 
-// 운영 주체와 연락처. 두 문서와 가입 창이 함께 쓴다.
-// 연락처는 데브이벤트 README·App Store에 공개된 문의 메일과 같다.
+// 운영 주체와 연락처. 이용약관·개인정보 처리방침의 문의·보호책임자 메일로 함께 쓴다.
 export const OPERATOR = '용감한 친구들 with 남송리 삼번지';
-export const CONTACT_EMAIL = 'covenant.ko@kakao.com';
+export const CONTACT_EMAIL = 'devevent558@gmail.com';
 export const CONTACT_LINK: LegalLink = {
   text: CONTACT_EMAIL,
   href: `mailto:${CONTACT_EMAIL}`,
