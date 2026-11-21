@@ -98,14 +98,12 @@ function LoginPanel({ onClose }: LoginPanelProps) {
     // 같은 이유로 다시 실패해도 화면 읽기 프로그램이 다시 읽도록 먼저 비운다
     setErrors(NO_FORM_ERRORS);
     try {
-      const tokens = await loginByEmail('/front/v1/users/login', user);
-      if (tokens) {
-        await finishEmailLogin(tokens, {
-          push: (url) => router.push(url),
-          login,
-          close: onClose,
-        });
-      }
+      await loginByEmail(user);
+      await finishEmailLogin({
+        push: (url) => router.push(url),
+        login,
+        close: onClose,
+      });
     } catch (e) {
       if (mounted.current) setErrors(failureErrors(authFailure('login', e)));
     }
