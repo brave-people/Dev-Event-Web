@@ -92,23 +92,30 @@ describe('/ (간편 로그인 성공 주소)', () => {
   });
 });
 
-describe('/api/login (이메일 로그인)', () => {
-  const call = async (method: string, body?: unknown) => {
+describe('/api/login (아이디 로그인 토큰을 쿠키로)', () => {
+  const call = (
+    method: string,
+    body?: unknown,
+    contentType = 'application/json'
+  ) => {
     const res = {
       setHeader: jest.fn(),
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
     };
-    await login(
-      { method, body } as NextApiRequest,
+    login(
+      {
+        method,
+        body,
+        headers: { 'content-type': contentType },
+      } as unknown as NextApiRequest,
       res as unknown as NextApiResponse
     );
     return res;
   };
 
-  it('성공하면 토큰을 쿠키로 심고, 응답 본문에는 토큰을 넣지 않는다', async () => {
-    mockFetch.mockResolvedValue(respond(200, TOKENS));
-    const res = await call('POST', { user_id: 'me', password: 'pw' });
+  it('본문의 토큰을 쿠키로 심고, 응답 본문에는 토큰을 넣지 않는다', () => {
+    const res = call('POST', TOKENS);
 
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({ status_code: 200 });
@@ -118,28 +125,36 @@ describe('/api/login (이메일 로그인)', () => {
     expect(cookies?.[1]).toContain(`refresh_token=${REFRESH};`);
   });
 
-  it('서버가 거절하면 상태 코드와 본문을 그대로 돌려준다(로그인 창 문구용)', async () => {
-    const body = { status_code: 400, status: 'AUTH_400_01', message: 'x' };
-    mockFetch.mockResolvedValue(respond(400, body));
-    const res = await call('POST', { user_id: 'me', password: 'bad' });
+  it('API 서버를 부르지 않는다(아이디·비밀번호는 이 라우트를 거치지 않음)', () => {
+    call('POST', TOKENS);
+    expect(mockFetch).not.toHaveBeenCalled();
+  });
+
+  it('JSON이 아닌 요청(다른 사이트의 폼)은 415로 거절한다', () => {
+    const res = call('POST', TOKENS, 'application/x-www-form-urlencoded');
+
+    expect(res.status).toHaveBeenCalledWith(415);
+    expect(setCookieOf(res.setHeader)).toBeUndefined();
+  });
+
+  it('토큰이 없으면 400', () => {
+    const res = call('POST', { user_id: 'me', password: 'pw' });
 
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith(body);
     expect(setCookieOf(res.setHeader)).toBeUndefined();
   });
 
-  it('서버가 응답하지 않으면 502', async () => {
-    mockFetch.mockRejectedValue(new TypeError('network'));
-    const res = await call('POST', { user_id: 'me', password: 'pw' });
+  it('JWT가 아니면(만료 시각을 못 읽으면) 400', () => {
+    const res = call('POST', { access_token: 'x', refresh_token: 'y' });
 
-    expect(res.status).toHaveBeenCalledWith(502);
+    expect(res.status).toHaveBeenCalledWith(400);
     expect(setCookieOf(res.setHeader)).toBeUndefined();
   });
 
-  it('POST가 아니면 405', async () => {
-    const res = await call('GET');
+  it('POST가 아니면 405', () => {
+    const res = call('GET');
 
     expect(res.status).toHaveBeenCalledWith(405);
-    expect(mockFetch).not.toHaveBeenCalled();
+    expect(setCookieOf(res.setHeader)).toBeUndefined();
   });
 });

@@ -1,8 +1,6 @@
 import {
-  EMAIL_LOGIN_PATH,
   LOGIN_CODE_PATH,
   exchangeLoginCodeOnServer,
-  loginByEmailOnServer,
 } from 'lib/api/loginServer';
 
 const originalFetch = global.fetch;
@@ -82,31 +80,5 @@ describe('exchangeLoginCodeOnServer', () => {
     const result = exchangeLoginCodeOnServer('abc', 100);
     jest.advanceTimersByTime(100);
     await expect(result).resolves.toBeNull();
-  });
-});
-
-describe('loginByEmailOnServer', () => {
-  it('아이디·비밀번호만 POST한다', async () => {
-    mockFetch.mockResolvedValue(respond(200, TOKENS));
-    await loginByEmailOnServer({ user_id: 'me', password: 'pw' });
-
-    const [url, init] = mockFetch.mock.calls[0];
-    expect(url).toBe(`http://api.test${EMAIL_LOGIN_PATH}`);
-    expect(JSON.parse(init.body)).toEqual({ user_id: 'me', password: 'pw' });
-  });
-
-  it('서버 응답의 상태 코드와 본문을 그대로 돌려준다', async () => {
-    const body = { status_code: 400, status: 'AUTH_400_01', message: 'x' };
-    mockFetch.mockResolvedValue(respond(400, body));
-    await expect(
-      loginByEmailOnServer({ user_id: 'me', password: 'pw' })
-    ).resolves.toEqual({ status: 400, body });
-  });
-
-  it('서버가 응답하지 않으면 null', async () => {
-    mockFetch.mockRejectedValue(new TypeError('network'));
-    await expect(
-      loginByEmailOnServer({ user_id: 'me', password: 'pw' })
-    ).resolves.toBeNull();
   });
 });
