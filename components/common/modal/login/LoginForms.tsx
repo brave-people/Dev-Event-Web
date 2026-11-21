@@ -7,6 +7,7 @@ import {
   FormFieldName,
 } from 'components/common/modal/login/loginFlow';
 import TimelineIcon from 'components/events/timeline/TimelineIcon';
+import { PRIVACY_PATH, TERMS_PATH } from 'lib/legal/document';
 import { AuthProp, SignUpProps } from 'model/auth';
 
 import style from './LoginPanel.module.scss';
@@ -50,6 +51,77 @@ function Field({ label, error, idPrefix, inputRef, ...input }: FieldProps) {
           {...input}
         />
       </label>
+      {error && (
+        <p id={errorId} className={cn('fieldError')}>
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
+
+// 가입 동의 칸: 만 14세 이상 확인과 이용약관 동의를 한 칸으로 받는다.
+// 가입에 필요한 개인정보는 이용 계약을 이행하려고 처리하므로(개인정보 보호법 제15조 제1항 제4호) 따로 동의받지 않고 아래 문구로 알린다.
+// 문서 링크는 새 탭으로 연다(이 창에 쓴 내용이 남도록). 링크는 label 밖에 두어 눌러도 칸이 바뀌지 않게 한다.
+interface AgreeFieldProps {
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  error?: string;
+  inputRef: React.Ref<HTMLInputElement>;
+}
+
+function AgreeField({ checked, onChange, error, inputRef }: AgreeFieldProps) {
+  const noteId = 'join-agree-note';
+  const errorId = 'join-agree-error';
+  return (
+    <div className={cn('agree')}>
+      <label className={cn('agreeLabel')}>
+        <input
+          ref={inputRef}
+          className={cn('agreeInput')}
+          type="checkbox"
+          name="agree"
+          checked={checked}
+          onChange={(e) => onChange(e.target.checked)}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? `${noteId} ${errorId}` : noteId}
+        />
+        <span className={cn('agreeBox')} aria-hidden>
+          <svg width={14} height={14} viewBox="0 0 24 24" fill="none">
+            <path
+              d="M5 12.5l4.5 4.5L19 7.5"
+              stroke="currentColor"
+              strokeWidth={3}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+        <span className={cn('agreeText')}>
+          만 14세 이상이며, 이용약관에 동의합니다{' '}
+          <span className={cn('agreeRequired')}>(필수)</span>
+        </span>
+      </label>
+      <p id={noteId} className={cn('agreeNote')}>
+        이름·아이디·이메일은 회원 관리에만 쓰고, 탈퇴하면 바로 지워요.{' '}
+        <a
+          className={cn('docLink')}
+          href={TERMS_PATH}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          이용약관
+        </a>
+        {' · '}
+        <a
+          className={cn('docLink')}
+          href={PRIVACY_PATH}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          개인정보 처리방침
+        </a>
+      </p>
       {error && (
         <p id={errorId} className={cn('fieldError')}>
           {error}
@@ -161,7 +233,7 @@ export function LoginEmailForm({
 }
 
 interface LoginJoinFormProps {
-  onSubmit: (fields: SignUpProps) => void;
+  onSubmit: (fields: SignUpProps, agreed: boolean) => void;
   onBack: () => void;
   firstInputRef: React.RefObject<HTMLInputElement>;
   errors: FormErrors;
@@ -184,11 +256,14 @@ export function LoginJoinForm({
   const userIdRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const agreeRef = useRef<HTMLInputElement>(null);
+  const [agreed, setAgreed] = useState(false);
   useFocusOnError(errors, {
     name: firstInputRef,
     user_id: userIdRef,
     email: emailRef,
     password: passwordRef,
+    agree: agreeRef,
   });
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -197,9 +272,14 @@ export function LoginJoinForm({
     onEdit(name as FormFieldName);
   };
 
+  const onChangeAgree = (checked: boolean) => {
+    setAgreed(checked);
+    onEdit('agree');
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSubmit(user);
+    onSubmit(user, agreed);
   };
 
   return (
@@ -257,6 +337,12 @@ export function LoginJoinForm({
           placeholder="비밀번호 입력 (6~15자)"
           onChange={onChangeInput}
           error={errors.fields.password}
+        />
+        <AgreeField
+          checked={agreed}
+          onChange={onChangeAgree}
+          error={errors.fields.agree}
+          inputRef={agreeRef}
         />
         <FormMessage message={errors.form} />
         <LoginButton variant="go" type="submit">

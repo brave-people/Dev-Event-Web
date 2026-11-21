@@ -1,4 +1,4 @@
-import { AuthProp, SignUpProps, TokenResponse } from 'model/auth';
+import { AuthProp, SignUpProps } from 'model/auth';
 
 export type LoginView = 'main' | 'email' | 'join';
 
@@ -70,7 +70,8 @@ export const focusAfter = (
 // 입력 확인과 서버 거절을 창 안에 보여 줄 모양.
 // fields: 칸 아래 문구, form: 제출 버튼 위 문구(칸을 가리키지 않는 거절), focus: 제출 뒤 포커스를 보낼 칸.
 export type LoginFieldName = 'user_id' | 'password';
-export type JoinFieldName = 'name' | 'user_id' | 'email' | 'password';
+// agree: 가입 동의 칸(만 14세 이상 확인 + 이용약관 동의)
+export type JoinFieldName = 'name' | 'user_id' | 'email' | 'password' | 'agree';
 export type FormFieldName = LoginFieldName | JoinFieldName;
 
 export interface FormErrors {
@@ -116,12 +117,17 @@ const passwordProblem = (password: string): string | null => {
   return null;
 };
 
-export const joinFieldErrors = (fields: SignUpProps): FormErrors =>
+// agreed는 서버로 보내지 않는다(가입 API에 동의 칸이 없음). 동의하지 않으면 가입 요청을 보내지 않는다.
+export const joinFieldErrors = (
+  fields: SignUpProps,
+  agreed: boolean
+): FormErrors =>
   collect([
     ['name', fields.name ? null : '이름을 입력해주세요.'],
     ['user_id', fields.user_id ? null : '아이디를 입력해주세요.'],
     ['email', fields.email ? null : '이메일을 입력해주세요.'],
     ['password', passwordProblem(fields.password)],
+    ['agree', agreed ? null : '만 14세 이상인지 확인하고 약관에 동의해주세요.'],
   ]);
 
 // 칸을 고치면 그 칸의 문구와 창 문구를 지운다. 다른 칸 문구는 남기고 포커스는 옮기지 않는다.
@@ -212,20 +218,16 @@ export const socialLoginUrl = (
   type: SocialType
 ): string => `${baseUrl}/auth/login/${type}`;
 
-// 이메일 로그인이 성공한 뒤: 창을 닫고, 토큰을 쿠키로 바꾸는 / 를 거쳐 /events 로 옮겨 간다.
+// 이메일 로그인이 성공한 뒤: 창을 닫고 /events 로 옮겨 간다.
+// 토큰 쿠키는 로그인 요청(pages/api/login.ts)의 응답이 이미 심었다. 주소에는 토큰을 싣지 않는다 (#377).
 // 새로고침 없이 옮겨 가서 처음 열 때 한 번 하는 로그인 확인(AuthContext)이 다시 돌지 않으므로
-// 로그인 상태는 여기서 바꾼다. 쿠키가 심긴 뒤여야 하므로 옮겨 가기가 끝난 다음에 바꾼다.
-export const finishEmailLogin = async (
-  tokens: Pick<TokenResponse, 'access_token' | 'refresh_token'>,
-  deps: {
-    push: (url: string) => Promise<boolean>;
-    login: () => void;
-    close: () => void;
-  }
-): Promise<void> => {
+// 로그인 상태는 여기서 바꾼다. 쿠키는 이미 있으므로 옮겨 가기 전에 바꾼다(옮겨 가기가 취소돼도 로그인 상태가 맞다).
+export const finishEmailLogin = async (deps: {
+  push: (url: string) => Promise<boolean>;
+  login: () => void;
+  close: () => void;
+}): Promise<void> => {
   deps.close();
-  const moved = await deps.push(
-    `/?accessToken=${tokens.access_token}&refreshToken=${tokens.refresh_token}`
-  );
-  if (moved) deps.login();
+  deps.login();
+  await deps.push('/events');
 };

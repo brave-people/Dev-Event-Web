@@ -9,6 +9,7 @@ import {
 } from 'components/common/modal/login/loginFlow';
 import LoginButton from 'components/common/modal/login/LoginButton';
 import TimelineIcon from 'components/events/timeline/TimelineIcon';
+import { PRIVACY_PATH, TERMS_PATH } from 'lib/legal/document';
 import GithubIcon from 'public/icon/github.svg';
 import GoogleIcon from 'public/icon/google.svg';
 import KakaoIcon from 'public/icon/kakao.svg';
@@ -96,6 +97,26 @@ function LoginMain({
         <button type="button" className={cn('link')} onClick={onJoin}>
           아이디로 가입
         </button>
+      </p>
+      <p className={cn('legal')}>
+        간편 로그인으로 처음 시작하면 만 14세 이상이며{' '}
+        <a
+          className={cn('docLink')}
+          href={TERMS_PATH}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          이용약관
+        </a>
+        에 동의하는 것으로 봐요.{' '}
+        <a
+          className={cn('docLink')}
+          href={PRIVACY_PATH}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          개인정보 처리방침
+        </a>
       </p>
     </div>
   );

@@ -9,6 +9,7 @@ import {
   REGISTER_FORM_URL,
   WHALE_URL,
 } from 'lib/links';
+import { PRIVACY_PATH, TERMS_PATH } from 'lib/legal/document';
 
 const cn = classNames.bind(style);
 
@@ -30,6 +31,15 @@ const Footer = () => {
             <a href={LICENSES_PATH} target="_blank" rel="noopener noreferrer">
               로고 출처
             </a>
+          </div>
+          {/* 처리방침 링크는 다른 링크와 구별되게 굵게 둔다(개인정보 처리방침 작성지침) */}
+          <div className={cn('footer__legal')}>
+            <Link href={TERMS_PATH}>
+              <a>이용약관</a>
+            </Link>
+            <Link href={PRIVACY_PATH}>
+              <a className={cn('footer__privacy')}>개인정보 처리방침</a>
+            </Link>
           </div>
         </div>
         <div className={cn('footer__row')}>

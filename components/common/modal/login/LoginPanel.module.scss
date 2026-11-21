@@ -194,3 +194,103 @@
     transition: none;
   }
 }
+
+// 가입 동의 칸 (만 14세 이상 확인 + 이용약관 동의)
+.agree {
+  margin-top: 4px;
+}
+
+.agreeLabel {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+}
+
+// 진짜 체크 칸은 투명하게 상자 자리에 겹쳐 두고(포커스·화면 읽기·누르기는 그대로) 옆의 상자를 그린다
+.agreeInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.agreeBox {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  background: var(--de-bg);
+  box-shadow: inset 0 0 0 1.5px var(--de-faint);
+  color: transparent;
+  transition: background 0.12s, box-shadow 0.12s, color 0.12s;
+
+  .agreeInput:checked + & {
+    background: var(--de-ink);
+    box-shadow: none;
+    color: var(--de-bg);
+  }
+
+  .agreeInput:focus-visible + & {
+    outline: 2px solid var(--de-blue);
+    outline-offset: 2px;
+  }
+
+  .agreeInput[aria-invalid='true'] + & {
+    box-shadow: inset 0 0 0 1.5px var(--de-red);
+  }
+
+  @include de-reduced-motion {
+    transition: none;
+  }
+}
+
+.agreeText {
+  padding-top: 1px;
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--de-ink);
+}
+
+.agreeRequired {
+  font-weight: 500;
+  color: var(--de-hint);
+}
+
+.agreeNote {
+  margin: 6px 0 0 32px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--de-hint);
+}
+
+.agree .fieldError {
+  margin-left: 32px;
+}
+
+// 간편 로그인 안내: 처음 로그인하면 가입이 되므로 약관·처리방침을 여기서 알린다
+.legal {
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--de-hint);
+}
+
+// 이용약관·개인정보 처리방침 링크 (새 탭)
+.docLink {
+  @include de-focus-ring;
+  font-weight: 600;
+  color: var(--de-sub);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--de-faint);
+}

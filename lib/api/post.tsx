@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import axiosInstanceWithToken from 'lib/api/axiosInstanceWithToken';
 import {
   AuthProp,
@@ -47,22 +47,17 @@ const acceptAll = { validateStatus: () => true };
 const isSuccess = (response: AxiosResponse) =>
   response.status >= 200 && response.status < 300;
 
-export const loginByEmail = async (
-  url: string,
-  data: AuthProp
-): Promise<TokenResponse> => {
+// 이메일 로그인. API 서버가 아니라 같은 웹 서버의 /api/login(pages/api/login.ts)을 부른다.
+// 그 라우트가 토큰을 바로 httpOnly 쿠키로 심으므로 브라우저는 토큰을 받지 않는다 (#377).
+// axiosInstance는 baseURL이 API 서버라서 쓰지 않는다.
+export const loginByEmail = async (data: AuthProp): Promise<void> => {
   let response: AxiosResponse;
   try {
-    response = await axiosInstance.post(
-      `${process.env.BASE_SERVER_URL}${url}`,
-      data,
-      acceptAll
-    );
+    response = await axios.post('/api/login', data, acceptAll);
   } catch (error: any) {
     throw error?.response; // 응답이 없으면(네트워크 오류) undefined
   }
   if (!isSuccess(response)) throw response;
-  return response.data;
 };
 
 export const signUpByEmail = async (
